@@ -26,6 +26,8 @@ cc.Class({
         var progress = this.loadBar.progress;
         if (progress < 1.0) {
             progress += this.speed * dt;
+        } else {
+            cc.director.loadScene("main.fire");
         }
         this.loadBar.progress += progress;
     },
