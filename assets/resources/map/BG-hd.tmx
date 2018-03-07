@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="12" height="8" tilewidth="80" tileheight="80" nextobjectid="14">
+ <objectgroup name="path">
+  <object id="2" name="PATH_00" x="120" y="190">
+   <properties>
+    <property name="direct" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" name="PATH_01" x="120" y="450">
+   <properties>
+    <property name="direct" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="5" name="PATH_02" x="360" y="450">
+   <properties>
+    <property name="direct" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="6" name="PATH_03" x="360" y="340">
+   <properties>
+    <property name="direct" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="7" name="PATH_04" x="600" y="340">
+   <properties>
+    <property name="direct" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="8" name="PATH_05" x="600" y="450">
+   <properties>
+    <property name="direct" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="9" name="PATH_06" x="840" y="450">
+   <properties>
+    <property name="direct" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="10" name="PATH_07" x="840" y="190">
+   <properties>
+    <property name="direct" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
