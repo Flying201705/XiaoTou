@@ -15,6 +15,10 @@ cc.Class({
         this._refreshDuration = 0;
         this._positionIndex = 0;
         this._gameOver = false;
+
+        this.node.on(cc.Node.EventType.TOUCH_END, this._touchEvent, this);
+
+        this._monsterLife = 100;
     },
 
     start () {
@@ -29,6 +33,16 @@ cc.Class({
                 this._refreshEndPosition();
                 this._refreshCurPosition();
                 this._updateMonsterPosition();
+            }
+
+            if (this.towerNode != null) {
+                var monsterPos = this._monster.getPosition();
+                var towerPos = this.towerNode.getPosition();
+                if (this._monsterLife <= 0) {
+                    this._monster.active = false;
+                } else if(Math.abs(towerPos.x - monsterPos.x) <= 100 && Math.abs(towerPos.y - monsterPos.y) <= 100) {
+                    this._monsterLife--;
+                }
             }
         }
     },
@@ -51,6 +65,21 @@ cc.Class({
         this._direct = this._curPoint.getProperties().direct;
         this._gameOver = false;
         this._updateMonsterPosition();
+        console.log("tile size:" + this._tileMap.getTileSize()+ ", mapsize : " + this.node.getContentSize()); 
+    },
+
+    _touchEvent: function (event) {
+        console.log("touchend event:" + event.touch.getLocation().x + "," + event.touch.getLocation().y);
+        this.towerNode = new cc.Node('sprite 1');
+        var tower = this.towerNode.addComponent(cc.Sprite);
+        var imgUrl = cc.url.raw('resources/tower/xiaotou.png');
+        var texture = cc.textureCache.addImage(imgUrl);
+        tower.spriteFrame = new cc.SpriteFrame();
+        tower.spriteFrame.setTexture(texture);
+        var position = this._getTilePos(cc.p(event.touch.getLocation().x - 960 / 2, event.touch.getLocation().y - 640 / 2));
+        console.log("touchend position:" + position.x + "," + position.y);
+        this.towerNode.setPosition(position.x, position.y);
+        this.node.addChild(this.towerNode);
     },
 
     _updateMonsterPosition: function() {
@@ -98,8 +127,8 @@ cc.Class({
         var mapSize = this.node.getContentSize();
         var tileSize = this._tileMap.getTileSize();
         var x = Math.floor(posInPixel.x / tileSize.width);
-        var y = Math.floor((mapSize.height - posInPixel.y) / tileSize.height);
+        var y = Math.floor(posInPixel.y / tileSize.height);
 
-        return cc.p(x, y);
+        return cc.p(x * tileSize.width, y * tileSize.height);
     },
 });
