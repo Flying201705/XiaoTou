@@ -20,5 +20,6 @@ cc.Class({
     onLoad: function () {
         let level = cc.instantiate(this.levelPrefabs[0]);
         level.parent = this.gameLayerNode;
+        level.getComponent('level').init(this.gameLayerNode.getComponent('game-layer'));
     }
 });

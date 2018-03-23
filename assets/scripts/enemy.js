@@ -36,7 +36,7 @@ cc.Class({
         //0 - 6
         this.spriteNode.spriteFrame = this.spriteFrames[type];
         this.pathPoints = pathPoints;
-        this.node.position = pathPoints[0].position;
+        this.node.position = pathPoints[0];
         cc.loader.loadRes("./config/monster_config", (err, result)=>{
             if (err){
                 cc.log(err);
@@ -53,14 +53,14 @@ cc.Class({
     },
     update: function (dt) {
         if (this.state === EnemyState.Running){
-            let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount].position);
+            let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
             if (distance < 10){
                 this.currentPathPointCount ++;
                 if (this.currentPathPointCount === this.pathPoints.length){
                     this.setState(EnemyState.EndPath);
                     return
                 }
-                this.direction = cc.pNormalize(cc.pSub(this.pathPoints[this.currentPathPointCount].position, this.node.position));
+                this.direction = cc.pNormalize(cc.pSub(this.pathPoints[this.currentPathPointCount], this.node.position));
             }else {
                 this.node.position = cc.pAdd(this.node.position, cc.pMult(this.direction, this.speed * dt));
             }

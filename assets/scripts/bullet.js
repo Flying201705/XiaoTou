@@ -37,8 +37,8 @@ cc.Class({
             }
         }
 
-        if (this.node.position.x < - 1920 * 0.5 || this.node.position.x > 1920 * 0.5
-        || this.node.position.y > 1080 * 0.5 || this.node.position.y < - 1080 * 0.5){
+        if (this.node.position.x < - 960 * 0.5 || this.node.position.x > 960 * 0.5
+        || this.node.position.y > 640 * 0.5 || this.node.position.y < - 640 * 0.5){
             this.node.destroy();
             cc.log("删掉子弹");
         }

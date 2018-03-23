@@ -63,7 +63,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 11
+        "__id__": 12
       }
     ],
     "_prefab": null,
@@ -167,14 +167,14 @@
         "__id__": 5
       },
       {
-        "__id__": 6
+        "__id__": 7
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 10
+        "__id__": 11
       }
     ],
     "_prefab": null,
@@ -224,7 +224,11 @@
     "_children": [],
     "_tag": -1,
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 6
+      }
+    ],
     "_prefab": null,
     "_id": "cb99AqDFtNbZGZKrdqZT+x",
     "_opacity": 255,
@@ -263,6 +267,15 @@
     "groupIndex": 0
   },
   {
+    "__type__": "5accaCtYrFCk5U3h/fGnGMR",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 5
+    },
+    "_enabled": true
+  },
+  {
     "__type__": "cc.Node",
     "_name": "game-ui-layer",
     "_objFlags": 0,
@@ -271,14 +284,14 @@
     },
     "_children": [
       {
-        "__id__": 7
+        "__id__": 8
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 9
+        "__id__": 10
       }
     ],
     "_prefab": null,
@@ -323,14 +336,14 @@
     "_name": "tiem-count-down-label",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 6
+      "__id__": 7
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 8
+        "__id__": 9
       }
     ],
     "_prefab": null,
@@ -375,7 +388,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 7
+      "__id__": 8
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -397,11 +410,11 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 6
+      "__id__": 7
     },
     "_enabled": true,
     "timeCountDownLabel": {
-      "__id__": 8
+      "__id__": 9
     }
   },
   {
@@ -421,7 +434,7 @@
       "__id__": 5
     },
     "gameUiLayerNode": {
-      "__id__": 6
+      "__id__": 7
     }
   },
   {
