@@ -45,7 +45,6 @@ cc.Class({
         global.event.on("sell_tower",this.sellTower.bind(this));
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
-        global.event.on("sell_tower", this.sellTower.bind(this));
         this.build_menu = cc.instantiate(this.buildMenuPrefab);
         this.build_menu.parent = this.node;
         this.build_menu.active = false;
@@ -69,7 +68,7 @@ cc.Class({
             var index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             cc.log("touchend event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
-                this.showUpdateMenu(this.towerNodeList[index]);
+                this.showUpdateMenu(index);
             } else if (this.isTouchEnable(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5)) {
                 this.showBuildMenu(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             }
@@ -112,17 +111,20 @@ cc.Class({
         this.build_menu.position = cc.p(x, y);
     },
 
-    showUpdateMenu: function (node) {
+    showUpdateMenu: function (index) {
         this.closeMenu();
         this.update_menu.active = true;
-        this.update_menu.position = node.position;
-        this.update_menu.tower = node;
+        this.update_menu.index = index;
+        let tower = this.towerNodeList[index];
+        if (tower != undefined) {
+            this.update_menu.position = tower.position;
+        }
     },
 
     closeMenu: function () {
         this.build_menu.active = false;
         this.update_menu.active = false;
-        return this.update_menu.tower;
+        return this.update_menu.index;
     },
 
     setState: function (node, state) {
@@ -158,14 +160,19 @@ cc.Class({
     },
 
     updateTower: function () {
-        let tower = this.closeMenu();
-        tower.getComponent("tower").updateTower();
+        let tower = this.towerNodeList[this.closeMenu()];
+        if (tower != undefined) {
+            tower.getComponent("tower").updateTower();
+        }
     },
 
     sellTower: function () {
-        let tower = this.closeMenu();
-        tower.getComponent("tower").sellTower();
-        this.towerNodeList.splice(tower);
+        let index = this.closeMenu();
+        let tower = this.towerNodeList[index];
+        if (tower != undefined) {
+            tower.getComponent("tower").sellTower();
+            this.towerNodeList.splice(index, 1);
+        }
     },
 
     gameStart: function () {
