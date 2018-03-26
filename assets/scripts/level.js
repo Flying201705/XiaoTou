@@ -46,11 +46,7 @@ cc.Class({
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
         this.build_menu = cc.instantiate(this.buildMenuPrefab);
-        this.build_menu.parent = this.node;
-        this.build_menu.active = false;
         this.update_menu = cc.instantiate(this.updateMenuPrefab);
-        this.update_menu.parent = this.node;
-        this.update_menu.active = false;
         this.currentWaveCount = 0;
         this.currentEnemyCount = 0;
         this.addEnemyCurrentTime = 0;
@@ -107,23 +103,23 @@ cc.Class({
 
     showBuildMenu: function (x, y) {
         this.closeMenu();
-        this.build_menu.active = true;
         this.build_menu.position = cc.p(x, y);
+        this.build_menu.parent = this.node;
     },
 
     showUpdateMenu: function (index) {
         this.closeMenu();
-        this.update_menu.active = true;
-        this.update_menu.index = index;
         let tower = this.towerNodeList[index];
         if (tower != undefined) {
             this.update_menu.position = tower.position;
+            this.update_menu.index = index;
+            this.update_menu.parent = this.node;
         }
     },
 
     closeMenu: function () {
-        this.build_menu.active = false;
-        this.update_menu.active = false;
+        this.node.removeChild(this.build_menu);
+        this.node.removeChild(this.update_menu);
         return this.update_menu.index;
     },
 
