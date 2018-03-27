@@ -22,11 +22,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 5
+        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 7
     },
     "_id": "",
     "_opacity": 255,
@@ -77,10 +77,13 @@
     "_components": [
       {
         "__id__": 3
+      },
+      {
+        "__id__": 4
       }
     ],
     "_prefab": {
-      "__id__": 4
+      "__id__": 5
     },
     "_id": "",
     "_opacity": 255,
@@ -99,7 +102,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 25,
+      "width": 26,
       "height": 56
     },
     "_rotationX": 0,
@@ -127,7 +130,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "71730e76-8725-49fb-b78f-58701b34f5b4"
+      "__uuid__": "234b4541-b56b-4ca7-8257-f53770e8b582"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -142,7 +145,31 @@
     "_isTrimmedMode": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_atlas": null
+    "_atlas": {
+      "__uuid__": "ff1f0a44-d554-4c3f-a13c-b21c22ad07b2"
+    }
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_defaultClip": null,
+    "_clips": [
+      {
+        "__uuid__": "4d6412e6-68f9-4a08-bf33-6089fac0e393"
+      },
+      {
+        "__uuid__": "804e3cfa-ba2a-4b74-bbd6-a9fabe0b2545"
+      },
+      {
+        "__uuid__": "e90dccc4-5f0c-4ac3-ae9b-3e5203ebdf52"
+      }
+    ],
+    "playOnLoad": false
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -176,6 +203,9 @@
     ],
     "spriteNode": {
       "__id__": 3
+    },
+    "anim": {
+      "__id__": 4
     },
     "towerType": "tower_a"
   },

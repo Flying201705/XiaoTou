@@ -1,0 +1,70 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "tower_1",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.3,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 36,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "234b4541-b56b-4ca7-8257-f53770e8b582"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "8bc42e0c-3dd5-432a-a986-3b1b69dd8bf8"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "cc99c333-1047-4f64-b807-9b389ebbd0f2"
+            }
+          }
+        ]
+      },
+      "tower": {}
+    },
+    "paths": {}
+  },
+  "events": [
+    {
+      "frame": 0.2,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0.2,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0.2,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0.2,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0.2,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0.2,
+      "func": "",
+      "params": []
+    }
+  ]
+}
