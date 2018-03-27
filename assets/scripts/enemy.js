@@ -58,7 +58,7 @@ cc.Class({
                 this.currentPathPointCount ++;
                 if (this.currentPathPointCount === this.pathPoints.length){
                     this.setState(EnemyState.EndPath);
-                    return
+                    return;
                 }
                 this.direction = cc.pNormalize(cc.pSub(this.pathPoints[this.currentPathPointCount], this.node.position));
             }else {
@@ -69,23 +69,27 @@ cc.Class({
     },
     setState: function (state) {
         if (this.state === state){
-            return ;
+            return;
         }
         switch (state){
             case EnemyState.Running:
                 this.node.opacity = 255;
                 break;
             case EnemyState.Dead:
-                let action = cc.fadeOut(1);
-                let sequence = cc.sequence(action, cc.callFunc(()=>{
+                let deadAction = cc.fadeOut(1);
+                let deadSequence = cc.sequence(deadAction, cc.callFunc(()=>{
                     cc.log("死了");
                     this.node.destroy();
                 }));
-                this.node.runAction(sequence);
-
-
+                this.node.runAction(deadSequence);
                 break;
             case EnemyState.EndPath:
+            let endAction = cc.fadeOut(0.5);
+            let endSequence = cc.sequence(endAction, cc.callFunc(()=>{
+                cc.log("跑了");
+                this.node.destroy();
+            }));
+            this.node.runAction(endSequence);
                 break;
             default:
                 break;
@@ -105,12 +109,18 @@ cc.Class({
             this.setState(EnemyState.Dead);
         }
     },
+
     isDead: function () {
         if (this.state === EnemyState.Dead){
             return true;
         }
         return false;
+    },
+
+    isEndPath: function() {
+        if (this.state === EnemyState.EndPath){
+            return true;
+        }
+        return false;
     }
-
-
 });

@@ -224,6 +224,14 @@ cc.Class({
             }
         }
 
+        for (let j = 0 ; j < this.enemyNodeList.length ; j ++){
+            let enemy = this.enemyNodeList[j];
+            if (enemy.getComponent("enemy").isDead() || enemy.getComponent("enemy").isEndPath()){
+              cc.log("从列表里面删掉");
+              this.enemyNodeList.splice(j , 1);
+            }
+        }
+
         for (let i = 0 ; i < this.towerNodeList.length ; i ++){
             let tower = this.towerNodeList[i];
             if (tower != undefined && tower.getComponent("tower").isFree()){
@@ -232,9 +240,6 @@ cc.Class({
                     if (enemy.getComponent("enemy").isLiving()){
                         // let distance = cc.pDistance(tower)
                        tower.getComponent("tower").setEnemy(enemy);
-                    }else if (enemy.getComponent("enemy").isDead()){
-                      cc.log("从列表里面删掉");
-                      this.enemyNodeList.splice(j , 1);
                     }
                 }
             }
@@ -243,7 +248,6 @@ cc.Class({
     },
 
     addBullet: function (tower, position) {
-
         let bullet = cc.instantiate(this.bulletPrefab);
         // bullet.position = tower.position;
         bullet.parent = this.node;
