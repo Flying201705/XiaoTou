@@ -1,0 +1,177 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "time_count_down",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 4,
+  "sample": 2,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "7b021aa5-a474-4652-9628-1dcc18ee80c7"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "7b021aa5-a474-4652-9628-1dcc18ee80c7"
+            }
+          },
+          {
+            "frame": 1,
+            "value": {
+              "__uuid__": "aa6d5d77-6e85-4ef6-ace3-eced617207ed"
+            }
+          },
+          {
+            "frame": 1.5,
+            "value": {
+              "__uuid__": "aa6d5d77-6e85-4ef6-ace3-eced617207ed"
+            }
+          },
+          {
+            "frame": 2,
+            "value": {
+              "__uuid__": "87f3ddef-4ec9-439f-9039-c51997df96c5"
+            }
+          },
+          {
+            "frame": 2.5,
+            "value": {
+              "__uuid__": "87f3ddef-4ec9-439f-9039-c51997df96c5"
+            }
+          },
+          {
+            "frame": 3,
+            "value": {
+              "__uuid__": "4b42a039-5186-4efc-9709-bc43d42fd49c"
+            }
+          },
+          {
+            "frame": 3.5,
+            "value": {
+              "__uuid__": "4b42a039-5186-4efc-9709-bc43d42fd49c"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "scaleX": [
+        {
+          "frame": 0,
+          "value": 0.8
+        },
+        {
+          "frame": 0.5,
+          "value": 1
+        },
+        {
+          "frame": 1,
+          "value": 0.8
+        },
+        {
+          "frame": 1.5,
+          "value": 1
+        },
+        {
+          "frame": 2,
+          "value": 0.8
+        },
+        {
+          "frame": 2.5,
+          "value": 1
+        },
+        {
+          "frame": 3,
+          "value": 0.8
+        },
+        {
+          "frame": 3.5,
+          "value": 1
+        }
+      ],
+      "scaleY": [
+        {
+          "frame": 0,
+          "value": 0.8
+        },
+        {
+          "frame": 0.5,
+          "value": 1
+        },
+        {
+          "frame": 1,
+          "value": 0.8
+        },
+        {
+          "frame": 1.5,
+          "value": 1
+        },
+        {
+          "frame": 2,
+          "value": 0.8
+        },
+        {
+          "frame": 2.5,
+          "value": 1
+        },
+        {
+          "frame": 3,
+          "value": 0.8
+        },
+        {
+          "frame": 3.5,
+          "value": 1
+        }
+      ],
+      "opacity": [
+        {
+          "frame": 0,
+          "value": 255
+        },
+        {
+          "frame": 0.5,
+          "value": 0
+        },
+        {
+          "frame": 1,
+          "value": 255
+        },
+        {
+          "frame": 1.5,
+          "value": 0
+        },
+        {
+          "frame": 2,
+          "value": 255
+        },
+        {
+          "frame": 2.5,
+          "value": 0
+        },
+        {
+          "frame": 3,
+          "value": 255
+        },
+        {
+          "frame": 3.5,
+          "value": 0
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "frame": 3.5,
+      "func": "startGame",
+      "params": []
+    }
+  ]
+}
