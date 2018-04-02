@@ -347,6 +347,9 @@
       "__id__": 1
     },
     "_enabled": true,
+    "selectPrefab": {
+      "__uuid__": "d1c67972-3f5d-4ff9-ace6-8f788e9ac1e2"
+    },
     "buildMenuPrefab": {
       "__uuid__": "661f2662-c7bd-43a8-bfca-8a65487b3a58"
     },

@@ -1,4 +1,5 @@
 import global from './global'
+
 const TowerPosNodeState = {
     Invalid: -1,
     Null: 1,
@@ -9,6 +10,11 @@ const TowerPosNodeState = {
 cc.Class({
     extends: cc.Component,
     properties: {
+        //选中背景框
+        selectPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
         buildMenuPrefab: {
             default: null,
             type: cc.Prefab
@@ -31,7 +37,7 @@ cc.Class({
         }
     },
 
-    init (gameLayer) {
+    init(gameLayer) {
         this.gameLayer = gameLayer;
     },
 
@@ -42,7 +48,7 @@ cc.Class({
 
         global.event.on("build_tower", this.buildTower.bind(this));
         global.event.on("update_tower", this.updateTower.bind(this));
-        global.event.on("sell_tower",this.sellTower.bind(this));
+        global.event.on("sell_tower", this.sellTower.bind(this));
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
         this.build_menu = cc.instantiate(this.buildMenuPrefab);
@@ -57,10 +63,11 @@ cc.Class({
         this.towerNodeList = [];
         this.bulletNodeList = [];
         this.tileSize = 80;
+        this.selectBox = cc.instantiate(this.selectPrefab);
     },
 
     setTouchEvent: function () {
-        this.node.on(cc.Node.EventType.TOUCH_START, (event)=>{
+        this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
             var index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             cc.log("touchend event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
@@ -71,8 +78,8 @@ cc.Class({
         });
     },
 
-    getTouchedTowerIdx: function(x, y) {
-        for (let i = 0; i <  this.towerNodeList.length; i++) {
+    getTouchedTowerIdx: function (x, y) {
+        for (let i = 0; i < this.towerNodeList.length; i++) {
             let tower = this.towerNodeList[i];
             let towerRect = cc.rect(tower.x - tower.width * 0.5, tower.y - tower.height * 0.5, tower.width, tower.height);
             if (cc.rectContainsPoint(towerRect, cc.p(x, y))) {
@@ -83,7 +90,7 @@ cc.Class({
         return -1;
     },
 
-    isTouchEnable: function(x, y) {
+    isTouchEnable: function (x, y) {
         for (let i = 0; i < this.towerRects.length; i++) {
             if (cc.rectContainsPoint(this.towerRects[i], cc.p(x, y))) {
                 return true;
@@ -95,7 +102,7 @@ cc.Class({
 
     // 暂时没用
     setTowerTouchEvent: function (node) {
-        node.on(cc.Node.EventType.TOUCH_START, (event)=>{
+        node.on(cc.Node.EventType.TOUCH_START, (event) => {
             cc.log("touch node name = " + event.target.name);
             this.showUpdateMenu(event.target);
         });
@@ -105,12 +112,18 @@ cc.Class({
         this.closeMenu();
         this.build_menu.position = cc.p(x, y);
         this.build_menu.parent = this.node;
+
+        this.selectBox.parent = this.node;
+        this.selectBox.position = this.getTilePos(this.build_menu.position);
     },
 
     showUpdateMenu: function (index) {
         this.closeMenu();
         let tower = this.towerNodeList[index];
-        if (tower != undefined) {
+        if (tower !== undefined) {
+            this.selectBox.parent = this.node;
+            this.selectBox.position = tower.position;
+
             this.update_menu.position = tower.position;
             this.update_menu.index = index;
             this.update_menu.parent = this.node;
@@ -120,14 +133,15 @@ cc.Class({
     closeMenu: function () {
         this.node.removeChild(this.build_menu);
         this.node.removeChild(this.update_menu);
+        this.node.removeChild(this.selectBox);
         return this.update_menu.index;
     },
 
     setState: function (node, state) {
-        if (node.state === state){
+        if (node.state === state) {
             return;
         }
-        switch (state){
+        switch (state) {
             case TowerPosNodeState.Null:
                 break;
             case TowerPosNodeState.BuildMenu:
@@ -157,7 +171,7 @@ cc.Class({
 
     updateTower: function () {
         let tower = this.towerNodeList[this.closeMenu()];
-        if (tower != undefined) {
+        if (tower !== undefined) {
             tower.getComponent("tower").updateTower();
         }
     },
@@ -165,17 +179,17 @@ cc.Class({
     sellTower: function () {
         let index = this.closeMenu();
         let tower = this.towerNodeList[index];
-        if (tower != undefined) {
+        if (tower !== undefined) {
             tower.getComponent("tower").sellTower();
             this.towerNodeList.splice(index, 1);
         }
     },
 
     gameStart: function () {
-        cc.loader.loadRes("./config/level_config",  (err, result)=> {
-            if (err){
+        cc.loader.loadRes("./config/level_config", (err, result) => {
+            if (err) {
                 cc.log("load config " + err);
-            }else {
+            } else {
                 cc.log("level config" + JSON.stringify(result));
             }
             let config = result["level_1"];
@@ -197,12 +211,12 @@ cc.Class({
     },
 
     update: function (dt) {
-        if (this.currentWaveConfig){
-            if (this.addEnemyCurrentTime > this.currentWaveConfig.dt){
+        if (this.currentWaveConfig) {
+            if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
                 this.addEnemyCurrentTime = 0;
-                this.currentEnemyCount ++;
+                this.currentEnemyCount++;
                 this.addEnemy(this.currentWaveConfig.type);
-                if (this.currentEnemyCount === this.currentWaveConfig.count){
+                if (this.currentEnemyCount === this.currentWaveConfig.count) {
                     this.currentWaveConfig = undefined;
                     this.currentEnemyCount = 0;
                 }
@@ -210,36 +224,36 @@ cc.Class({
             else {
                 this.addEnemyCurrentTime += dt;
             }
-        }else if (this.levelConfig) {
-            if (this.addWaveCurrentTime > this.levelConfig.dt){
+        } else if (this.levelConfig) {
+            if (this.addWaveCurrentTime > this.levelConfig.dt) {
                 this.currentWaveConfig = this.levelConfig.waves[this.currentWaveCount];
-                if (this.currentWaveCount < this.levelConfig.waves.length ){
-                    this.currentWaveCount ++;
-                }else {
+                if (this.currentWaveCount < this.levelConfig.waves.length) {
+                    this.currentWaveCount++;
+                } else {
                     this.currentWaveConfig = undefined;
                 }
                 this.addWaveCurrentTime = 0;
-            }else {
+            } else {
                 this.addWaveCurrentTime += dt;
             }
         }
 
-        for (let j = 0 ; j < this.enemyNodeList.length ; j ++){
+        for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
-            if (enemy.getComponent("enemy").isDead() || enemy.getComponent("enemy").isEndPath()){
-              cc.log("从列表里面删掉");
-              this.enemyNodeList.splice(j , 1);
+            if (enemy.getComponent("enemy").isDead() || enemy.getComponent("enemy").isEndPath()) {
+                cc.log("从列表里面删掉");
+                this.enemyNodeList.splice(j, 1);
             }
         }
 
-        for (let i = 0 ; i < this.towerNodeList.length ; i ++){
+        for (let i = 0; i < this.towerNodeList.length; i++) {
             let tower = this.towerNodeList[i];
-            if (tower != undefined && tower.getComponent("tower").isFree()){
-                for (let j = 0 ; j < this.enemyNodeList.length ; j ++){
+            if (tower !== undefined && tower.getComponent("tower").isFree()) {
+                for (let j = 0; j < this.enemyNodeList.length; j++) {
                     let enemy = this.enemyNodeList[j];
-                    if (enemy.getComponent("enemy").isLiving()){
+                    if (enemy.getComponent("enemy").isLiving()) {
                         // let distance = cc.pDistance(tower)
-                       tower.getComponent("tower").setEnemy(enemy);
+                        tower.getComponent("tower").setEnemy(enemy);
                     }
                 }
             }
@@ -255,7 +269,7 @@ cc.Class({
 
     },
 
-    getTilePos: function(posInPixel) {
+    getTilePos: function (posInPixel) {
         var mapSize = this.node.getContentSize();
         var tileSize = this.tileSize;
         var x = Math.floor(posInPixel.x / tileSize.width);
