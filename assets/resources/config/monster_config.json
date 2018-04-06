@@ -1,18 +1,26 @@
 {
   "enemy_0": {
-    "speed": 50,
-    "health": 2
+    "speed": 80,
+    "health": 20
   },
   "enemy_1": {
-    "speed": 50,
-    "health": 4
+    "speed": 100,
+    "health": 100
   },
   "enemy_2": {
-    "speed": 60,
-    "health": 4
+    "speed": 100,
+    "health": 200
   },
   "enemy_3": {
-    "speed": 40,
-    "health": 10
+    "speed": 80,
+    "health": 70
+  },
+  "enemy_4": {
+    "speed": 100,
+    "health": 150
+  },
+  "enemy_5": {
+    "speed": 100,
+    "health": 300
   }
 }

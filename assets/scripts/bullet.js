@@ -17,6 +17,7 @@ cc.Class({
         this.node.rotation = (180 / Math.PI) * angle;
         this.enemyNodeList = enemyNodeList;
         this.damage = tower.getComponent("tower").getDamage();
+        this.gainRate = tower.getComponent("tower").getGainRate();
     },
 
     update: function (dt) {
@@ -28,7 +29,7 @@ cc.Class({
             if (enemy.getComponent("enemy").isLiving()) {
                 let distance = cc.pDistance(enemy.position, this.node.position);
                 if (distance < (enemy.width * 0.5 + this.node.width * 0.5)) {
-                    enemy.getComponent("enemy").beAttacked(this.damage);
+                    enemy.getComponent("enemy").beAttacked(this);
                     this.node.destroy();
                     // cc.log("")
                 }

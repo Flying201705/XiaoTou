@@ -84,12 +84,13 @@ cc.Class({
                 this.node.runAction(deadSequence);
                 break;
             case EnemyState.EndPath:
-            let endAction = cc.fadeOut(0.5);
-            let endSequence = cc.sequence(endAction, cc.callFunc(()=>{
-                cc.log("跑了");
-                this.node.destroy();
-            }));
-            this.node.runAction(endSequence);
+                let endAction = cc.fadeOut(0.5);
+                let endSequence = cc.sequence(endAction, cc.callFunc(()=>{
+                    cc.log("跑了");
+                    this.node.destroy();
+                }));
+                this.node.runAction(endSequence);
+                this.node.parent.getComponent('level').detractLife(1);
                 break;
             default:
                 break;
@@ -102,12 +103,22 @@ cc.Class({
         }
         return false;
     },
-    beAttacked: function (damage) {
+    beAttacked: function (bullet) {
+        var damage = bullet.damage;
+        if (damage > this.currentHealthCount) {
+            damage = this.currentHealthCount;
+        }
+        this.gainGold(damage * bullet.gainRate);
         this.currentHealthCount -= damage;
-        if (this.currentHealthCount < 0){
+        if (this.currentHealthCount <= 0){
             this.currentHealthCount = 0;
             this.setState(EnemyState.Dead);
+            this.gainGold(1);
         }
+    },
+
+    gainGold: function(gold) {
+        this.node.parent.getComponent("level").addGold(Math.floor(gold));
     },
 
     isDead: function () {

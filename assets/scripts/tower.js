@@ -22,7 +22,9 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         this.levelCount = 0;
+        this.currentUpgradeCost = 0;
         this.currentDamage = 0;
+        this.currentGainRate = 0;
         this.lookRange = 0;
         this.currentAttackRange = 0;
         this.shootBulletDt = 0;
@@ -33,9 +35,16 @@ cc.Class({
             } else {
                 cc.log("load config = " + JSON.stringify(result));
                 this.towerConfig = result[this.towerType];
+                if (this.levelCount < this.towerConfig.costs.length - 1) {
+                    this.currentUpgradeCost = this.towerConfig.costs[this.levelCount + 1];
+                }
                 this.currentDamage = this.towerConfig.damages[this.levelCount];
+                if (this.towerConfig.gain_rates != undefined && this.towerConfig.gain_rates.length > 0) {
+                    this.currentGainRate = this.towerConfig.gain_rates[this.levelCount];
+                }
                 this.currentAttackRange = this.towerConfig.attack_ranges[this.levelCount];
-                this.lookRange = this.towerConfig.look_range;
+                //this.lookRange = this.towerConfig.look_range;
+                this.lookRange = this.currentAttackRange;
                 this.shootBulletDt = this.towerConfig.shoot_dts[this.levelCount];
             }
         });
@@ -46,9 +55,16 @@ cc.Class({
             this.levelCount++;
             this.spriteNode.spriteFrame = this.spriteFrames[this.levelCount];
 
+            if (this.levelCount < this.towerConfig.costs.length - 1) {
+                this.currentUpgradeCost = this.towerConfig.costs[this.levelCount + 1];
+            }
             this.currentDamage = this.towerConfig.damages[this.levelCount];
+            if (this.towerConfig.gain_rates != undefined && this.towerConfig.gain_rates.length > 0) {
+                this.currentGainRate = this.towerConfig.gain_rates[this.levelCount];
+            }
             this.currentAttackRange = this.towerConfig.attack_ranges[this.levelCount];
-            this.lookRange = this.towerConfig.look_range;
+            //this.lookRange = this.towerConfig.look_range;
+            this.lookRange = this.currentAttackRange;
             this.shootBulletDt = this.towerConfig.shoot_dts[this.levelCount];
 
         } else {
@@ -109,6 +125,18 @@ cc.Class({
     },
     getDamage: function () {
         return this.currentDamage;
+    },
+    getGainRate: function() {
+        return this.currentGainRate;
+    },
+    getUpgradeCost: function() {
+        return this.currentUpgradeCost;
+    },
+    getSelledGold: function() {
+        var gold = 0;
+        for (let i = 0; i <= this.levelCount; i++) {
+            gold += this.towerConfig.costs[i];
+        }
+        return Math.floor(gold / 2);
     }
-
 });

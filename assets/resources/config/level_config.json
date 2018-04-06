@@ -1,25 +1,31 @@
 {
   "level_1":{
     "dt": 1,
+    "gold": 250,
     "waves": [
       {
         "dt": 2,
         "type": 0,
-        "count": 10
+        "count": 5
       },
       {
-        "dt": 3,
-        "type": 1,
-        "count": 10
-      },
-      {
-        "dt": 3,
-        "type": 2,
-        "count": 20
-      },
-      {
-        "dt": 4,
+        "dt": 2,
         "type": 3,
+        "count": 5
+      },
+      {
+        "dt": 1,
+        "type": 1,
+        "count": 5
+      },
+      {
+        "dt": 2,
+        "type": 4,
+        "count": 10
+      },
+      {
+        "dt": 1,
+        "type": 2,
         "count": 10
       }
     ]

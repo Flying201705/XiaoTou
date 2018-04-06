@@ -64,6 +64,11 @@ cc.Class({
         this.bulletNodeList = [];
         this.tileSize = 80;
         this.selectBox = cc.instantiate(this.selectPrefab);
+
+        this.goldCount = 0;
+        this.goldLabel = this.node.getChildByName('gold').getComponent(cc.Label);
+        this.lifeCount = 10;
+        this.lifeLabel = this.node.getChildByName('life').getComponent(cc.Label);
     },
 
     setTouchEvent: function () {
@@ -155,6 +160,11 @@ cc.Class({
     buildTower: function (data) {
         cc.log("build tower " + data);
         this.closeMenu();
+        if (this.goldCount < 100) {
+            return;
+        }
+
+        this.goldCount -= 100;
         let tower = cc.instantiate(this.towerPrefabs[data]);
         tower.parent = this.node;
         tower.position = this.getTilePos(this.build_menu.position);
@@ -162,7 +172,6 @@ cc.Class({
         tower.height = 80;
         // this.setTowerTouchEvent(tower);
         this.towerNodeList.push(tower);
-
     },
 
     onDestroy: function () {
@@ -172,6 +181,11 @@ cc.Class({
     updateTower: function () {
         let tower = this.towerNodeList[this.closeMenu()];
         if (tower !== undefined) {
+            var cost = tower.getComponent("tower").getUpgradeCost();
+            if (this.goldCount < cost) {
+                return;
+            }
+            this.detractGold(cost);
             tower.getComponent("tower").updateTower();
         }
     },
@@ -180,6 +194,7 @@ cc.Class({
         let index = this.closeMenu();
         let tower = this.towerNodeList[index];
         if (tower !== undefined) {
+            this.addGold(tower.getComponent("tower").getSelledGold());
             tower.getComponent("tower").sellTower();
             this.towerNodeList.splice(index, 1);
         }
@@ -195,6 +210,7 @@ cc.Class({
             let config = result["level_1"];
             this.levelConfig = config;
             // this.currentWaveConfig = wavesConfig[0];
+            this.goldCount = this.levelConfig.gold;
         });
         this.enemyPathPositions = this.gameLayer.getPathPositions();
         this.towerRects = this.gameLayer.getObjRects();
@@ -211,6 +227,8 @@ cc.Class({
     },
 
     update: function (dt) {
+        this.goldLabel.string = "金钱：" + this.goldCount;
+        this.lifeLabel.string = "生命：" + this.lifeCount;
         if (this.currentWaveConfig) {
             if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
                 this.addEnemyCurrentTime = 0;
@@ -267,6 +285,24 @@ cc.Class({
         bullet.parent = this.node;
         bullet.getComponent("bullet").initWithData(tower, position, this.enemyNodeList);
 
+    },
+
+    addGold: function(gold) {
+        this.goldCount += gold;
+    },
+
+    detractGold: function(gold) {
+        this.goldCount -= gold;
+        if (this.goldCount < 0) {
+            this.goldCount = 0;
+        }
+    },
+
+    detractLife: function(life) {
+        this.lifeCount -= life;
+        if (this.lifeCount < 0) {
+            this.lifeCount = 0;
+        }
     },
 
     getTilePos: function (posInPixel) {
