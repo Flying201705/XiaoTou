@@ -69,6 +69,7 @@ cc.Class({
         this.goldLabel = this.node.getChildByName('gold').getComponent(cc.Label);
         this.lifeCount = 10;
         this.lifeLabel = this.node.getChildByName('life').getComponent(cc.Label);
+        this.levelLabel = this.node.getChildByName('level').getComponent(cc.Label);
     },
 
     setTouchEvent: function () {
@@ -247,6 +248,7 @@ cc.Class({
                 this.currentWaveConfig = this.levelConfig.waves[this.currentWaveCount];
                 if (this.currentWaveCount < this.levelConfig.waves.length) {
                     this.currentWaveCount++;
+                    this.levelLabel.string = "关卡1：" + this.currentWaveCount + "/" + this.levelConfig.waves.length;
                 } else {
                     this.currentWaveConfig = undefined;
                 }
