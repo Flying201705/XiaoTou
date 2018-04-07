@@ -161,17 +161,20 @@ cc.Class({
     buildTower: function (data) {
         cc.log("build tower " + data);
         this.closeMenu();
-        if (this.goldCount < 100) {
+        let tower_type = this.levelConfig.towers[data].type;
+        let create_cost = this.towerConfigs[tower_type].costs[0];
+        if (this.goldCount < create_cost) {
             return;
         }
 
-        this.goldCount -= 100;
+        this.goldCount -= create_cost;
         let tower = cc.instantiate(this.towerPrefabs[data]);
         tower.parent = this.node;
         tower.position = this.getTilePos(this.build_menu.position);
         tower.width = 80;
         tower.height = 80;
         // this.setTowerTouchEvent(tower);
+        tower.getComponent("tower").initWithData(this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
         this.towerNodeList.push(tower);
     },
 
@@ -184,6 +187,11 @@ cc.Class({
         if (tower !== undefined) {
             var cost = tower.getComponent("tower").getUpgradeCost();
             if (this.goldCount < cost) {
+                cc.log("金钱不够!!");
+                return;
+            }
+            if (!tower.getComponent("tower").canUpgrade()) {
+                cc.log("满级!!");
                 return;
             }
             this.detractGold(cost);
@@ -201,7 +209,19 @@ cc.Class({
         }
     },
 
+    isLevelMax: function(level, maxlevel) {
+
+    },
+
     gameStart: function () {
+        this.loadLevelConfig();
+        this.loadTowerConfig();
+        this.enemyPathPositions = this.gameLayer.getPathPositions();
+        this.towerRects = this.gameLayer.getObjRects();
+        this.tileSize = this.gameLayer.getTileSize();
+    },
+
+    loadLevelConfig: function() {
         cc.loader.loadRes("./config/level_config", (err, result) => {
             if (err) {
                 cc.log("load config " + err);
@@ -213,9 +233,17 @@ cc.Class({
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
         });
-        this.enemyPathPositions = this.gameLayer.getPathPositions();
-        this.towerRects = this.gameLayer.getObjRects();
-        this.tileSize = this.gameLayer.getTileSize();
+    },
+
+    loadTowerConfig: function() {
+        cc.loader.loadRes("./config/tower_config", (err, result) => {
+            if (err) {
+                cc.log("load config = " + err);
+            } else {
+                cc.log("load config = " + JSON.stringify(result));
+                this.towerConfigs = result;
+            }
+        });
     },
 
     addEnemy: function (type) {

@@ -21,7 +21,8 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        this.levelCount = 0;
+        //当前级数从0级开始
+        this.currentLevel = 0;
         this.currentUpgradeCost = 0;
         this.currentDamage = 0;
         this.currentGainRate = 0;
@@ -29,44 +30,34 @@ cc.Class({
         this.currentAttackRange = 0;
         this.shootBulletDt = 0;
         this.currentShootTime = 0;
-        cc.loader.loadRes("./config/tower_config", (err, result) => {
-            if (err) {
-                cc.log("load config = " + err);
-            } else {
-                cc.log("load config = " + JSON.stringify(result));
-                this.towerConfig = result[this.towerType];
-                if (this.levelCount < this.towerConfig.costs.length - 1) {
-                    this.currentUpgradeCost = this.towerConfig.costs[this.levelCount + 1];
-                }
-                this.currentDamage = this.towerConfig.damages[this.levelCount];
-                if (this.towerConfig.gain_rates != undefined && this.towerConfig.gain_rates.length > 0) {
-                    this.currentGainRate = this.towerConfig.gain_rates[this.levelCount];
-                }
-                this.currentAttackRange = this.towerConfig.attack_ranges[this.levelCount];
-                //this.lookRange = this.towerConfig.look_range;
-                this.lookRange = this.currentAttackRange;
-                this.shootBulletDt = this.towerConfig.shoot_dts[this.levelCount];
-            }
-        });
     },
+
+    initWithData: function(towerConfig, maxLevel) {
+        this.towerConfig = towerConfig;
+        this.maxLevel = maxLevel;
+        this.updateTowerConfig();
+    },
+
+    updateTowerConfig: function() {
+        if (this.currentLevel < this.towerConfig.costs.length - 1) {
+            this.currentUpgradeCost = this.towerConfig.costs[this.currentLevel + 1];
+        }
+        this.currentDamage = this.towerConfig.damages[this.currentLevel];
+        if (this.towerConfig.gain_rates != undefined && this.towerConfig.gain_rates.length > 0) {
+            this.currentGainRate = this.towerConfig.gain_rates[this.currentLevel];
+        }
+        this.currentAttackRange = this.towerConfig.attack_ranges[this.currentLevel];
+        //this.lookRange = this.towerConfig.look_range;
+        this.lookRange = this.currentAttackRange;
+        this.shootBulletDt = this.towerConfig.shoot_dts[this.currentLevel];
+    },
+
     updateTower: function () {
         cc.log("update tower");
-        if (this.levelCount < this.spriteFrames.length - 1) {
-            this.levelCount++;
-            this.spriteNode.spriteFrame = this.spriteFrames[this.levelCount];
-
-            if (this.levelCount < this.towerConfig.costs.length - 1) {
-                this.currentUpgradeCost = this.towerConfig.costs[this.levelCount + 1];
-            }
-            this.currentDamage = this.towerConfig.damages[this.levelCount];
-            if (this.towerConfig.gain_rates != undefined && this.towerConfig.gain_rates.length > 0) {
-                this.currentGainRate = this.towerConfig.gain_rates[this.levelCount];
-            }
-            this.currentAttackRange = this.towerConfig.attack_ranges[this.levelCount];
-            //this.lookRange = this.towerConfig.look_range;
-            this.lookRange = this.currentAttackRange;
-            this.shootBulletDt = this.towerConfig.shoot_dts[this.levelCount];
-
+        if (this.currentLevel < this.spriteFrames.length - 1) {
+            this.currentLevel++;
+            this.spriteNode.spriteFrame = this.spriteFrames[this.currentLevel];
+            this.updateTowerConfig();
         } else {
             cc.log("满级");
         }
@@ -114,17 +105,20 @@ cc.Class({
         }
     },
     shootBullet: function () {
-        if (this.levelCount === 0) {
+        if (this.currentLevel === 0) {
             this.anim.play("tower_1");
-        } else if (this.levelCount === 1) {
+        } else if (this.currentLevel === 1) {
             this.anim.play("tower_2");
-        } else if (this.levelCount === 2) {
+        } else if (this.currentLevel === 2) {
             this.anim.play("tower_3");
         }
         global.event.fire("shoot_bullet", this.node, this.enemy.position);
     },
     getDamage: function () {
         return this.currentDamage;
+    },
+    canUpgrade: function() {
+        return this.currentLevel < this.maxLevel;
     },
     getGainRate: function() {
         return this.currentGainRate;
@@ -134,9 +128,9 @@ cc.Class({
     },
     getSelledGold: function() {
         var gold = 0;
-        for (let i = 0; i <= this.levelCount; i++) {
+        for (let i = 0; i <= this.currentLevel; i++) {
             gold += this.towerConfig.costs[i];
         }
         return Math.floor(gold / 2);
-    }
+    },
 });

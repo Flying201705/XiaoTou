@@ -2,6 +2,16 @@
   "level_1":{
     "dt": 1,
     "gold": 250,
+    "towers": [
+      {
+        "type": "tower_a",
+        "level": 1
+      },
+      {
+        "type": "tower_b",
+        "level": 2
+      }
+    ],
     "waves": [
       {
         "dt": 2,
