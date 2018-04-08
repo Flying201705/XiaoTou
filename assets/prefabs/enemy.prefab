@@ -18,18 +18,18 @@
         "__id__": 2
       },
       {
-        "__id__": 5
+        "__id__": 6
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 12
+        "__id__": 13
       }
     ],
     "_prefab": {
-      "__id__": 13
+      "__id__": 14
     },
     "_id": "",
     "_opacity": 255,
@@ -80,10 +80,13 @@
     "_components": [
       {
         "__id__": 3
+      },
+      {
+        "__id__": 4
       }
     ],
     "_prefab": {
-      "__id__": 4
+      "__id__": 5
     },
     "_id": "",
     "_opacity": 255,
@@ -146,6 +149,40 @@
     "_atlas": null
   },
   {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_defaultClip": null,
+    "_clips": [
+      {
+        "__uuid__": "157c70b0-3fbe-41d2-835c-f000eb1560ed"
+      },
+      {
+        "__uuid__": "8149cb81-e02b-4537-bfdc-dd3ca4c0cfc6"
+      },
+      {
+        "__uuid__": "cad3ac2c-5eb2-42ef-bc5e-3d99b9707294"
+      },
+      {
+        "__uuid__": "1dbb8833-0fb9-4481-9e03-81a37505fbbc"
+      },
+      {
+        "__uuid__": "ed2494c6-4958-4692-ba84-cf1fd946e6d1"
+      },
+      {
+        "__uuid__": "fb069a5e-2234-401b-a449-f2537964bb98"
+      },
+      {
+        "__uuid__": "ba49df24-41ba-4a91-ae62-e6e3c47cbe30"
+      }
+    ],
+    "playOnLoad": false
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -165,21 +202,21 @@
     },
     "_children": [
       {
-        "__id__": 6
+        "__id__": 7
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 9
+        "__id__": 10
       },
       {
-        "__id__": 10
+        "__id__": 11
       }
     ],
     "_prefab": {
-      "__id__": 11
+      "__id__": 12
     },
     "_id": "",
     "_opacity": 255,
@@ -222,18 +259,18 @@
     "_name": "bar",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 5
+      "__id__": 6
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 7
+        "__id__": 8
       }
     ],
     "_prefab": {
-      "__id__": 8
+      "__id__": 9
     },
     "_id": "",
     "_opacity": 255,
@@ -276,7 +313,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 6
+      "__id__": 7
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -313,7 +350,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 5
+      "__id__": 6
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -339,12 +376,12 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 5
+      "__id__": 6
     },
     "_enabled": true,
     "_N$totalLength": 100,
     "_N$barSprite": {
-      "__id__": 7
+      "__id__": 8
     },
     "_N$mode": 0,
     "_N$progress": 0,
@@ -371,32 +408,35 @@
     "_enabled": true,
     "spriteFrames": [
       {
-        "__uuid__": "1660ffbd-3bd4-4ae6-b5e1-ffa65adef4f1"
+        "__uuid__": "7589766f-1404-43c8-8c75-efdd3db25ec4"
       },
       {
-        "__uuid__": "fc9995aa-f78c-4eb8-9d6e-8195d53394b2"
+        "__uuid__": "1faf2443-60a9-46ad-a60a-793e76049ed6"
       },
       {
-        "__uuid__": "6e70a99f-8eea-4df3-a849-9c57506269be"
+        "__uuid__": "e714806b-7701-491b-8c58-20f066b171fc"
       },
       {
-        "__uuid__": "10f546c8-a49c-4c24-978b-da11d773937c"
+        "__uuid__": "ca8dbebf-755f-40f9-8ab7-c25699304ba6"
       },
       {
-        "__uuid__": "ff5a4b68-6790-4deb-bdc7-64e463c4baef"
+        "__uuid__": "04219ef7-1968-4125-95b6-74bf2c43caa8"
       },
       {
-        "__uuid__": "ff37b2e8-93f8-4d69-bb6e-dcdbaa3e148f"
+        "__uuid__": "5cf680b8-3928-4d5c-8e65-bfbacea696db"
       },
       {
-        "__uuid__": "04eeae69-0df0-48d9-ba22-9f60de0bf424"
+        "__uuid__": "b51b4163-e45b-4935-acc6-95fa6cb6de15"
       }
     ],
     "spriteNode": {
       "__id__": 3
     },
     "healthProgressBar": {
-      "__id__": 10
+      "__id__": 11
+    },
+    "anim": {
+      "__id__": 4
     }
   },
   {

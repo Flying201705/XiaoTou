@@ -19,7 +19,11 @@ cc.Class({
         healthProgressBar: {
             default: null,
             type: cc.ProgressBar
-        }
+        },
+        anim: {
+            default: null,
+            type: cc.Animation
+        },
     },
 
     // use this for initialization
@@ -30,10 +34,11 @@ cc.Class({
         this.currentPathPointCount = 0;
         this.currentHealthCount = 0;
         this.totalHealthCount = 1;
-    }
-    ,
+    },
+
     initWithData: function (type, pathPoints) {
         //0 - 6
+        this.type = type;
         this.spriteNode.spriteFrame = this.spriteFrames[type];
         this.pathPoints = pathPoints;
         this.node.position = pathPoints[0];
@@ -47,10 +52,17 @@ cc.Class({
                 this.currentHealthCount = config.health;
                 this.totalHealthCount = config.health;
                 this.setState(EnemyState.Running);
+
+                this.schedule(this.playAnim, 1);
             }
         });
 
     },
+    
+    playAnim: function() {
+        this.anim.play("enemy_" + (this.type + 1));
+    },
+
     update: function (dt) {
         if (this.state === EnemyState.Running){
             let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
