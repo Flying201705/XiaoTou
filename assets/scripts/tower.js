@@ -85,11 +85,15 @@ cc.Class({
 
     },
     update: function (dt) {
+        //人物添加级数说明
+        this.node.getChildByName("lv").getComponent(cc.Label).string = "LV" + (this.currentLevel + 1);
+
         if (this.enemy !== undefined) {
             let direction = cc.pSub(this.node.position, this.enemy.position);
             let angle = cc.pAngleSigned(direction, cc.p(0, -1));
             // cc.log("angle = " + angle);
-            this.node.rotation = (180 / Math.PI) * angle;
+            //塔旋转
+            //this.node.rotation = (180 / Math.PI) * angle;
 
             if (this.currentShootTime > this.shootBulletDt) {
                 this.currentShootTime = 0;
@@ -105,13 +109,14 @@ cc.Class({
         }
     },
     shootBullet: function () {
-        if (this.currentLevel === 0) {
+        /*if (this.currentLevel === 0) {
             this.anim.play("tower_1");
         } else if (this.currentLevel === 1) {
             this.anim.play("tower_2");
         } else if (this.currentLevel === 2) {
             this.anim.play("tower_3");
-        }
+        }*/
+        this.anim.play(this.towerType);
         global.event.fire("shoot_bullet", this.node, this.enemy.position);
     },
     getDamage: function () {
