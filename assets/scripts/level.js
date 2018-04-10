@@ -116,11 +116,13 @@ cc.Class({
 
     showBuildMenu: function (x, y) {
         this.closeMenu();
-        this.build_menu.position = cc.p(x, y);
-        this.build_menu.parent = this.node;
-
+        let centerPos = this.getTilePos(cc.p(x, y));
+        
+        this.selectBox.position = centerPos;
         this.selectBox.parent = this.node;
-        this.selectBox.position = this.getTilePos(this.build_menu.position);
+
+        this.build_menu.position = centerPos;
+        this.build_menu.parent = this.node;
     },
 
     showUpdateMenu: function (index) {
@@ -232,6 +234,7 @@ cc.Class({
             this.levelConfig = config;
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
+            this.build_menu.getComponent("build-menu").initWithData(this.levelConfig.towers);
         });
     },
 
