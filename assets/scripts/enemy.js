@@ -36,7 +36,7 @@ cc.Class({
         this.totalHealthCount = 1;
     },
 
-    initWithData: function (type, pathPoints) {
+    initWithData: function (type, level, pathPoints) {
         //0 - 6
         this.type = type;
         this.spriteNode.spriteFrame = this.spriteFrames[type];
@@ -47,7 +47,7 @@ cc.Class({
                 cc.log(err);
             }else {
                 // cc.log("enemy result = " + JSON.stringify(result));
-                let config = result["enemy_" + type];
+                let config = result["enemy_" + type][level];
                 this.speed = config.speed;
                 this.currentHealthCount = config.health;
                 this.totalHealthCount = config.health;

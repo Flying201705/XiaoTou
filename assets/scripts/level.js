@@ -45,7 +45,8 @@ cc.Class({
     onLoad: function () {
         cc.log("level onLoad begin");
         this.setTouchEvent();
-
+        //当前关卡
+        this.currentLevel = 1;
         global.event.on("build_tower", this.buildTower.bind(this));
         global.event.on("update_tower", this.updateTower.bind(this));
         global.event.on("sell_tower", this.sellTower.bind(this));
@@ -230,7 +231,7 @@ cc.Class({
             } else {
                 cc.log("level config" + JSON.stringify(result));
             }
-            let config = result["level_1"];
+            let config = result["level_" + this.currentLevel];
             this.levelConfig = config;
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
@@ -249,11 +250,11 @@ cc.Class({
         });
     },
 
-    addEnemy: function (type) {
+    addEnemy: function (type, level) {
         // cc.log("add Enemy" + this.currentEnemyCount);
         // cc.log("add Wave " + this.currentWaveCount)
         let enemy = cc.instantiate(this.enemyPrefab);
-        enemy.getComponent("enemy").initWithData(type, this.enemyPathPositions);
+        enemy.getComponent("enemy").initWithData(type, level, this.enemyPathPositions);
         enemy.parent = this.node;
         this.enemyNodeList.push(enemy);
     },
@@ -265,7 +266,7 @@ cc.Class({
             if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
                 this.addEnemyCurrentTime = 0;
                 this.currentEnemyCount++;
-                this.addEnemy(this.currentWaveConfig.type);
+                this.addEnemy(this.currentWaveConfig.type, this.currentWaveConfig.lv);
                 if (this.currentEnemyCount === this.currentWaveConfig.count) {
                     this.currentWaveConfig = undefined;
                     this.currentEnemyCount = 0;
@@ -279,7 +280,7 @@ cc.Class({
                 this.currentWaveConfig = this.levelConfig.waves[this.currentWaveCount];
                 if (this.currentWaveCount < this.levelConfig.waves.length) {
                     this.currentWaveCount++;
-                    this.levelLabel.string = "关卡1：" + this.currentWaveCount + "/" + this.levelConfig.waves.length;
+                    this.levelLabel.string = "关卡" + this.currentLevel + "：" + this.currentWaveCount + "/" + this.levelConfig.waves.length;
                 } else {
                     this.currentWaveConfig = undefined;
                 }
