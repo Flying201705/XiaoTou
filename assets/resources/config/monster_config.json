@@ -1,90 +1,37 @@
 {
   "enemy_0": [
-    {
-      "speed": 80,
-      "health": 20
-    },
-    {
-      "speed": 100,
-      "health": 50
-    },
-    {
-      "speed": 100,
-      "health": 100
-    }
+    {"speed": 80,"health": 20},
+    {"speed": 100,"health": 50},
+    {"speed": 100,"health": 100}
   ],
+  
   "enemy_1": [
-    {
-        "speed": 80,
-        "health": 70
-    },
-    {
-        "speed": 100,
-        "health": 100
-    },
-    {
-        "speed": 100,
-        "health": 150
-    }
+    {"speed": 80,"health": 70},
+    {"speed": 100,"health": 100},
+    {"speed": 100,"health": 150}
   ],
 
   "enemy_2": [
-    {
-        "speed": 100,
-        "health": 120
-    },
-    {
-        "speed": 120,
-        "health": 170
-    },
-    {
-        "speed": 120,
-        "health": 250
-    }
+    {"speed": 100,"health": 120},
+    {"speed": 120,"health": 170},
+    {"speed": 120,"health": 250}
   ],
 
   "enemy_3": [
-    {
-        "speed": 100,
-        "health": 150
-    },
-    {
-        "speed": 120,
-        "health": 200
-    },
-    {
-        "speed": 120,
-        "health": 300
-    }
+    {"speed": 100,"health": 150},
+    {"speed": 120,"health": 200},
+    {"speed": 120,"health": 300}
   ],
 
   "enemy_4": [
-    {
-        "speed": 100,
-        "health": 200
-    },
-    {
-        "speed": 120,
-        "health": 300
-    },
-    {
-        "speed": 120,
-        "health": 450
-    }
+    {"speed": 100,"health": 200},
+    {"speed": 120,"health": 300},
+    {"speed": 120,"health": 450}
   ],
 
   "enemy_5": [
-    {
-        "speed": 100,
-        "health": 250
-    },
-    {
-        "speed": 120,
-        "health": 400
-    },
-    {
-        "speed": 120,
-        "health": 500
-    }
+    {"speed": 100,"health": 250},
+    {"speed": 120,"health": 400},
+    {"speed": 120,"health": 500}
   ]
 }
