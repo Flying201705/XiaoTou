@@ -36,6 +36,8 @@ cc.Class({
         this.totalHealthCount = 1;
         //被眩晕
         this.beStuned = false;
+        //减速
+        this.slowRate = 0;
     },
 
     initWithData: function (type, level, pathPoints) {
@@ -76,7 +78,7 @@ cc.Class({
                 }
                 this.direction = cc.pNormalize(cc.pSub(this.pathPoints[this.currentPathPointCount], this.node.position));
             } else if (!this.beStuned) {
-                this.node.position = cc.pAdd(this.node.position, cc.pMult(this.direction, this.speed * dt));
+                this.node.position = cc.pAdd(this.node.position, cc.pMult(this.direction, this.speed * (1 - this.slowRate) * dt));
             }
         }
         this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
@@ -137,6 +139,8 @@ cc.Class({
             this.setState(EnemyState.Dead);
             this.gainGold(1);
         }
+        //减速测试代码
+        //this.hanleSlowed(0.5);
     },
 
     handleStuned: function() {
@@ -147,6 +151,16 @@ cc.Class({
 
     cancelStuned: function() {
         this.beStuned = false;
+    },
+
+    hanleSlowed: function(rate) {
+        this.unschedule(this.cancelSlowed);
+        this.slowRate = rate;
+        this.scheduleOnce(this.cancelSlowed, 2);
+    },
+
+    cancelSlowed: function() {
+        this.slowRate = 0;
     },
 
     beTriggerRate: function(rate) {
