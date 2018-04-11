@@ -12,12 +12,16 @@ cc.Class({
         this.direction = cc.pNormalize(cc.pSub(position, tower.position));
         this.node.position = cc.pAdd(tower.position, cc.pMult(this.direction, 100));
 
-
         let angle = cc.pAngleSigned(this.direction, cc.p(0, 1));
         this.node.rotation = (180 / Math.PI) * angle;
         this.enemyNodeList = enemyNodeList;
         this.damage = tower.getComponent("tower").getDamage();
+        //抢钱比例
         this.gainRate = tower.getComponent("tower").getGainRate();
+        //眩晕率
+        this.stunRate = tower.getComponent("tower").getStunRate();
+        //暴击率
+        this.critRate = tower.getComponent("tower").getCritRate();
     },
 
     update: function (dt) {

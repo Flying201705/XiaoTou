@@ -17,7 +17,8 @@
     "damages": [70, 157, 262],
     "attack_ranges": [200, 250, 300],
     "look_range": 400,
-    "shoot_dts": [1, 0.8, 0.6]
+    "shoot_dts": [1, 0.8, 0.6],
+    "crit_rates": [0.1, 0.2, 0.3]
   },
 
   "tower_c":
@@ -27,6 +28,7 @@
     "damages": [70, 157, 262],
     "attack_ranges": [200, 250, 300],
     "look_range": 400,
-    "shoot_dts": [1.2, 1.1, 1]
+    "shoot_dts": [1.2, 1.1, 1],
+    "stun_rates": [0.1, 0.2, 0.3]
   }
 }

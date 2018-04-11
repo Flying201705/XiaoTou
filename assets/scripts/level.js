@@ -229,7 +229,7 @@ cc.Class({
             if (err) {
                 cc.log("load config " + err);
             } else {
-                cc.log("level config" + JSON.stringify(result));
+                //cc.log("level config" + JSON.stringify(result));
             }
             let config = result["level_" + this.currentLevel];
             this.levelConfig = config;
@@ -244,7 +244,7 @@ cc.Class({
             if (err) {
                 cc.log("load config = " + err);
             } else {
-                cc.log("load config = " + JSON.stringify(result));
+                //cc.log("load config = " + JSON.stringify(result));
                 this.towerConfigs = result;
             }
         });
@@ -293,7 +293,7 @@ cc.Class({
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             if (enemy.getComponent("enemy").isDead() || enemy.getComponent("enemy").isEndPath()) {
-                cc.log("从列表里面删掉");
+                //cc.log("从列表里面删掉");
                 this.enemyNodeList.splice(j, 1);
             }
         }

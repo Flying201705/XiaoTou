@@ -50,6 +50,12 @@ cc.Class({
         //this.lookRange = this.towerConfig.look_range;
         this.lookRange = this.currentAttackRange;
         this.shootBulletDt = this.towerConfig.shoot_dts[this.currentLevel];
+        if (this.towerConfig.stun_rates != undefined && this.towerConfig.stun_rates.length > 0) {
+            this.currentStunRate = this.towerConfig.stun_rates[this.currentLevel];
+        }
+        if (this.towerConfig.crit_rates != undefined && this.towerConfig.crit_rates.length > 0) {
+            this.currentCritRate = this.towerConfig.crit_rates[this.currentLevel];
+        }
     },
 
     updateTower: function () {
@@ -126,7 +132,22 @@ cc.Class({
         return this.currentLevel < this.maxLevel;
     },
     getGainRate: function() {
-        return this.currentGainRate;
+        if (this.currentGainRate != undefined) {
+            return this.currentGainRate;
+        }
+        return 0;
+    },
+    getStunRate: function() {
+        if (this.currentStunRate != undefined) {
+            return this.currentStunRate;
+        }
+        return 0;
+    },
+    getCritRate: function() {
+        if (this.currentCritRate != undefined) {
+            return this.currentCritRate;
+        }
+        return 0;
     },
     getUpgradeCost: function() {
         return this.currentUpgradeCost;

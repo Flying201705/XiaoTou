@@ -34,6 +34,8 @@ cc.Class({
         this.currentPathPointCount = 0;
         this.currentHealthCount = 0;
         this.totalHealthCount = 1;
+        //被眩晕
+        this.beStuned = false;
     },
 
     initWithData: function (type, level, pathPoints) {
@@ -45,7 +47,7 @@ cc.Class({
         cc.loader.loadRes("./config/monster_config", (err, result)=>{
             if (err){
                 cc.log(err);
-            }else {
+            } else {
                 // cc.log("enemy result = " + JSON.stringify(result));
                 let config = result["enemy_" + type][level];
                 this.speed = config.speed;
@@ -73,7 +75,7 @@ cc.Class({
                     return;
                 }
                 this.direction = cc.pNormalize(cc.pSub(this.pathPoints[this.currentPathPointCount], this.node.position));
-            }else {
+            } else if (!this.beStuned) {
                 this.node.position = cc.pAdd(this.node.position, cc.pMult(this.direction, this.speed * dt));
             }
         }
@@ -90,7 +92,7 @@ cc.Class({
             case EnemyState.Dead:
                 let deadAction = cc.fadeOut(1);
                 let deadSequence = cc.sequence(deadAction, cc.callFunc(()=>{
-                    cc.log("死了");
+                    //cc.log("死了");
                     this.node.destroy();
                 }));
                 this.node.runAction(deadSequence);
@@ -117,6 +119,14 @@ cc.Class({
     },
     beAttacked: function (bullet) {
         var damage = bullet.damage;
+        if (this.beTriggerRate(bullet.stunRate)) {
+            cc.log("enemy be stun attacked");
+            this.handleStuned();
+        }
+        if (this.beTriggerRate(bullet.critRate)) {
+            cc.log("enemy be crit attacked");
+            damage = damage * 2;
+        }
         if (damage > this.currentHealthCount) {
             damage = this.currentHealthCount;
         }
@@ -127,6 +137,27 @@ cc.Class({
             this.setState(EnemyState.Dead);
             this.gainGold(1);
         }
+    },
+
+    handleStuned: function() {
+        this.unschedule(this.cancelStuned);
+        this.beStuned = true;
+        this.scheduleOnce(this.cancelStuned, 2);
+    },
+
+    cancelStuned: function() {
+        this.beStuned = false;
+    },
+
+    beTriggerRate: function(rate) {
+        if (rate > 0) {
+            var random = Math.random();
+            if (random < rate) {
+                return true;
+            }
+        }
+
+        return false;
     },
 
     gainGold: function(gold) {
