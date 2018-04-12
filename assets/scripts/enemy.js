@@ -122,11 +122,11 @@ cc.Class({
     beAttacked: function (bullet) {
         var damage = bullet.damage;
         if (this.beTriggerRate(bullet.stunRate)) {
-            cc.log("enemy be stun attacked");
+            cc.log("触发眩晕！");
             this.handleStuned();
         }
         if (this.beTriggerRate(bullet.critRate)) {
-            cc.log("enemy be crit attacked");
+            cc.log("触发暴击！");
             damage = damage * 2;
         }
         if (damage > this.currentHealthCount) {

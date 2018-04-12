@@ -43,7 +43,7 @@ cc.Class({
         if (this.node.position.x < -960 * 0.5 || this.node.position.x > 960 * 0.5
             || this.node.position.y > 640 * 0.5 || this.node.position.y < -640 * 0.5) {
             this.node.destroy();
-            cc.log("删掉子弹");
+            //cc.log("删掉子弹");
         }
 
     },
