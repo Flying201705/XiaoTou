@@ -118,7 +118,7 @@ cc.Class({
     showBuildMenu: function (x, y) {
         this.closeMenu();
         let centerPos = this.getTilePos(cc.p(x, y));
-        
+
         this.selectBox.position = centerPos;
         this.selectBox.parent = this.node;
 
@@ -212,7 +212,7 @@ cc.Class({
         }
     },
 
-    isLevelMax: function(level, maxlevel) {
+    isLevelMax: function (level, maxlevel) {
 
     },
 
@@ -224,7 +224,7 @@ cc.Class({
         this.tileSize = this.gameLayer.getTileSize();
     },
 
-    loadLevelConfig: function() {
+    loadLevelConfig: function () {
         cc.loader.loadRes("./config/level_config", (err, result) => {
             if (err) {
                 cc.log("load config " + err);
@@ -239,7 +239,7 @@ cc.Class({
         });
     },
 
-    loadTowerConfig: function() {
+    loadTowerConfig: function () {
         cc.loader.loadRes("./config/tower_config", (err, result) => {
             if (err) {
                 cc.log("load config = " + err);
@@ -260,8 +260,8 @@ cc.Class({
     },
 
     update: function (dt) {
-        this.goldLabel.string = "金钱：" + this.goldCount;
-        this.lifeLabel.string = "生命：" + this.lifeCount;
+        this.goldLabel.string = this.goldCount.toString();
+        this.lifeLabel.string = this.lifeCount.toString();
         if (this.currentWaveConfig) {
             if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
                 this.addEnemyCurrentTime = 0;
@@ -321,18 +321,18 @@ cc.Class({
 
     },
 
-    addGold: function(gold) {
+    addGold: function (gold) {
         this.goldCount += gold;
     },
 
-    detractGold: function(gold) {
+    detractGold: function (gold) {
         this.goldCount -= gold;
         if (this.goldCount < 0) {
             this.goldCount = 0;
         }
     },
 
-    detractLife: function(life) {
+    detractLife: function (life) {
         this.lifeCount -= life;
         if (this.lifeCount < 0) {
             this.lifeCount = 0;
@@ -340,10 +340,10 @@ cc.Class({
     },
 
     getTilePos: function (posInPixel) {
-        var mapSize = this.node.getContentSize();
-        var tileSize = this.tileSize;
-        var x = Math.floor(posInPixel.x / tileSize.width);
-        var y = Math.floor(posInPixel.y / tileSize.height);
+        // let mapSize = this.node.getContentSize();
+        let tileSize = this.tileSize;
+        let x = Math.floor(posInPixel.x / tileSize.width);
+        let y = Math.floor(posInPixel.y / tileSize.height);
 
         // 锚点在中心位置
         return cc.p((x + 0.5) * tileSize.width, (y + 0.5) * tileSize.height);
