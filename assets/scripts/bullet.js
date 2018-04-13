@@ -22,6 +22,12 @@ cc.Class({
         this.stunRate = tower.getComponent("tower").getStunRate();
         //暴击率
         this.critRate = tower.getComponent("tower").getCritRate();
+        //减速率
+        this.slowRate = tower.getComponent("tower").getSlowRate();
+        //范围攻击
+        this.areaAtt = tower.getComponent("tower").isAreaAttack();
+        //攻击列表
+        this.attList = tower.getComponent("tower").getAreaEnemyList();
     },
 
     update: function (dt) {
@@ -33,9 +39,14 @@ cc.Class({
             if (enemy.getComponent("enemy").isLiving()) {
                 let distance = cc.pDistance(enemy.position, this.node.position);
                 if (distance < (enemy.width * 0.5 + this.node.width * 0.5)) {
-                    enemy.getComponent("enemy").beAttacked(this);
+                    if (this.areaAtt) {
+                        this.handleAreaAttack();
+                    } else {
+                        enemy.getComponent("enemy").beAttacked(this);
+                    }
                     this.node.destroy();
                     // cc.log("")
+                    break;
                 }
             }
         }
@@ -47,4 +58,10 @@ cc.Class({
         }
 
     },
+    handleAreaAttack: function() {
+        for (let i = 0; i < this.attList.length; i++) {
+            let enemy = this.attList[i];
+            enemy.getComponent("enemy").beAttacked(this);
+        }
+    }
 });

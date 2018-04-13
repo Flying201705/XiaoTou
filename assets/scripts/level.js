@@ -300,14 +300,16 @@ cc.Class({
 
         for (let i = 0; i < this.towerNodeList.length; i++) {
             let tower = this.towerNodeList[i];
-            if (tower !== undefined && tower.getComponent("tower").isFree()) {
+            /*if (tower !== undefined && tower.getComponent("tower").isFree()) {
                 for (let j = 0; j < this.enemyNodeList.length; j++) {
                     let enemy = this.enemyNodeList[j];
                     if (enemy.getComponent("enemy").isLiving()) {
-                        // let distance = cc.pDistance(tower)
                         tower.getComponent("tower").setEnemy(enemy);
                     }
                 }
+            }*/
+            if (tower != undefined) {
+                tower.getComponent("tower").setEnemyList(this.enemyNodeList);
             }
         }
 

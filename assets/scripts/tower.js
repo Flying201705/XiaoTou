@@ -30,6 +30,8 @@ cc.Class({
         this.currentAttackRange = 0;
         this.shootBulletDt = 0;
         this.currentShootTime = 0;
+        this.areaAttack = false;
+        this.areaEnemyList = [];
     },
 
     initWithData: function(towerConfig, maxLevel) {
@@ -50,11 +52,17 @@ cc.Class({
         //this.lookRange = this.towerConfig.look_range;
         this.lookRange = this.currentAttackRange;
         this.shootBulletDt = this.towerConfig.shoot_dts[this.currentLevel];
+        if (this.towerConfig.area != undefined) {
+            this.areaAttack = this.towerConfig.area > 0;
+        }
         if (this.towerConfig.stun_rates != undefined && this.towerConfig.stun_rates.length > 0) {
             this.currentStunRate = this.towerConfig.stun_rates[this.currentLevel];
         }
         if (this.towerConfig.crit_rates != undefined && this.towerConfig.crit_rates.length > 0) {
             this.currentCritRate = this.towerConfig.crit_rates[this.currentLevel];
+        }
+        if (this.towerConfig.slows != undefined && this.towerConfig.slows.length > 0) {
+            this.currentSlowRate = this.towerConfig.slows[this.currentLevel];
         }
     },
 
@@ -82,13 +90,33 @@ cc.Class({
         }
         return false;
     },
-    setEnemy: function (enemy) {
+    /*setEnemy: function (enemy) {
 
         let distance = cc.pDistance(enemy.position, this.node.position);
         if (distance < this.lookRange) {
             this.enemy = enemy;
         }
+    },*/
+    setEnemyList: function(enemyList) {
+        this.areaEnemyList = [];
+        for (let i = 0; i < enemyList.length; i++) {
+            if (!this.isFree() && !this.areaAttack) {
+                break;
+            }
+            let enemy = enemyList[i];
+            if (enemy.getComponent("enemy").isLiving()) {
+                let distance = cc.pDistance(enemy.position, this.node.position);
+                if (distance < this.lookRange) {
+                    if (this.isFree()) {
+                        this.enemy = enemy;
+                    }
 
+                    if (this.areaAttack) {
+                        this.areaEnemyList.push(enemy);
+                    }
+                }
+            }
+        }
     },
     update: function (dt) {
         //人物添加级数说明
@@ -125,6 +153,15 @@ cc.Class({
         this.anim.play(this.towerType);
         global.event.fire("shoot_bullet", this.node, this.enemy.position);
     },
+    isAreaAttack: function() {
+        if (this.areaAttack != undefined) {
+            return this.areaAttack;
+        }
+        return false;
+    },
+    getAreaEnemyList: function() {
+        return this.areaEnemyList;
+    },
     getDamage: function () {
         return this.currentDamage;
     },
@@ -146,6 +183,12 @@ cc.Class({
     getCritRate: function() {
         if (this.currentCritRate != undefined) {
             return this.currentCritRate;
+        }
+        return 0;
+    },
+    getSlowRate: function() {
+        if (this.currentSlowRate != undefined) {
+            return this.currentSlowRate;
         }
         return 0;
     },

@@ -139,8 +139,10 @@ cc.Class({
             this.setState(EnemyState.Dead);
             this.gainGold(1);
         }
-        //减速测试代码
-        //this.hanleSlowed(0.5);
+        //减速代码
+        if (bullet.slowRate >= this.slowRate) {
+            this.hanleSlowed(bullet.slowRate);
+        }
     },
 
     handleStuned: function() {
