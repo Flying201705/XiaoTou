@@ -52,6 +52,7 @@ cc.Class({
         global.event.on("sell_tower", this.sellTower.bind(this));
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
+        global.event.on("shoot_buff", this.addBuff.bind(this));
         this.build_menu = cc.instantiate(this.buildMenuPrefab);
         this.update_menu = cc.instantiate(this.updateMenuPrefab);
         this.currentWaveCount = 0;
@@ -309,10 +310,12 @@ cc.Class({
                 }
             }*/
             if (tower != undefined) {
+                if (tower.getComponent("tower").ifBuffAttack()) {
+                    tower.getComponent("tower").setTowerList(this.towerNodeList);
+                }
                 tower.getComponent("tower").setEnemyList(this.enemyNodeList);
             }
         }
-
     },
 
     addBullet: function (tower, position) {
@@ -320,7 +323,13 @@ cc.Class({
         // bullet.position = tower.position;
         bullet.parent = this.node;
         bullet.getComponent("bullet").initWithData(tower, position, this.enemyNodeList);
+    },
 
+    addBuff: function (tower, attackRate, speedRate) {
+        let buffList = tower.getComponent("tower").getAreaTowerList();
+        for (let i = 0; i < buffList.length; i++) {
+            buffList[i].getComponent("tower").beBuffed(attackRate, speedRate);
+        }
     },
 
     addGold: function (gold) {

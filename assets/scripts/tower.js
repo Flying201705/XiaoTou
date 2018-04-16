@@ -21,17 +21,43 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        //当前级数从0级开始
+        //当前级数，从0级开始
         this.currentLevel = 0;
+        //当前级数塔升级所需金币
         this.currentUpgradeCost = 0;
+        //当前攻击力
         this.currentDamage = 0;
+        //当前偷钱比例
         this.currentGainRate = 0;
+        //侦查范围（默认等于攻击范围）
         this.lookRange = 0;
+        //当前攻击范围
         this.currentAttackRange = 0;
+        //当前攻击间隔(攻速)
         this.shootBulletDt = 0;
-        this.currentShootTime = 0;
+        //当前塔的眩晕概率
+        this.currentStunRate = 0;
+        //当前塔的暴击概率
+        this.currentCritRate = 0;
+        //当前塔的减速比例
+        this.currentSlowRate = 0;
+        //当前塔提供的攻击buff比例
+        this.currentAttackRate = 0;
+        //当前塔提供的攻速buff比例
+        this.currentSpeedRate = 0;
+        //当前塔是否区域攻击（群攻）塔
         this.areaAttack = false;
+        //当前塔是否为BUFF辅助塔
+        this.buffAttack = false;
+        //受到的攻击加成
+        this.beAttackBuff = 0;
+        //受到的攻速加成
+        this.beSpeedBuff = 0;
+
+        /**下为业务逻辑 */
+        this.currentShootTime = 0;
         this.areaEnemyList = [];
+        this.areaTowerList = [];
     },
 
     initWithData: function(towerConfig, maxLevel) {
@@ -63,6 +89,20 @@ cc.Class({
         }
         if (this.towerConfig.slows != undefined && this.towerConfig.slows.length > 0) {
             this.currentSlowRate = this.towerConfig.slows[this.currentLevel];
+            //所有减速塔均为范围攻击
+            this.areaAttack = true;
+        }
+        if (this.towerConfig.attack_rates != undefined && this.towerConfig.attack_rates.length > 0) {
+            this.currentAttackRate = this.towerConfig.attack_rates[this.currentLevel];
+            //所有攻击加成的塔均为范围攻击的BUFF塔
+            this.buffAttack = true;
+            this.areaAttack = true;
+        }
+        if (this.towerConfig.speed_rates != undefined && this.towerConfig.speed_rates.length > 0) {
+            this.currentSpeedRate = this.towerConfig.speed_rates[this.currentLevel];
+            //所有攻速加成的塔均为范围攻击的BUFF塔
+            this.buffAttack = true;
+            this.areaAttack = true;
         }
     },
 
@@ -90,6 +130,20 @@ cc.Class({
         }
         return false;
     },
+    setTowerList: function(towerList) {
+        if (this.buffAttack != true) {
+            return;
+        }
+
+        this.areaTowerList = [];
+        for (let i = 0; i < towerList.length; i++) {
+            let tower = towerList[i];
+            let distance = cc.pDistance(tower.position, this.node.position);
+            if (distance < this.lookRange) {
+                this.areaTowerList.push(tower);
+            }
+        }
+    },
     /*setEnemy: function (enemy) {
 
         let distance = cc.pDistance(enemy.position, this.node.position);
@@ -100,23 +154,47 @@ cc.Class({
     setEnemyList: function(enemyList) {
         this.areaEnemyList = [];
         for (let i = 0; i < enemyList.length; i++) {
-            if (!this.isFree() && !this.areaAttack) {
+            if (this.isFree() != true && this.areaAttack != true) {
                 break;
             }
             let enemy = enemyList[i];
             if (enemy.getComponent("enemy").isLiving()) {
                 let distance = cc.pDistance(enemy.position, this.node.position);
                 if (distance < this.lookRange) {
-                    if (this.isFree()) {
+                    if (this.isFree() == true) {
                         this.enemy = enemy;
                     }
 
-                    if (this.areaAttack) {
+                    if (this.areaAttack == true && this.buffAttack != true) {
                         this.areaEnemyList.push(enemy);
                     }
                 }
             }
         }
+    },
+    beBuffed: function(attackRate, speedRate) {
+        if (attackRate >= this.beAttackBuff) {
+            this.handleAttackBuff(attackRate);
+        }
+        if (speedRate >= this.beSpeedBuff) {
+            this.handleSpeedBuff(speedRate);
+        }
+    },
+    handleAttackBuff: function(attackRate) {
+        this.unschedule(this.cancelAttackBuff);
+        this.beAttackBuff = attackRate;
+        this.scheduleOnce(this.cancelAttackBuff, 3);
+    },
+    cancelAttackBuff: function() {
+        this.beAttackBuff = 0;
+    },
+    handleSpeedBuff: function(speedRate) {
+        this.unschedule(this.cancelSpeedBuff);
+        this.beSpeedBuff = speedRate;
+        this.scheduleOnce(this.cancelSpeedBuff, 3);
+    },
+    cancelSpeedBuff: function() {
+        this.beSpeedBuff = 0;
     },
     update: function (dt) {
         //人物添加级数说明
@@ -129,7 +207,8 @@ cc.Class({
             //塔旋转
             //this.node.rotation = (180 / Math.PI) * angle;
 
-            if (this.currentShootTime > this.shootBulletDt) {
+            let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
+            if (this.currentShootTime > shootDt) {
                 this.currentShootTime = 0;
                 this.shootBullet();
             } else {
@@ -151,7 +230,11 @@ cc.Class({
             this.anim.play("tower_3");
         }*/
         this.anim.play(this.towerType);
-        global.event.fire("shoot_bullet", this.node, this.enemy.position);
+        if (this.buffAttack == true) {
+            global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);
+        } else {
+            global.event.fire("shoot_bullet", this.node, this.enemy.position);
+        }
     },
     isAreaAttack: function() {
         if (this.areaAttack != undefined) {
@@ -159,11 +242,20 @@ cc.Class({
         }
         return false;
     },
+    ifBuffAttack: function() {
+        if (this.buffAttack != undefined) {
+            return this.buffAttack;
+        }
+        return false;
+    },
     getAreaEnemyList: function() {
         return this.areaEnemyList;
     },
+    getAreaTowerList: function() {
+        return this.areaTowerList;
+    },
     getDamage: function () {
-        return this.currentDamage;
+        return this.currentDamage * (1 + this.beAttackBuff);
     },
     canUpgrade: function() {
         return this.currentLevel < this.maxLevel;
