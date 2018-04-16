@@ -71,7 +71,8 @@ cc.Class({
         this.goldLabel = this.node.getChildByName('gold').getComponent(cc.Label);
         this.lifeCount = 10;
         this.lifeLabel = this.node.getChildByName('life').getComponent(cc.Label);
-        this.levelLabel = this.node.getChildByName('level').getComponent(cc.Label);
+        this.currentWaveLabel = this.node.getChildByName('current_wave').getComponent(cc.Label);
+        this.totalWaveLabel = this.node.getChildByName('total_wave').getComponent(cc.Label);
     },
 
     setTouchEvent: function () {
@@ -237,6 +238,7 @@ cc.Class({
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
             this.build_menu.getComponent("build-menu").initWithData(this.levelConfig.towers);
+            this.totalWaveLabel.string = this.levelConfig.waves.length.toString();
         });
     },
 
@@ -281,7 +283,7 @@ cc.Class({
                 this.currentWaveConfig = this.levelConfig.waves[this.currentWaveCount];
                 if (this.currentWaveCount < this.levelConfig.waves.length) {
                     this.currentWaveCount++;
-                    this.levelLabel.string = "关卡" + this.currentLevel + "：" + this.currentWaveCount + "/" + this.levelConfig.waves.length;
+                    this.currentWaveLabel.string = this.prefixInteger(this.currentWaveCount, 2);//this.currentWaveCount.toString();
                 } else {
                     this.currentWaveConfig = undefined;
                 }
@@ -309,7 +311,7 @@ cc.Class({
                     }
                 }
             }*/
-            if (tower != undefined) {
+            if (tower !== undefined) {
                 if (tower.getComponent("tower").ifBuffAttack()) {
                     tower.getComponent("tower").setTowerList(this.towerNodeList);
                 }
@@ -359,4 +361,8 @@ cc.Class({
         // 锚点在中心位置
         return cc.p((x + 0.5) * tileSize.width, (y + 0.5) * tileSize.height);
     },
-});
+    prefixInteger: function (num, length) {
+        return (Array(length).join('0') + num).slice(-length);
+    },
+})
+;
