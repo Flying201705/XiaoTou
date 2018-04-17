@@ -73,6 +73,9 @@ cc.Class({
         this.lifeLabel = this.node.getChildByName('life').getComponent(cc.Label);
         this.currentWaveLabel = this.node.getChildByName('current_wave').getComponent(cc.Label);
         this.totalWaveLabel = this.node.getChildByName('total_wave').getComponent(cc.Label);
+        //加载地图
+        this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
+        this.level_map.loadMap("map/level_" + this.currentLevel);
     },
 
     setTouchEvent: function () {
@@ -221,9 +224,9 @@ cc.Class({
     gameStart: function () {
         this.loadLevelConfig();
         this.loadTowerConfig();
-        this.enemyPathPositions = this.gameLayer.getPathPositions();
-        this.towerRects = this.gameLayer.getObjRects();
-        this.tileSize = this.gameLayer.getTileSize();
+        this.enemyPathPositions = this.level_map.getPathPositions();
+        this.towerRects = this.level_map.getObjRects();
+        this.tileSize = this.level_map.getTileSize();
     },
 
     loadLevelConfig: function () {
