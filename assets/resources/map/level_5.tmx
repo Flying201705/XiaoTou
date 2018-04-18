@@ -17,7 +17,6 @@
  <objectgroup name="path" visible="0">
   <object id="45" name="P0" x="80" y="270"/>
   <object id="46" name="P1" x="440" y="280"/>
-  <object id="47" x="-394" y="308"/>
   <object id="48" name="P2" x="440" y="200"/>
   <object id="49" name="P3" x="760" y="200"/>
   <object id="50" name="P4" x="760" y="440"/>

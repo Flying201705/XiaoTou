@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "tower_a",
+    "_name": "tower_d",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -105,8 +105,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
-      "height": 62
+      "width": 66,
+      "height": 66
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -133,7 +133,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "71730e76-8725-49fb-b78f-58701b34f5b4"
+      "__uuid__": "f7075b2c-282b-4471-a56f-acc8e056e255"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -161,7 +161,7 @@
     "_defaultClip": null,
     "_clips": [
       {
-        "__uuid__": "2860ace5-3301-4fb4-8128-334053f22c4b"
+        "__uuid__": "49ff2d1f-945a-4de7-a843-8305603ff459"
       }
     ],
     "playOnLoad": false
@@ -172,9 +172,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2f16dc47-f997-4c86-a261-bcbe53e74d50"
+      "__uuid__": "8cca409a-8743-4aad-8b82-aeb9a817b97c"
     },
-    "fileId": "3dJ8bYj6NFq6Zt3dYax3uH",
+    "fileId": "88LDex3rVAh4OVUFwexU7g",
     "sync": false
   },
   {
@@ -221,8 +221,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 3,
-      "y": 49
+      "x": -11,
+      "y": 48
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -259,9 +259,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2f16dc47-f997-4c86-a261-bcbe53e74d50"
+      "__uuid__": "8cca409a-8743-4aad-8b82-aeb9a817b97c"
     },
-    "fileId": "306QNUl1xCLJVLzJYg86F1",
+    "fileId": "0cudushlNCmItjyoRXmuPZ",
     "sync": false
   },
   {
@@ -274,19 +274,13 @@
     "_enabled": true,
     "spriteFrames": [
       {
-        "__uuid__": "71730e76-8725-49fb-b78f-58701b34f5b4"
+        "__uuid__": "f7075b2c-282b-4471-a56f-acc8e056e255"
       },
       {
-        "__uuid__": "9814089f-c577-4933-a1de-0e1526012f02"
+        "__uuid__": "2dc76e31-6656-45b9-ba4a-e8464b9bbdf9"
       },
       {
-        "__uuid__": "87f3b3cc-8368-486b-97b3-a1705c5d5208"
-      },
-      {
-        "__uuid__": "20ed15e7-e07f-41fd-a3fe-89146462da10"
-      },
-      {
-        "__uuid__": "20ed15e7-e07f-41fd-a3fe-89146462da10"
+        "__uuid__": "ec9c8ee0-aa3d-45eb-96f9-24cfaac440c1"
       }
     ],
     "spriteNode": {
@@ -295,7 +289,7 @@
     "anim": {
       "__id__": 4
     },
-    "towerType": "tower_a"
+    "towerType": "tower_d"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -303,9 +297,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2f16dc47-f997-4c86-a261-bcbe53e74d50"
+      "__uuid__": "8cca409a-8743-4aad-8b82-aeb9a817b97c"
     },
-    "fileId": "7ekGc12KBO7ZE7XSkJBhEv",
+    "fileId": "dde7Hf4BVDe5ItU93Yb3GI",
     "sync": false
   }
 ]
