@@ -81,5 +81,125 @@
       {"dt": 1,"type": 2, "lv": 2,"count": 5},
       {"dt": 2,"type": 3,"lv": 2,"count": 10}
     ]
+  },
+
+  "level_6":{
+    "dt": 1,
+    "gold": 250,
+    "towers": [
+      {"type": "tower_a","level": 3},
+      {"type": "tower_b","level": 2},
+      {"type": "tower_c","level": 2}
+    ],
+    "waves": [
+      {"dt": 2,"type": 0,"lv": 2,"count": 10},
+      {"dt": 2,"type": 1,"lv": 2,"count": 5},
+      {"dt": 2,"type": 3,"lv": 0,"count": 10},
+      {"dt": 1,"type": 2, "lv": 1,"count": 10},
+      {"dt": 2,"type": 2,"lv": 1,"count": 15},
+      {"dt": 1,"type": 3,"lv": 1,"count": 5},
+      {"dt": 2,"type": 4,"lv": 0,"count": 10},
+      {"dt": 1,"type": 2, "lv": 2,"count": 10},
+      {"dt": 2,"type": 3,"lv": 2,"count": 10},
+      {"dt": 1,"type": 4,"lv": 1,"count": 10}
+    ]
+  },
+
+  "level_7":{
+    "dt": 1,
+    "gold": 250,
+    "towers": [
+      {"type": "tower_a","level": 3},
+      {"type": "tower_b","level": 2},
+      {"type": "tower_c","level": 2}
+    ],
+    "waves": [
+      {"dt": 2,"type": 0,"lv": 2,"count": 10},
+      {"dt": 2,"type": 1,"lv": 2,"count": 5},
+      {"dt": 2,"type": 3,"lv": 0,"count": 10},
+      {"dt": 1,"type": 2, "lv": 1,"count": 10},
+      {"dt": 2,"type": 2,"lv": 1,"count": 15},
+      {"dt": 1,"type": 3,"lv": 1,"count": 5},
+      {"dt": 2,"type": 4,"lv": 0,"count": 10},
+      {"dt": 1,"type": 2, "lv": 2,"count": 10},
+      {"dt": 2,"type": 3,"lv": 2,"count": 10},
+      {"dt": 1,"type": 4,"lv": 1,"count": 15}
+    ]
+  },
+
+  "level_8":{
+    "dt": 1,
+    "gold": 250,
+    "towers": [
+      {"type": "tower_a","level": 4},
+      {"type": "tower_b","level": 2},
+      {"type": "tower_c","level": 2}
+    ],
+    "waves": [
+      {"dt": 2,"type": 1,"lv": 1,"count": 10},
+      {"dt": 2,"type": 2,"lv": 0,"count": 10},
+      {"dt": 2,"type": 3,"lv": 0,"count": 10},
+      {"dt": 1,"type": 1, "lv": 2,"count": 10},
+      {"dt": 2,"type": 2,"lv": 1,"count": 15},
+      {"dt": 1,"type": 3,"lv": 1,"count": 5},
+      {"dt": 2,"type": 4,"lv": 0,"count": 10},
+      {"dt": 1,"type": 2, "lv": 2,"count": 10},
+      {"dt": 2,"type": 3,"lv": 2,"count": 10},
+      {"dt": 2,"type": 4,"lv": 1,"count": 10},
+      {"dt": 2,"type": 3,"lv": 2,"count": 15},
+      {"dt": 1,"type": 4,"lv": 2,"count": 10}
+    ]
+  },
+
+  "level_9":{
+    "dt": 1,
+    "gold": 250,
+    "towers": [
+      {"type": "tower_a","level": 4},
+      {"type": "tower_b","level": 2},
+      {"type": "tower_c","level": 2}
+    ],
+    "waves": [
+      {"dt": 2,"type": 1,"lv": 1,"count": 10},
+      {"dt": 2,"type": 2,"lv": 0,"count": 10},
+      {"dt": 2,"type": 3,"lv": 0,"count": 10},
+      {"dt": 1,"type": 1, "lv": 2,"count": 10},
+      {"dt": 2,"type": 2,"lv": 1,"count": 15},
+      {"dt": 1,"type": 3,"lv": 1,"count": 5},
+      {"dt": 2,"type": 4,"lv": 0,"count": 10},
+      {"dt": 1,"type": 2, "lv": 2,"count": 10},
+      {"dt": 2,"type": 3,"lv": 2,"count": 10},
+      {"dt": 2,"type": 4,"lv": 1,"count": 10},
+      {"dt": 2,"type": 3,"lv": 2,"count": 10},
+      {"dt": 1,"type": 4,"lv": 2,"count": 15}
+    ]
+  },
+
+  "level_10":{
+    "dt": 1,
+    "gold": 250,
+    "towers": [
+      {"type": "tower_a","level": 4},
+      {"type": "tower_b","level": 2},
+      {"type": "tower_c","level": 2},
+      {"type": "tower_d","level": 2}
+    ],
+    "waves": [
+      {"dt": 2,"type": 2,"lv": 0,"count": 5},
+      {"dt": 2,"type": 1,"lv": 2,"count": 10},
+      {"dt": 2,"type": 3,"lv": 0,"count": 10},
+      {"dt": 1,"type": 1, "lv": 2,"count": 15},
+      {"dt": 2,"type": 2,"lv": 1,"count": 10},
+      {"dt": 1,"type": 4,"lv": 0,"count": 10},
+      {"dt": 2,"type": 3,"lv": 1,"count": 10},
+      {"dt": 1,"type": 5, "lv": 0,"count": 5},
+      {"dt": 2,"type": 2,"lv": 2,"count": 10},
+      {"dt": 2,"type": 1000,"lv": 0,"count": 1},
+      {"dt": 2,"type": 3,"lv": 2,"count": 10},
+      {"dt": 2,"type": 5,"lv": 1,"count": 10},
+      {"dt": 1,"type": 4,"lv": 1,"count": 10},
+      {"dt": 1,"type": 4,"lv": 2,"count": 10},
+      {"dt": 1,"type": 5,"lv": 2,"count": 10}
+    ]
   }
 }

@@ -33,5 +33,9 @@
     {"speed": 100,"health": 250},
     {"speed": 120,"health": 400},
     {"speed": 120,"health": 500}
+  ],
+
+  "enemy_1000": [
+    {"speed": 40,"health": 5000}
   ]
 }

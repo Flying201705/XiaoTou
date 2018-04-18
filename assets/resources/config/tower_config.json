@@ -30,5 +30,26 @@
     "look_range": 400,
     "shoot_dts": [1.2, 1.1, 1],
     "stun_rates": [0.1, 0.2, 0.3]
+  },
+
+  "tower_d":
+  {
+    "name": "女巫",
+    "area": 1,
+    "costs": [200, 250, 300],
+    "damages": [1, 1, 1],
+    "attack_ranges": [200, 250, 300],
+    "shoot_dts": [1, 0.8, 0.6],
+    "slows": [0.1, 0.2, 0.3]
+  },
+
+  "tower_e":
+  {
+    "name": "射手",
+    "area": 1,
+    "costs": [200, 250, 300],
+    "damages": [50, 100, 200],
+    "attack_ranges": [200, 250, 300],
+    "shoot_dts": [1.2, 1.1, 1]
   }
 }
