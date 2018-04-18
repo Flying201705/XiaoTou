@@ -46,7 +46,7 @@ cc.Class({
         cc.log("level onLoad begin");
         this.setTouchEvent();
         //当前关卡
-        this.currentLevel = 1;
+        this.currentLevel = global.currentLevel;
         global.event.on("build_tower", this.buildTower.bind(this));
         global.event.on("update_tower", this.updateTower.bind(this));
         global.event.on("sell_tower", this.sellTower.bind(this));
@@ -80,7 +80,7 @@ cc.Class({
 
     setTouchEvent: function () {
         this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
-            var index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
+            let index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             cc.log("touchend event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
                 this.showUpdateMenu(index);

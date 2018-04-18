@@ -1,3 +1,5 @@
+import global from "./global";
+
 cc.Class({
     extends: cc.Component,
 
@@ -29,6 +31,7 @@ cc.Class({
     },
     startGameClick: function (event, coustomData) {
         cc.log('page index' + this.pageIndex);
-        cc.director.loadScene("game"/*'Game_' + (this.pageIndex + 1)*/);
+        global.currentLevel = this.pageIndex + 1;
+        cc.director.loadScene("game");
     }
 });
