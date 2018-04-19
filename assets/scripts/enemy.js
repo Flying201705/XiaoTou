@@ -28,11 +28,20 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        //速度
+        this.speed = 0;
+        //总血量
+        this.currentHealthCount = 0;
+        //是否BOSS
+        this.isBoss = false;
+        //护甲
+        this.armor = 0;
+        /**以上为enemy的自有属性 */
+
         this.state = EnemyState.Invalid;
         this.node.opacity = 0;
         this.direction = cc.p(0, 0);
         this.currentPathPointCount = 0;
-        this.currentHealthCount = 0;
         this.totalHealthCount = 1;
         //被眩晕
         this.beStuned = false;
@@ -55,6 +64,12 @@ cc.Class({
                 this.speed = config.speed;
                 this.currentHealthCount = config.health;
                 this.totalHealthCount = config.health;
+                if (config.boss != undefined) {
+                    this.isBoss = config.boss > 0;
+                }
+                if (config.armor != undefined) {
+                    this.armor = config.armor;
+                }
                 this.setState(EnemyState.Running);
 
                 this.schedule(this.playAnim, 1);
@@ -129,6 +144,13 @@ cc.Class({
             cc.log("触发暴击！");
             damage = damage * 2;
         }
+
+        //护甲减少伤害
+        if (this.armor > 0) {
+            let curDamageRate = this.getCutDamageRateByArmor(this.armor);
+            damage = damage * (1 - curDamageRate);
+        }
+
         if (damage > this.currentHealthCount) {
             damage = this.currentHealthCount;
         }
@@ -138,6 +160,9 @@ cc.Class({
             this.currentHealthCount = 0;
             this.setState(EnemyState.Dead);
             this.gainGold(1);
+            if (this.isBoss) {
+                this.node.parent.getComponent("level").addGold(Math.floor(gold));
+            }
         }
         //减速代码
         if (bullet.slowRate >= this.slowRate) {
@@ -176,8 +201,17 @@ cc.Class({
         return false;
     },
 
+    getCutDamageRateByArmor: function(armor) {
+        if (armor <= 0) {
+            return 0;
+        }
+
+        let curDamageRate = (armor * 6) / (100 + armor * 6);
+        return curDamageRate;
+    },
+
     gainGold: function(gold) {
-        this.node.parent.getComponent("level").addGold(Math.floor(gold));
+        this.node.parent.getComponent("level").dropGoods();
     },
 
     isDead: function () {

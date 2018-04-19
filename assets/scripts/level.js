@@ -355,6 +355,10 @@ cc.Class({
         }
     },
 
+    dropGoods: function() {
+        cc.log("击败BOSS，掉落 <减速弹> 和 <偷圣碎片3-1>");
+    },
+
     getTilePos: function (posInPixel) {
         // let mapSize = this.node.getContentSize();
         let tileSize = this.tileSize;
@@ -367,5 +371,4 @@ cc.Class({
     prefixInteger: function (num, length) {
         return (Array(length).join('0') + num).slice(-length);
     },
-})
-;
+});
