@@ -161,7 +161,7 @@ cc.Class({
             this.setState(EnemyState.Dead);
             this.gainGold(1);
             if (this.isBoss) {
-                this.node.parent.getComponent("level").addGold(Math.floor(gold));
+                this.node.parent.getComponent("level").dropGoods();
             }
         }
         //减速代码
@@ -211,7 +211,7 @@ cc.Class({
     },
 
     gainGold: function(gold) {
-        this.node.parent.getComponent("level").dropGoods();
+        this.node.parent.getComponent("level").addGold(Math.floor(gold));
     },
 
     isDead: function () {

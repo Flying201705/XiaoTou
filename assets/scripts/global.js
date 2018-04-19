@@ -3,7 +3,7 @@
  */
 import EventListener from './event-listener'
 let global = {
-    currentLevel:0,
+    currentLevel:1,
     event: EventListener({}),
 };
 export default global;
