@@ -34,11 +34,23 @@ cc.Class({
         bulletPrefab: {
             default: null,
             type: cc.Prefab
-        }
-    },
-
-    init(gameLayer) {
-        this.gameLayer = gameLayer;
+        },
+        goldLabel: {
+            default: null,
+            type: cc.Label
+        },
+        currentWaveLabel: {
+            default: null,
+            type: cc.Label
+        },
+        totalWaveLabel: {
+            default: null,
+            type: cc.Label
+        },
+        lifeLabel: {
+            default: null,
+            type: cc.Label
+        },
     },
 
     // use this for initialization
@@ -68,11 +80,8 @@ cc.Class({
         this.selectBox = cc.instantiate(this.selectPrefab);
 
         this.goldCount = 0;
-        this.goldLabel = this.node.getChildByName('gold').getComponent(cc.Label);
         this.lifeCount = 10;
-        this.lifeLabel = this.node.getChildByName('life').getComponent(cc.Label);
-        this.currentWaveLabel = this.node.getChildByName('current_wave').getComponent(cc.Label);
-        this.totalWaveLabel = this.node.getChildByName('total_wave').getComponent(cc.Label);
+
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
         this.level_map.loadMap("map/level_" + this.currentLevel);
@@ -193,7 +202,7 @@ cc.Class({
     updateTower: function () {
         let tower = this.towerNodeList[this.closeMenu()];
         if (tower !== undefined) {
-            var cost = tower.getComponent("tower").getUpgradeCost();
+            let cost = tower.getComponent("tower").getUpgradeCost();
             if (this.goldCount < cost) {
                 cc.log("金钱不够!!");
                 return;
