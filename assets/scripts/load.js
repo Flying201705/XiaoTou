@@ -19,6 +19,8 @@ cc.Class({
     onLoad: function () {
         this.label.string = this.text;
         this.loadBar.progress = 0;
+        //测试程序
+        //this.sendPostRequest();
     },
 
     // called every frame
@@ -31,4 +33,17 @@ cc.Class({
         }
         this.loadBar.progress += progress;
     },
+
+    sendPostRequest:function () {
+        var url="http://zhang395295759.xicp.net:30629/xiaotou/user/getUserInfoId.do?id=100";
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
+                var response = xhr.responseText;
+                console.log("<test> : " + response);
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
 });

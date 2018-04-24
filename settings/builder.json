@@ -22,11 +22,11 @@
   "privateKey": "",
   "renderMode": "0",
   "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
-  "title": "hello_world",
+  "title": "xiaotou_world",
   "webOrientation": "auto",
   "wechatgame": {
     "appid": "",
-    "orientation": "portrait"
+    "orientation": "landscape"
   },
   "xxteaKey": "4dd75723-494f-46",
   "zipCompressJs": true
