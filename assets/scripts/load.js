@@ -1,3 +1,5 @@
+import {InfoHandle} from './InfoData'
+
 cc.Class({
     extends: cc.Component,
 
@@ -21,6 +23,7 @@ cc.Class({
         this.loadBar.progress = 0;
         //测试程序
         //this.sendPostRequest();
+        new InfoHandle().init();
     },
 
     // called every frame
