@@ -6,9 +6,10 @@ cc.Class({
     properties: {
     },
 
-    onLoad: function () {
-
+    onClickBackButton: function () {
+        cc.director.loadScene("main");
     },
+
     startGameClick: function (event, customEventData) {
         cc.log('select level : ' + customEventData);
         global.currentLevel = customEventData;

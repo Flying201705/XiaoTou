@@ -2,8 +2,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        pressedScale: 1,
-        transDuration: 0
+        pressedScale: 1.2,
+        transDuration: 0.1
     },
 
     // use this for initialization

@@ -11,9 +11,9 @@ cc.Class({
     extends: cc.Component,
     properties: {
         //选中背景框
-        selectPrefab: {
+        selectBox: {
             default: null,
-            type: cc.Prefab
+            type: cc.Node
         },
         buildMenuPrefab: {
             default: null,
@@ -77,7 +77,8 @@ cc.Class({
         this.towerNodeList = [];
         this.bulletNodeList = [];
         this.tileSize = 80;
-        this.selectBox = cc.instantiate(this.selectPrefab);
+
+        this.selectBox.active = false;
 
         this.goldCount = 0;
         this.lifeCount = 10;
@@ -133,6 +134,7 @@ cc.Class({
         this.closeMenu();
         let centerPos = this.getTilePos(cc.p(x, y));
 
+        this.selectBox.active = true;
         this.selectBox.position = centerPos;
         this.selectBox.parent = this.node;
 
@@ -144,6 +146,7 @@ cc.Class({
         this.closeMenu();
         let tower = this.towerNodeList[index];
         if (tower !== undefined) {
+            this.selectBox.active = true;
             this.selectBox.parent = this.node;
             this.selectBox.position = tower.position;
 
@@ -156,7 +159,7 @@ cc.Class({
     closeMenu: function () {
         this.node.removeChild(this.build_menu);
         this.node.removeChild(this.update_menu);
-        this.node.removeChild(this.selectBox);
+        this.selectBox.active = false;
         return this.update_menu.index;
     },
 

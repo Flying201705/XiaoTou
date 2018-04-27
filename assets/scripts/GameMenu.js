@@ -23,4 +23,10 @@ cc.Class({
         this.node.active = false;
         cc.director.resume();
     },
+
+    selcetStage: function () {
+        this.node.active = true;
+        cc.director.resume();
+        cc.director.loadScene("stage");
+    }
 });
