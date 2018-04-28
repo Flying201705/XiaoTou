@@ -8,7 +8,9 @@ import GoodsData from './GoodsData';
 const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
 const get_levels = "level/allLevels.do?";
+const update_level = "level/updateLevel.do?";
 const get_goods = "goods/allGoods.do?";
+const update_goods = "goods/updateGoods.do?";
 
 const InfoData = {
     user:UserData,
@@ -68,14 +70,26 @@ const InfoHandle = cc.Class({
         }
     },
 
+    updateLevel: function(lv, score, stars) {
+        let url = http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars;
+        this.sendRequest(url, null);
+    },
+
+    updateGoods: function(goods, num) {
+        let url = http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num;
+        this.sendRequest(url, null);
+    },
+
     sendRequest:function (url, method) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
                 var response = xhr.responseText;
                 console.log("<test> json str : " + response);
-                var obj = JSON.parse(response);
-                method(obj.data);
+                if (method != null) {
+                    var obj = JSON.parse(response);
+                    method(obj.data);
+                }
             }
         }
         xhr.open("GET", url, true);
