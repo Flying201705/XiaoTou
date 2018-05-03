@@ -6,7 +6,7 @@ cc.Class({
     },
 
     onLoad() {
-        this.node.active = false;
+        // this.node.active = false;
     },
 
     showMenu: function () {

@@ -52,6 +52,10 @@ cc.Class({
             default: null,
             type: cc.Label
         },
+        gameOverUI: {
+            default: null,
+            type: cc.Node
+        }
     },
 
     // use this for initialization
@@ -252,8 +256,7 @@ cc.Class({
             } else {
                 //cc.log("level config" + JSON.stringify(result));
             }
-            let config = result["level_" + this.currentLevel];
-            this.levelConfig = config;
+            this.levelConfig = result["level_" + this.currentLevel];
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
             this.build_menu.getComponent("build-menu").initWithData(this.levelConfig.towers);
@@ -353,6 +356,7 @@ cc.Class({
             && this.currentEnemyCount >= this.currentWaveConfig.count
             && this.enemyNodeList.length <= 0) {
                 //游戏结束--赢了
+                this.gameOver(true);
             }
     },
 
@@ -407,6 +411,7 @@ cc.Class({
         if (this.lifeCount <= 0) {
             this.lifeCount = 0;
             //游戏结束--输了
+            this.gameOver(false);
         }
     },
 
@@ -422,6 +427,11 @@ cc.Class({
             }
         }
         cc.log(log);
+    },
+
+    gameOver: function(win) {
+        this.gameover = this.gameOverUI.getComponent("GameOver");
+        this.gameover.showUI(win);
     },
 
     getTilePos: function (posInPixel) {
