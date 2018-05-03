@@ -349,7 +349,7 @@ cc.Class({
             }
         }
 
-        if (this.currentWaveCount >= this.levelConfig.waves.length
+        if (this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
             && this.currentEnemyCount >= this.currentWaveConfig.count
             && this.enemyNodeList.length <= 0) {
                 //游戏结束--赢了
