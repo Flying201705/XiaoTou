@@ -348,6 +348,12 @@ cc.Class({
                 tower.getComponent("tower").setEnemyList(this.enemyNodeList);
             }
         }
+
+        if (this.currentWaveCount >= this.levelConfig.waves.length
+            && this.currentEnemyCount >= this.currentWaveConfig.count
+            && this.enemyNodeList.length <= 0) {
+                //游戏结束--赢了
+            }
     },
 
     addBullet: function (tower, position) {
@@ -398,8 +404,9 @@ cc.Class({
 
     detractLife: function (life) {
         this.lifeCount -= life;
-        if (this.lifeCount < 0) {
+        if (this.lifeCount <= 0) {
             this.lifeCount = 0;
+            //游戏结束--输了
         }
     },
 
