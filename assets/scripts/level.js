@@ -1,4 +1,5 @@
 import global from './global'
+import {InfoHandle} from './InfoData'
 
 const TowerPosNodeState = {
     Invalid: -1,
@@ -65,6 +66,9 @@ cc.Class({
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
         global.event.on("shoot_buff", this.addBuff.bind(this));
+        global.event.on("release_slow", this.handleSlow.bind(this));
+        global.event.on("release_stun", this.handleStun.bind(this));
+        global.event.on("release_damage", this.handleDamage.bind(this));
         this.build_menu = cc.instantiate(this.buildMenuPrefab);
         this.update_menu = cc.instantiate(this.updateMenuPrefab);
         this.currentWaveCount = 0;
@@ -268,6 +272,17 @@ cc.Class({
         });
     },
 
+    loadBossConfig: function () {
+        cc.loader.loadRes("./config/boss_config", (err, result) => {
+            if (err) {
+                cc.log("load config = " + err);
+            } else {
+                //cc.log("load config = " + JSON.stringify(result));
+                this.bossConfigs = result;
+            }
+        });
+    },
+
     addEnemy: function (type, level) {
         // cc.log("add Enemy" + this.currentEnemyCount);
         // cc.log("add Wave " + this.currentWaveCount)
@@ -349,6 +364,27 @@ cc.Class({
         }
     },
 
+    handleSlow: function() {
+        for (let j = 0; j < this.enemyNodeList.length; j++) {
+            let enemy = this.enemyNodeList[j];
+            enemy.getComponent("enemy").hanleSlowed(0.5);
+        }
+    },
+
+    handleStun: function() {
+        for (let j = 0; j < this.enemyNodeList.length; j++) {
+            let enemy = this.enemyNodeList[j];
+            enemy.getComponent("enemy").handleStuned();
+        }
+    },
+
+    handleDamage: function() {
+        for (let j = 0; j < this.enemyNodeList.length; j++) {
+            let enemy = this.enemyNodeList[j];
+            enemy.getComponent("enemy").handleDamage(100, 0);
+        }
+    },
+
     addGold: function (gold) {
         this.goldCount += gold;
     },
@@ -367,8 +403,18 @@ cc.Class({
         }
     },
 
-    dropGoods: function() {
-        cc.log("击败BOSS，掉落 <减速弹> 和 <偷圣碎片3-1>");
+    dropGoods: function(boss_type) {
+        let log = "击败BOSS";
+        for (let i = 0; i < this.bossConfigs[boss_type].length; i++) {
+            let goods = this.bossConfigs[boss_type][i].goods;
+            let rate = this.bossConfigs[boss_type][i].rate;
+            let random = Math.random();
+            if (random < rate) {
+                log = log + ", 掉落<道具" + goods + ">";
+                new InfoHandle().updateGoods(goods, 1);
+            }
+        }
+        cc.log(log);
     },
 
     getTilePos: function (posInPixel) {

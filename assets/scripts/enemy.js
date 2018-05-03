@@ -145,6 +145,15 @@ cc.Class({
             damage = damage * 2;
         }
 
+        this.handleDamage(damage, bullet.gainRate);
+        
+        //减速代码
+        if (bullet.slowRate >= this.slowRate) {
+            this.hanleSlowed(bullet.slowRate);
+        }
+    },
+
+    handleDamage: function(damage, gainRate) {
         //护甲减少伤害
         if (this.armor > 0) {
             let curDamageRate = this.getCutDamageRateByArmor(this.armor);
@@ -154,7 +163,7 @@ cc.Class({
         if (damage > this.currentHealthCount) {
             damage = this.currentHealthCount;
         }
-        this.gainGold(damage * bullet.gainRate);
+        this.gainGold(damage * gainRate);
         this.currentHealthCount -= damage;
         if (this.currentHealthCount <= 0){
             this.currentHealthCount = 0;
@@ -163,10 +172,6 @@ cc.Class({
             if (this.isBoss) {
                 this.node.parent.getComponent("level").dropGoods();
             }
-        }
-        //减速代码
-        if (bullet.slowRate >= this.slowRate) {
-            this.hanleSlowed(bullet.slowRate);
         }
     },
 
