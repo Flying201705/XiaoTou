@@ -212,7 +212,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 24.89,
+      "width": 25,
       "height": 15
     },
     "_rotationX": 0,
@@ -294,6 +294,9 @@
     },
     "anim": {
       "__id__": 4
+    },
+    "shootAudio": {
+      "__uuid__": "c24eee8f-2fef-4e62-b416-9d39fc1cdcf6"
     },
     "towerType": "tower_a"
   },

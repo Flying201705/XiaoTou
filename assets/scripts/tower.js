@@ -16,6 +16,10 @@ cc.Class({
             default: null,
             type: cc.Animation
         },
+        shootAudio: {
+            default: null,
+            url: cc.AudioClip
+        },
         towerType: ""
     },
 
@@ -230,20 +234,21 @@ cc.Class({
             this.anim.play("tower_3");
         }*/
         this.anim.play(this.towerType);
-        if (this.buffAttack == true) {
+        if (this.buffAttack === true) {
             global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);
         } else {
+            cc.audioEngine.play(this.shootAudio, false, 1);
             global.event.fire("shoot_bullet", this.node, this.enemy.position);
         }
     },
     isAreaAttack: function() {
-        if (this.areaAttack != undefined) {
+        if (this.areaAttack !== undefined) {
             return this.areaAttack;
         }
         return false;
     },
     ifBuffAttack: function() {
-        if (this.buffAttack != undefined) {
+        if (this.buffAttack !== undefined) {
             return this.buffAttack;
         }
         return false;
@@ -261,25 +266,25 @@ cc.Class({
         return this.currentLevel < this.maxLevel;
     },
     getGainRate: function() {
-        if (this.currentGainRate != undefined) {
+        if (this.currentGainRate !== undefined) {
             return this.currentGainRate;
         }
         return 0;
     },
     getStunRate: function() {
-        if (this.currentStunRate != undefined) {
+        if (this.currentStunRate !== undefined) {
             return this.currentStunRate;
         }
         return 0;
     },
     getCritRate: function() {
-        if (this.currentCritRate != undefined) {
+        if (this.currentCritRate !== undefined) {
             return this.currentCritRate;
         }
         return 0;
     },
     getSlowRate: function() {
-        if (this.currentSlowRate != undefined) {
+        if (this.currentSlowRate !== undefined) {
             return this.currentSlowRate;
         }
         return 0;

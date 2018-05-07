@@ -55,6 +55,10 @@ cc.Class({
         gameOverUI: {
             default: null,
             type: cc.Node
+        },
+        audioMng: {
+            default: null,
+            type: cc.Node
         }
     },
 
@@ -94,6 +98,9 @@ cc.Class({
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
         this.level_map.loadMap("map/level_" + this.currentLevel);
+
+        //音频
+        this.audioMng = this.audioMng.getComponent("GameAudio");
     },
 
     setTouchEvent: function () {
@@ -102,6 +109,9 @@ cc.Class({
             cc.log("touchend event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
                 this.showUpdateMenu(index);
+            } else if (this.selectBox.active === true) {
+                this.closeMenu();
+                this.audioMng.playTowerDeselect();
             } else if (this.isTouchEnable(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5)) {
                 this.showBuildMenu(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             }
@@ -148,6 +158,8 @@ cc.Class({
 
         this.build_menu.position = centerPos;
         this.build_menu.parent = this.node;
+
+        this.audioMng.playTowerSelect();
     },
 
     showUpdateMenu: function (index) {
@@ -161,6 +173,8 @@ cc.Class({
             this.update_menu.position = tower.position;
             this.update_menu.index = index;
             this.update_menu.parent = this.node;
+
+            this.audioMng.playTowerSelect();
         }
     },
 
@@ -204,6 +218,8 @@ cc.Class({
         // this.setTowerTouchEvent(tower);
         tower.getComponent("tower").initWithData(this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
         this.towerNodeList.push(tower);
+
+        this.audioMng.playTowerBuild();
     },
 
     onDestroy: function () {
@@ -224,6 +240,8 @@ cc.Class({
             }
             this.detractGold(cost);
             tower.getComponent("tower").updateTower();
+
+            this.audioMng.playTowerUpdate();
         }
     },
 
@@ -234,6 +252,8 @@ cc.Class({
             this.addGold(tower.getComponent("tower").getSelledGold());
             tower.getComponent("tower").sellTower();
             this.towerNodeList.splice(index, 1);
+
+            this.audioMng.playTowerSell();
         }
     },
 
@@ -432,6 +452,11 @@ cc.Class({
     gameOver: function(win) {
         this.gameover = this.gameOverUI.getComponent("GameOver");
         this.gameover.showUI(win);
+        if (win === true) {
+            this.audioMng.playWin();
+        } else {
+            this.audioMng.playLose();
+        }
     },
 
     getTilePos: function (posInPixel) {
