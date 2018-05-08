@@ -7,16 +7,23 @@ cc.Class({
         timeCountDownAnim: {
             default: null,
             type: cc.Animation
+        },
+        countDownAudio: {
+            default: null,
+            url: cc.AudioClip
+        },
+        goAudio: {
+            default: null,
+            url: cc.AudioClip
         }
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    startGame: function () {
-        global.event.fire("game_start");
+    countDown: function() {
+        cc.audioEngine.playEffect(this.countDownAudio, false);
     },
 
-    // update (dt) {},
+    startGame: function () {
+        cc.audioEngine.playEffect(this.goAudio, false);
+        global.event.fire("game_start");
+    },
 });

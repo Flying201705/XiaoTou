@@ -29,10 +29,13 @@
     "_components": [
       {
         "__id__": 15
+      },
+      {
+        "__id__": 16
       }
     ],
     "_prefab": {
-      "__id__": 16
+      "__id__": 17
     },
     "_id": "",
     "_opacity": 255,
@@ -72,7 +75,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "塔防_45",
+    "_name": "range",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -105,8 +108,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 240,
-      "height": 240
+      "width": 282,
+      "height": 282
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -132,7 +135,9 @@
       "__id__": 2
     },
     "_enabled": true,
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "5aa404ff-3fd3-4305-a976-fd2cea6fd3a0"
+    },
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -146,7 +151,9 @@
     "_isTrimmedMode": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_atlas": null
+    "_atlas": {
+      "__uuid__": "18b86475-5618-4d07-b6f7-15f5dd1bf4fa"
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -489,6 +496,24 @@
       "__id__": 1
     },
     "_enabled": true
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "e917737c-ca7e-4671-badb-3707bcf59fc1"
+    },
+    "_clips": [
+      {
+        "__uuid__": "e917737c-ca7e-4671-badb-3707bcf59fc1"
+      }
+    ],
+    "playOnLoad": false
   },
   {
     "__type__": "cc.PrefabInfo",

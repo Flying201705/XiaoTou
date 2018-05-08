@@ -4549,6 +4549,12 @@
     "_enabled": true,
     "timeCountDownAnim": {
       "__id__": 118
+    },
+    "countDownAudio": {
+      "__uuid__": "aeaf0fc8-259b-4380-a2d1-fa3c3c393e84"
+    },
+    "goAudio": {
+      "__uuid__": "bc3d2b19-d21e-4f52-a45d-567cd6d72790"
     }
   },
   {

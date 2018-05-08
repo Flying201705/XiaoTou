@@ -24,6 +24,10 @@ cc.Class({
             default: null,
             type: cc.Animation
         },
+        audioDead: {
+            default: null,
+            url: cc.AudioClip
+        }
     },
 
     // use this for initialization
@@ -55,8 +59,8 @@ cc.Class({
         this.spriteNode.spriteFrame = this.spriteFrames[type];
         this.pathPoints = pathPoints;
         this.node.position = pathPoints[0];
-        cc.loader.loadRes("./config/monster_config", (err, result)=>{
-            if (err){
+        cc.loader.loadRes("./config/monster_config", (err, result) => {
+            if (err) {
                 cc.log(err);
             } else {
                 // cc.log("enemy result = " + JSON.stringify(result));
@@ -64,10 +68,10 @@ cc.Class({
                 this.speed = config.speed;
                 this.currentHealthCount = config.health;
                 this.totalHealthCount = config.health;
-                if (config.boss != undefined) {
+                if (config.boss !== undefined) {
                     this.isBoss = config.boss > 0;
                 }
-                if (config.armor != undefined) {
+                if (config.armor !== undefined) {
                     this.armor = config.armor;
                 }
                 this.setState(EnemyState.Running);
@@ -77,17 +81,17 @@ cc.Class({
         });
 
     },
-    
-    playAnim: function() {
+
+    playAnim: function () {
         this.anim.play("enemy_" + (this.type + 1));
     },
 
     update: function (dt) {
-        if (this.state === EnemyState.Running){
+        if (this.state === EnemyState.Running) {
             let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
-            if (distance < 10){
-                this.currentPathPointCount ++;
-                if (this.currentPathPointCount === this.pathPoints.length){
+            if (distance < 10) {
+                this.currentPathPointCount++;
+                if (this.currentPathPointCount === this.pathPoints.length) {
                     this.setState(EnemyState.EndPath);
                     return;
                 }
@@ -99,16 +103,17 @@ cc.Class({
         this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
     },
     setState: function (state) {
-        if (this.state === state){
+        if (this.state === state) {
             return;
         }
-        switch (state){
+        switch (state) {
             case EnemyState.Running:
                 this.node.opacity = 255;
                 break;
             case EnemyState.Dead:
+                cc.audioEngine.playEffect(this.audioDead, false);
                 let deadAction = cc.fadeOut(1);
-                let deadSequence = cc.sequence(deadAction, cc.callFunc(()=>{
+                let deadSequence = cc.sequence(deadAction, cc.callFunc(() => {
                     //cc.log("死了");
                     this.node.destroy();
                 }));
@@ -116,7 +121,7 @@ cc.Class({
                 break;
             case EnemyState.EndPath:
                 let endAction = cc.fadeOut(0.5);
-                let endSequence = cc.sequence(endAction, cc.callFunc(()=>{
+                let endSequence = cc.sequence(endAction, cc.callFunc(() => {
                     cc.log("跑了");
                     this.node.destroy();
                 }));
@@ -129,7 +134,7 @@ cc.Class({
         this.state = state;
     },
     isLiving: function () {
-        if (this.state === EnemyState.Running){
+        if (this.state === EnemyState.Running) {
             return true;
         }
         return false;
@@ -146,14 +151,14 @@ cc.Class({
         }
 
         this.handleDamage(damage, bullet.gainRate);
-        
+
         //减速代码
         if (bullet.slowRate >= this.slowRate) {
             this.hanleSlowed(bullet.slowRate);
         }
     },
 
-    handleDamage: function(damage, gainRate) {
+    handleDamage: function (damage, gainRate) {
         //护甲减少伤害
         if (this.armor > 0) {
             let curDamageRate = this.getCutDamageRateByArmor(this.armor);
@@ -165,7 +170,7 @@ cc.Class({
         }
         this.gainGold(damage * gainRate);
         this.currentHealthCount -= damage;
-        if (this.currentHealthCount <= 0){
+        if (this.currentHealthCount <= 0) {
             this.currentHealthCount = 0;
             this.setState(EnemyState.Dead);
             this.gainGold(1);
@@ -175,27 +180,27 @@ cc.Class({
         }
     },
 
-    handleStuned: function() {
+    handleStuned: function () {
         this.unschedule(this.cancelStuned);
         this.beStuned = true;
         this.scheduleOnce(this.cancelStuned, 2);
     },
 
-    cancelStuned: function() {
+    cancelStuned: function () {
         this.beStuned = false;
     },
 
-    hanleSlowed: function(rate) {
+    hanleSlowed: function (rate) {
         this.unschedule(this.cancelSlowed);
         this.slowRate = rate;
         this.scheduleOnce(this.cancelSlowed, 2);
     },
 
-    cancelSlowed: function() {
+    cancelSlowed: function () {
         this.slowRate = 0;
     },
 
-    beTriggerRate: function(rate) {
+    beTriggerRate: function (rate) {
         if (rate > 0) {
             var random = Math.random();
             if (random < rate) {
@@ -206,7 +211,7 @@ cc.Class({
         return false;
     },
 
-    getCutDamageRateByArmor: function(armor) {
+    getCutDamageRateByArmor: function (armor) {
         if (armor <= 0) {
             return 0;
         }
@@ -215,19 +220,19 @@ cc.Class({
         return curDamageRate;
     },
 
-    gainGold: function(gold) {
+    gainGold: function (gold) {
         this.node.parent.getComponent("level").addGold(Math.floor(gold));
     },
 
     isDead: function () {
-        if (this.state === EnemyState.Dead){
+        if (this.state === EnemyState.Dead) {
             return true;
         }
         return false;
     },
 
-    isEndPath: function() {
-        if (this.state === EnemyState.EndPath){
+    isEndPath: function () {
+        if (this.state === EnemyState.EndPath) {
             return true;
         }
         return false;
