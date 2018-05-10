@@ -7,7 +7,6 @@ cc.Class({
     },
 
     onLoad: function () {
-        cc.log("onLoad");
         this.anim = this.getComponent(cc.Animation);
         this.anim.play("update_menu");
     },

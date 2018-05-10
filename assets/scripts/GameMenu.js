@@ -28,5 +28,14 @@ cc.Class({
         this.node.active = true;
         cc.director.resume();
         cc.director.loadScene("stage");
+    },
+
+    onClickPauseBtn: function () {
+        // this.node.active = true;
+        if (cc.director.isPaused()) {
+            cc.director.resume();
+        } else {
+            cc.director.pause();
+        }
     }
 });

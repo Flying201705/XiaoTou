@@ -105,6 +105,10 @@ cc.Class({
 
     setTouchEvent: function () {
         this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
+            if (cc.director.isPaused()) {
+                return;
+            }
+
             let index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             cc.log("touchend event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
@@ -375,9 +379,9 @@ cc.Class({
         if (this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
             && this.currentEnemyCount >= this.currentWaveConfig.count
             && this.enemyNodeList.length <= 0) {
-                //游戏结束--赢了
-                this.gameOver(true);
-            }
+            //游戏结束--赢了
+            this.gameOver(true);
+        }
     },
 
     addBullet: function (tower, position) {
@@ -394,21 +398,21 @@ cc.Class({
         }
     },
 
-    handleSlow: function() {
+    handleSlow: function () {
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").hanleSlowed(0.5);
         }
     },
 
-    handleStun: function() {
+    handleStun: function () {
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").handleStuned();
         }
     },
 
-    handleDamage: function() {
+    handleDamage: function () {
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").handleDamage(100, 0);
@@ -435,7 +439,7 @@ cc.Class({
         }
     },
 
-    dropGoods: function(boss_type) {
+    dropGoods: function (boss_type) {
         let log = "击败BOSS";
         for (let i = 0; i < this.bossConfigs[boss_type].length; i++) {
             let goods = this.bossConfigs[boss_type][i].goods;
@@ -449,14 +453,14 @@ cc.Class({
         cc.log(log);
     },
 
-    gameOver: function(win) {
-        this.gameover = this.gameOverUI.getComponent("GameOver");
-        this.gameover.showUI(win);
+    gameOver: function (win) {
         if (win === true) {
             this.audioMng.playWin();
         } else {
             this.audioMng.playLose();
         }
+        this.gameover = this.gameOverUI.getComponent("GameOver");
+        this.gameover.showUI(win);
     },
 
     getTilePos: function (posInPixel) {
