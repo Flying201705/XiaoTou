@@ -2,11 +2,32 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        maskNode: {
+            default: null,
+            type: cc.Node
+        }
     },
 
     onLoad() {
         // this.node.active = false;
+    },
+
+    onEnable: function () {
+        this.maskNode.on('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.maskNode.on('touchend', function (event) {
+            event.stopPropagation();
+        });
+    },
+
+    onDisable: function () {
+        this.maskNode.off('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.maskNode.off('touchend', function (event) {
+            event.stopPropagation();
+        });
     },
 
     showMenu: function () {

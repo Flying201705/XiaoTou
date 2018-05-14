@@ -2,6 +2,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        maskNode: {
+            default: null,
+            type: cc.Node
+        },
         win: {
             default: null,
             type: cc.Node
@@ -10,6 +14,24 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+    },
+
+    onEnable: function () {
+        this.maskNode.on('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.maskNode.on('touchend', function (event) {
+            event.stopPropagation();
+        });
+    },
+
+    onDisable: function () {
+        this.maskNode.off('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.maskNode.off('touchend', function (event) {
+            event.stopPropagation();
+        });
     },
 
     showUI: function (win) {
