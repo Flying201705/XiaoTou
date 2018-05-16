@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "a4a5caa9-b452-4ec0-be2d-f0f3d20f6ebc",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "btn_adventure": {
+      "ver": "1.0.3",
+      "uuid": "68edb90a-2093-4d5e-b602-72625f186256",
+      "rawTextureUuid": "a4a5caa9-b452-4ec0-be2d-f0f3d20f6ebc",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 285,
+      "height": 88,
+      "rawWidth": 285,
+      "rawHeight": 88,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
