@@ -5,6 +5,14 @@ cc.Class({
         maskNode: {
             default: null,
             type: cc.Node
+        },
+        levelNode: {
+            default: null,
+            type: cc.Node
+        },
+        clickAudio: {
+            default: null,
+            url: cc.AudioClip
         }
     },
 
@@ -38,14 +46,17 @@ cc.Class({
     hideMenu: function () {
         this.node.active = false;
         cc.director.resume();
+        this.levelNode.resumeAllActions();
     },
 
     resumeGame: function() {
+        cc.audioEngine.playEffect(this.clickAudio, false);
         this.node.active = false;
         cc.director.resume();
     },
 
     selcetStage: function () {
+        cc.audioEngine.playEffect(this.clickAudio, false);
         this.node.active = true;
         cc.director.resume();
         cc.director.loadScene("stage");
@@ -53,6 +64,7 @@ cc.Class({
 
     onClickPauseBtn: function () {
         // this.node.active = true;
+        cc.audioEngine.playEffect(this.clickAudio, false);
         if (cc.director.isPaused()) {
             cc.director.resume();
         } else {
