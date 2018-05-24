@@ -1,3 +1,5 @@
+import global from './global'
+
 cc.Class({
     extends: cc.Component,
 
@@ -40,7 +42,6 @@ cc.Class({
 
     showUI: function (win) {
         cc.log("win=" + win);
-        win = true;
         if (win === true) {
             this.win.active = true;
             this.lose.active = false;
@@ -56,5 +57,18 @@ cc.Class({
         cc.director.pause();
         this.node.active = true;
     },
-
+    goToNextLevel: function () {
+        global.currentLevel++;
+        cc.director.loadScene('game');
+    },
+    restartCurrentLevel: function () {
+        cc.director.loadScene('game');
+    },
+    goToPreviousScene: function () {
+        cc.director.resume();
+        cc.director.loadScene("stage");
+    },
+    share: function () {
+        
+    }
 });

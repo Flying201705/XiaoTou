@@ -55,6 +55,10 @@ cc.Class({
         cc.director.resume();
     },
 
+    restartGame: function() {
+        cc.director.loadScene('game');
+    },
+
     selcetStage: function () {
         cc.audioEngine.playEffect(this.clickAudio, false);
         this.node.active = true;
