@@ -174,6 +174,7 @@ cc.Class({
             this.selectBox.parent = this.node;
             this.selectBox.position = tower.position;
 
+            this.update_menu.getComponent('update-menu').setTower(tower);
             this.update_menu.position = tower.position;
             this.update_menu.index = index;
             this.update_menu.parent = this.node;

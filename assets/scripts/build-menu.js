@@ -9,11 +9,6 @@ cc.Class({
         },
     },
 
-    // use this for initialization
-    onLoad: function () {
-
-    },
-
     initWithData: function(towers) {
         for (let i = 0; i < towers.length; i++) {
             let towerMenu = cc.instantiate(this.menuPrefab);
@@ -26,7 +21,7 @@ cc.Class({
     },
 
     buttonClick: function(event) {
-        var customData = event.target.data;
+        let customData = event.target.data;
         cc.log("click " + customData);
         global.event.fire("build_tower", customData);
     },

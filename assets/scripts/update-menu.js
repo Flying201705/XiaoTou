@@ -3,6 +3,14 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        updateGold: {
+            default: null,
+            type: cc.Label
+        },
+        sellGold: {
+            default: null,
+            type: cc.Label
+        }
 
     },
 
@@ -22,5 +30,11 @@ cc.Class({
     buttonClick: function (event, coustomData) {
         cc.log("button click = " + coustomData);
         global.event.fire(coustomData + "_tower");
+    },
+    setTower: function (tower) {
+        if (tower !== null) {
+            this.updateGold.string = tower.getComponent('tower').getUpgradeCost();
+            this.sellGold.string = tower.getComponent('tower').getSelledGold();
+        }
     }
 });
