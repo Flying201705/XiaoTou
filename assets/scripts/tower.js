@@ -204,6 +204,11 @@ cc.Class({
         //人物添加级数说明
         this.node.getChildByName("lv").getComponent(cc.Label).string = "LV" + (this.currentLevel + 1);
 
+        let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
+        if (this.currentShootTime <= shootDt) {
+            this.currentShootTime += dt;
+        }
+
         if (this.enemy !== undefined) {
             let direction = cc.pSub(this.node.position, this.enemy.position);
             let angle = cc.pAngleSigned(direction, cc.p(0, -1));
@@ -211,12 +216,9 @@ cc.Class({
             //塔旋转
             //this.node.rotation = (180 / Math.PI) * angle;
 
-            let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
             if (this.currentShootTime > shootDt) {
                 this.currentShootTime = 0;
                 this.shootBullet();
-            } else {
-                this.currentShootTime += dt;
             }
 
             let distance = cc.pDistance(this.enemy.position, this.node.position);
