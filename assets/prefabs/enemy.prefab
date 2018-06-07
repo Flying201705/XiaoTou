@@ -446,6 +446,9 @@
     },
     "audioDead": {
       "__uuid__": "2bc923f4-fbb4-4c41-b41d-587cedfdd87f"
+    },
+    "damagePrefab": {
+      "__uuid__": "7b80e256-3552-49a7-924d-77dd827b1f40"
     }
   },
   {

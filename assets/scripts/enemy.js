@@ -27,6 +27,10 @@ cc.Class({
         audioDead: {
             default: null,
             url: cc.AudioClip
+        },
+        damagePrefab: {
+            default: null,
+            type: cc.Prefab
         }
     },
 
@@ -178,6 +182,8 @@ cc.Class({
                 this.node.parent.getComponent("level").dropGoods();
             }
         }
+
+        this.damageAnimation(damage);
     },
 
     handleStuned: function () {
@@ -236,5 +242,11 @@ cc.Class({
             return true;
         }
         return false;
+    },
+
+    damageAnimation: function (num) {
+        let damage = cc.instantiate(this.damagePrefab);
+        damage.parent = this.node;
+        damage.getComponent("Damage").hit(num);
     }
 });
