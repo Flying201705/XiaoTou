@@ -7,6 +7,7 @@ import GoodsData from './GoodsData';
 
 const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
+const update_user_level = "user/changeLevel.do?";
 const get_levels = "level/allLevels.do?";
 const update_level = "level/updateLevel.do?";
 const get_goods = "goods/allGoods.do?";
@@ -70,7 +71,31 @@ const InfoHandle = cc.Class({
         }
     },
 
+    updateLatestLevel: function(level) {
+        let url = http_head + update_user_level + "id=" + InfoData.user.id + "&level=" + level;
+        this.sendRequest(url, null);
+    },
+
     updateLevel: function(lv, score, stars) {
+        if (InfoData.user.level <= lv) {
+            InfoData.user.level = lv + 1;
+            this.updateLatestLevel(InfoData.user.level);
+        }
+        
+        if (InfoData.levels.length >= lv) {
+            if (InfoData.levels[lv].stars >= stars) {
+                return;
+            }
+            InfoData.levels[lv - 1].stars = stars;
+        } else {
+            let level = new LevelData();
+            level.level = lv;
+            level.score = score;
+            level.stars = stars;
+            InfoData.levels[lv - 1] = level;
+        }
+
+
         let url = http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars;
         this.sendRequest(url, null);
     },

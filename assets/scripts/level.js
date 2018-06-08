@@ -460,6 +460,10 @@ cc.Class({
         } else {
             this.audioMng.playLose();
         }
+        
+        if (win == true) {
+            new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
+        }
         this.gameover = this.gameOverUI.getComponent("GameOver");
         this.gameover.showUI(win);
     },
@@ -473,7 +477,19 @@ cc.Class({
         // 锚点在中心位置
         return cc.p((x + 0.5) * tileSize.width, (y + 0.5) * tileSize.height);
     },
+
     prefixInteger: function (num, length) {
         return (Array(length).join('0') + num).slice(-length);
+    },
+
+    getStarsForWin: function() {
+        if (this.lifeCount >= 10) {
+            return 3;
+        } else if (this.lifeCount >= 5) {
+            return 2;
+        } else if (this.lifeCount >= 1) {
+            return 1;
+        }
+        return 0;
     },
 });
