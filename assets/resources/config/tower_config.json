@@ -5,7 +5,7 @@
     "costs": [100, 150, 200, 300, 375],
     "damages": [20, 50, 90, 150, 225],
     "gain_rates": [0.2, 0.2, 0.25, 0.25, 0.3],
-    "attack_ranges": [200, 250, 300, 350, 400],
+    "attack_ranges": [85, 125, 170, 210, 225],
     "look_range": 300,
     "shoot_dts": [1, 0.9, 0.8, 0.7, 0.6]
   },
@@ -15,10 +15,10 @@
     "name": "剑士",
     "costs": [200, 250, 300],
     "damages": [70, 157, 262],
-    "attack_ranges": [200, 250, 300],
+    "attack_ranges": [85, 125, 170],
     "look_range": 400,
-    "shoot_dts": [1, 0.8, 0.6],
-    "crit_rates": [0.1, 0.2, 0.3]
+    "shoot_dts": [1, 0.9, 0.8],
+    "crit_rates": [0.05, 0.07, 0.1]
   },
 
   "tower_c":
@@ -26,7 +26,7 @@
     "name": "武士",
     "costs": [200, 250, 300],
     "damages": [70, 157, 262],
-    "attack_ranges": [200, 250, 300],
+    "attack_ranges": [85, 125, 170],
     "look_range": 400,
     "shoot_dts": [1.2, 1.1, 1],
     "stun_rates": [0.1, 0.2, 0.3]
@@ -38,7 +38,7 @@
     "area": 1,
     "costs": [200, 250, 300],
     "damages": [1, 1, 1],
-    "attack_ranges": [200, 250, 300],
+    "attack_ranges": [170, 210, 255],
     "shoot_dts": [1, 0.8, 0.6],
     "slows": [0.1, 0.2, 0.3]
   },
@@ -49,7 +49,7 @@
     "area": 1,
     "costs": [200, 250, 300],
     "damages": [50, 100, 200],
-    "attack_ranges": [200, 250, 300],
+    "attack_ranges": [170, 210, 255],
     "shoot_dts": [1.2, 1.1, 1]
   }
 }

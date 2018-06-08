@@ -24,13 +24,13 @@
   ],
 
   "enemy_4": [
-    {"speed": 100,"health": 200},
+    {"speed": 120,"health": 200},
     {"speed": 120,"health": 300},
     {"speed": 120,"health": 450}
   ],
 
   "enemy_5": [
-    {"speed": 100,"health": 250},
+    {"speed": 120,"health": 250},
     {"speed": 120,"health": 400},
     {"speed": 120,"health": 500}
   ],
