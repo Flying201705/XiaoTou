@@ -1413,10 +1413,10 @@
       "__uuid__": "255586db-60af-4b39-89b9-ec8cf34bcedb"
     },
     "_N$hoverSprite": {
-      "__uuid__": "255586db-60af-4b39-89b9-ec8cf34bcedb"
+      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
     },
     "hoverSprite": {
-      "__uuid__": "255586db-60af-4b39-89b9-ec8cf34bcedb"
+      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
     },
     "_N$disabledSprite": {
       "__uuid__": "c9192009-73c5-42b7-a1ce-699b90cf3282"
@@ -3552,9 +3552,6 @@
     "_enabled": true,
     "selectBox": {
       "__id__": 13
-    },
-    "levelMap": {
-      "__id__": 9
     },
     "buildMenuPrefab": {
       "__uuid__": "661f2662-c7bd-43a8-bfca-8a65487b3a58"
