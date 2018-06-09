@@ -105,8 +105,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 53,
-      "height": 63
+      "width": 60,
+      "height": 80
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -292,7 +292,8 @@
     "shootAudio": {
       "__uuid__": "0c22870e-0882-4df2-b1bd-2a7ac8be7fdf"
     },
-    "towerType": "tower_e"
+    "towerType": "tower_e",
+    "bulletType": 1
   },
   {
     "__type__": "cc.PrefabInfo",

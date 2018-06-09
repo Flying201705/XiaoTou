@@ -20,7 +20,8 @@ cc.Class({
             default: null,
             url: cc.AudioClip
         },
-        towerType: ""
+        towerType: "",
+        bulletType: 0
     },
 
     // use this for initialization
@@ -228,13 +229,6 @@ cc.Class({
         }
     },
     shootBullet: function () {
-        /*if (this.currentLevel === 0) {
-            this.anim.play("tower_1");
-        } else if (this.currentLevel === 1) {
-            this.anim.play("tower_2");
-        } else if (this.currentLevel === 2) {
-            this.anim.play("tower_3");
-        }*/
         this.anim.play(this.towerType);
         if (this.buffAttack === true) {
             global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);

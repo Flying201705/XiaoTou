@@ -33,7 +33,7 @@ cc.Class({
             type: cc.Prefab
         },
         bulletPrefab: {
-            default: null,
+            default: [],
             type: cc.Prefab
         },
         goldLabel: {
@@ -386,7 +386,7 @@ cc.Class({
     },
 
     addBullet: function (tower, position) {
-        let bullet = cc.instantiate(this.bulletPrefab);
+        let bullet = cc.instantiate(this.bulletPrefab[tower.getComponent("tower").bulletType]);
         // bullet.position = tower.position;
         bullet.parent = this.node;
         bullet.getComponent("bullet").initWithData(tower, position, this.enemyNodeList);
