@@ -40,16 +40,16 @@ cc.Class({
         });
     },
 
-    showUI: function (win) {
+    showUI: function (win, stars) {
         cc.log("win=" + win);
         if (win === true) {
             this.win.active = true;
             this.lose.active = false;
             let star = this.star.getComponent("GameStar");
             //TODO 设置星星
-            let testStar = Math.floor(Math.random()*3);
-            cc.log("star: " + testStar);
-            star.initSprite(testStar);
+            //let testStar = Math.floor(Math.random()*3);
+            cc.log("star: " + stars);
+            star.initSprite(stars);
         } else {
             this.win.active = false;
             this.lose.active = true;

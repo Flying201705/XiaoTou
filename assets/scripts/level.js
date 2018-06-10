@@ -465,7 +465,7 @@ cc.Class({
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
         }
         this.gameover = this.gameOverUI.getComponent("GameOver");
-        this.gameover.showUI(win);
+        this.gameover.showUI(win, this.getStarsForWin());
     },
 
     getTilePos: function (posInPixel) {

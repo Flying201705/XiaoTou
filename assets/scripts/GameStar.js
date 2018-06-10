@@ -9,8 +9,8 @@ cc.Class({
     },
     
     initSprite: function (star) {
-        if (star >= 0 && star < 3) {
-            this.node.getComponent(cc.Sprite).spriteFrame = this.sprites[star];
+        if (star > 0 && star <= 3) {
+            this.node.getComponent(cc.Sprite).spriteFrame = this.sprites[star - 1];
         }
     }
 });
