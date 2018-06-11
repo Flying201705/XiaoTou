@@ -58,8 +58,17 @@ const InfoHandle = cc.Class({
     handleLevels: function(obj) {
         for (let i = 0; i < obj.length; i++) {
             let level = new LevelData();
+
+            //服务器关卡数据异常，跳关
+            if (i < obj[i].lv - 1) {
+                for (let j = i; j < obj[i].lv - 1; j++) {
+                    let templevel = new LevelData();
+                    InfoData.levels[j] = templevel;
+                }
+            }
+
             level.init(obj[i]);
-            InfoData.levels[i] = level;
+            InfoData.levels[obj[i].lv - 1] = level;
         }
     },
 
@@ -82,8 +91,8 @@ const InfoHandle = cc.Class({
             this.updateLatestLevel(InfoData.user.level);
         }
         
-        if (InfoData.levels.length >= lv) {
-            if (InfoData.levels[lv].stars >= stars) {
+        if (InfoData.levels[lv - 1] != null) {
+            if (InfoData.levels[lv - 1].stars >= stars) {
                 return;
             }
             InfoData.levels[lv - 1].stars = stars;
