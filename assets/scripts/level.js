@@ -361,14 +361,6 @@ cc.Class({
 
         for (let i = 0; i < this.towerNodeList.length; i++) {
             let tower = this.towerNodeList[i];
-            /*if (tower !== undefined && tower.getComponent("tower").isFree()) {
-                for (let j = 0; j < this.enemyNodeList.length; j++) {
-                    let enemy = this.enemyNodeList[j];
-                    if (enemy.getComponent("enemy").isLiving()) {
-                        tower.getComponent("tower").setEnemy(enemy);
-                    }
-                }
-            }*/
             if (tower !== undefined) {
                 if (tower.getComponent("tower").ifBuffAttack()) {
                     tower.getComponent("tower").setTowerList(this.towerNodeList);
@@ -460,12 +452,13 @@ cc.Class({
         } else {
             this.audioMng.playLose();
         }
-        
+
+        this.gameover = this.gameOverUI.getComponent("GameOver");
+        this.gameover.showUI(win, this.getStarsForWin());
+
         if (win == true) {
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
         }
-        this.gameover = this.gameOverUI.getComponent("GameOver");
-        this.gameover.showUI(win, this.getStarsForWin());
     },
 
     getTilePos: function (posInPixel) {
