@@ -55,6 +55,8 @@ cc.Class({
         this.beStuned = false;
         //减速
         this.slowRate = 0;
+        //位置标签，标签值越大越靠前
+        this.positionTag = 0;
     },
 
     initWithData: function (type, level, pathPoints) {
@@ -83,7 +85,6 @@ cc.Class({
                 this.schedule(this.playAnim, 1);
             }
         });
-
     },
 
     playAnim: function () {
@@ -105,6 +106,8 @@ cc.Class({
             }
         }
         this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
+        //位置标签 = 当前节点 * 10000 + distance
+        this.positionTag = this.currentPathPointCount * 10000 + cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
     },
     setState: function (state) {
         if (this.state === state) {

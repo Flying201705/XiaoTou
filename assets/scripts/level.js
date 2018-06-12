@@ -365,6 +365,7 @@ cc.Class({
                 if (tower.getComponent("tower").ifBuffAttack()) {
                     tower.getComponent("tower").setTowerList(this.towerNodeList);
                 }
+                this.sortEnemyList(this.enemyNodeList);
                 tower.getComponent("tower").setEnemyList(this.enemyNodeList);
             }
         }
@@ -484,5 +485,18 @@ cc.Class({
             return 1;
         }
         return 0;
+    },
+
+    sortEnemyList: function(enemyList) {
+        for (let i = 0; i < enemyList.length; i++) {
+			for (let j = i + 1; j < enemyList.length; j++) {
+                //位置标签值越大位置越靠前
+				if (enemyList[j].getComponent("enemy").positionTag > enemyList[i].getComponent("enemy").positionTag) {
+                    let enemy = enemyList[i];
+                    enemyList[i] = enemyList[j];
+                    enemyList[j] = enemy;
+				}
+			}
+		}
     },
 });
