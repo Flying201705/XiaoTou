@@ -19,23 +19,23 @@
 
   "enemy_3": [
     {"speed": 100,"health": 150},
-    {"speed": 120,"health": 200},
-    {"speed": 120,"health": 300}
+    {"speed": 120,"health": 250},
+    {"speed": 120,"health": 400}
   ],
 
   "enemy_4": [
-    {"speed": 120,"health": 200},
     {"speed": 120,"health": 300},
-    {"speed": 120,"health": 450}
+    {"speed": 120,"health": 500},
+    {"speed": 120,"health": 650}
   ],
 
   "enemy_5": [
-    {"speed": 120,"health": 250},
-    {"speed": 120,"health": 400},
-    {"speed": 120,"health": 500}
+    {"speed": 120,"health": 500},
+    {"speed": 120,"health": 650},
+    {"speed": 120,"health": 800}
   ],
 
   "enemy_7": [
-    {"boss": 1,"speed": 40,"health": 5000,"armor": 20}
+    {"boss": 1,"speed": 40,"health": 10000,"armor": 20}
   ]
 }
