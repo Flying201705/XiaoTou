@@ -214,7 +214,6 @@ cc.Class({
             return;
         }
 
-        this.goldCount -= create_cost;
         let tower = cc.instantiate(this.towerPrefabs[data]);
         tower.parent = this.node;
         tower.position = this.getTilePos(this.build_menu.position);
@@ -224,6 +223,7 @@ cc.Class({
         tower.getComponent("tower").initWithData(this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
         this.towerNodeList.push(tower);
 
+        this.detractGold(create_cost);
         this.audioMng.playTowerBuild();
     },
 
@@ -284,6 +284,7 @@ cc.Class({
             this.levelConfig = result["level_" + this.currentLevel];
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
+            this.isTowerCanUpgrade();
             this.build_menu.getComponent("build-menu").initWithData(this.levelConfig.towers);
             this.totalWaveLabel.string = this.levelConfig.waves.length.toString();
         });
@@ -415,12 +416,28 @@ cc.Class({
 
     addGold: function (gold) {
         this.goldCount += gold;
+        this.isTowerCanUpgrade();
     },
 
     detractGold: function (gold) {
         this.goldCount -= gold;
         if (this.goldCount < 0) {
             this.goldCount = 0;
+        }
+        this.isTowerCanUpgrade();
+    },
+
+    isTowerCanUpgrade: function () {
+        for (let i = 0; i < this.towerNodeList.length; i++) {
+            let tower = this.towerNodeList[i];
+            if (tower !== undefined) {
+                let t = tower.getComponent("tower");
+                if (this.goldCount >= t.getUpgradeCost()) {
+                    t.showGradeMark();
+                } else {
+                    t.hideGradeMark();
+                }
+            }
         }
     },
 

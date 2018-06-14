@@ -16,6 +16,10 @@ cc.Class({
             default: null,
             type: cc.Animation
         },
+        upgradeNode: {
+            default: null,
+            type: cc.Node
+        },
         shootAudio: {
             default: null,
             url: cc.AudioClip
@@ -295,4 +299,10 @@ cc.Class({
         }
         return Math.floor(gold / 2);
     },
+    showGradeMark: function () {
+        this.upgradeNode.active = true;
+    },
+    hideGradeMark: function () {
+        this.upgradeNode.active = false;
+    }
 });
