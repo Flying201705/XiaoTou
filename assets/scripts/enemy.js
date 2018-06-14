@@ -1,9 +1,14 @@
 const EnemyState = {
     Invalid: -1,
+    //无敌状态
+    Unbeatable: 0,
     Running: 1,
     EndPath: 2,
     Dead: 3
 };
+//保持无敌状态的距离
+const UnbeatableDistance = 50;
+
 cc.Class({
     extends: cc.Component,
 
@@ -80,7 +85,7 @@ cc.Class({
                 if (config.armor !== undefined) {
                     this.armor = config.armor;
                 }
-                this.setState(EnemyState.Running);
+                this.setState(EnemyState.Unbeatable);
 
                 this.schedule(this.playAnim, 1);
             }
@@ -92,7 +97,7 @@ cc.Class({
     },
 
     update: function (dt) {
-        if (this.state === EnemyState.Running) {
+        if (this.state === EnemyState.Running || this.state === EnemyState.Unbeatable) {
             let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
             if (distance < 10) {
                 this.currentPathPointCount++;
@@ -104,6 +109,12 @@ cc.Class({
             } else if (!this.beStuned) {
                 this.node.position = cc.pAdd(this.node.position, cc.pMult(this.direction, this.speed * (1 - this.slowRate) * dt));
             }
+
+            let startDistance = cc.pDistance(this.node.position, this.pathPoints[0]);
+            //超过一定距离，无敌状态消失
+            if (startDistance > UnbeatableDistance) {
+                this.setState(EnemyState.Running);
+            }
         }
         this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
         //位置标签 = 当前节点 * 10000 + distance
@@ -114,6 +125,7 @@ cc.Class({
             return;
         }
         switch (state) {
+            case EnemyState.Unbeatable:
             case EnemyState.Running:
                 this.node.opacity = 255;
                 break;
