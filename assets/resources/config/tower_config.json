@@ -29,7 +29,7 @@
     "attack_ranges": [90, 125, 170],
     "look_range": 400,
     "shoot_dts": [1.2, 1.1, 1],
-    "stun_rates": [0.1, 0.2, 0.3]
+    "stun_rates": [0.1, 0.15, 0.2]
   },
 
   "tower_d":
