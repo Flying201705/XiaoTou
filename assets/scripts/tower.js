@@ -80,34 +80,34 @@ cc.Class({
             this.currentUpgradeCost = this.towerConfig.costs[this.currentLevel + 1];
         }
         this.currentDamage = this.towerConfig.damages[this.currentLevel];
-        if (this.towerConfig.gain_rates != undefined && this.towerConfig.gain_rates.length > 0) {
+        if (this.towerConfig.gain_rates !== undefined && this.towerConfig.gain_rates.length > 0) {
             this.currentGainRate = this.towerConfig.gain_rates[this.currentLevel];
         }
         this.currentAttackRange = this.towerConfig.attack_ranges[this.currentLevel];
         //this.lookRange = this.towerConfig.look_range;
         this.lookRange = this.currentAttackRange;
         this.shootBulletDt = this.towerConfig.shoot_dts[this.currentLevel];
-        if (this.towerConfig.area != undefined) {
+        if (this.towerConfig.area !== undefined) {
             this.areaAttack = this.towerConfig.area > 0;
         }
-        if (this.towerConfig.stun_rates != undefined && this.towerConfig.stun_rates.length > 0) {
+        if (this.towerConfig.stun_rates !== undefined && this.towerConfig.stun_rates.length > 0) {
             this.currentStunRate = this.towerConfig.stun_rates[this.currentLevel];
         }
-        if (this.towerConfig.crit_rates != undefined && this.towerConfig.crit_rates.length > 0) {
+        if (this.towerConfig.crit_rates !== undefined && this.towerConfig.crit_rates.length > 0) {
             this.currentCritRate = this.towerConfig.crit_rates[this.currentLevel];
         }
-        if (this.towerConfig.slows != undefined && this.towerConfig.slows.length > 0) {
+        if (this.towerConfig.slows !== undefined && this.towerConfig.slows.length > 0) {
             this.currentSlowRate = this.towerConfig.slows[this.currentLevel];
             //所有减速塔均为范围攻击
             this.areaAttack = true;
         }
-        if (this.towerConfig.attack_rates != undefined && this.towerConfig.attack_rates.length > 0) {
+        if (this.towerConfig.attack_rates !== undefined && this.towerConfig.attack_rates.length > 0) {
             this.currentAttackRate = this.towerConfig.attack_rates[this.currentLevel];
             //所有攻击加成的塔均为范围攻击的BUFF塔
             this.buffAttack = true;
             this.areaAttack = true;
         }
-        if (this.towerConfig.speed_rates != undefined && this.towerConfig.speed_rates.length > 0) {
+        if (this.towerConfig.speed_rates !== undefined && this.towerConfig.speed_rates.length > 0) {
             this.currentSpeedRate = this.towerConfig.speed_rates[this.currentLevel];
             //所有攻速加成的塔均为范围攻击的BUFF塔
             this.buffAttack = true;
@@ -134,13 +134,11 @@ cc.Class({
     }
     ,
     isFree: function () {
-        if (this.enemy === undefined) {
-            return true;
-        }
-        return false;
+        return this.enemy === undefined;
+
     },
     setTowerList: function(towerList) {
-        if (this.buffAttack != true) {
+        if (this.buffAttack !== true) {
             return;
         }
 
@@ -163,18 +161,18 @@ cc.Class({
     setEnemyList: function(enemyList) {
         this.areaEnemyList = [];
         for (let i = 0; i < enemyList.length; i++) {
-            if (this.isFree() != true && this.areaAttack != true) {
+            if (this.isFree() !== true && this.areaAttack !== true) {
                 break;
             }
             let enemy = enemyList[i];
             if (enemy.getComponent("enemy").isLiving()) {
                 let distance = cc.pDistance(enemy.position, this.node.position);
                 if (distance < this.lookRange) {
-                    if (this.isFree() == true) {
+                    if (this.isFree() === true) {
                         this.enemy = enemy;
                     }
 
-                    if (this.areaAttack == true && this.buffAttack != true) {
+                    if (this.areaAttack === true && this.buffAttack !== true) {
                         this.areaEnemyList.push(enemy);
                     }
                 }
@@ -293,7 +291,7 @@ cc.Class({
         return this.currentUpgradeCost;
     },
     getSelledGold: function() {
-        var gold = 0;
+        let gold = 0;
         for (let i = 0; i <= this.currentLevel; i++) {
             gold += this.towerConfig.costs[i];
         }

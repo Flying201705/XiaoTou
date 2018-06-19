@@ -296,7 +296,7 @@
     "_actualFontSize": 14,
     "_fontSize": 14,
     "_lineHeight": 20,
-    "_enableWrapText": false,
+    "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "7b2de0f7-e8c9-43f8-ac88-26faf87cce02"
     },
@@ -379,7 +379,7 @@
       "__id__": 5
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,
@@ -660,7 +660,7 @@
       "__id__": 14
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,
@@ -736,6 +736,20 @@
       "__id__": 1
     },
     "_enabled": true,
+    "updateNode": {
+      "__id__": 5
+    },
+    "updateSprites": [
+      {
+        "__uuid__": "acc2a9eb-ec14-4151-b6b9-145471816155"
+      },
+      {
+        "__uuid__": "acc2a9eb-ec14-4151-b6b9-145471816155"
+      },
+      {
+        "__uuid__": "ce443325-30b3-4b1a-bba5-c32be1303778"
+      }
+    ],
     "updateGold": {
       "__id__": 7
     },

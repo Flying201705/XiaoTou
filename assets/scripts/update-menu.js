@@ -3,6 +3,14 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        updateNode: {
+            default: null,
+            type: cc.Node
+        },
+        updateSprites: {
+            default: [],
+            type: cc.SpriteFrame
+        },
         updateGold: {
             default: null,
             type: cc.Label
@@ -31,10 +39,19 @@ cc.Class({
         cc.log("button click = " + coustomData);
         global.event.fire(coustomData + "_tower");
     },
-    setTower: function (tower) {
+    setTower: function (tower, gold) {
         if (tower !== null) {
-            this.updateGold.string = tower.getComponent('tower').getUpgradeCost();
-            this.sellGold.string = tower.getComponent('tower').getSelledGold();
+            let t = tower.getComponent('tower');
+            if (t.canUpgrade()) {
+                this.updateNode.getComponent(cc.Sprite).spriteFrame = this.updateSprites[gold >= t.getUpgradeCost() ? 0 : 1];
+                this.updateNode.getComponent(cc.Button).enabled = true;
+                this.updateGold.string = t.getUpgradeCost();
+            } else {
+                this.updateNode.getComponent(cc.Sprite).spriteFrame = this.updateSprites[2];
+                this.updateNode.getComponent(cc.Button).enabled = false;
+                this.updateGold.string = "";
+            }
+            this.sellGold.string = t.getSelledGold();
         }
     }
 });

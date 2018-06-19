@@ -174,7 +174,7 @@ cc.Class({
             this.selectBox.parent = this.node;
             this.selectBox.position = tower.position;
 
-            this.update_menu.getComponent('update-menu').setTower(tower);
+            this.update_menu.getComponent('update-menu').setTower(tower, this.goldCount);
             this.update_menu.position = tower.position;
             this.update_menu.index = index;
             this.update_menu.parent = this.node;
@@ -432,7 +432,7 @@ cc.Class({
             let tower = this.towerNodeList[i];
             if (tower !== undefined) {
                 let t = tower.getComponent("tower");
-                if (this.goldCount >= t.getUpgradeCost()) {
+                if (t.canUpgrade() && this.goldCount >= t.getUpgradeCost()) {
                     t.showGradeMark();
                 } else {
                     t.hideGradeMark();
