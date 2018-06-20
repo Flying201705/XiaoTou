@@ -70,7 +70,7 @@ cc.Class({
 
     initWithData: function (type, level, pathPoints) {
         this.type = type;
-        if (this.isBoss()) {
+        if (this.type >= 1000) {
             this.spriteNode.spriteFrame = this.bossFrames[this.type % 1000];
         } else {
             this.spriteNode.spriteFrame = this.enemyFrames[this.type];
@@ -100,7 +100,7 @@ cc.Class({
     },
 
     playAnim: function () {
-        if (this.isBoss()) {
+        if (this.type >= 1000) {
             this.anim.play("boss_" + (this.type % 1000));
         } else {
             this.anim.play("enemy_" + (this.type));
@@ -162,14 +162,6 @@ cc.Class({
                 break;
         }
         this.state = state;
-    },
-
-    isBoss: function() {
-        if (this.type >= 1000) {
-            return true;
-        }
-        
-        return false;
     },
 
     isLiving: function () {

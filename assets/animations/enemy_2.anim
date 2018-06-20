@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "enemy_2",
+  "_name": "enemy_3",
   "_objFlags": 0,
   "_rawFiles": null,
   "_duration": 0.5166666666666667,
@@ -14,19 +14,19 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "d86c5529-6207-4268-bdf4-34cf3e559706"
+              "__uuid__": "afdc26af-80db-46ab-8e75-a56ab5fcf85c"
             }
           },
           {
             "frame": 0.25,
             "value": {
-              "__uuid__": "6a46027b-6066-4cdd-9e85-578ea8626f92"
+              "__uuid__": "b8584c29-aec5-4d72-92dd-f73637187156"
             }
           },
           {
             "frame": 0.5,
             "value": {
-              "__uuid__": "1faf2443-60a9-46ad-a60a-793e76049ed6"
+              "__uuid__": "e714806b-7701-491b-8c58-20f066b171fc"
             }
           }
         ]

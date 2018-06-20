@@ -409,7 +409,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "spriteFrames": [
+    "enemyFrames": [
       {
         "__uuid__": "7589766f-1404-43c8-8c75-efdd3db25ec4"
       },
@@ -430,7 +430,9 @@
       },
       {
         "__uuid__": "5cf680b8-3928-4d5c-8e65-bfbacea696db"
-      },
+      }
+    ],
+    "bossFrames": [
       {
         "__uuid__": "6d782529-1fb7-4ec1-b8a8-706b66eb754d"
       }
