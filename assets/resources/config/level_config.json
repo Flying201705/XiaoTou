@@ -190,7 +190,7 @@
       {"dt": 1,"type": 4,"lv": 0,"count": 10},
       {"dt": 1,"type": 3,"lv": 2,"count": 10},
       {"dt": 1,"type": 5,"lv": 0,"count": 10},
-      {"dt": 2,"type": 7,"lv": 0,"count": 1},
+      {"dt": 2,"type": 1000,"lv": 0,"count": 1},
       {"dt": 1,"type": 4,"lv": 1,"count": 10},
       {"dt": 1,"type": 5,"lv": 1,"count": 10},
       {"dt": 1,"type": 4,"lv": 2,"count": 10},

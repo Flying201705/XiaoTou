@@ -13,7 +13,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        spriteFrames: {
+        enemyFrames: {
+            default: [],
+            type: cc.SpriteFrame
+        },
+        bossFrames: {
             default: [],
             type: cc.SpriteFrame
         },
@@ -65,9 +69,12 @@ cc.Class({
     },
 
     initWithData: function (type, level, pathPoints) {
-        //0 - 6
         this.type = type;
-        this.spriteNode.spriteFrame = this.spriteFrames[type];
+        if (this.isBoss()) {
+            this.spriteNode.spriteFrame = this.bossFrames[this.type % 1000];
+        } else {
+            this.spriteNode.spriteFrame = this.enemyFrames[this.type];
+        }
         this.pathPoints = pathPoints;
         this.node.position = pathPoints[0];
         cc.loader.loadRes("./config/monster_config", (err, result) => {
@@ -93,7 +100,11 @@ cc.Class({
     },
 
     playAnim: function () {
-        this.anim.play("enemy_" + (this.type + 1));
+        if (this.isBoss()) {
+            this.anim.play("boss_" + (this.type % 1000));
+        } else {
+            this.anim.play("enemy_" + (this.type));
+        }
     },
 
     update: function (dt) {
@@ -152,6 +163,15 @@ cc.Class({
         }
         this.state = state;
     },
+
+    isBoss: function() {
+        if (this.type >= 1000) {
+            return true;
+        }
+        
+        return false;
+    },
+
     isLiving: function () {
         if (this.state === EnemyState.Running) {
             return true;
