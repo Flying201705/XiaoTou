@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "2963c1e3-5e2c-49e1-b785-909ead275fc6",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "BossHP08": {
+      "ver": "1.0.3",
+      "uuid": "6187c3ff-8288-49c4-b492-abcaa4d960f8",
+      "rawTextureUuid": "2963c1e3-5e2c-49e1-b785-909ead275fc6",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": -0.5,
+      "trimX": 1,
+      "trimY": 1,
+      "width": 73,
+      "height": 37,
+      "rawWidth": 74,
+      "rawHeight": 38,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

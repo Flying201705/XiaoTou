@@ -48,9 +48,9 @@ cc.Class({
             default: null,
             type: cc.Label
         },
-        lifeLabel: {
+        lifeNode: {
             default: null,
-            type: cc.Label
+            type: cc.Node
         },
         gameOverUI: {
             default: null,
@@ -323,7 +323,7 @@ cc.Class({
 
     update: function (dt) {
         this.goldLabel.string = this.goldCount.toString();
-        this.lifeLabel.string = this.lifeCount.toString();
+        this.lifeNode.getComponent("Life").setLife(this.lifeCount);
         if (this.currentWaveConfig) {
             if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
                 this.addEnemyCurrentTime = 0;
@@ -372,7 +372,7 @@ cc.Class({
         }
 
         if (this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
-            && this.currentWaveConfig == undefined
+            && this.currentWaveConfig === undefined
             && this.enemyNodeList.length <= 0) {
             //游戏结束--赢了
             this.gameOver(true);
@@ -474,7 +474,7 @@ cc.Class({
         this.gameover = this.gameOverUI.getComponent("GameOver");
         this.gameover.showUI(win, this.getStarsForWin());
 
-        if (win == true) {
+        if (win === true) {
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
         }
     },

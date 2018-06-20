@@ -35,9 +35,9 @@ cc.Class({
     onDestroy: function() {
         this.anim.stop("update_menu");
     },
-    buttonClick: function (event, coustomData) {
-        cc.log("button click = " + coustomData);
-        global.event.fire(coustomData + "_tower");
+    buttonClick: function (event, customData) {
+        cc.log("button click = " + customData);
+        global.event.fire(customData + "_tower");
     },
     setTower: function (tower, gold) {
         if (tower !== null) {
