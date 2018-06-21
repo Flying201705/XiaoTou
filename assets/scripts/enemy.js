@@ -188,7 +188,7 @@ cc.Class({
         this.handleDamage(damage, bullet.gainRate);
 
         //减速代码
-        if (bullet.slowRate >= this.slowRate) {
+        if (bullet.slowRate > 0 && bullet.slowRate >= this.slowRate) {
             this.hanleSlowed(bullet.slowRate);
         }
     },
