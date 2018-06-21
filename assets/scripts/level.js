@@ -40,11 +40,7 @@ cc.Class({
             default: null,
             type: cc.Label
         },
-        currentWaveLabel: {
-            default: null,
-            type: cc.Label
-        },
-        totalWaveLabel: {
+        waveDetails: {
             default: null,
             type: cc.Label
         },
@@ -65,35 +61,33 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         cc.log("level onLoad begin");
+
         this.setTouchEvent();
+
         //当前关卡
         this.currentLevel = global.currentLevel;
-        global.event.on("build_tower", this.buildTower.bind(this));
-        global.event.on("update_tower", this.updateTower.bind(this));
-        global.event.on("sell_tower", this.sellTower.bind(this));
-        global.event.on("game_start", this.gameStart.bind(this));
-        global.event.on("shoot_bullet", this.addBullet.bind(this));
-        global.event.on("shoot_buff", this.addBuff.bind(this));
-        global.event.on("release_slow", this.handleSlow.bind(this));
-        global.event.on("release_stun", this.handleStun.bind(this));
-        global.event.on("release_damage", this.handleDamage.bind(this));
-        this.build_menu = cc.instantiate(this.buildMenuPrefab);
-        this.update_menu = cc.instantiate(this.updateMenuPrefab);
+
         this.currentWaveCount = 0;
+        this.totalWaveCount = 0;
         this.currentEnemyCount = 0;
+
+        this.tileSize = 80;
+        this.goldCount = 0;
+        this.lifeCount = 10;
         this.addEnemyCurrentTime = 0;
         this.addWaveCurrentTime = 0;
+
+        this.selectBox.active = false;
+
         this.enemyPathPositions = [];
         this.enemyNodeList = [];
         this.towerRects = [];
         this.towerNodeList = [];
-        this.bulletNodeList = [];
-        this.tileSize = 80;
 
-        this.selectBox.active = false;
+        this.initEvent();
 
-        this.goldCount = 0;
-        this.lifeCount = 10;
+        this.build_menu = cc.instantiate(this.buildMenuPrefab);
+        this.update_menu = cc.instantiate(this.updateMenuPrefab);
 
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
@@ -103,6 +97,18 @@ cc.Class({
         this.audioMng = this.audioMng.getComponent("GameAudio");
     },
 
+    initEvent: function() {
+        global.event.on("build_tower", this.buildTower.bind(this));
+        global.event.on("update_tower", this.updateTower.bind(this));
+        global.event.on("sell_tower", this.sellTower.bind(this));
+        global.event.on("game_start", this.gameStart.bind(this));
+        global.event.on("shoot_bullet", this.addBullet.bind(this));
+        global.event.on("shoot_buff", this.addBuff.bind(this));
+        global.event.on("release_slow", this.handleSlow.bind(this));
+        global.event.on("release_stun", this.handleStun.bind(this));
+        global.event.on("release_damage", this.handleDamage.bind(this));
+    },
+
     setTouchEvent: function () {
         this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
             if (cc.director.isPaused()) {
@@ -110,7 +116,7 @@ cc.Class({
             }
 
             let index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
-            cc.log("touchend event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
+            cc.log("touched event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
                 this.showUpdateMenu(index);
             } else if (this.selectBox.active === true) {
@@ -262,10 +268,6 @@ cc.Class({
         }
     },
 
-    isLevelMax: function (level, maxlevel) {
-
-    },
-
     gameStart: function () {
         this.loadLevelConfig();
         this.loadTowerConfig();
@@ -286,7 +288,7 @@ cc.Class({
             this.goldCount = this.levelConfig.gold;
             this.isTowerCanUpgrade();
             this.build_menu.getComponent("build-menu").initWithData(this.levelConfig.towers);
-            this.totalWaveLabel.string = this.levelConfig.waves.length.toString();
+            this.totalWaveCount = this.levelConfig.waves.length;
         });
     },
 
@@ -312,15 +314,6 @@ cc.Class({
         });
     },
 
-    addEnemy: function (type, level) {
-        // cc.log("add Enemy" + this.currentEnemyCount);
-        // cc.log("add Wave " + this.currentWaveCount)
-        let enemy = cc.instantiate(this.enemyPrefab);
-        enemy.getComponent("enemy").initWithData(type, level, this.enemyPathPositions);
-        enemy.parent = this.node;
-        this.enemyNodeList.push(enemy);
-    },
-
     update: function (dt) {
         this.goldLabel.string = this.goldCount.toString();
         this.lifeNode.getComponent("Life").setLife(this.lifeCount);
@@ -342,7 +335,7 @@ cc.Class({
                 this.currentWaveConfig = this.levelConfig.waves[this.currentWaveCount];
                 if (this.currentWaveCount < this.levelConfig.waves.length) {
                     this.currentWaveCount++;
-                    this.currentWaveLabel.string = this.prefixInteger(this.currentWaveCount, 2);//this.currentWaveCount.toString();
+                    this.updateWaveDetails();
                 } else {
                     this.currentWaveConfig = undefined;
                 }
@@ -377,6 +370,17 @@ cc.Class({
             //游戏结束--赢了
             this.gameOver(true);
         }
+    },
+
+    updateWaveDetails: function() {
+        this.waveDetails.string = this.prefixInteger(this.currentWaveCount, 2) + "/" + this.prefixInteger(this.totalWaveCount, 2);
+    },
+
+    addEnemy: function (type, level) {
+        let enemy = cc.instantiate(this.enemyPrefab);
+        enemy.getComponent("enemy").initWithData(type, level, this.enemyPathPositions);
+        enemy.parent = this.node;
+        this.enemyNodeList.push(enemy);
     },
 
     addBullet: function (tower, position) {
