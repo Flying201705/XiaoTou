@@ -33,6 +33,10 @@ cc.Class({
             default: null,
             type: cc.Animation
         },
+        slowDebuff: {
+            default: null,
+            type: cc.Node
+        },
         audioDead: {
             default: null,
             url: cc.AudioClip
@@ -227,10 +231,12 @@ cc.Class({
         this.unschedule(this.cancelSlowed);
         this.slowRate = rate;
         this.scheduleOnce(this.cancelSlowed, 2);
+        this.slowDebuff.active = true;
     },
 
     cancelSlowed: function () {
         this.slowRate = 0;
+        this.slowDebuff.active = false;
     },
 
     beTriggerRate: function (rate) {
