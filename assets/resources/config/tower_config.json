@@ -37,8 +37,8 @@
     "name": "女巫",
     "area": 1,
     "costs": [200, 250, 300],
-    "damages": [1, 1, 1],
-    "attack_ranges": [170, 210, 255],
+    "damages": [0, 0, 0],
+    "attack_ranges": [150, 180, 210],
     "shoot_dts": [1, 0.8, 0.6],
     "slows": [0.1, 0.2, 0.3]
   },

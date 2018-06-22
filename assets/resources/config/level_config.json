@@ -223,7 +223,7 @@
 
   "level_12":{
     "dt": 1,
-    "gold": 250,
+    "gold": 350,
     "towers": [
       {"type": "tower_a","level": 4},
       {"type": "tower_b","level": 2},
