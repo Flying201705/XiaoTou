@@ -1,6 +1,12 @@
 import EventListener from './event-listener'
+
 let global = {
-    currentLevel:1,
+    loadRes: false,
+    currentLevel: 1,
+    userInfo: null,
     event: EventListener({}),
 };
+
+window.global = global;
+
 export default global;
