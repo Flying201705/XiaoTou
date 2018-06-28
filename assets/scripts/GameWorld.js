@@ -16,6 +16,14 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        towerGroup: {
+            default: null,
+            type: cc.Node
+        },
+        enemyGroup: {
+            default: null,
+            type: cc.Node
+        },
         buildMenuPrefab: {
             default: null,
             type: cc.Prefab
@@ -88,6 +96,8 @@ cc.Class({
 
         this.build_menu = cc.instantiate(this.buildMenuPrefab);
         this.update_menu = cc.instantiate(this.updateMenuPrefab);
+
+        this.towerMng = this.towerGroup.getComponent('TowerMng');
 
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");

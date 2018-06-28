@@ -48,8 +48,6 @@ cc.Class({
                     }
                 }
             }
-
-
         }
         this.loadBar.progress += progress;
     },

@@ -262,7 +262,7 @@ cc.Class({
     },
 
     gainGold: function (gold) {
-        this.node.parent.getComponent("level").addGold(Math.floor(gold));
+        this.node.parent.getComponent("GameWorld").addGold(Math.floor(gold));
     },
 
     isDead: function () {
