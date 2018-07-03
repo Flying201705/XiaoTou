@@ -28,15 +28,7 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        towerPrefabs: {
-            default: [],
-            type: cc.Prefab
-        },
         updateMenuPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemyPrefab: {
             default: null,
             type: cc.Prefab
         },
@@ -90,7 +82,6 @@ cc.Class({
         this.enemyPathPositions = [];
         this.enemyNodeList = [];
         this.towerRects = [];
-        this.towerNodeList = [];
 
         this.initEvent();
 
@@ -98,6 +89,7 @@ cc.Class({
         this.update_menu = cc.instantiate(this.updateMenuPrefab);
 
         this.towerMng = this.towerGroup.getComponent('TowerMng');
+        this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
 
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
@@ -139,8 +131,8 @@ cc.Class({
     },
 
     getTouchedTowerIdx: function (x, y) {
-        for (let i = 0; i < this.towerNodeList.length; i++) {
-            let tower = this.towerNodeList[i];
+        for (let i = 0; i < this.towerGroup.childrenCount; i++) {
+            let tower = this.towerGroup.children[i];
             let towerRect = cc.rect(tower.x - tower.width * 0.5, tower.y - tower.height * 0.5, tower.width, tower.height);
             if (cc.rectContainsPoint(towerRect, cc.p(x, y))) {
                 return i;
@@ -184,7 +176,7 @@ cc.Class({
 
     showUpdateMenu: function (index) {
         this.closeMenu();
-        let tower = this.towerNodeList[index];
+        let tower = this.towerGroup.children[index];
         if (tower !== undefined) {
             this.selectBox.active = true;
             this.selectBox.parent = this.node;
@@ -230,14 +222,10 @@ cc.Class({
             return;
         }
 
-        let tower = cc.instantiate(this.towerPrefabs[data]);
-        tower.parent = this.node;
+        let tower = this.towerMng.createTower(this.towerGroup, data);
         tower.position = this.getTilePos(this.build_menu.position);
-        tower.width = 80;
-        tower.height = 80;
         // this.setTowerTouchEvent(tower);
         tower.getComponent("tower").initWithData(this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
-        this.towerNodeList.push(tower);
 
         this.detractGold(create_cost);
         this.audioMng.playTowerBuild();
@@ -248,7 +236,7 @@ cc.Class({
     },
 
     updateTower: function () {
-        let tower = this.towerNodeList[this.closeMenu()];
+        let tower = this.towerGroup.children[this.closeMenu()];
         if (tower !== undefined) {
             let cost = tower.getComponent("tower").getUpgradeCost();
             if (this.goldCount < cost) {
@@ -268,11 +256,12 @@ cc.Class({
 
     sellTower: function () {
         let index = this.closeMenu();
-        let tower = this.towerNodeList[index];
+        let tower = this.towerGroup.children[index];
         if (tower !== undefined) {
             this.addGold(tower.getComponent("tower").getSelledGold());
-            tower.getComponent("tower").sellTower();
-            this.towerNodeList.splice(index, 1);
+            // tower.getComponent("tower").sellTower();
+            this.towerGroup.removeChild(tower);
+            this.towerMng.destroyTower(tower);
 
             this.audioMng.playTowerSell();
         }
@@ -363,11 +352,11 @@ cc.Class({
             }
         }
 
-        for (let i = 0; i < this.towerNodeList.length; i++) {
-            let tower = this.towerNodeList[i];
+        for (let i = 0; i < this.towerGroup.childrenCount; i++) {
+            let tower = this.towerGroup.children[i];
             if (tower !== undefined) {
                 if (tower.getComponent("tower").ifBuffAttack()) {
-                    tower.getComponent("tower").setTowerList(this.towerNodeList);
+                    tower.getComponent("tower").setTowerList(this.towerGroup.children);
                 }
                 this.sortEnemyList(this.enemyNodeList);
                 tower.getComponent("tower").setEnemyList(this.enemyNodeList);
@@ -387,9 +376,8 @@ cc.Class({
     },
 
     addEnemy: function (type, level) {
-        let enemy = cc.instantiate(this.enemyPrefab);
-        enemy.getComponent("enemy").initWithData(type, level, this.enemyPathPositions);
-        enemy.parent = this.node;
+        let enemy = this.enemyMng.createEnemy(this.enemyGroup);
+        enemy.getComponent("enemy").initWithData(this, type, level, this.enemyPathPositions);
         this.enemyNodeList.push(enemy);
     },
 
@@ -442,8 +430,8 @@ cc.Class({
     },
 
     isTowerCanUpgrade: function () {
-        for (let i = 0; i < this.towerNodeList.length; i++) {
-            let tower = this.towerNodeList[i];
+        for (let i = 0; i < this.towerGroup.childrenCount; i++) {
+            let tower = this.towerGroup.children[i];
             if (tower !== undefined) {
                 let t = tower.getComponent("tower");
                 if (t.canUpgrade() && this.goldCount >= t.getUpgradeCost()) {

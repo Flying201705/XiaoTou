@@ -72,7 +72,8 @@ cc.Class({
         this.positionTag = 0;
     },
 
-    initWithData: function (type, level, pathPoints) {
+    initWithData: function (gameWorld, type, level, pathPoints) {
+        this.gameWorld = gameWorld;
         this.type = type;
         if (this.type >= 1000) {
             this.spriteNode.spriteFrame = this.bossFrames[this.type % 1000];
@@ -262,7 +263,7 @@ cc.Class({
     },
 
     gainGold: function (gold) {
-        this.node.parent.getComponent("GameWorld").addGold(Math.floor(gold));
+        this.gameWorld.addGold(Math.floor(gold));
     },
 
     isDead: function () {
