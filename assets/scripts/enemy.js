@@ -163,7 +163,7 @@ cc.Class({
                     this.node.destroy();
                 }));
                 this.node.runAction(endSequence);
-                this.node.parent.getComponent('level').detractLife(1);
+                this.gameWorld.detractLife(1);
                 break;
             default:
                 break;
@@ -213,7 +213,7 @@ cc.Class({
             this.setState(EnemyState.Dead);
             this.gainGold(1);
             if (this.isBoss) {
-                this.node.parent.getComponent("level").dropGoods();
+                this.gameWorld.dropGoods();
             }
         }
 
