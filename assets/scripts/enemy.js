@@ -202,6 +202,7 @@ cc.Class({
             let curDamageRate = this.getCutDamageRateByArmor(this.armor);
             damage = damage * (1 - curDamageRate);
         }
+        damage = Math.round(damage);
 
         if (damage > this.currentHealthCount) {
             damage = this.currentHealthCount;
