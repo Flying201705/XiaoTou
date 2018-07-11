@@ -202,9 +202,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 214,
-      "g": 88,
-      "b": 28,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -215,8 +215,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 25,
-      "height": 15
+      "width": 23,
+      "height": 10
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -224,8 +224,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 7,
-      "y": 47
+      "x": 1,
+      "y": 57
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -235,26 +235,30 @@
     "groupIndex": 0
   },
   {
-    "__type__": "cc.Label",
+    "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 6
     },
     "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 15,
-    "_fontSize": 15,
-    "_lineHeight": 15,
-    "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
-    "_spacingX": 0,
-    "_N$string": "LV1",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
-    "_N$overflow": 0
+    "_spriteFrame": {
+      "__uuid__": "4ef5a5e3-7d00-458d-b307-7259198a89f4"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_atlas": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -264,7 +268,7 @@
     "asset": {
       "__uuid__": "6b35787b-abff-4523-85a1-05954a0eb944"
     },
-    "fileId": "0cudushlNCmItjyoRXmuPZ",
+    "fileId": "22lFMfiDhKZ4cKHXLlBAga",
     "sync": false
   },
   {
@@ -396,8 +400,22 @@
         "__uuid__": "22c50c5e-264d-44f2-9ac8-466e21766801"
       }
     ],
+    "levelFrames": [
+      {
+        "__uuid__": "4ef5a5e3-7d00-458d-b307-7259198a89f4"
+      },
+      {
+        "__uuid__": "030c1f6a-0cfc-4e31-97b4-fca378e65b30"
+      },
+      {
+        "__uuid__": "57f16410-d562-4144-9d77-f931410e5881"
+      }
+    ],
     "spriteNode": {
       "__id__": 3
+    },
+    "levelNode": {
+      "__id__": 7
     },
     "anim": {
       "__id__": 4
