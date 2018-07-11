@@ -215,8 +215,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 23,
-      "height": 10
+      "width": 11,
+      "height": 11
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -394,10 +394,10 @@
         "__uuid__": "20e1b40d-4950-484e-9b80-0966c3da8887"
       },
       {
-        "__uuid__": "962abd14-753f-480b-b1cf-98b3e670008a"
+        "__uuid__": "20e1b40d-4950-484e-9b80-0966c3da8887"
       },
       {
-        "__uuid__": "48cae56e-04f5-49ac-96d5-7959868640c6"
+        "__uuid__": "20e1b40d-4950-484e-9b80-0966c3da8887"
       }
     ],
     "levelFrames": [
