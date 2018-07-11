@@ -133,10 +133,10 @@ cc.Class({
             }
         }
         if (this.currentHealthCount < this.totalHealthCount) {
-            this.healthProgressBar.active = true;
+            this.healthProgressBar.node.active = true;
             this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
         } else {
-            this.healthProgressBar.active = false;
+            this.healthProgressBar.node.active = false;
         }
         //位置标签 = 当前节点 * 10000 + distance
         if (this.node.position.active === true) {

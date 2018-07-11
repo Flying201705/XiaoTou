@@ -256,7 +256,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 60,
       "height": 8
     },
     "_rotationX": 0,
@@ -266,7 +266,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 46
+      "y": 36
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -319,7 +319,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -50,
+      "x": -30,
       "y": 0
     },
     "_skewX": 0,
@@ -400,7 +400,7 @@
       "__id__": 6
     },
     "_enabled": true,
-    "_N$totalLength": 100,
+    "_N$totalLength": 60,
     "_N$barSprite": {
       "__id__": 8
     },
