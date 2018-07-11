@@ -8,7 +8,15 @@ cc.Class({
             default: [],
             type: cc.SpriteFrame
         },
+        levelFrames: {
+            default: [],
+            type: cc.SpriteFrame
+        },
         spriteNode: {
+            default: null,
+            type: cc.Sprite
+        },
+        levelNode: {
             default: null,
             type: cc.Sprite
         },
@@ -120,6 +128,7 @@ cc.Class({
         if (this.currentLevel < this.spriteFrames.length - 1) {
             this.currentLevel++;
             this.spriteNode.spriteFrame = this.spriteFrames[this.currentLevel];
+            this.levelNode.spriteFrame = this.levelFrames[this.currentLevel];
             this.updateTowerConfig();
         } else {
             cc.log("满级");
@@ -205,7 +214,7 @@ cc.Class({
     },
     update: function (dt) {
         //人物添加级数说明
-        this.node.getChildByName("lv").getComponent(cc.Label).string = "LV" + (this.currentLevel + 1);
+        //this.node.getChildByName("lv").getComponent(cc.Label).string = "LV" + (this.currentLevel + 1);
 
         let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
         if (this.currentShootTime <= shootDt) {
