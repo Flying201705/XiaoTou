@@ -132,7 +132,12 @@ cc.Class({
                 this.setState(EnemyState.Running);
             }
         }
-        this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
+        if (this.currentHealthCount < this.totalHealthCount) {
+            this.healthProgressBar.active = true;
+            this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
+        } else {
+            this.healthProgressBar.active = false;
+        }
         //位置标签 = 当前节点 * 10000 + distance
         if (this.node.position.active === true) {
             this.positionTag = this.currentPathPointCount * 10000 + cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
