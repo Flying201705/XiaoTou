@@ -30,6 +30,10 @@ cc.Class({
         this.btn3Num.getComponent(cc.Label).string = this.bombNum.toString();
     },
 
+    onPressSummonBtn: function() {
+        global.event.fire("summon_hero");
+    },
+
     onPressProp1Btn: function () {
         if (this.decelerationNum > 0) {
             console.log("施放道具1--全屏减速");

@@ -53,6 +53,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        summonHintLabel: {
+            default: null,
+            type: cc.Label
+        },
         gameOverUI: {
             default: null,
             type: cc.Node
@@ -78,7 +82,7 @@ cc.Class({
 
         this.tileSize = 80;
         this.goldCount = 0;
-        this.crystalCount = InfoData.user.crystal;
+        this.crystalCount = 50;//InfoData.user.crystal;
         this.lifeCount = 10;
         this.addEnemyCurrentTime = 0;
         this.addWaveCurrentTime = 0;
@@ -112,6 +116,7 @@ cc.Class({
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
         global.event.on("shoot_buff", this.addBuff.bind(this));
+        global.event.on("summon_hero", this.summonHero.bind(this));
         global.event.on("release_slow", this.handleSlow.bind(this));
         global.event.on("release_stun", this.handleStun.bind(this));
         global.event.on("release_damage", this.handleDamage.bind(this));
@@ -403,6 +408,19 @@ cc.Class({
         for (let i = 0; i < buffList.length; i++) {
             buffList[i].getComponent("tower").beBuffed(attackRate, speedRate);
         }
+    },
+
+    showSummonHint: function() {
+        this.summonHintLabel.node.active = true;
+        this.scheduleOnce(this.hideSummonHint, 2);
+    },
+
+    hideSummonHint: function() {
+        this.summonHintLabel.node.active = false;
+    },
+
+    summonHero: function() {
+        this.showSummonHint();
     },
 
     handleSlow: function () {
