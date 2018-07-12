@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": false
+    "autoReleaseAssets": null
   },
   {
     "__type__": "cc.Node",
@@ -819,8 +819,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 73,
-      "height": 38
+      "width": 102,
+      "height": 49
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -2148,7 +2148,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "b9ed22ab-be66-40b8-af97-71e033d2902c"
+      "__uuid__": "739baf99-5159-4269-8170-df26da68b102"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -2294,7 +2294,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "eea8add9-8a01-4314-b607-c5a25091b0b3"
+      "__uuid__": "739baf99-5159-4269-8170-df26da68b102"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -2412,7 +2412,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 73,
+      "width": 71,
       "height": 71
     },
     "_rotationX": 0,
@@ -2440,7 +2440,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "aee61b13-a920-4989-95bf-7d5b3e5a68e6"
+      "__uuid__": "739baf99-5159-4269-8170-df26da68b102"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -2797,7 +2797,7 @@
     "target": {
       "__id__": 53
     },
-    "component": "propsControl",
+    "component": "PropsControl",
     "handler": "onPressProp3Btn",
     "customEventData": ""
   },
@@ -2943,7 +2943,7 @@
     "target": {
       "__id__": 53
     },
-    "component": "propsControl",
+    "component": "PropsControl",
     "handler": "onPressProp2Btn",
     "customEventData": ""
   },
@@ -3089,7 +3089,7 @@
     "target": {
       "__id__": 53
     },
-    "component": "propsControl",
+    "component": "PropsControl",
     "handler": "onPressProp1Btn",
     "customEventData": ""
   },
@@ -3159,9 +3159,6 @@
     },
     "updateMenuPrefab": {
       "__uuid__": "48ff2758-e2c7-4e72-af87-c35d40195c30"
-    },
-    "enemyPrefab": {
-      "__uuid__": "7deaee16-f3af-4ba6-9946-5d399e5a6b33"
     },
     "bulletPrefab": [
       {
