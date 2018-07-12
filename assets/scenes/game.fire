@@ -3580,6 +3580,9 @@
     "goldLabel": {
       "__id__": 13
     },
+    "crystalLabel": {
+      "__id__": 17
+    },
     "waveDetails": {
       "__id__": 20
     },

@@ -25,9 +25,9 @@ cc.Class({
     },
 
     update: function (dt) {
-        this.btn1Num.getComponent(cc.Label).string = this.decelerationNum;
-        this.btn2Num.getComponent(cc.Label).string = this.dizzinessNum;
-        this.btn3Num.getComponent(cc.Label).string = this.bombNum;
+        this.btn1Num.getComponent(cc.Label).string = this.decelerationNum.toString();
+        this.btn2Num.getComponent(cc.Label).string = this.dizzinessNum.toString();
+        this.btn3Num.getComponent(cc.Label).string = this.bombNum.toString();
     },
 
     onPressProp1Btn: function () {

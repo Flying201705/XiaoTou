@@ -1,5 +1,6 @@
 import global from './global'
 import {InfoHandle} from './InfoData'
+import {InfoData} from './InfoData'
 
 const TowerPosNodeState = {
     Invalid: -1,
@@ -40,6 +41,10 @@ cc.Class({
             default: null,
             type: cc.Label
         },
+        crystalLabel: {
+            default: null,
+            type: cc.Label
+        },
         waveDetails: {
             default: null,
             type: cc.Label
@@ -73,6 +78,7 @@ cc.Class({
 
         this.tileSize = 80;
         this.goldCount = 0;
+        this.crystalCount = InfoData.user.crystal;
         this.lifeCount = 10;
         this.addEnemyCurrentTime = 0;
         this.addWaveCurrentTime = 0;
@@ -318,6 +324,7 @@ cc.Class({
 
     update: function (dt) {
         this.goldLabel.string = this.goldCount.toString();
+        this.crystalLabel.string = this.crystalCount.toString();
         this.lifeNode.getComponent("Life").setLife(this.lifeCount);
         if (this.currentWaveConfig) {
             if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
