@@ -109,6 +109,9 @@ cc.Class({
         global.event.on("release_slow", this.handleSlow.bind(this));
         global.event.on("release_stun", this.handleStun.bind(this));
         global.event.on("release_damage", this.handleDamage.bind(this));
+        global.event.on("buy_slow", this.buySlow.bind(this));
+        global.event.on("buy_stun", this.buyStun.bind(this));
+        global.event.on("buy_damage", this.buyDamage.bind(this));
     },
 
     setTouchEvent: function () {
@@ -414,6 +417,21 @@ cc.Class({
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").handleDamage(100, 0);
         }
+    },
+
+    //购买减速
+    buySlow: function () {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(1, 1);
+    },
+
+    //购买眩晕
+    buyStun: function () {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(2, 1);
+    },
+
+    //购买炸弹
+    buyDamage: function () {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(3, 1);
     },
 
     addGold: function (gold) {
