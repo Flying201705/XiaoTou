@@ -6158,7 +6158,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 201
@@ -7843,7 +7843,7 @@
     "propType": 1,
     "propNumber": 0,
     "crystalNumber": 0,
-    "crystalLeftNumber": 0
+    "crystalTotalNumber": 0
   },
   {
     "__type__": "cc.Node",
