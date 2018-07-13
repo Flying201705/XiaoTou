@@ -61,6 +61,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        description: {
+            default: null,
+            type: cc.Node
+        },
         audioMng: {
             default: null,
             type: cc.Node
@@ -107,6 +111,13 @@ cc.Class({
 
         //音频
         this.audioMng = this.audioMng.getComponent("GameAudio");
+        
+        //道具、塔、英雄描述弹窗
+        this.gameDescription = this.description.getComponent("GameDescription");
+    },
+
+    start: function () {
+        this.gameDescription.showDialog();
     },
 
     initEvent: function() {
