@@ -6158,7 +6158,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 201
@@ -6619,8 +6619,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 57,
-      "height": 46
+      "width": 22.86,
+      "height": 45.71
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -6650,7 +6650,7 @@
     "_actualFontSize": 40,
     "_fontSize": 40,
     "_lineHeight": 40,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_N$file": {
       "__uuid__": "0d57fcf2-4dea-4c2f-a71f-811f344997d5"
     },
@@ -6660,7 +6660,7 @@
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 1
+    "_N$overflow": 0
   },
   {
     "__type__": "cc.Node",
@@ -7384,8 +7384,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 57,
-      "height": 46
+      "width": 22.86,
+      "height": 45.71
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -7394,7 +7394,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 159,
-      "y": -61
+      "y": -55
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -7415,7 +7415,7 @@
     "_actualFontSize": 40,
     "_fontSize": 40,
     "_lineHeight": 40,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_N$file": {
       "__uuid__": "0d57fcf2-4dea-4c2f-a71f-811f344997d5"
     },
@@ -7425,7 +7425,7 @@
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 1
+    "_N$overflow": 0
   },
   {
     "__type__": "cc.Node",
@@ -7534,8 +7534,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 57,
-      "height": 46
+      "width": 22.86,
+      "height": 45.71
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -7565,7 +7565,7 @@
     "_actualFontSize": 40,
     "_fontSize": 40,
     "_lineHeight": 40,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_N$file": {
       "__uuid__": "0d57fcf2-4dea-4c2f-a71f-811f344997d5"
     },
@@ -7575,7 +7575,7 @@
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 1
+    "_N$overflow": 0
   },
   {
     "__type__": "cc.Node",
