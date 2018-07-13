@@ -463,18 +463,18 @@ cc.Class({
     },
 
     //购买减速
-    buySlow: function () {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(1, 1);
+    buySlow: function (count) {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(1, count);
     },
 
     //购买眩晕
-    buyStun: function () {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(2, 1);
+    buyStun: function (count) {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(2, count);
     },
 
     //购买炸弹
-    buyDamage: function () {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(3, 1);
+    buyDamage: function (count) {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(3, count);
     },
 
     addGold: function (gold) {

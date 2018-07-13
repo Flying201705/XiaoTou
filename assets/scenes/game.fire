@@ -7546,7 +7546,7 @@
       "__id__": 160
     },
     "component": "GameBuyProp",
-    "handler": "hideDialog",
+    "handler": "convert",
     "customEventData": "stage"
   },
   {
@@ -7577,6 +7577,7 @@
         "__id__": 174
       }
     ],
+    "propType": 1,
     "propNumber": 0,
     "crystalNumber": 0
   },

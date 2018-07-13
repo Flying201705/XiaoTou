@@ -8,6 +8,8 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+import global from "./global";
+
 cc.Class({
     extends: cc.Component,
 
@@ -28,6 +30,7 @@ cc.Class({
             default: [],
             type: [cc.Sprite]
         },
+        propType: 1,
         propNumber: 0,
         crystalNumber: 0,
     },
@@ -46,7 +49,7 @@ cc.Class({
         // cc.log('bunny:'+iconSprite.spriteFrame.getTexture())
 
         // iconSpirte.spriteFrame.setTexture(cc.url.raw('res/textures/scene/deceleration.png'));
-
+        this.propType = propType;
         this.propIconSprite.spriteFrame = this.sprArray[propType - 1].spriteFrame;
 
         this.propNumber = 0;
@@ -79,5 +82,23 @@ cc.Class({
 
         this.propNumberLabel.string = this.propNumber.toString();
         this.crystalNumberLabel.string = (this.propNumber * 10).toString();
+    },
+    convert() {
+        // global.event.on("buy_slow", this.buySlow.bind(this));
+        // global.event.on("buy_stun", this.buyStun.bind(this));
+        // global.event.on("buy_damage", this.buyDamage.bind(this));
+        switch (this.propType) {
+            case 1:
+                global.event.fire("buy_slow", this.propNumber);
+                break;
+            case 2:
+                global.event.fire("buy_stun", this.propNumber);
+                break;
+            case 3:
+                global.event.fire("buy_damage", this.propNumber);
+                break;
+        }
+
+        this.hideDialog();
     },
 });
