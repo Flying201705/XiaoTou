@@ -20,24 +20,34 @@ cc.Class({
             default: null,
             type: cc.Label
         },
-        propIconNode: {
+        propIconSprite: {
             default: null,
-            type: cc.Node
+            type: cc.Sprite
+        },
+        sprArray:{
+            default: [],
+            type: [cc.Sprite]
         },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
-
-    start() {
-
-    },
-
     // update (dt) {},
 
     showDialog(propType) {
         cc.log('buy prop type :' + propType);
+
+        // this.iconSprite = this.propIconNode.getComponent(cc.Sprite).spriteFrame;
+        // this.propIcon1Url = cc.url.raw('texture/scene/crystal.png')
+        // this.propIcon1Texture = cc.textureCache.addImage(this.propIcon1Url);
+        // this.iconSprite.setTexture(this.propIcon1Texture);
+        // cc.log('bunny:'+iconSprite.spriteFrame.getTexture())
+
+        // iconSpirte.spriteFrame.setTexture(cc.url.raw('res/textures/scene/deceleration.png'));
+
+        this.propIconSprite.spriteFrame = this.sprArray[propType-1].spriteFrame;
+
+
         cc.director.pause();
         this.node.active = true;
     },
