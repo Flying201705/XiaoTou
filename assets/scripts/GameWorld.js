@@ -141,6 +141,8 @@ cc.Class({
         global.event.on("buy_stun", this.buyStun.bind(this));
         global.event.on("buy_damage", this.buyDamage.bind(this));
         global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
+        global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
+        global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
     },
 
     setTouchEvent: function () {
@@ -581,6 +583,13 @@ cc.Class({
     },
 
     showBuyPropDialog(propType) {
-        this.buyProp.showDialog(propType)
+        this.buyProp.showDialog(propType, this.crystalCount)
     },
+    getCrystalCount() {
+        return this.crystalCount
+    },
+    updateCrystalCount(count) {
+        this.crystalCount = count;
+        this.crystalLabel.string = this.crystalCount.toString();
+    }
 });
