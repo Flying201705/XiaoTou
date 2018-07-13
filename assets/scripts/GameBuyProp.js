@@ -24,10 +24,12 @@ cc.Class({
             default: null,
             type: cc.Sprite
         },
-        sprArray:{
+        sprArray: {
             default: [],
             type: [cc.Sprite]
         },
+        propNumber: 0,
+        crystalNumber: 0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -45,8 +47,13 @@ cc.Class({
 
         // iconSpirte.spriteFrame.setTexture(cc.url.raw('res/textures/scene/deceleration.png'));
 
-        this.propIconSprite.spriteFrame = this.sprArray[propType-1].spriteFrame;
+        this.propIconSprite.spriteFrame = this.sprArray[propType - 1].spriteFrame;
 
+        this.propNumber = 0;
+        this.crystalNumber = 0;
+
+        this.propNumberLabel.string = '0';
+        this.crystalNumberLabel.string = '0';
 
         cc.director.pause();
         this.node.active = true;
@@ -54,5 +61,23 @@ cc.Class({
     hideDialog() {
         cc.director.resume();
         this.node.active = false;
+    },
+    addPropNumber() {
+        this.propNumber++;
+
+        this.propNumberLabel.string = this.propNumber.toString();
+        this.crystalNumberLabel.string = (this.propNumber * 10).toString();
+
+
+    },
+    minusPropNumber() {
+        if (this.propNumber <= 0) {
+            this.propNumber = 0;
+        } else {
+            this.propNumber--
+        }
+
+        this.propNumberLabel.string = this.propNumber.toString();
+        this.crystalNumberLabel.string = (this.propNumber * 10).toString();
     },
 });

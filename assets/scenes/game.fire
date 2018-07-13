@@ -6182,7 +6182,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 195
@@ -6492,8 +6492,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 22.86,
-      "height": 45.71
+      "width": 57,
+      "height": 46
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -6501,7 +6501,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 150,
+      "x": 159,
       "y": -61
     },
     "_skewX": 0,
@@ -6533,7 +6533,7 @@
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 0
+    "_N$overflow": 1
   },
   {
     "__type__": "cc.Node",
@@ -7229,8 +7229,8 @@
     "target": {
       "__id__": 160
     },
-    "component": "GameDescription",
-    "handler": "hideDialog",
+    "component": "GameBuyProp",
+    "handler": "addPropNumber",
     "customEventData": "stage"
   },
   {
@@ -7387,8 +7387,8 @@
     "target": {
       "__id__": 160
     },
-    "component": "GameDescription",
-    "handler": "hideDialog",
+    "component": "GameBuyProp",
+    "handler": "minusPropNumber",
     "customEventData": "stage"
   },
   {
@@ -7576,7 +7576,9 @@
       {
         "__id__": 174
       }
-    ]
+    ],
+    "propNumber": 0,
+    "crystalNumber": 0
   },
   {
     "__type__": "cc.Node",
