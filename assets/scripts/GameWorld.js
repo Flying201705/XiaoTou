@@ -65,6 +65,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        buyPropNode: {
+            default: null,
+            type: cc.Node
+        },
         audioMng: {
             default: null,
             type: cc.Node
@@ -111,16 +115,18 @@ cc.Class({
 
         //音频
         this.audioMng = this.audioMng.getComponent("GameAudio");
-        
+
         //道具、塔、英雄描述弹窗
         this.gameDescription = this.description.getComponent("GameDescription");
+
+        this.buyProp = this.buyPropNode.getComponent('GameBuyProp');
     },
 
     start: function () {
         this.gameDescription.showDialog();
     },
 
-    initEvent: function() {
+    initEvent: function () {
         global.event.on("build_tower", this.buildTower.bind(this));
         global.event.on("update_tower", this.updateTower.bind(this));
         global.event.on("sell_tower", this.sellTower.bind(this));
@@ -134,6 +140,7 @@ cc.Class({
         global.event.on("buy_slow", this.buySlow.bind(this));
         global.event.on("buy_stun", this.buyStun.bind(this));
         global.event.on("buy_damage", this.buyDamage.bind(this));
+        global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
     },
 
     setTouchEvent: function () {
@@ -397,7 +404,7 @@ cc.Class({
         }
     },
 
-    updateWaveDetails: function() {
+    updateWaveDetails: function () {
         this.waveDetails.string = this.prefixInteger(this.currentWaveCount, 2) + "/" + this.prefixInteger(this.totalWaveCount, 2);
     },
 
@@ -421,16 +428,16 @@ cc.Class({
         }
     },
 
-    showSummonHint: function() {
+    showSummonHint: function () {
         this.summonHintLabel.node.active = true;
         this.scheduleOnce(this.hideSummonHint, 2);
     },
 
-    hideSummonHint: function() {
+    hideSummonHint: function () {
         this.summonHintLabel.node.active = false;
     },
 
-    summonHero: function() {
+    summonHero: function () {
         this.showSummonHint();
     },
 
@@ -549,7 +556,7 @@ cc.Class({
         return (Array(length).join('0') + num).slice(-length);
     },
 
-    getStarsForWin: function() {
+    getStarsForWin: function () {
         if (this.lifeCount >= 10) {
             return 3;
         } else if (this.lifeCount >= 5) {
@@ -560,16 +567,20 @@ cc.Class({
         return 0;
     },
 
-    sortEnemyList: function(enemyList) {
+    sortEnemyList: function (enemyList) {
         for (let i = 0; i < enemyList.length; i++) {
-			for (let j = i + 1; j < enemyList.length; j++) {
+            for (let j = i + 1; j < enemyList.length; j++) {
                 //位置标签值越大位置越靠前
-				if (enemyList[j].getComponent("enemy").positionTag > enemyList[i].getComponent("enemy").positionTag) {
+                if (enemyList[j].getComponent("enemy").positionTag > enemyList[i].getComponent("enemy").positionTag) {
                     let enemy = enemyList[i];
                     enemyList[i] = enemyList[j];
                     enemyList[j] = enemy;
-				}
-			}
-		}
+                }
+            }
+        }
+    },
+
+    showBuyPropDialog(propType) {
+        this.buyProp.showDialog(propType)
     },
 });

@@ -17,7 +17,7 @@ cc.Class({
             type: cc.Label
         },
     },
-    
+
     onLoad: function () {
         this.decelerationNum = 1;
         this.dizzinessNum = 2;
@@ -30,7 +30,7 @@ cc.Class({
         this.btn3Num.getComponent(cc.Label).string = this.bombNum.toString();
     },
 
-    onPressSummonBtn: function() {
+    onPressSummonBtn: function () {
         global.event.fire("summon_hero");
     },
 
@@ -41,7 +41,7 @@ cc.Class({
             this.decelerationNum--;
         } else {
             console.log("购买道具1--全屏减速");
-            global.event.fire("buy_slow");
+            global.event.fire("show_buy_prop_dialog", 1);
         }
     },
 
@@ -52,7 +52,7 @@ cc.Class({
             this.dizzinessNum--;
         } else {
             console.log("购买道具2--全屏眩晕");
-            global.event.fire("buy_stun");
+            global.event.fire("show_buy_prop_dialog", 2);
         }
     },
 
@@ -63,11 +63,11 @@ cc.Class({
             this.bombNum--;
         } else {
             console.log("购买道具3--炸弹100");
-            global.event.fire("buy_damage");
+            global.event.fire("show_buy_prop_dialog", 3);
         }
     },
 
-    addProp: function(type, num) {
+    addProp: function (type, num) {
         if (type === 1) {
             this.decelerationNum += num;
         } else if (type === 2) {
