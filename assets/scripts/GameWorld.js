@@ -146,6 +146,8 @@ cc.Class({
         global.event.on("buy_stun", this.buyStun.bind(this));
         global.event.on("buy_damage", this.buyDamage.bind(this));
         global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
+        global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
+        global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
     },
 
     setTouchEvent: function () {
@@ -495,18 +497,18 @@ cc.Class({
     },
 
     //购买减速
-    buySlow: function () {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(1, 1);
+    buySlow: function (count) {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(1, count);
     },
 
     //购买眩晕
-    buyStun: function () {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(2, 1);
+    buyStun: function (count) {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(2, count);
     },
 
     //购买炸弹
-    buyDamage: function () {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(3, 1);
+    buyDamage: function (count) {
+        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(3, count);
     },
 
     addGold: function (gold) {
@@ -613,6 +615,13 @@ cc.Class({
     },
 
     showBuyPropDialog(propType) {
-        this.buyProp.showDialog(propType)
+        this.buyProp.showDialog(propType, this.crystalCount)
     },
+    getCrystalCount() {
+        return this.crystalCount
+    },
+    updateCrystalCount(count) {
+        this.crystalCount = count;
+        this.crystalLabel.string = this.crystalCount.toString();
+    }
 });
