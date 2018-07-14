@@ -1,7 +1,18 @@
 {
+  "hero":
+  {
+    "name": "小兵之神",
+    "costs": [0],
+    "damages": [100],
+    "gain_rates": [0.4],
+    "attack_ranges": [250],
+    "look_range": 300,
+    "shoot_dts": [0.6]
+  },
+
   "tower_a":
   {
-    "name": "小偷",
+    "name": "小兵",
     "costs": [100, 150, 200, 300, 375],
     "damages": [20, 50, 72, 120, 150],
     "gain_rates": [0.2, 0.2, 0.25, 0.25, 0.3],

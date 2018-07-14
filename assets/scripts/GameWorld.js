@@ -33,6 +33,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        heroPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
         bulletPrefab: {
             default: [],
             type: cc.Prefab
@@ -108,6 +112,7 @@ cc.Class({
 
         this.towerMng = this.towerGroup.getComponent('TowerMng');
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
+        this.hero = cc.instantiate(this.heroPrefab);
 
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
@@ -149,6 +154,20 @@ cc.Class({
                 return;
             }
 
+            let x = event.touch.getLocation().x - 960 * 0.5;
+            let y = event.touch.getLocation().y - 640 * 0.5;
+            
+            // 处理英雄操作
+            let isHeroHandle = this.hero.getComponent("hero").handleTouched(x, y);
+            if (isHeroHandle === true) {
+                if (this.selectBox.active === true) {
+                    this.closeMenu();
+                    this.audioMng.playTowerDeselect();
+                }
+                return;
+            }
+
+            // 处理塔操作
             let index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
             cc.log("touched event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
             if (index >= 0) {
@@ -385,13 +404,17 @@ cc.Class({
             }
         }
 
+        this.sortEnemyList(this.enemyNodeList);
+        // 处理英雄操作
+        this.hero.getComponent("hero").setEnemyList(this.enemyNodeList);
+
+        // 处理塔操作
         for (let i = 0; i < this.towerGroup.childrenCount; i++) {
             let tower = this.towerGroup.children[i];
             if (tower !== undefined) {
                 if (tower.getComponent("tower").ifBuffAttack()) {
                     tower.getComponent("tower").setTowerList(this.towerGroup.children);
                 }
-                this.sortEnemyList(this.enemyNodeList);
                 tower.getComponent("tower").setEnemyList(this.enemyNodeList);
             }
         }
@@ -438,7 +461,16 @@ cc.Class({
     },
 
     summonHero: function () {
-        this.showSummonHint();
+        if (this.currentLevel < 10) {
+            this.showSummonHint();
+        } else {
+            let x = this.node.getChildByName('bottomBar').x;
+            let y = this.node.getChildByName('bottomBar').y + this.hero.height;
+            this.hero.position = cc.p(x, y);
+            this.hero.parent = this.node;
+            this.hero.getComponent("hero").initWithData(this.towerConfigs["hero"], 1000);
+            this.hero.getComponent("hero").showHero();
+        }
     },
 
     handleSlow: function () {

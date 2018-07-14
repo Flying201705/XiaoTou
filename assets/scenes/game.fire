@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": false
+    "autoReleaseAssets": null
   },
   {
     "__type__": "cc.Node",
@@ -3661,6 +3661,9 @@
     },
     "updateMenuPrefab": {
       "__uuid__": "48ff2758-e2c7-4e72-af87-c35d40195c30"
+    },
+    "heroPrefab": {
+      "__uuid__": "e0a38be2-b288-40be-9398-08caed28080e"
     },
     "bulletPrefab": [
       {

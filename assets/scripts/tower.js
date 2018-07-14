@@ -234,7 +234,8 @@ cc.Class({
             }
 
             let distance = cc.pDistance(this.enemy.position, this.node.position);
-            if (distance > this.currentAttackRange || this.enemy.getComponent("enemy").isLiving() === false) {
+            if (distance > this.currentAttackRange || 
+                (this.enemy.getComponent("enemy") !== null && this.enemy.getComponent("enemy").isLiving() === false)) {
                 this.enemy = undefined;
             }
         }
