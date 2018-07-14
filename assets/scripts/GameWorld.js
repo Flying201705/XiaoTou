@@ -73,6 +73,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        effectNode: {
+            default: null,
+            type: cc.Node
+        },
         audioMng: {
             default: null,
             type: cc.Node
@@ -490,6 +494,12 @@ cc.Class({
     },
 
     handleDamage: function () {
+        this.effectNode.getComponent(cc.Animation).play("bobm_effect");
+        var animationCom = this.effectNode.getComponent(cc.Animation);
+        animationCom.beDamaged = this.beDamaged();
+    },
+
+    beDamaged: function() {
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").handleDamage(100, 0);
