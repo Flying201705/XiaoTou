@@ -20,6 +20,10 @@ cc.Class({
         description: {
             default: null,
             type: cc.Label
+        },
+        clickAudio: {
+            default: null,
+            url: cc.AudioClip
         }
     },
 
@@ -56,6 +60,7 @@ cc.Class({
         this.node.active = true;
     },
     hideDialog() {
+        cc.audioEngine.playEffect(this.clickAudio, false);
         cc.director.resume();
         this.node.active = false;
     },

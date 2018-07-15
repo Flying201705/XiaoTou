@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": null
+    "autoReleaseAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -6558,6 +6558,9 @@
     },
     "description": {
       "__id__": 163
+    },
+    "clickAudio": {
+      "__uuid__": "3b81d878-51ed-4e15-92b8-757e6f046883"
     }
   },
   {
@@ -8432,6 +8435,9 @@
         "__id__": 186
       }
     ],
+    "clickAudio": {
+      "__uuid__": "3b81d878-51ed-4e15-92b8-757e6f046883"
+    },
     "propType": 1,
     "propNumber": 0,
     "crystalNumber": 0,

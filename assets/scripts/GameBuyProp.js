@@ -35,6 +35,10 @@ cc.Class({
             default: [],
             type: [cc.Sprite]
         },
+        clickAudio: {
+            default: null,
+            url: cc.AudioClip
+        },
         propType: 1,
         propNumber: 0,
         crystalNumber: 0,
@@ -76,6 +80,8 @@ cc.Class({
         this.node.active = false;
     },
     refreshNumber(propNumber) {
+        cc.audioEngine.playEffect(this.clickAudio, false);
+        
         this.propNumberLabel.string = propNumber.toString();
 
         var crystalForPay = propNumber * ONE_PROP_PRICE;
@@ -105,9 +111,8 @@ cc.Class({
         this.refreshNumber(this.propNumber);
     },
     convert() {
-        // global.event.on("buy_slow", this.buySlow.bind(this));
-        // global.event.on("buy_stun", this.buyStun.bind(this));
-        // global.event.on("buy_damage", this.buyDamage.bind(this));
+        cc.audioEngine.playEffect(this.clickAudio, false);
+
         switch (this.propType) {
             case 1:
                 global.event.fire("buy_slow", this.propNumber);
