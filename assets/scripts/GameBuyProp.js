@@ -39,16 +39,19 @@ cc.Class({
             default: null,
             url: cc.AudioClip
         },
+        backPackPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
         propType: 1,
         propNumber: 0,
         crystalNumber: 0,
         crystalTotalNumber: 0,
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // update (dt) {},
-
+    onLoad() {
+        this.backPack = cc.instantiate(this.backPackPrefab);
+    },
     showDialog(propType, crystalTotalNumber) {
         cc.log('buy prop type :' + propType);
 
@@ -81,7 +84,7 @@ cc.Class({
     },
     refreshNumber(propNumber) {
         cc.audioEngine.playEffect(this.clickAudio, false);
-        
+
         this.propNumberLabel.string = propNumber.toString();
 
         var crystalForPay = propNumber * ONE_PROP_PRICE;
@@ -128,5 +131,25 @@ cc.Class({
         global.event.fire("update_crystal_count", this.crystalTotalNumber - this.propNumber * ONE_PROP_PRICE);
 
         this.hideDialog();
+    },
+    /**
+     * 显示背包弹窗
+     */
+    showBackPack(event) {
+        // console.log(event)
+        cc.log('showBackPack')
+        let x = event.touch.getLocation().x;
+        let y = event.touch.getLocation().y;
+        cc.log('x:' + x + ' y:' + y)
+
+        var pos = event.target.getPosition();
+        cc.log('pos:' + pos)
+
+        // this.backPack.position = pos;
+        this.backPack.getComponent('back-pack').setContentPosition(this.node, pos);
+        this.backPack.parent = this.node;
+    },
+    hideBackPck() {
+        this.node.removeChild(this.backPack);
     },
 });
