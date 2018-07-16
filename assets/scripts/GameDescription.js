@@ -24,18 +24,24 @@ cc.Class({
         clickAudio: {
             default: null,
             url: cc.AudioClip
-        }
+        },
+        towerSprites: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        levelSprites: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        towerIcon: {
+            default: null,
+            type: cc.Sprite
+        },
+        levelIcon: {
+            default: null,
+            type: cc.Sprite
+        },
     },
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    start() {
-
-    },
-
-    // update (dt) {},
 
     onEnable: function () {
         this.mask.on('touchstart', function (event) {
@@ -56,6 +62,9 @@ cc.Class({
     },
     showDialog: function () {
         this.description.string = this.getDescription();
+        this.towerIcon.spriteFrame = this.getTowerIcon();
+        this.levelIcon.spriteFrame = this.getLevelIcon();
+
         cc.director.pause();
         this.node.active = true;
     },
@@ -65,6 +74,13 @@ cc.Class({
         this.node.active = false;
     },
     getDescription() {
-        return '光明精灵们通体发亮，光明耀眼，长得非常美丽。他们通常性情温良，开朗热情，能和树木花草、游鱼飞鸟彼此沟通，因此众神就把他们作为神的朋友。';
+        return '打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱';
     },
+    getTowerIcon() {
+        return this.towerSprites[0];
+    },
+    getLevelIcon() {
+        return this.levelSprites[0];
+    },
+
 });
