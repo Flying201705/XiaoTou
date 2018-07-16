@@ -103,11 +103,11 @@ cc.Class({
             this.title.spriteFrame = this.titleSprites[1];
 
             var item1 = cc.instantiate(this.awardItemPrefab);
-            var item2 = cc.instantiate(this.awardItemPrefab);
-            var item3 = cc.instantiate(this.awardItemPrefab);
+            // var item2 = cc.instantiate(this.awardItemPrefab);
+            // var item3 = cc.instantiate(this.awardItemPrefab);
             this.awardList.node.addChild(item1);
-            this.awardList.node.addChild(item2);
-            this.awardList.node.addChild(item3);
+            // this.awardList.node.addChild(item2);
+            // this.awardList.node.addChild(item3);
 
             this.contentHero.active = false;
             this.contentAward.active = true;
