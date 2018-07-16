@@ -3,7 +3,7 @@
   "_name": "bobm_effect",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.6833333333333333,
+  "_duration": 0.5166666666666667,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -34,12 +34,6 @@
             "value": {
               "__uuid__": "09266231-5850-41d3-99b4-242207ad6193"
             }
-          },
-          {
-            "frame": 0.6666666666666666,
-            "value": {
-              "__uuid__": "3e09d203-8c0e-49dc-8505-93e79e65499a"
-            }
           }
         ]
       }
@@ -47,9 +41,11 @@
   },
   "events": [
     {
-      "frame": 0.6666666666666666,
-      "func": "beDamaged",
-      "params": []
+      "frame": 0.5,
+      "func": "onEffectEnd",
+      "params": [
+        "bomb"
+      ]
     }
   ]
 }

@@ -37,6 +37,10 @@ cc.Class({
             default: [],
             type: cc.Prefab
         },
+        effectPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
         goldLabel: {
             default: null,
             type: cc.Label
@@ -66,10 +70,6 @@ cc.Class({
             type: cc.Node
         },
         buyPropNode: {
-            default: null,
-            type: cc.Node
-        },
-        effectNode: {
             default: null,
             type: cc.Node
         },
@@ -111,6 +111,7 @@ cc.Class({
         this.towerOp = this.towerOperate.getComponent('TowerOperate');
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
         this.hero = cc.instantiate(this.heroPrefab);
+        this.hero.active = false;
 
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
@@ -158,13 +159,15 @@ cc.Class({
             let y = event.touch.getLocation().y - 640 * 0.5;
 
             // 处理英雄操作
-            let isHeroHandle = this.hero.getComponent("hero").handleTouched(x, y);
-            if (isHeroHandle === true) {
-                if (this.selectBox.active === true) {
-                    this.closeMenu();
-                    this.audioMng.playTowerDeselect();
+            if (this.hero !== undefined && this.hero.active === true) {
+                let isHeroHandle = this.hero.getComponent("hero").handleTouched(x, y);
+                if (isHeroHandle === true) {
+                    if (this.selectBox.active === true) {
+                        this.closeMenu();
+                        this.audioMng.playTowerDeselect();
+                    }
+                    return;
                 }
-                return;
             }
 
             // 处理塔操作
@@ -401,7 +404,9 @@ cc.Class({
 
         this.sortEnemyList(this.enemyNodeList);
         // 处理英雄操作
-        this.hero.getComponent("hero").setEnemyList(this.enemyNodeList);
+        if (this.hero !== undefined && this.hero.active === true) {
+            this.hero.getComponent("hero").setEnemyList(this.enemyNodeList);
+        }
 
         // 处理塔操作
         for (let i = 0; i < this.towerGroup.childrenCount; i++) {
@@ -463,6 +468,7 @@ cc.Class({
             let y = this.node.getChildByName('bottomBar').y + this.hero.height;
             this.hero.position = cc.p(x, y);
             this.hero.parent = this.node;
+            this.hero.active = true;
             this.hero.getComponent("hero").initWithData(this.towerConfigs["hero"], 1000);
             this.hero.getComponent("hero").showHero();
         }
@@ -483,15 +489,21 @@ cc.Class({
     },
 
     handleDamage: function () {
-        this.effectNode.getComponent(cc.Animation).play("bobm_effect");
-        var animationCom = this.effectNode.getComponent(cc.Animation);
-        animationCom.beDamaged = this.beDamaged();
+        let effectNode = cc.instantiate(this.effectPrefab);
+        effectNode.position = cc.p(0, 0);
+        effectNode.parent = this.node;
+        effectNode.getComponent("Effect").playAnim();
+        var animationCom = effectNode.getComponent("Effect").getComponent(cc.Animation);
+        animationCom.onEffectEnd = this.onEffectEnd.bind(this);
     },
 
-    beDamaged: function () {
-        for (let j = 0; j < this.enemyNodeList.length; j++) {
-            let enemy = this.enemyNodeList[j];
-            enemy.getComponent("enemy").handleDamage(100, 0);
+    onEffectEnd: function (prop) {
+        console.log("gameworld onEffectEnd~~" + prop);
+        if (prop === "bomb") {
+            for (let j = 0; j < this.enemyNodeList.length; j++) {
+                let enemy = this.enemyNodeList[j];
+                enemy.getComponent("enemy").handleDamage(100, 0);
+            }
         }
     },
 
