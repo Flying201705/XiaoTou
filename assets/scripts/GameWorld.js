@@ -156,7 +156,7 @@ cc.Class({
 
             let x = event.touch.getLocation().x - 960 * 0.5;
             let y = event.touch.getLocation().y - 640 * 0.5;
-            
+
             // 处理英雄操作
             let isHeroHandle = this.hero.getComponent("hero").handleTouched(x, y);
             if (isHeroHandle === true) {
@@ -488,7 +488,7 @@ cc.Class({
         animationCom.beDamaged = this.beDamaged();
     },
 
-    beDamaged: function() {
+    beDamaged: function () {
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").handleDamage(100, 0);
