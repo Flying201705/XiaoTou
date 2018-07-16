@@ -8922,15 +8922,15 @@
     "propIconSprite": {
       "__id__": 191
     },
-    "sprArray": [
+    "propIcons": [
       {
-        "__id__": 197
+        "__uuid__": "aee61b13-a920-4989-95bf-7d5b3e5a68e6"
       },
       {
-        "__id__": 199
+        "__uuid__": "eea8add9-8a01-4314-b607-c5a25091b0b3"
       },
       {
-        "__id__": 195
+        "__uuid__": "b9ed22ab-be66-40b8-af97-71e033d2902c"
       }
     ],
     "clickAudio": {

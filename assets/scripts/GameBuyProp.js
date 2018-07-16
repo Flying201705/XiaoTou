@@ -31,9 +31,9 @@ cc.Class({
             default: null,
             type: cc.Sprite
         },
-        sprArray: {
+        propIcons: {
             default: [],
-            type: [cc.Sprite]
+            type: [cc.SpriteFrame]
         },
         clickAudio: {
             default: null,
@@ -55,15 +55,8 @@ cc.Class({
     showDialog(propType, crystalTotalNumber) {
         cc.log('buy prop type :' + propType);
 
-        // this.iconSprite = this.propIconNode.getComponent(cc.Sprite).spriteFrame;
-        // this.propIcon1Url = cc.url.raw('texture/scene/crystal.png')
-        // this.propIcon1Texture = cc.textureCache.addImage(this.propIcon1Url);
-        // this.iconSprite.setTexture(this.propIcon1Texture);
-        // cc.log('bunny:'+iconSprite.spriteFrame.getTexture())
-
-        // iconSpirte.spriteFrame.setTexture(cc.url.raw('res/textures/scene/deceleration.png'));
         this.propType = propType;
-        this.propIconSprite.spriteFrame = this.sprArray[propType - 1].spriteFrame;
+        this.propIconSprite.spriteFrame = this.propIcons[propType - 1];
 
         this.crystalTotalNumber = crystalTotalNumber;
         cc.log("bunny" + this.crystalTotalNumber)
