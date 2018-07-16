@@ -132,7 +132,7 @@ cc.Class({
     },
 
     start: function () {
-        this.gameDescription.showDialog();
+        this.gameDescription.showDialog(1);
     },
 
     initEvent: function () {
