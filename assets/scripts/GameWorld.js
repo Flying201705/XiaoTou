@@ -21,17 +21,13 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        enemyGroup: {
+        towerOperate: {
             default: null,
             type: cc.Node
         },
-        buildMenuPrefab: {
+        enemyGroup: {
             default: null,
-            type: cc.Prefab
-        },
-        updateMenuPrefab: {
-            default: null,
-            type: cc.Prefab
+            type: cc.Node
         },
         heroPrefab: {
             default: null,
@@ -111,10 +107,8 @@ cc.Class({
 
         this.initEvent();
 
-        this.build_menu = cc.instantiate(this.buildMenuPrefab);
-        this.update_menu = cc.instantiate(this.updateMenuPrefab);
-
         this.towerMng = this.towerGroup.getComponent('TowerMng');
+        this.towerOp = this.towerOperate.getComponent('TowerOperate');
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
         this.hero = cc.instantiate(this.heroPrefab);
 
@@ -162,7 +156,7 @@ cc.Class({
 
             let x = event.touch.getLocation().x - 960 * 0.5;
             let y = event.touch.getLocation().y - 640 * 0.5;
-            
+
             // 处理英雄操作
             let isHeroHandle = this.hero.getComponent("hero").handleTouched(x, y);
             if (isHeroHandle === true) {
@@ -225,8 +219,7 @@ cc.Class({
         this.selectBox.position = centerPos;
         this.selectBox.parent = this.node;
 
-        this.build_menu.position = centerPos;
-        this.build_menu.parent = this.node;
+        this.towerOp.showBuildMenu(centerPos);
 
         this.audioMng.playTowerSelect();
     },
@@ -239,20 +232,16 @@ cc.Class({
             this.selectBox.parent = this.node;
             this.selectBox.position = tower.position;
 
-            this.update_menu.getComponent('update-menu').setTower(tower, this.goldCount);
-            this.update_menu.position = tower.position;
-            this.update_menu.index = index;
-            this.update_menu.parent = this.node;
+            this.towerOp.showUpdateMenu(tower, this.goldCount, index);
 
             this.audioMng.playTowerSelect();
         }
     },
 
     closeMenu: function () {
-        this.node.removeChild(this.build_menu);
-        this.node.removeChild(this.update_menu);
+        this.towerOp.closeMenu();
         this.selectBox.active = false;
-        return this.update_menu.index;
+        return this.towerOp.getUpdateMenuIndex();
     },
 
     setState: function (node, state) {
@@ -280,7 +269,7 @@ cc.Class({
         }
 
         let tower = this.towerMng.createTower(this.towerGroup, data);
-        tower.position = this.getTilePos(this.build_menu.position);
+        tower.position = this.getTilePos(this.towerOp.getBuildMenuPosition());
         // this.setTowerTouchEvent(tower);
         tower.getComponent("tower").initWithData(this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
 
@@ -343,7 +332,7 @@ cc.Class({
             // this.currentWaveConfig = wavesConfig[0];
             this.goldCount = this.levelConfig.gold;
             this.isTowerCanUpgrade();
-            this.build_menu.getComponent("build-menu").initWithData(this.levelConfig.towers);
+            this.towerOp.initBuildMenu(this.levelConfig.towers);
             this.totalWaveCount = this.levelConfig.waves.length;
         });
     },
@@ -499,7 +488,7 @@ cc.Class({
         animationCom.beDamaged = this.beDamaged();
     },
 
-    beDamaged: function() {
+    beDamaged: function () {
         for (let j = 0; j < this.enemyNodeList.length; j++) {
             let enemy = this.enemyNodeList[j];
             enemy.getComponent("enemy").handleDamage(100, 0);
