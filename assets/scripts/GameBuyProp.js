@@ -136,20 +136,9 @@ cc.Class({
      * 显示背包弹窗
      */
     showBackPack(event) {
-        // console.log(event)
         cc.log('showBackPack')
-        let x = event.touch.getLocation().x;
-        let y = event.touch.getLocation().y;
-        cc.log('x:' + x + ' y:' + y)
-
         var pos = event.target.getPosition();
-        cc.log('pos:' + pos)
-
-        // this.backPack.position = pos;
         this.backPack.getComponent('back-pack').setContentPosition(this.node, pos);
         this.backPack.parent = this.node;
-    },
-    hideBackPck() {
-        this.node.removeChild(this.backPack);
     },
 });

@@ -25,15 +25,13 @@ cc.Class({
             this.selfPause = true;
         }
     },
-    start() {
-
-    },
     setContentPosition(node, pos) {
         this.parentNode = node;
         this.content.position = pos;
     },
     dismiss() {
         this.parentNode.removeChild(this.node);
+        this.parentNode = null;
         if (this.selfPause) {
             cc.director.resume();
             this.selfPause = false;
