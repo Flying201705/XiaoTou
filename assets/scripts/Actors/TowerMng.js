@@ -12,7 +12,7 @@ cc.Class({
         let tower = cc.instantiate(this.towerPrefabs[data]);
         tower.width = 80;
         tower.height = 80;
-        tower.parent = parentNode; // 将生成的敌人加入节点树
+        tower.parent = parentNode;
         return tower;
     },
 
