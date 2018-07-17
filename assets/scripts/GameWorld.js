@@ -65,10 +65,6 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        description: {
-            default: null,
-            type: cc.Node
-        },
         buyPropNode: {
             default: null,
             type: cc.Node
@@ -121,13 +117,18 @@ cc.Class({
         this.audioMng = this.audioMng.getComponent("GameAudio");
 
         //道具、塔、英雄描述弹窗
-        this.gameDescription = this.description.getComponent("GameDescription");
+        // this.gameDescription = this.description.getComponent("GameDescription");
 
         this.buyProp = this.buyPropNode.getComponent('GameBuyProp');
     },
 
     start: function () {
-        this.gameDescription.showDialog(this.currentLevel);
+        // let descriptionDialog = cc.instantiate(this.description);
+        //
+        // descriptionDialog.getComponent('GameDescription').showDialog(this.currentLevel);
+        //
+        // descriptionDialog.parent = this.node;
+        // this.gameDescription.showDialog(this.currentLevel);
     },
 
     initEvent: function () {

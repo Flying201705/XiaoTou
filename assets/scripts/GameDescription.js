@@ -82,7 +82,8 @@ cc.Class({
             event.stopPropagation();
         });
     },
-    showDialog(currentLevel) {
+    config(parentNode, currentLevel) {
+        this.parentNode = parentNode;
         cc.loader.loadRes("./config/description_config", (err, result) => {
             if (err) {
                 cc.log("bunny load config " + err);
@@ -123,15 +124,16 @@ cc.Class({
                 this.contentAward.active = true;
             }
 
-            this.node.active = true;
+            // this.node.active = true;
             cc.director.pause();
         });
 
     },
     hideDialog() {
+        this.parentNode.removeChild(this.node);
+        this.parentNode = null;
         cc.audioEngine.playEffect(this.clickAudio, false);
         cc.director.resume();
-        this.node.active = false;
     },
     getTowerIcon(index) {
         return this.towerSprites[index - 1];
