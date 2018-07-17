@@ -65,10 +65,6 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        buyPropNode: {
-            default: null,
-            type: cc.Node
-        },
         audioMng: {
             default: null,
             type: cc.Node
@@ -115,20 +111,6 @@ cc.Class({
 
         //音频
         this.audioMng = this.audioMng.getComponent("GameAudio");
-
-        //道具、塔、英雄描述弹窗
-        // this.gameDescription = this.description.getComponent("GameDescription");
-
-        this.buyProp = this.buyPropNode.getComponent('GameBuyProp');
-    },
-
-    start: function () {
-        // let descriptionDialog = cc.instantiate(this.description);
-        //
-        // descriptionDialog.getComponent('GameDescription').showDialog(this.currentLevel);
-        //
-        // descriptionDialog.parent = this.node;
-        // this.gameDescription.showDialog(this.currentLevel);
     },
 
     initEvent: function () {
@@ -145,9 +127,6 @@ cc.Class({
         global.event.on("buy_slow", this.buySlow.bind(this));
         global.event.on("buy_stun", this.buyStun.bind(this));
         global.event.on("buy_damage", this.buyDamage.bind(this));
-        global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
-        global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
-        global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
     },
 
     setTouchEvent: function () {
@@ -625,15 +604,4 @@ cc.Class({
             }
         }
     },
-
-    showBuyPropDialog(propType) {
-        this.buyProp.showDialog(propType, this.crystalCount)
-    },
-    getCrystalCount() {
-        return this.crystalCount
-    },
-    updateCrystalCount(count) {
-        this.crystalCount = count;
-        this.crystalLabel.string = this.crystalCount.toString();
-    }
 });

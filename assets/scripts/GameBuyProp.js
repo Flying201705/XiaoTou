@@ -52,14 +52,15 @@ cc.Class({
     onLoad() {
         this.backPack = cc.instantiate(this.backPackPrefab);
     },
-    showDialog(propType, crystalTotalNumber) {
+    config(parentNode, propType, crystalTotalNumber) {
+        this.parentNode = parentNode;
         cc.log('buy prop type :' + propType);
 
         this.propType = propType;
         this.propIconSprite.spriteFrame = this.propIcons[propType - 1];
 
         this.crystalTotalNumber = crystalTotalNumber;
-        cc.log("bunny" + this.crystalTotalNumber)
+        cc.log("crystalTotalNumber:" + this.crystalTotalNumber)
         this.crystalLeftNumberLabel.string = this.crystalTotalNumber;
 
         this.propNumber = 0;
@@ -73,7 +74,8 @@ cc.Class({
     },
     hideDialog() {
         cc.director.resume();
-        this.node.active = false;
+        // this.node.active = false;
+        this.parentNode.removeChild(this.node);
     },
     refreshNumber(propNumber) {
         cc.audioEngine.playEffect(this.clickAudio, false);
@@ -121,7 +123,9 @@ cc.Class({
                 break;
         }
 
-        global.event.fire("update_crystal_count", this.crystalTotalNumber - this.propNumber * ONE_PROP_PRICE);
+        var crystalLeft = this.crystalTotalNumber - this.propNumber * ONE_PROP_PRICE;
+        cc.log('crystalLeft:' + crystalLeft);
+        global.event.fire("update_crystal_count", crystalLeft);
 
         this.hideDialog();
     },
