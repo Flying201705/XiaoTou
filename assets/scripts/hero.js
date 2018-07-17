@@ -24,6 +24,8 @@ cc.Class({
         this.heroSelected = false;
         this.state = HeroState.Invalid;
         this.targetPosition = this.node.position;
+        //当前英雄级别，从0级开始
+        this.currentHeroLevel = 0;
 
         //当前级数，从0级开始
         this.currentLevel = 0;
@@ -44,6 +46,7 @@ cc.Class({
 
         /**下为业务逻辑 */
         this.currentShootTime = 0;
+        this.AttackCount = 0;
     },
 
     update: function(dt) {
@@ -88,6 +91,12 @@ cc.Class({
         this.playHeroAnim();
         cc.audioEngine.play(this.shootAudio, false, 1);
         global.event.fire("shoot_bullet", this.node, this.enemy.position);
+        //英雄自升级，临时：当前等级的十倍攻击次数升一级
+        this.AttackCount++;
+        if (this.AttackCount > (this.currentHeroLevel + 1) * 10) {
+            this.AttackCount = 0;
+            this.currentHeroLevel++;
+        }
     },
 
     handleTouched: function(x, y) {
@@ -123,6 +132,11 @@ cc.Class({
         }
 
         return false;
+    },
+
+    getDamage: function () {
+        console.log("hero getDamage " + this.currentDamage * Math.pow(1.1, this.currentHeroLevel) * (1 + this.beAttackBuff));
+        return this.currentDamage * Math.pow(1.1, this.currentHeroLevel) * (1 + this.beAttackBuff);
     },
 
     moveTo: function(x, y) {

@@ -29,6 +29,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        heroLayer: {
+            default: null,
+            type: cc.Node
+        },
         bulletLayer: {
             default: null,
             type: cc.Node
@@ -301,6 +305,7 @@ cc.Class({
     gameStart: function () {
         this.loadLevelConfig();
         this.loadTowerConfig();
+        this.loadRewardConfig();
         this.enemyPathPositions = this.level_map.getPathPositions();
         this.towerRects = this.level_map.getObjRects();
         this.tileSize = this.level_map.getTileSize();
@@ -333,12 +338,11 @@ cc.Class({
         });
     },
 
-    loadBossConfig: function () {
-        cc.loader.loadRes("./config/boss_config", (err, result) => {
+    loadRewardConfig: function () {
+        cc.loader.loadRes("./config/reward_config", (err, result) => {
             if (err) {
                 cc.log("load config = " + err);
             } else {
-                //cc.log("load config = " + JSON.stringify(result));
                 this.bossConfigs = result;
             }
         });
@@ -452,7 +456,7 @@ cc.Class({
             let x = this.node.getChildByName('bottomBar').x;
             let y = this.node.getChildByName('bottomBar').y + this.hero.height;
             this.hero.position = cc.p(x, y);
-            this.hero.parent = this.node;
+            this.hero.parent = this.heroLayer;
             this.hero.active = true;
             this.hero.getComponent("hero").initWithData(this.towerConfigs["hero"], 1000);
             this.hero.getComponent("hero").showHero();

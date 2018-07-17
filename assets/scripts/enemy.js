@@ -219,7 +219,7 @@ cc.Class({
             this.setState(EnemyState.Dead);
             this.gainGold(1);
             if (this.isBoss) {
-                this.gameWorld.dropGoods();
+                this.gameWorld.dropGoods('enemy_1000');
             }
         }
 
