@@ -29,12 +29,12 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        bulletLayer: {
+            default: null,
+            type: cc.Node
+        },
         heroPrefab: {
             default: null,
-            type: cc.Prefab
-        },
-        bulletPrefab: {
-            default: [],
             type: cc.Prefab
         },
         effectPrefab: {
@@ -102,6 +102,7 @@ cc.Class({
         this.towerMng = this.towerGroup.getComponent('TowerMng');
         this.towerOp = this.towerOperate.getComponent('TowerOperate');
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
+        this.bulletMng = this.bulletLayer.getComponent('BulletMng');
         this.hero = cc.instantiate(this.heroPrefab);
         this.hero.active = false;
 
@@ -119,6 +120,7 @@ cc.Class({
         global.event.on("sell_tower", this.sellTower.bind(this));
         global.event.on("game_start", this.gameStart.bind(this));
         global.event.on("shoot_bullet", this.addBullet.bind(this));
+        global.event.on("destroy_bullet", this.removeBullet.bind(this));
         global.event.on("shoot_buff", this.addBuff.bind(this));
         global.event.on("summon_hero", this.summonHero.bind(this));
         global.event.on("release_slow", this.handleSlow.bind(this));
@@ -418,10 +420,13 @@ cc.Class({
     },
 
     addBullet: function (tower, position) {
-        let bullet = cc.instantiate(this.bulletPrefab[tower.getComponent("tower").bulletType]);
-        // bullet.position = tower.position;
-        bullet.parent = this.node;
+        let bullet = this.bulletMng.requestBullet(tower.getComponent("tower").bulletType);
+        bullet.parent = this.bulletLayer;
         bullet.getComponent("bullet").initWithData(tower, position, this.enemyNodeList);
+    },
+
+    removeBullet: function(type, obj) {
+        this.bulletMng.returnBullet(type, obj);
     },
 
     addBuff: function (tower, attackRate, speedRate) {
