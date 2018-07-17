@@ -43,10 +43,6 @@ cc.Class({
             default: null,
             url: cc.AudioClip
         },
-        backPackPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
         propType: 1,
         propNumber: 0,
         crystalNumber: 0,
@@ -144,16 +140,5 @@ cc.Class({
         global.event.fire("update_crystal_count", crystalLeft);
 
         this.hideDialog();
-    },
-    /**
-     * 显示背包弹窗
-     */
-    showBackPack(event) {
-        cc.log('showBackPack')
-        // var pos = event.target.getPosition();
-        // this.backPack.getComponent('back-pack').setContentPosition(this.node, pos);
-        this.backPack = cc.instantiate(this.backPackPrefab);
-        this.backPack.getComponent('back-pack').config();
-        this.backPack.parent = this.node;
     },
 });

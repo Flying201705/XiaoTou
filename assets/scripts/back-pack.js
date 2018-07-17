@@ -31,11 +31,13 @@ cc.Class({
         // selfPause: false
     },
     onEnable() {
+        let self = this;
         this.mask.on('touchstart', function (event) {
             event.stopPropagation();
         });
         this.mask.on('touchend', function (event) {
             event.stopPropagation();
+            self.dismiss();
         });
     },
     onDisable() {
@@ -62,7 +64,9 @@ cc.Class({
         this.parentNode = node;
         // this.content.position = pos;
     },
-    config() {
+    config(parentNode) {
+        this.parentNode = parentNode;
+
         for (let i = 0; i < 1; i++) {
             let item = cc.instantiate(this.itemPrefab);
             this.heroItemContainer.node.addChild(item);

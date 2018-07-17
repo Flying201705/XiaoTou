@@ -15,7 +15,11 @@ cc.Class({
         gameNode: {
             default: null,
             type: cc.Node
-        }
+        },
+        backPack: {
+            default: null,
+            type: cc.Prefab
+        },
     },
     onLoad() {
         global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
@@ -44,4 +48,9 @@ cc.Class({
         this.gameWorld.crystalCount = count;
         this.gameWorld.crystalLabel.string = count.toString();
     },
+    showBackPack() {
+        var backPackDialog = cc.instantiate(this.backPack);
+        backPackDialog.getComponent('back-pack').config(this.node);
+        backPackDialog.parent = this.node;
+    }
 });
