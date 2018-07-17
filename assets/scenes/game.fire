@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": false
+    "autoReleaseAssets": null
   },
   {
     "__type__": "cc.Node",
@@ -1205,18 +1205,10 @@
     "_N$normalSprite": {
       "__uuid__": "c9192009-73c5-42b7-a1ce-699b90cf3282"
     },
-    "_N$pressedSprite": {
-      "__uuid__": "255586db-60af-4b39-89b9-ec8cf34bcedb"
-    },
-    "pressedSprite": {
-      "__uuid__": "255586db-60af-4b39-89b9-ec8cf34bcedb"
-    },
-    "_N$hoverSprite": {
-      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
-    },
-    "hoverSprite": {
-      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
-    },
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
     "_N$disabledSprite": {
       "__uuid__": "c9192009-73c5-42b7-a1ce-699b90cf3282"
     },
@@ -2107,18 +2099,10 @@
     "_N$normalSprite": {
       "__uuid__": "065ea220-8037-4ca6-beba-820b8ec2c121"
     },
-    "_N$pressedSprite": {
-      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
-    },
-    "pressedSprite": {
-      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
-    },
-    "_N$hoverSprite": {
-      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
-    },
-    "hoverSprite": {
-      "__uuid__": "96f9f996-c9b8-4072-afc1-68ed580093cc"
-    },
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
     "_N$disabledSprite": {
       "__uuid__": "065ea220-8037-4ca6-beba-820b8ec2c121"
     },
