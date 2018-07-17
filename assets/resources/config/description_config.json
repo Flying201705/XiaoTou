@@ -17,6 +17,29 @@
       {
         "type": 1,
         "description": "水晶描述文字"
+      }
+    ]
+  },
+  "level_4": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶描述文字"
+      },
+      {
+        "type": 2,
+        "icon": 1,
+        "description": "道具描述文字"
+      }
+    ]
+  },
+  "level_5": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶描述文字"
       },
       {
         "type": 2,

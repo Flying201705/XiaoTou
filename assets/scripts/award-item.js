@@ -45,8 +45,8 @@ cc.Class({
                 this.icon.spriteFrame = this.typeProp[icon_index];
                 break;
             case 3:
-                var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
-                this.icon.spriteFrame = this.typeHeroChip[icon_index];
+                // var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
+                this.icon.spriteFrame = this.typeHeroChip[0];
                 break;
         }
 
