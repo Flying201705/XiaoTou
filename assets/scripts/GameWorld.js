@@ -127,7 +127,7 @@ cc.Class({
     },
 
     start: function () {
-        this.gameDescription.showDialog(2);
+        this.gameDescription.showDialog(this.currentLevel);
     },
 
     initEvent: function () {

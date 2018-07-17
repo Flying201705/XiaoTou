@@ -17,11 +17,11 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        title:{
+        title: {
             default: null,
             type: cc.Sprite
         },
-        titleSprites:{
+        titleSprites: {
             default: [],
             type: [cc.SpriteFrame]
         },
@@ -66,75 +66,77 @@ cc.Class({
             url: cc.AudioClip
         },
     },
-
-    onEnable:
-
-        function () {
-            this.mask.on('touchstart', function (event) {
-                event.stopPropagation();
-            });
-            this.mask.on('touchend', function (event) {
-                event.stopPropagation();
-            });
-        }
-
-    ,
-
-    onDisable: function () {
+    onEnable() {
+        this.mask.on('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.mask.on('touchend', function (event) {
+            event.stopPropagation();
+        });
+    },
+    onDisable() {
         this.mask.off('touchstart', function (event) {
             event.stopPropagation();
         });
         this.mask.off('touchend', function (event) {
             event.stopPropagation();
         });
-    }
-    ,
-    showDialog: function (mode) {
-        if (mode === undefined || mode == 1) {
-            this.title.spriteFrame = this.titleSprites[0];
+    },
+    showDialog(currentLevel) {
+        cc.loader.loadRes("./config/description_config", (err, result) => {
+            if (err) {
+                cc.log("bunny load config " + err);
+                cc.director.resume();
+                return;
+            }
+            var config = result["level_" + currentLevel];
 
-            this.description.string = this.getDescription();
-            this.towerIcon.spriteFrame = this.getTowerIcon();
-            this.levelIcon.spriteFrame = this.getLevelIcon();
+            if (config === undefined) {
+                cc.error("level_" + currentLevel + " not exist");
+                return;
+            }
 
-            this.contentHero.active = true;
-            this.contentAward.active = false;
-        } else {
-            this.title.spriteFrame = this.titleSprites[1];
+            var mode = config.mode;
 
-            var item1 = cc.instantiate(this.awardItemPrefab);
-            // var item2 = cc.instantiate(this.awardItemPrefab);
-            // var item3 = cc.instantiate(this.awardItemPrefab);
-            this.awardList.node.addChild(item1);
-            // this.awardList.node.addChild(item2);
-            // this.awardList.node.addChild(item3);
+            if (mode === undefined || mode == 1) {
+                this.title.spriteFrame = this.titleSprites[0];
 
-            this.contentHero.active = false;
-            this.contentAward.active = true;
-        }
+                this.description.string = config.description;
+                this.towerIcon.spriteFrame = this.getTowerIcon(config.tower_icon);
+                this.levelIcon.spriteFrame = this.getLevelIcon(config.tower_level);
 
-        cc.director.pause();
-        this.node.active = true;
-    }
-    ,
+                this.contentHero.active = true;
+                this.contentAward.active = false;
+            } else if (mode == 2) {
+                this.title.spriteFrame = this.titleSprites[1];
+
+                var goodsList = config.goods;
+
+                for (var index = 0; index < goodsList.length; index++) {
+                    var goods = goodsList[index];
+                    var item = cc.instantiate(this.awardItemPrefab);
+                    item.getComponent('award-item').set(goods);
+                    this.awardList.node.addChild(item);
+                }
+
+                this.contentHero.active = false;
+                this.contentAward.active = true;
+            }
+
+            this.node.active = true;
+            cc.director.pause();
+        });
+
+    },
     hideDialog() {
         cc.audioEngine.playEffect(this.clickAudio, false);
         cc.director.resume();
         this.node.active = false;
-    }
-    ,
-    getDescription() {
-        return '打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱';
-    }
-    ,
-    getTowerIcon() {
-        return this.towerSprites[0];
-    }
-    ,
-    getLevelIcon() {
-        return this.levelSprites[0];
-    }
-    ,
-
-})
-;
+    },
+    getTowerIcon(index) {
+        return this.towerSprites[index - 1];
+    },
+    getLevelIcon(level) {
+        return this.levelSprites[level - 1];
+    },
+});

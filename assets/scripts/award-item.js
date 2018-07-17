@@ -12,30 +12,44 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        typeCrystal: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        typeProp: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        typeHeroChip: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        icon: {
+            default: null,
+            type: cc.Sprite
+        },
+        description: {
+            default: null,
+            type: cc.Label
+        }
     },
+    set(opt) {
+        cc.log(opt.type + ' ' + opt.description);
 
-    // LIFE-CYCLE CALLBACKS:
+        switch (opt.type) {
+            case 1:
+                this.icon.spriteFrame = this.typeCrystal[0];
+                break;
+            case 2:
+                var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
+                this.icon.spriteFrame = this.typeProp[icon_index];
+                break;
+            case 3:
+                var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
+                this.icon.spriteFrame = this.typeHeroChip[icon_index];
+                break;
+        }
 
-    // onLoad () {},
-
-    start () {
-
-    },
-
-    // update (dt) {},
+        this.description.string = opt.description;
+    }
 });
