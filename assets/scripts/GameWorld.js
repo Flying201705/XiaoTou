@@ -171,15 +171,15 @@ cc.Class({
             }
 
             // 处理塔操作
-            let index = this.getTouchedTowerIdx(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
-            cc.log("touched event:" + (event.touch.getLocation().x - 960 * 0.5) + "," + (event.touch.getLocation().y - 640 * 0.5) + ", index = " + index);
+            let index = this.getTouchedTowerIdx(x, y);
+            cc.log("touched event:" + x + "," + y + ", index = " + index);
             if (index >= 0) {
                 this.showUpdateMenu(index);
             } else if (this.selectBox.active === true) {
                 this.closeMenu();
                 this.audioMng.playTowerDeselect();
-            } else if (this.isTouchEnable(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5)) {
-                this.showBuildMenu(event.touch.getLocation().x - 960 * 0.5, event.touch.getLocation().y - 640 * 0.5);
+            } else if (this.isTouchEnable(x, y)) {
+                this.showBuildMenu(x, y);
             }
         });
     },
