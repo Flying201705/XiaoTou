@@ -12,29 +12,76 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        content: {
+        mask: {
             default: null,
             type: cc.Node
         },
-        selfPause: false
-    },
-
-    onLoad() {
-        if (!cc.director.isPaused()) {
-            cc.director.pause();
-            this.selfPause = true;
+        heroItemContainer: {
+            default: null,
+            type: cc.Layout
+        },
+        propItemContainer: {
+            default: null,
+            type: cc.Layout
+        },
+        itemPrefab: {
+            default: null,
+            type: cc.Prefab
         }
+        // selfPause: false
     },
+    onEnable() {
+        this.mask.on('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.mask.on('touchend', function (event) {
+            event.stopPropagation();
+        });
+    },
+    onDisable() {
+        this.mask.off('touchstart', function (event) {
+            event.stopPropagation();
+        });
+        this.mask.off('touchend', function (event) {
+            event.stopPropagation();
+        });
+    },
+    onLoad() {
+
+        // if (!cc.director.isPaused()) {
+        // cc.director.pause();
+        // this.selfPause = true;
+        // }
+
+
+    },
+    // start() {
+    //
+    // },
     setContentPosition(node, pos) {
         this.parentNode = node;
-        this.content.position = pos;
+        // this.content.position = pos;
+    },
+    config() {
+        for (let i = 0; i < 1; i++) {
+            let item = cc.instantiate(this.itemPrefab);
+            this.heroItemContainer.node.addChild(item);
+            cc.log('add hero')
+        }
+
+        for (let j = 0; j < 3; j++) {
+            let item = cc.instantiate(this.itemPrefab);
+            item.getComponent('chipItem').config(j);
+            this.propItemContainer.node.addChild(item);
+            cc.log('add prop ' + j);
+        }
     },
     dismiss() {
         this.parentNode.removeChild(this.node);
         this.parentNode = null;
-        if (this.selfPause) {
-            cc.director.resume();
-            this.selfPause = false;
-        }
+        cc.director.resume();
+        // if (this.selfPause) {
+        // this.selfPause = false;
+        // }
     }
 });

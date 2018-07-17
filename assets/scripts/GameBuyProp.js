@@ -68,9 +68,6 @@ cc.Class({
             event.stopPropagation();
         });
     },
-    onLoad() {
-        this.backPack = cc.instantiate(this.backPackPrefab);
-    },
     config(parentNode, propType, crystalTotalNumber) {
         this.parentNode = parentNode;
         cc.log('buy prop type :' + propType);
@@ -153,8 +150,10 @@ cc.Class({
      */
     showBackPack(event) {
         cc.log('showBackPack')
-        var pos = event.target.getPosition();
-        this.backPack.getComponent('back-pack').setContentPosition(this.node, pos);
+        // var pos = event.target.getPosition();
+        // this.backPack.getComponent('back-pack').setContentPosition(this.node, pos);
+        this.backPack = cc.instantiate(this.backPackPrefab);
+        this.backPack.getComponent('back-pack').config();
         this.backPack.parent = this.node;
     },
 });
