@@ -38,8 +38,7 @@ cc.Class({
 
     },
 
-    config(opt) {
-        // type, chipCount, crystalCount
+    getSprite(opt) {
         var chipSprite = this.heroChipSprites[0];
 
         if (opt.kind == 0) {
@@ -47,11 +46,16 @@ cc.Class({
         } else if (opt.kind == 1) {
             chipSprite = this.propChipSprites[opt.propType];
         }
+        return chipSprite;
+    },
+    config(opt) {
+        // type, chipCount, crystalCount
+        var chipSprite = this.getSprite(opt);
 
-        for (let i = 0; i < opt.chipCount; i++) {
-            this.chips[i].spriteFrame = chipSprite;
-            cc.log(chipSprite)
-        }
+        this.chips[0].spriteFrame = opt.chip0 === 1 ? chipSprite : null;
+        this.chips[1].spriteFrame = opt.chip1 === 1 ? chipSprite : null;
+        this.chips[2].spriteFrame = opt.chip2 === 1 ? chipSprite : null;
+
         this.crystalCount = opt.crystalCount === undefined ? 0 : opt.crystalCount;
         this.text.string = `需要<b><color=#8e256a>${this.crystalCount}</color></b>水晶`;
     }
