@@ -61,9 +61,11 @@ cc.Class({
             cc.log('add hero')
         }
 
+
         for (let j = 0; j < 3; j++) {
             let item = cc.instantiate(this.itemPrefab);
-            item.getComponent('chipItem').config({kind: 1, propType: j, chipCount: j + 1, crystalCount: 50});
+            // // 二期开放功能。
+            //     item.getComponent('chipItem').config({kind: 1, propType: j, chipCount: j + 1, crystalCount: 50});
             this.propItemContainer.node.addChild(item);
             cc.log('add prop ' + j);
         }
