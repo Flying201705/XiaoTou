@@ -57,6 +57,7 @@ cc.Class({
     },
     config(parentNode) {
         this.parentNode = parentNode;
+        this.fillData();
         this.fetchData();
     },
     dismiss() {
@@ -67,44 +68,54 @@ cc.Class({
         global.resume();
     },
     configHeroChips(opt) {
-        for (let i = 0; i < 1; i++) {
-            let item = cc.instantiate(this.itemPrefab);
-            item.getComponent('chipItem').config(opt);
-            this.heroItemContainer.node.addChild(item);
-            cc.log('add hero')
+        var children = this.heroItemContainer.node.children;
+        if (children.length > 0) {
+            for (var i = 0; i < children.length; ++i) {
+                children[i].getComponent('chipItem').config(opt);
+            }
+        } else {
+            for (let i = 0; i < 1; i++) {
+                let item = cc.instantiate(this.itemPrefab);
+                item.getComponent('chipItem').config(opt);
+                this.heroItemContainer.node.addChild(item);
+                cc.log('add hero')
+            }
         }
+
     },
     configPropChips(opt) {
-        for (let j = 0; j < 3; j++) {
-            let item = cc.instantiate(this.itemPrefab);
-            item.getComponent('chipItem').config(opt);
-            this.propItemContainer.node.addChild(item);
-            cc.log('add prop ' + j);
+        var children = this.propItemContainer.node.children;
+        if (children.length > 0) {
+            for (var i = 0; i < children.length; ++i) {
+                children[i].getComponent('chipItem').config(opt);
+            }
+        } else {
+            for (let j = 0; j < 3; j++) {
+                let item = cc.instantiate(this.itemPrefab);
+                item.getComponent('chipItem').config(opt);
+                this.propItemContainer.node.addChild(item);
+                // cc.log('add prop ' + j);
+            }
         }
     },
     fetchData() {
         cc.log('bunny fetchData()-2')
-        // var infoHandle = new InfoHandle();
-        // infoHandle.dataUpdateComplete = type => {
-        //     cc.log('bunny dataUpdateComplete callback')
-        //     // 仅监听物品数据更新
-        //     if (type != 3) {
-        //         return;
-        //     }
-        //
-        //     var config = {kind: 0, crystalCount: 50};
-        //     for (let i = 0; i < InfoData.goods.length; i++) {
-        //         var goodsInfo = InfoData.goods[i];
-        //         cc.log('bunny id:' + goodsInfo.goodsid);
-        //     }
-        //
-        //
-        //     // this.configHeroChips();
-        //
-        // };
-        //
-        // infoHandle.getGoodsById(InfoData.user.id);
+        var infoHandle = new InfoHandle();
+        infoHandle.dataCompleteCallback = (type) => {
+            cc.log('bunny dataUpdateComplete callback type:' + type)
+            // 仅监听物品数据更新
+            if (type != 3) {
+                return;
+            }
 
+            this.fillData();
+        };
+
+        infoHandle.getGoodsById(InfoData.user.id);
+
+
+    },
+    fillData() {
         var config = {kind: 0, crystalCount: 50};
         for (let i = 0; i < InfoData.goods.length; i++) {
             var goodsInfo = InfoData.goods[i];
@@ -120,6 +131,7 @@ cc.Class({
 
         this.configHeroChips(config);
         // 二期开放功能。
-        this.configPropChips({kind:2});
+        this.configPropChips({kind: 2});
+        cc.log('bunny fillData')
     }
 });

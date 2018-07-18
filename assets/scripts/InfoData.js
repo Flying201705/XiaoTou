@@ -14,7 +14,7 @@ const get_goods = "goods/allGoods.do?";
 const update_goods = "goods/updateGoods.do?";
 
 const InfoData = {
-    user:UserData,
+    user: UserData,
     levels: {
         default: [],
         type: LevelData
@@ -26,36 +26,38 @@ const InfoData = {
 };
 
 const InfoHandle = cc.Class({
-    init:function() {
+    init: function () {
         InfoData.user = new UserData();
         InfoData.levels = [];
         InfoData.goods = [];
         this.getUserInfoById(100);
     },
 
-    getUserInfoById: function(id) {
+    getUserInfoById: function (id) {
         let url = http_head + get_user_info + "id=" + id;
         this.sendRequest(url, this.handleUserInfo);
     },
 
-    getLevelsById: function(id) {
+    getLevelsById: function (id) {
         let url = http_head + get_levels + "id=" + id;
         this.sendRequest(url, this.handleLevels);
     },
-    
-    getGoodsById: function(id) {
+
+    getGoodsById: function (id) {
         let url = http_head + get_goods + "id=" + id;
         this.sendRequest(url, this.handleGoods);
-    },
-    
-    handleUserInfo: function(obj) {
-        InfoData.user.init(obj);
-        
-        new InfoHandle().getGoodsById(InfoData.user.id);
-        new InfoHandle().getLevelsById(InfoData.user.id);
+        this.dataCompleteCallback();
     },
 
-    handleLevels: function(obj) {
+    handleUserInfo: function (self, obj) {
+        InfoData.user.init(obj);
+
+        new InfoHandle().getGoodsById(InfoData.user.id);
+        new InfoHandle().getLevelsById(InfoData.user.id);
+        self.dataCompleteCallback(1);
+    },
+
+    handleLevels: function (self, obj) {
         for (let i = 0; i < obj.length; i++) {
             let level = new LevelData();
 
@@ -70,27 +72,29 @@ const InfoHandle = cc.Class({
             level.init(obj[i]);
             InfoData.levels[obj[i].lv - 1] = level;
         }
+        self.dataCompleteCallback(2);
     },
 
-    handleGoods: function(obj) {
+    handleGoods: function (self, obj) {
         for (let i = 0; i < obj.length; i++) {
             let goods = new GoodsData();
             goods.init(obj[i]);
             InfoData.goods[i] = goods;
         }
+        self.dataCompleteCallback(3);
     },
 
-    updateLatestLevel: function(level) {
+    updateLatestLevel: function (level) {
         let url = http_head + update_user_level + "id=" + InfoData.user.id + "&level=" + level;
         this.sendRequest(url, null);
     },
 
-    updateLevel: function(lv, score, stars) {
+    updateLevel: function (lv, score, stars) {
         if (InfoData.user.level <= lv) {
             InfoData.user.level = lv + 1;
             this.updateLatestLevel(InfoData.user.level);
         }
-        
+
         if (InfoData.levels[lv - 1] != null) {
             if (InfoData.levels[lv - 1].stars >= stars) {
                 return;
@@ -109,26 +113,32 @@ const InfoHandle = cc.Class({
         this.sendRequest(url, null);
     },
 
-    updateGoods: function(goods, num) {
+    updateGoods: function (goods, num) {
         let url = http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num;
         this.sendRequest(url, null);
     },
 
-    sendRequest:function (url, method) {
+    sendRequest: function (url, method) {
         var xhr = new XMLHttpRequest();
+        var self  = this;
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
                 var response = xhr.responseText;
                 console.log("<test> json str : " + response);
+                cc.log('bunny sendRequest() response:' + response)
                 if (method != null) {
                     var obj = JSON.parse(response);
-                    method(obj.data);
+                    method(self, obj.data);
                 }
             }
         }
         xhr.open("GET", url, true);
         xhr.send();
-    }
+    },
+    dataCompleteCallback() {
+        cc.log('bunny do callback')
+    },
+
 });
 
 export {
