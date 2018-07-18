@@ -48,18 +48,9 @@ cc.Class({
             event.stopPropagation();
         });
     },
-    onLoad() {
-
-        // if (!cc.director.isPaused()) {
-        // cc.director.pause();
-        // this.selfPause = true;
-        // }
-
-
+    start() {
+        cc.director.pause();
     },
-    // start() {
-    //
-    // },
     setContentPosition(node, pos) {
         this.parentNode = node;
         // this.content.position = pos;
@@ -84,8 +75,5 @@ cc.Class({
         this.parentNode.removeChild(this.node);
         this.parentNode = null;
         cc.director.resume();
-        // if (this.selfPause) {
-        // this.selfPause = false;
-        // }
     }
 });
