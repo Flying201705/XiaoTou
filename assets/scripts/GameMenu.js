@@ -1,3 +1,5 @@
+import global from './global'
+
 cc.Class({
     extends: cc.Component,
 
@@ -39,20 +41,23 @@ cc.Class({
     },
 
     showMenu: function () {
-        cc.director.pause();
+        // cc.director.pause();
+        global.pause();
         this.node.active = true;
     },
 
     hideMenu: function () {
         this.node.active = false;
-        cc.director.resume();
+        // cc.director.resume();
+        global.resume();
         this.levelNode.resumeAllActions();
     },
 
     resumeGame: function() {
         cc.audioEngine.playEffect(this.clickAudio, false);
         this.node.active = false;
-        cc.director.resume();
+        // cc.director.resume();
+        global.resume();
     },
 
     restartGame: function() {
@@ -62,7 +67,8 @@ cc.Class({
     selcetStage: function () {
         cc.audioEngine.playEffect(this.clickAudio, false);
         this.node.active = true;
-        cc.director.resume();
+        // cc.director.resume();
+        global.resume();
         cc.director.loadScene("stage");
     },
 

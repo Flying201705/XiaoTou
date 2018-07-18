@@ -40,11 +40,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 57
+        "__id__": 58
       }
     ],
     "_prefab": {
-      "__id__": 58
+      "__id__": 59
     },
     "_id": "",
     "_opacity": 255,
@@ -1672,10 +1672,13 @@
       },
       {
         "__id__": 54
+      },
+      {
+        "__id__": 56
       }
     ],
     "_prefab": {
-      "__id__": 56
+      "__id__": 57
     },
     "_id": "",
     "_opacity": 255,
@@ -1815,6 +1818,17 @@
     "component": "GameBuyProp",
     "handler": "convert",
     "customEventData": "stage"
+  },
+  {
+    "__type__": "2410b11qZtA/5T0djc81LEM",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 52
+    },
+    "_enabled": true,
+    "pressedScale": 1.2,
+    "transDuration": 0.1
   },
   {
     "__type__": "cc.PrefabInfo",
