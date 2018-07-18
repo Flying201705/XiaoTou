@@ -77,7 +77,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        cc.log("level onLoad begin");
+        cc.log("GameWorld onLoad");
 
         this.setTouchEvent();
 
@@ -132,6 +132,23 @@ cc.Class({
         global.event.on("buy_slow", this.buySlow.bind(this));
         global.event.on("buy_stun", this.buyStun.bind(this));
         global.event.on("buy_damage", this.buyDamage.bind(this));
+    },
+
+    onDestroy: function () {
+        global.event.off("build_tower", this.buildTower);
+        global.event.off("update_tower", this.updateTower);
+        global.event.off("sell_tower", this.sellTower);
+        global.event.off("game_start", this.gameStart);
+        global.event.off("shoot_bullet", this.addBullet);
+        global.event.off("destroy_bullet", this.removeBullet);
+        global.event.off("shoot_buff", this.addBuff);
+        global.event.off("summon_hero", this.summonHero);
+        global.event.off("release_slow", this.handleSlow);
+        global.event.off("release_stun", this.handleStun);
+        global.event.off("release_damage", this.handleDamage);
+        global.event.off("buy_slow", this.buySlow);
+        global.event.off("buy_stun", this.buyStun);
+        global.event.off("buy_damage", this.buyDamage);
     },
 
     setTouchEvent: function () {
@@ -263,10 +280,6 @@ cc.Class({
 
         this.detractGold(create_cost);
         this.audioMng.playTowerBuild();
-    },
-
-    onDestroy: function () {
-        global.event.off("build_tower", this.buildTower);
     },
 
     updateTower: function () {

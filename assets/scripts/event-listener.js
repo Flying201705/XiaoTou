@@ -26,7 +26,7 @@ const EventListener = function (obj) {
         if (Register.hasOwnProperty(name)) {
             let handlerList = Register[name];
             for (let i = 0; i < handlerList.length; i++) {
-                if (handlerList[i] === method) {
+                if (handlerList[i]) {
                     handlerList.splice(i, 1);
                 }
             }
