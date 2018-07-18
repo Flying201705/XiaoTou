@@ -140,8 +140,10 @@ cc.Class({
                 return;
             }
 
-            let x = event.touch.getLocation().x - 960 * 0.5;
-            let y = event.touch.getLocation().y - 640 * 0.5;
+            let windowSize = cc.view.getVisibleSize();
+            let x = event.touch.getLocation().x - windowSize.width * 0.5;
+            let y = event.touch.getLocation().y - windowSize.height * 0.5;
+            console.log("x = " + event.touch.getLocation().x + ", y = " + event.touch.getLocation().y);
 
             // 处理英雄操作
             if (this.hero !== undefined && this.hero.active === true) {

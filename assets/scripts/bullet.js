@@ -58,8 +58,9 @@ cc.Class({
             }
         }
 
-        if (this.node.position.x < -960 * 0.5 || this.node.position.x > 960 * 0.5
-            || this.node.position.y > 640 * 0.5 || this.node.position.y < -640 * 0.5) {
+        let windowSize = cc.view.getVisibleSize();
+        if (this.node.position.x < -windowSize.width * 0.5 || this.node.position.x > windowSize.width * 0.5
+            || this.node.position.y > windowSize.height * 0.5 || this.node.position.y < -windowSize.height * 0.5) {
             global.event.fire("destroy_bullet", this.type, this.node);
         }
 

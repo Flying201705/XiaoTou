@@ -22,14 +22,18 @@ cc.Class({
     initDataFromMap: function (tmxAsset) {
         let tileMap = this.node.getComponent(cc.TiledMap);
         tileMap.tmxAsset = tmxAsset;
+        console.log("tile size:" + tileMap.getTileSize() + ", mapsize : " + this.node.getContentSize());
+        this.tileSize = tileMap.getTileSize();
+        let mapWidth = this.node.getContentSize().width;
+        let mapHeight = this.node.getContentSize().height;
         let pathGroup = tileMap.getObjectGroup("path");
         for (let i = 0; i < 100; i++) {
             let pathPoint = pathGroup.getObject("P" + i);
             if (!pathPoint) {
                 break;
             }
-            cc.log("P" + i + ": x " + (pathPoint.sgNode.x - 960 * 0.5) + ", y " + (pathPoint.sgNode.y - 640 * 0.5));
-            this.pathPositions[i] = cc.p(pathPoint.sgNode.x - 960 * 0.5, pathPoint.sgNode.y - 640 * 0.5);
+            cc.log("P" + i + ": x " + (pathPoint.sgNode.x - mapWidth * 0.5) + ", y " + (pathPoint.sgNode.y - mapHeight * 0.5));
+            this.pathPositions[i] = cc.p(pathPoint.sgNode.x - mapWidth * 0.5, pathPoint.sgNode.y - mapHeight * 0.5);
         }
 
         for (let i = 0; i < 100; i++) {
@@ -37,11 +41,9 @@ cc.Class({
             if (!objRect) {
                 break;
             }
-            cc.log("O" + i + ": x " + (objRect.sgNode.x - 960 * 0.5) + ", y " + (objRect.sgNode.y - objRect.sgNode.height - 640 * 0.5) + ", w " + objRect.sgNode.width + ", h " + objRect.sgNode.height);
-            this.objRects[i] = cc.rect(objRect.sgNode.x - 960 * 0.5, objRect.sgNode.y - objRect.sgNode.height - 640 * 0.5, objRect.sgNode.width, objRect.sgNode.height);
+            cc.log("O" + i + ": x " + (objRect.sgNode.x - mapWidth * 0.5) + ", y " + (objRect.sgNode.y - objRect.sgNode.height - mapHeight * 0.5) + ", w " + objRect.sgNode.width + ", h " + objRect.sgNode.height);
+            this.objRects[i] = cc.rect(objRect.sgNode.x - mapWidth * 0.5, objRect.sgNode.y - objRect.sgNode.height - mapHeight * 0.5, objRect.sgNode.width, objRect.sgNode.height);
         }
-        cc.log("tile size:" + tileMap.getTileSize() + ", mapsize : " + this.node.getContentSize());
-        this.tileSize = tileMap.getTileSize();
     },
 
     // update (dt) {},
