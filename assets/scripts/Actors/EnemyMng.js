@@ -15,6 +15,12 @@ cc.Class({
             let enemy = cc.instantiate(this.enemyPrefab); // 创建节点
             this.enemyPool.put(enemy); // 通过 putInPool 接口放入对象池
         }
+
+        this.list = [];
+    },
+
+    init: function (game) {
+        this.gameWorld = game;
     },
 
     createEnemy: function (parentNode) {
@@ -26,11 +32,27 @@ cc.Class({
         }
         enemy.parent = parentNode; // 将生成的敌人加入节点树
         // enemy.getComponent('enemy').init(); //接下来就可以调用 enemy 身上的脚本进行初始化
+
+        this.add(enemy);
+
         return enemy;
     },
 
     destroyEnemy: function (enemy) {
         // enemy 应该是一个 cc.Node
         this.enemyPool.put(enemy); // 和初始化时的方法一样，将节点放进对象池，这个方法会同时调用节点的 removeFromParent
+    },
+
+    add: function (enemy) {
+        this.list.push(enemy);
+        // this.gameWorld.updateEnemy();
+    },
+
+    remove: function (enemy) {
+        let index = this.list.indexOf(enemy);
+        if (index > -1) {
+            this.list.splice(index, 1);
+            // this.gameWorld.updateEnemy();
+        }
     }
 });

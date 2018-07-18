@@ -49,8 +49,7 @@ cc.Class({
         }
     },
 
-    // use this for initialization
-    onLoad: function () {
+    initWithData: function (gameWorld, type, level, pathPoints) {
         //速度
         this.speed = 0;
         //总血量
@@ -72,9 +71,7 @@ cc.Class({
         this.slowRate = 0;
         //位置标签，标签值越大越靠前
         this.positionTag = 0;
-    },
 
-    initWithData: function (gameWorld, type, level, pathPoints) {
         this.gameWorld = gameWorld;
         this.type = type;
         if (this.type >= 1000) {
@@ -153,6 +150,8 @@ cc.Class({
         if (this.state === state) {
             return;
         }
+
+        this.state = state;
         switch (state) {
             case EnemyState.Unbeatable:
             case EnemyState.Running:
@@ -160,18 +159,22 @@ cc.Class({
                 break;
             case EnemyState.Dead:
                 cc.audioEngine.playEffect(this.audioDead, false);
+                this.gameWorld.enemyMng.remove(this.node);
+
                 let deadAction = cc.fadeOut(1);
                 let deadSequence = cc.sequence(deadAction, cc.callFunc(() => {
-                    //cc.log("死了");
-                    this.node.destroy();
+                    // this.node.destroy();
+                    this.gameWorld.enemyMng.destroyEnemy(this.node);
                 }));
                 this.node.runAction(deadSequence);
                 break;
             case EnemyState.EndPath:
+                this.gameWorld.enemyMng.remove(this.node);
+
                 let endAction = cc.fadeOut(0.5);
                 let endSequence = cc.sequence(endAction, cc.callFunc(() => {
-                    cc.log("跑了");
-                    this.node.destroy();
+                    // this.node.destroy();
+                    this.gameWorld.enemyMng.destroyEnemy(this.node);
                 }));
                 this.node.runAction(endSequence);
                 this.gameWorld.detractLife(1);
@@ -179,7 +182,6 @@ cc.Class({
             default:
                 break;
         }
-        this.state = state;
     },
 
     isLiving: function () {

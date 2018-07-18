@@ -140,11 +140,9 @@ cc.Class({
         cc.log("sell tower");
 
         this.node.destroy();
-    }
-    ,
+    },
     isFree: function () {
         return this.enemy === undefined;
-
     },
     setTowerList: function(towerList) {
         if (this.buffAttack !== true) {
@@ -222,8 +220,8 @@ cc.Class({
         }
 
         if (this.enemy !== undefined) {
-            let direction = cc.pSub(this.node.position, this.enemy.position);
-            let angle = cc.pAngleSigned(direction, cc.p(0, -1));
+            // let direction = cc.pSub(this.node.position, this.enemy.position);
+            // let angle = cc.pAngleSigned(direction, cc.p(0, -1));
             // cc.log("angle = " + angle);
             //塔旋转
             //this.node.rotation = (180 / Math.PI) * angle;

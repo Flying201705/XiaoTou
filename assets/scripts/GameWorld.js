@@ -98,7 +98,6 @@ cc.Class({
         this.selectBox.active = false;
 
         this.enemyPathPositions = [];
-        this.enemyNodeList = [];
         this.towerRects = [];
 
         this.initEvent();
@@ -384,18 +383,10 @@ cc.Class({
             }
         }
 
-        for (let j = 0; j < this.enemyNodeList.length; j++) {
-            let enemy = this.enemyNodeList[j];
-            if (enemy.getComponent("enemy").isDead() || enemy.getComponent("enemy").isEndPath()) {
-                //cc.log("从列表里面删掉");
-                this.enemyNodeList.splice(j, 1);
-            }
-        }
-
-        this.sortEnemyList(this.enemyNodeList);
+        this.sortEnemyList(this.enemyMng.list);
         // 处理英雄操作
         if (this.hero !== undefined && this.hero.active === true) {
-            this.hero.getComponent("hero").setEnemyList(this.enemyNodeList);
+            this.hero.getComponent("hero").setEnemyList(this.enemyMng.list);
         }
 
         // 处理塔操作
@@ -405,13 +396,13 @@ cc.Class({
                 if (tower.getComponent("tower").ifBuffAttack()) {
                     tower.getComponent("tower").setTowerList(this.towerGroup.children);
                 }
-                tower.getComponent("tower").setEnemyList(this.enemyNodeList);
+                tower.getComponent("tower").setEnemyList(this.enemyMng.list);
             }
         }
 
         if (this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
             && this.currentWaveConfig === undefined
-            && this.enemyNodeList.length <= 0) {
+            && this.enemyGroup.childrenCount <= 0) {
             //游戏结束--赢了
             this.gameOver(true);
         }
@@ -424,13 +415,12 @@ cc.Class({
     addEnemy: function (type, level) {
         let enemy = this.enemyMng.createEnemy(this.enemyGroup);
         enemy.getComponent("enemy").initWithData(this, type, level, this.enemyPathPositions);
-        this.enemyNodeList.push(enemy);
     },
 
     addBullet: function (tower, position) {
         let bullet = this.bulletMng.requestBullet(tower.getComponent("tower").bulletType);
         bullet.parent = this.bulletLayer;
-        bullet.getComponent("bullet").initWithData(tower, position, this.enemyNodeList);
+        bullet.getComponent("bullet").initWithData(tower, position, this.enemyMng.list);
     },
 
     removeBullet: function(type, obj) {
@@ -468,15 +458,15 @@ cc.Class({
     },
 
     handleSlow: function () {
-        for (let j = 0; j < this.enemyNodeList.length; j++) {
-            let enemy = this.enemyNodeList[j];
+        for (let j = 0; j < this.enemyMng.list.length; j++) {
+            let enemy = this.enemyMng.list[j];
             enemy.getComponent("enemy").hanleSlowed(0.5);
         }
     },
 
     handleStun: function () {
-        for (let j = 0; j < this.enemyNodeList.length; j++) {
-            let enemy = this.enemyNodeList[j];
+        for (let j = 0; j < this.enemyMng.list.length; j++) {
+            let enemy = this.enemyMng.list[j];
             enemy.getComponent("enemy").handleStuned();
         }
     },
@@ -493,8 +483,8 @@ cc.Class({
     onEffectEnd: function (prop) {
         console.log("gameworld onEffectEnd~~" + prop);
         if (prop === "bomb") {
-            for (let j = 0; j < this.enemyNodeList.length; j++) {
-                let enemy = this.enemyNodeList[j];
+            for (let j = 0; j < this.enemyMng.list.length; j++) {
+                let enemy = this.enemyMng.list[j];
                 enemy.getComponent("enemy").handleDamage(100, 0);
             }
         }
