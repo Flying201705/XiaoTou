@@ -51,22 +51,19 @@ cc.Class({
     start() {
         cc.director.pause();
     },
-    setContentPosition(node, pos) {
-        this.parentNode = node;
-        // this.content.position = pos;
-    },
     config(parentNode) {
         this.parentNode = parentNode;
 
         for (let i = 0; i < 1; i++) {
             let item = cc.instantiate(this.itemPrefab);
+            item.getComponent('chipItem').config({kind: 0, chipCount: 2, crystalCount: 50});
             this.heroItemContainer.node.addChild(item);
             cc.log('add hero')
         }
 
         for (let j = 0; j < 3; j++) {
             let item = cc.instantiate(this.itemPrefab);
-            item.getComponent('chipItem').config(j);
+            item.getComponent('chipItem').config({kind: 1, propType: j, chipCount: j + 1, crystalCount: 50});
             this.propItemContainer.node.addChild(item);
             cc.log('add prop ' + j);
         }

@@ -12,10 +12,22 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        label: {
+        text: {
             default: null,
             type: cc.RichText
-        }
+        },
+        heroChipSprites: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        propChipSprites: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        chips: {
+            default: [],
+            type: [cc.Sprite]
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -26,9 +38,22 @@ cc.Class({
 
     },
 
-    config(type) {
-        this.type = type;
-        this.label.string = type.toString();
+    config(opt) {
+        // type, chipCount, crystalCount
+        var chipSprite = this.heroChipSprites[0];
+
+        if (opt.kind == 0) {
+            chipSprite = this.heroChipSprites[0];
+        } else if (opt.kind == 1) {
+            chipSprite = this.propChipSprites[opt.propType];
+        }
+
+        for (let i = 0; i < opt.chipCount; i++) {
+            this.chips[i].spriteFrame = chipSprite;
+            cc.log(chipSprite)
+        }
+        this.crystalCount = opt.crystalCount === undefined ? 0 : opt.crystalCount;
+        this.text.string = `需要<b><color=#8e256a>${this.crystalCount}</color></b>水晶`;
     }
 
     // update (dt) {},
