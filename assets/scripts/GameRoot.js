@@ -4,6 +4,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        timeCountDown: {
+            default: null,
+            type: cc.Node
+        },
         description: {
             default: null,
             type: cc.Prefab
@@ -21,10 +25,19 @@ cc.Class({
             type: cc.Prefab
         },
     },
+    update() {
+        if (global.isPause()) {
+            this.timeCountDownAnim.pause();
+        } else {
+            this.timeCountDownAnim.resume();
+        }
+    },
     onLoad() {
         global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
         global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
         global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
+
+        this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
     },
     start() {
         this.showDescDialog();

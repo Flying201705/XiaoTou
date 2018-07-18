@@ -81,11 +81,13 @@ cc.Class({
         this.propNumberLabel.string = '0';
         this.crystalNumberLabel.string = '0';
 
-        cc.director.pause();
+        // cc.director.pause();
+        global.pause();
         this.node.active = true;
     },
     hideDialog() {
-        cc.director.resume();
+        // cc.director.resume();
+        global.resume();
         // this.node.active = false;
         this.parentNode.removeChild(this.node);
     },

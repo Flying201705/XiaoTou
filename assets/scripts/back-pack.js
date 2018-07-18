@@ -8,6 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 import {InfoHandle, InfoData} from './InfoData'
+import global from './global'
 
 cc.Class({
     extends: cc.Component,
@@ -50,7 +51,9 @@ cc.Class({
         });
     },
     start() {
-        cc.director.pause();
+        // cc.director.pause();
+        // global.pause = true;
+        global.pause();
     },
     config(parentNode) {
         this.parentNode = parentNode;
@@ -59,7 +62,9 @@ cc.Class({
     dismiss() {
         this.parentNode.removeChild(this.node);
         this.parentNode = null;
-        cc.director.resume();
+        // cc.director.resume();
+        // global.pause = false;
+        global.resume();
     },
     configHeroChips(opt) {
         for (let i = 0; i < 1; i++) {

@@ -1,3 +1,5 @@
+import global from './global'
+
 const EnemyState = {
     Invalid: -1,
     //无敌状态
@@ -113,6 +115,10 @@ cc.Class({
     },
 
     update: function (dt) {
+        if (global.isPause()) {
+            return;
+        }
+
         if (this.state === EnemyState.Running || this.state === EnemyState.Unbeatable) {
             let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
             if (distance < 10) {

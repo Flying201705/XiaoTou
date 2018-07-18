@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+import global from './global'
 // 游戏界面的英雄、道具介绍弹窗。
 cc.Class({
     extends: cc.Component,
@@ -125,7 +125,8 @@ cc.Class({
             }
 
             // this.node.active = true;
-            cc.director.pause();
+            // cc.director.pause();
+            global.pause();
         });
 
     },
@@ -133,7 +134,8 @@ cc.Class({
         this.parentNode.removeChild(this.node);
         this.parentNode = null;
         cc.audioEngine.playEffect(this.clickAudio, false);
-        cc.director.resume();
+        // cc.director.resume();
+        global.resume();
     },
     getTowerIcon(index) {
         return this.towerSprites[index - 1];

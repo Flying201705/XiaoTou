@@ -349,6 +349,12 @@ cc.Class({
     },
 
     update: function (dt) {
+        if (global.isPause()) {
+            return;
+        }
+
+        cc.log('bunny-game update');
+
         this.goldLabel.string = this.goldCount.toString();
         this.crystalLabel.string = this.crystalCount.toString();
         this.lifeNode.getComponent("Life").setLife(this.lifeCount);
