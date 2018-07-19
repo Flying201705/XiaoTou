@@ -159,21 +159,19 @@ cc.Class({
                 break;
             case EnemyState.Dead:
                 cc.audioEngine.playEffect(this.audioDead, false);
-                this.gameWorld.enemyMng.remove(this.node);
-
                 let deadAction = cc.fadeOut(1);
                 let deadSequence = cc.sequence(deadAction, cc.callFunc(() => {
                     // this.node.destroy();
+                    this.gameWorld.enemyMng.remove(this.node);
                     this.gameWorld.enemyMng.destroyEnemy(this.node);
                 }));
                 this.node.runAction(deadSequence);
                 break;
             case EnemyState.EndPath:
-                this.gameWorld.enemyMng.remove(this.node);
-
                 let endAction = cc.fadeOut(0.5);
                 let endSequence = cc.sequence(endAction, cc.callFunc(() => {
                     // this.node.destroy();
+                    this.gameWorld.enemyMng.remove(this.node);
                     this.gameWorld.enemyMng.destroyEnemy(this.node);
                 }));
                 this.node.runAction(endSequence);
