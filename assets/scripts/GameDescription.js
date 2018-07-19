@@ -41,6 +41,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        towerName: {
+            default: null,
+            type: cc.Label
+        },
         description: {
             default: null,
             type: cc.Label
@@ -101,7 +105,7 @@ cc.Class({
 
             if (mode === undefined || mode == 1) {
                 this.title.spriteFrame = this.titleSprites[0];
-
+                this.towerName.string = config.towerName;
                 this.description.string = config.description;
                 this.towerIcon.spriteFrame = this.getTowerIcon(config.tower_icon);
                 this.levelIcon.spriteFrame = this.getLevelIcon(config.tower_level);

@@ -1,12 +1,14 @@
 {
   "level_1": {
     "mode": 1,
+    "towerName":"小兵",
     "tower_icon": 1,
     "tower_level": 1,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_2": {
     "mode": 1,
+    "towerName":"小兵2",
     "tower_icon": 2,
     "tower_level": 2,
     "description": "文字描述文字文字"
