@@ -39,6 +39,11 @@ cc.Class({
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
     },
+    onDestroy(){
+        global.event.off("show_buy_prop_dialog", this.showBuyPropDialog);
+        global.event.off("get_crystal_count", this.getCrystalCount);
+        global.event.off("update_crystal_count", this.updateCrystalCount);
+    },
     start() {
         this.showDescDialog();
     },
