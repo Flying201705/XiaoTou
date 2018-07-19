@@ -112,10 +112,9 @@ const InfoHandle = cc.Class({
         let url = http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars;
         this.sendRequest(url, null);
     },
-
-    updateGoods: function (goods, num) {
+    updateGoods: function (goods, num, callback) {
         let url = http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num;
-        this.sendRequest(url, null);
+        this.sendRequest(url, callback);
     },
 
     sendRequest: function (url, method) {
@@ -125,9 +124,9 @@ const InfoHandle = cc.Class({
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
                 var response = xhr.responseText;
                 console.log("<test> json str : " + response);
-                cc.log('bunny sendRequest() response:' + response)
                 if (method != null) {
                     var obj = JSON.parse(response);
+                    cc.log("bunny-invoke callback");
                     method(self, obj.data);
                 }
             }

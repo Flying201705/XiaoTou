@@ -1166,6 +1166,9 @@
     "mask": {
       "__id__": 2
     },
+    "container": {
+      "__id__": 7
+    },
     "heroItemContainer": {
       "__id__": 18
     },

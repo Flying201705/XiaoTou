@@ -18,6 +18,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        container: {
+            default: null,
+            type: cc.Node
+        },
         heroItemContainer: {
             default: null,
             type: cc.Layout
@@ -39,7 +43,14 @@ cc.Class({
         });
         this.mask.on('touchend', function (event) {
             event.stopPropagation();
-            self.dismiss();
+
+            // 点击弹窗外面区域退出弹窗
+            let retWord = self.container.getBoundingBoxToWorld();
+            var point = event.getLocation();
+
+            if (!retWord.contains(point)) {
+                self.hideDialog();
+            }
         });
     },
     onDisable() {
@@ -60,7 +71,8 @@ cc.Class({
         this.fillData();
         this.fetchData();
     },
-    dismiss() {
+    hideDialog() {
+        cc.log('bunny hideDialog');
         this.parentNode.removeChild(this.node);
         this.parentNode = null;
         // cc.director.resume();
@@ -70,10 +82,12 @@ cc.Class({
     configHeroChips(opt) {
         var children = this.heroItemContainer.node.children;
         if (children.length > 0) {
+            cc.log('bunny-configHeroChips-1')
             for (var i = 0; i < children.length; ++i) {
                 children[i].getComponent('chipItem').config(opt);
             }
         } else {
+            cc.log('bunny-configHeroChips-2')
             for (let i = 0; i < 1; i++) {
                 let item = cc.instantiate(this.itemPrefab);
                 item.getComponent('chipItem').config(opt);
@@ -116,22 +130,23 @@ cc.Class({
 
     },
     fillData() {
-        var config = {kind: 0, crystalCount: 50};
+        var config = {kind: 0, chipIds: [], crystalCount: 50};
         for (let i = 0; i < InfoData.goods.length; i++) {
             var goodsInfo = InfoData.goods[i];
-            cc.log('bunny id:' + goodsInfo.goodsid);
-            if (goodsInfo.goodsid == 1001) {
-                config['chip0'] = 1;
-            } else if (goodsInfo.goodsid == 1002) {
-                config['chip1'] = 1;
-            } else if (goodsInfo.goodsid == 1003) {
-                config['chip2'] = 1;
+            cc.log('fillData() id:' + goodsInfo.goodsid + " num:" + goodsInfo.number);
+
+            if (goodsInfo.number <= 0) {
+                continue;
+            }
+            var goodsId = goodsInfo.goodsid.toString().substring(0, 3);
+            cc.log('goodsId:' + goodsId)
+            if (goodsId == 100 && goodsInfo.goodsid > 1000) {
+                config['chipIds'].push(goodsInfo.goodsid);
             }
         }
 
         this.configHeroChips(config);
         // 二期开放功能。
         this.configPropChips({kind: 2});
-        cc.log('bunny fillData')
     }
 });
