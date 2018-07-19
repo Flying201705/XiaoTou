@@ -33,6 +33,8 @@ cc.Class({
         }
     },
     onLoad() {
+        this.gameWorld = this.gameNode.getComponent('GameWorld');
+
         global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
         global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
         global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
@@ -53,7 +55,6 @@ cc.Class({
         descriptionDialog.parent = this.node;
     },
     showBuyPropDialog(propType) {
-        this.gameWorld = this.gameNode.getComponent('GameWorld');
         var crystalCount = this.getCrystalCount();
         let buyPropDialog = cc.instantiate(this.buyProp);
         buyPropDialog.getComponent('GameBuyProp').config(this.node, propType, crystalCount);

@@ -39,16 +39,29 @@ cc.Class({
     config(opt) {
         // this.goodsId = opt.goodsid === undefined ? -1 : opt.goodsid;
         this.chipIds = opt.chipIds === undefined ? [] : opt.chipIds;
-        cc.log(this.chipIds)
+        cc.log('bunny:' + this.chipIds);
 
-        // type, chipCount, crystalCount
         var chipSprite = this.getSprite(opt);
 
-        // if (this.chipIds.length > 0) {
-        for (let i = 0; i < 3; i++) {
-            this.chips[i].spriteFrame = this.chipIds[i] > 0 ? chipSprite : null;
+        if (opt.kind === 0 || this.chipIds.length > 0) {
+            for (let i = 0; i < 3; i++) {
+                this.chips[i].spriteFrame = chipSprite;
+                this.chips[i].node.opacity = 125;
+            }
         }
-        // }
+
+
+        for (let i = 0; i < this.chipIds.length; i++) {
+            var pos = this.chipIds[i] % 10;
+
+            if (pos > 3) {
+                continue;
+            } else {
+                pos -= 1;
+            }
+
+            this.chips[pos].node.opacity = 255;
+        }
 
         this.crystalCount = opt.crystalCount === undefined ? 0 : opt.crystalCount;
         this.text.string = `需要<b><color=#8e256a>${this.crystalCount}</color></b>水晶`;
@@ -74,7 +87,7 @@ cc.Class({
                 infoHandle.updateGoods(chipId, -1, () => {
                     this.updateLocalGoods(chipId, -1);
                     //清空本地碎片图标
-                    this.chips[i].spriteFrame = null;
+                    this.chips[i].node.opacity = 125;
                 });
             }
 
