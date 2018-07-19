@@ -130,7 +130,7 @@ cc.Class({
 
     },
     fillData() {
-        var config = {kind: 0, chipIds: [], crystalCount: 50};
+        var config = {kind: 0, chipIds: []};
         for (let i = 0; i < InfoData.goods.length; i++) {
             var goodsInfo = InfoData.goods[i];
             cc.log('fillData() id:' + goodsInfo.goodsid + " num:" + goodsInfo.number);
@@ -140,7 +140,7 @@ cc.Class({
             }
             var goodsId = goodsInfo.goodsid.toString().substring(0, 3);
             cc.log('goodsId:' + goodsId)
-            if (goodsId == 100 && goodsInfo.goodsid > 1000) {
+            if (goodsId == 100 && goodsInfo.goodsid > 1000 && config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
                 config['chipIds'].push(goodsInfo.goodsid);
             }
         }
