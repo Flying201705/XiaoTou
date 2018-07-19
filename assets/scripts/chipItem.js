@@ -1,4 +1,5 @@
 import {InfoHandle, InfoData} from './InfoData'
+import global from './global'
 
 cc.Class({
     extends: cc.Component,
@@ -54,8 +55,8 @@ cc.Class({
     }
     ,
     compose() {
-        cc.log('compose chip count:' + this.chipIds.length);
-
+        var crystalCount = global.event.fire('get_crystal_count');
+        cc.log('compose chip count:' + this.chipIds.length + ' crystalCount:' + crystalCount);
 
         if (this.chipIds.length === 3) {
             cc.log('start compose');
