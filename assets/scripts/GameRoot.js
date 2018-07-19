@@ -38,13 +38,15 @@ cc.Class({
         global.event.on("show_buy_prop_dialog", this.showBuyPropDialog.bind(this));
         global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
         global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
+        global.event.on("get_one_chip_price", this.getOneChipPrice.bind(this));
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
     },
-    onDestroy(){
+    onDestroy() {
         global.event.off("show_buy_prop_dialog", this.showBuyPropDialog);
         global.event.off("get_crystal_count", this.getCrystalCount);
         global.event.off("update_crystal_count", this.updateCrystalCount);
+        global.event.off("get_one_chip_price", this.getOneChipPrice);
     },
     start() {
         this.showDescDialog();
@@ -71,5 +73,8 @@ cc.Class({
         var backPackDialog = cc.instantiate(this.backPack);
         backPackDialog.getComponent('back-pack').config(this.node);
         backPackDialog.parent = this.node;
-    }
+    },
+    getOneChipPrice() {
+        return 50;
+    },
 });
