@@ -34,23 +34,8 @@ cc.Class({
             chipSprite = this.propChipSprites[opt.propType];
         }
         return chipSprite;
-    }
-    ,
-    config(opt) {
-        // this.goodsId = opt.goodsid === undefined ? -1 : opt.goodsid;
-        this.chipIds = opt.chipIds === undefined ? [] : opt.chipIds;
-        cc.log('bunny:' + this.chipIds);
-
-        var chipSprite = this.getSprite(opt);
-
-        if (opt.kind === 0 || this.chipIds.length > 0) {
-            for (let i = 0; i < 3; i++) {
-                this.chips[i].spriteFrame = chipSprite;
-                this.chips[i].node.opacity = 125;
-            }
-        }
-
-
+    },
+    highlight: function () {
         for (let i = 0; i < this.chipIds.length; i++) {
             var pos = this.chipIds[i] % 10;
 
@@ -62,35 +47,53 @@ cc.Class({
 
             this.chips[pos].node.opacity = 255;
         }
+    }, /**
+     * 初始化预制件显示内容
+     * @param opt
+     */
+    config(opt) {
+        // this.goodsId = opt.goodsid === undefined ? -1 : opt.goodsid;
+        this.chipIds = opt.chipIds === undefined ? [] : opt.chipIds;
+        cc.log('chipIds len:' + this.chipIds.length);
+
+        this.initIconBg(opt);
+
+        this.highlight();
 
         this.crystalCount = opt.crystalCount === undefined ? 0 : opt.crystalCount;
         this.text.string = `需要<b><color=#8e256a>${this.crystalCount}</color></b>水晶`;
-    }
-    ,
+    },
+    addHeroNumber: function (infoHandle, goodsId) {
+
+        infoHandle.updateGoods(goodsId, 1, () => {
+            this.updateLocalGoods(goodsId, 1);
+        });
+        return infoHandle;
+    },
+    clearChipNumber: function (infoHandle) {
+        for (let i = 0; i < this.chipIds.length; i++) {
+            let chipId = this.chipIds[i];
+            cc.log('delete chips ' + chipId);
+            infoHandle.updateGoods(chipId, -1, () => {
+                this.updateLocalGoods(chipId, -1);
+                //清空本地碎片图标
+                this.chips[i].node.opacity = 125;
+            });
+        }
+    },
+    /**
+     * 合成英雄、物品
+     */
     compose() {
         var crystalCount = global.event.fire('get_crystal_count');
         cc.log('compose chip count:' + this.chipIds.length + ' crystalCount:' + crystalCount);
 
         if (this.chipIds.length === 3) {
             cc.log('start compose');
-
             var goodsId = this.chipIds[0].toString().substring(0, 3);
-
             var infoHandle = new InfoHandle();
-            infoHandle.updateGoods(goodsId, 1, () => {
-                this.updateLocalGoods(goodsId, 1);
-            });
-
-            for (let i = 0; i < this.chipIds.length; i++) {
-                let chipId = this.chipIds[i];
-                cc.log('delete chips ' + chipId);
-                infoHandle.updateGoods(chipId, -1, () => {
-                    this.updateLocalGoods(chipId, -1);
-                    //清空本地碎片图标
-                    this.chips[i].node.opacity = 125;
-                });
-            }
-
+            this.addHeroNumber(infoHandle, goodsId);
+            this.clearChipNumber(infoHandle);
         }
     },
     updateLocalGoods(goodsId, num) {
@@ -102,6 +105,16 @@ cc.Class({
                 InfoData.goods[i] = goods;
                 cc.log('bunny updateLocalGoods set goods')
                 break;
+            }
+        }
+    },
+    initIconBg(opt) {
+        var chipSprite = this.getSprite(opt);
+
+        if (opt.kind === 0 || this.chipIds.length > 0) {
+            for (let i = 0; i < 3; i++) {
+                this.chips[i].spriteFrame = chipSprite;
+                this.chips[i].node.opacity = 125;
             }
         }
     }
