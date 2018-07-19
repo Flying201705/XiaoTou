@@ -1,0 +1,1 @@
+curl http://zhang395295759.xicp.net:30629/xiaotou/goods/allGoods.do?id=100
