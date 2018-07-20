@@ -224,9 +224,10 @@ cc.Class({
             this.currentHealthCount = 0;
             this.setState(EnemyState.Dead);
             this.gainGold(1);
-            if (this.isBoss) {
+            // 取消BOSS掉落，改为关卡掉落
+            /*if (this.isBoss) {
                 this.gameWorld.dropGoods('enemy_1000');
-            }
+            }*/
         }
 
         this.damageAnimation(damage);

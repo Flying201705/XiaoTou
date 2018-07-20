@@ -357,7 +357,7 @@ cc.Class({
             if (err) {
                 cc.log("load config = " + err);
             } else {
-                this.bossConfigs = result;
+                this.rewardConfigs = result;
             }
         });
     },
@@ -556,11 +556,11 @@ cc.Class({
         }
     },
 
-    dropGoods: function (boss_type) {
-        let log = "击败BOSS";
-        for (let i = 0; i < this.bossConfigs[boss_type].length; i++) {
-            let goods = this.bossConfigs[boss_type][i].goods;
-            let rate = this.bossConfigs[boss_type][i].rate;
+    dropGoods: function (level) {
+        let log = "通关获取奖励";
+        for (let i = 0; i < this.rewardConfigs[level].length; i++) {
+            let goods = this.rewardConfigs[level][i].goods;
+            let rate = this.rewardConfigs[level][i].rate;
             let random = Math.random();
             if (random < rate) {
                 log = log + ", 掉落<道具" + goods + ">";
@@ -572,6 +572,7 @@ cc.Class({
 
     gameOver: function (win) {
         if (win === true) {
+            dropGoods("level_" + this.currentLevel);
             this.audioMng.playWin();
         } else {
             this.audioMng.playLose();
