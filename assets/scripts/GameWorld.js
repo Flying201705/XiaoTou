@@ -606,18 +606,17 @@ cc.Class({
     },
 
     gameOver: function (win) {
+        this.gameover = this.gameOverUI.getComponent("GameOver");
+
         if (win === true) {
             let rewards = this.dropGoods("level_" + this.currentLevel);
             this.audioMng.playWin();
+            this.gameover.showWinUI(this.getStarsForWin(), rewards);
+
+            new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
         } else {
             this.audioMng.playLose();
-        }
-
-        this.gameover = this.gameOverUI.getComponent("GameOver");
-        this.gameover.showUI(win, this.getStarsForWin());
-
-        if (win === true) {
-            new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
+            this.gameover.showLoseUI();
         }
     },
 
