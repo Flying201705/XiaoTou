@@ -3,14 +3,14 @@
     "mode": 1,
     "towerName":"小兵",
     "tower_icon": 1,
-    "tower_level": 1,
+    "tower_level": 2,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_2": {
     "mode": 1,
     "towerName":"剑士",
     "tower_icon": 2,
-    "tower_level": 2,
+    "tower_level": 3,
     "description": "高攻击，攻击速度快\n带概率爆击，主要的攻击英雄"
   },
   "level_3": {
@@ -20,14 +20,14 @@
     "mode": 1,
     "towerName":"小兵",
     "tower_icon": 1,
-    "tower_level": 2,
+    "tower_level": 3,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_5": {
     "mode": 1,
     "towerName":"武士",
     "tower_icon": 3,
-    "tower_level": 2,
+    "tower_level": 3,
     "description": "高攻击，攻击速度稍慢\n带概率眩晕，打BOSS必备"
   },
   "level_6": {
@@ -56,15 +56,15 @@
     "mode": 1,
     "towerName":"小兵",
     "tower_icon": 1,
-    "tower_level": 4,
+    "tower_level": 5,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_9": {
     "mode": 1,
     "towerName":"女巫",
-    "tower_icon": 1,
-    "tower_level": 4,
-    "description": "高攻击，攻击速度稍慢\n带概率眩晕，打BOSS必备"
+    "tower_icon": 4,
+    "tower_level": 3,
+    "description": "范围攻击\n减慢怪物移动速度，减少怪物护甲"
   },
   "level_10": {
     "mode": 2,
