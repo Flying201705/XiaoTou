@@ -1,10 +1,10 @@
 {
   "level_6": [
-    {"goods": 1,"rate": 1},
-    {"goods": 1001,"rate": 1}
+    {"goods": 1001,"rate": 1},
+    {"goods": 1,"rate": 1}
   ],
   "level_10": [
-    {"goods": 2,"rate": 1},
-    {"goods": 1002,"rate": 0.6}
+    {"goods": 1002,"rate": 0.6},
+    {"goods": 2,"rate": 1}
   ]
 }
