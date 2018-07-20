@@ -8,50 +8,80 @@
   },
   "level_2": {
     "mode": 1,
-    "towerName":"小兵2",
+    "towerName":"剑士",
     "tower_icon": 2,
     "tower_level": 2,
-    "description": "文字描述文字文字"
+    "description": "高攻击，攻击速度快\n带概率爆击，主要的攻击英雄"
   },
   "level_3": {
-    "mode": 2,
-    "goods": [
-      {
-        "type": 1,
-        "description": "水晶描述文字"
-      }
-    ]
+    "mode": 0
   },
   "level_4": {
-    "mode": 2,
-    "goods": [
-      {
-        "type": 1,
-        "description": "水晶描述文字"
-      },
-      {
-        "type": 2,
-        "icon": 1,
-        "description": "道具描述文字"
-      }
-    ]
+    "mode": 1,
+    "towerName":"小兵",
+    "tower_icon": 1,
+    "tower_level": 2,
+    "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_5": {
+    "mode": 1,
+    "towerName":"武士",
+    "tower_icon": 3,
+    "tower_level": 2,
+    "description": "高攻击，攻击速度稍慢\n带概率眩晕，打BOSS必备"
+  },
+  "level_6": {
     "mode": 2,
     "goods": [
       {
         "type": 1,
-        "description": "水晶描述文字"
+        "description": "水晶"
       },
       {
         "type": 2,
         "icon": 1,
-        "description": "道具描述文字"
+        "description": "初级减速弹"
       },
       {
         "type": 3,
         "icon": 1,
-        "description": "英雄碎片"
+        "description": "神秘英雄碎片1"
+      }
+    ]
+  },
+  "level_7": {
+    "mode": 0
+  },
+  "level_8": {
+    "mode": 1,
+    "towerName":"小兵",
+    "tower_icon": 1,
+    "tower_level": 4,
+    "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
+  },
+  "level_9": {
+    "mode": 1,
+    "towerName":"女巫",
+    "tower_icon": 1,
+    "tower_level": 4,
+    "description": "高攻击，攻击速度稍慢\n带概率眩晕，打BOSS必备"
+  },
+  "level_10": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶"
+      },
+      {
+        "type": 2,
+        "icon": 2,
+        "description": "初级眩晕弹"
+      },
+      {
+        "type": 3,
+        "icon": 1,
+        "description": "神秘英雄碎片2"
       }
     ]
   }
