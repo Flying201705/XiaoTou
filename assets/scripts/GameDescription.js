@@ -86,52 +86,39 @@ cc.Class({
             event.stopPropagation();
         });
     },
-    config(parentNode, currentLevel) {
+    config(parentNode, config) {
         this.parentNode = parentNode;
-        cc.loader.loadRes("./config/description_config", (err, result) => {
-            if (err) {
-                cc.log("bunny load config " + err);
-                cc.director.resume();
-                return;
-            }
-            var config = result["level_" + currentLevel];
 
-            if (config === undefined) {
-                cc.error("level_" + currentLevel + " not exist");
-                return;
-            }
+        var mode = config.mode;
 
-            var mode = config.mode;
+        if (mode === undefined || mode == 1) {
+            this.title.spriteFrame = this.titleSprites[0];
+            this.towerName.string = config.towerName;
+            this.description.string = config.description;
+            this.towerIcon.spriteFrame = this.getTowerIcon(config.tower_icon);
+            this.levelIcon.spriteFrame = this.getLevelIcon(config.tower_level);
 
-            if (mode === undefined || mode == 1) {
-                this.title.spriteFrame = this.titleSprites[0];
-                this.towerName.string = config.towerName;
-                this.description.string = config.description;
-                this.towerIcon.spriteFrame = this.getTowerIcon(config.tower_icon);
-                this.levelIcon.spriteFrame = this.getLevelIcon(config.tower_level);
+            this.contentHero.active = true;
+            this.contentAward.active = false;
+        } else if (mode == 2) {
+            this.title.spriteFrame = this.titleSprites[1];
 
-                this.contentHero.active = true;
-                this.contentAward.active = false;
-            } else if (mode == 2) {
-                this.title.spriteFrame = this.titleSprites[1];
+            var goodsList = config.goods;
 
-                var goodsList = config.goods;
-
-                for (var index = 0; index < goodsList.length; index++) {
-                    var goods = goodsList[index];
-                    var item = cc.instantiate(this.awardItemPrefab);
-                    item.getComponent('award-item').set(goods);
-                    this.awardList.node.addChild(item);
-                }
-
-                this.contentHero.active = false;
-                this.contentAward.active = true;
+            for (var index = 0; index < goodsList.length; index++) {
+                var goods = goodsList[index];
+                var item = cc.instantiate(this.awardItemPrefab);
+                item.getComponent('award-item').set(goods);
+                this.awardList.node.addChild(item);
             }
 
-            // this.node.active = true;
-            // cc.director.pause();
-            global.pause();
-        });
+            this.contentHero.active = false;
+            this.contentAward.active = true;
+        }
+
+        // cc.director.pause();
+        global.pause();
+
 
     },
     hideDialog() {

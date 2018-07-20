@@ -52,9 +52,31 @@ cc.Class({
         this.showDescDialog();
     },
     showDescDialog() {
-        let descriptionDialog = cc.instantiate(this.description);
-        descriptionDialog.getComponent('GameDescription').config(this.node, global.currentLevel);
-        descriptionDialog.parent = this.node;
+        cc.loader.loadRes("./config/description_config", (err, result) => {
+            if (err) {
+                cc.error("load description_config " + err);
+                // cc.director.resume();
+                return;
+            }
+
+            var config = result["level_" + global.currentLevel];
+
+            if (config === undefined) {
+                cc.error("level_" + global.currentLevel + " not exist");
+                return;
+            }
+
+            if (config.mode === undefined || config.mode === 0) {
+                cc.error("mode undefined or 0 ");
+                return;
+            }
+
+            let descriptionDialog = cc.instantiate(this.description);
+            descriptionDialog.getComponent('GameDescription').config(this.node, config);
+            descriptionDialog.parent = this.node;
+
+        });
+
     },
     showBuyPropDialog(propType) {
         var crystalCount = this.getCrystalCount();
