@@ -449,19 +449,41 @@ cc.Class({
         }
     },
 
-    showSummonHint: function () {
+    hasXiaoBinMaxLevel: function() {
+        for (let i = 0; i < this.towerGroup.childrenCount; i++) {
+            let tower = this.towerGroup.children[i];
+            if (tower !== undefined) {
+                let t = tower.getComponent("tower");
+                if (t.towerType == "tower_a" && t.currentLevel >= 4) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+
+    showSummonHint: function (hint) {
         this.summonHintLabel.node.active = true;
+        this.summonHintLabel.string = hint;
         this.scheduleOnce(this.hideSummonHint, 2);
     },
 
     hideSummonHint: function () {
+        this.summonHintLabel.string = "";
         this.summonHintLabel.node.active = false;
     },
 
     summonHero: function () {
-        if (this.currentLevel < 10) {
-            this.showSummonHint();
+        if (this.currentLevel < 21) {
+            this.showSummonHint("21关解锁神秘英雄，加油哦~");
+        } else if (InfoData.user.hero !== true) {
+            global.event.fire("show_back_pack_dialog");
+        } else if (this.hasXiaoBinMaxLevel() !== true) {
+            this.showSummonHint("召唤英雄需要小兵升到顶级");
+        } else if (this.goldCount < 500) {
+            this.showSummonHint("召唤英雄需要500金币");
         } else {
+            this.goldCount -= 500;
             let x = this.node.getChildByName('bottomBar').x;
             let y = this.node.getChildByName('bottomBar').y + this.hero.height;
             this.hero.position = cc.p(x, y);

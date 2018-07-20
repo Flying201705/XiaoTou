@@ -39,6 +39,7 @@ cc.Class({
         global.event.on("get_crystal_count", this.getCrystalCount.bind(this));
         global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
         global.event.on("get_one_chip_price", this.getOneChipPrice.bind(this));
+        global.event.on("show_back_pack_dialog", this.showBackPack.bind(this));
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
     },
@@ -47,6 +48,7 @@ cc.Class({
         global.event.off("get_crystal_count", this.getCrystalCount);
         global.event.off("update_crystal_count", this.updateCrystalCount);
         global.event.off("get_one_chip_price", this.getOneChipPrice);
+        global.event.off("show_back_pack_dialog", this.showBackPack);
     },
     start() {
         this.showDescDialog();
