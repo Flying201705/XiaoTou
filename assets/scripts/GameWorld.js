@@ -90,8 +90,10 @@ cc.Class({
 
         this.tileSize = 80;
         this.goldCount = 0;
-        // this.crystalCount = 50;
         this.crystalCount = InfoData.user.crystal;
+        if (this.crystalCount === undefined) {
+            this.crystalCount = 0;
+        }
         this.lifeCount = 10;
         this.addEnemyCurrentTime = 0;
         this.addWaveCurrentTime = 0;
