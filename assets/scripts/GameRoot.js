@@ -90,8 +90,7 @@ cc.Class({
         return this.gameWorld.crystalCount;
     },
     updateCrystalCount(count) {
-        this.gameWorld.crystalCount = count;
-        this.gameWorld.crystalLabel.string = count.toString();
+        this.gameWorld.updateCrystalCount(count);
     },
     showBackPack() {
         var backPackDialog = cc.instantiate(this.backPack);

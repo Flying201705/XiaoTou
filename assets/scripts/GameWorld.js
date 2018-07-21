@@ -90,7 +90,8 @@ cc.Class({
 
         this.tileSize = 80;
         this.goldCount = 0;
-        this.crystalCount = 50;//InfoData.user.crystal;
+        // this.crystalCount = 50;
+        this.crystalCount = InfoData.user.crystal;
         this.lifeCount = 10;
         this.addEnemyCurrentTime = 0;
         this.addWaveCurrentTime = 0;
@@ -618,6 +619,12 @@ cc.Class({
             this.audioMng.playLose();
             this.gameover.showLoseUI();
         }
+    },
+
+    updateCrystalCount(count) {
+        this.crystalCount = count;
+        this.crystalLabel.string = count.toString();
+        new InfoHandle().updateCrystal(count);
     },
 
     getTilePos: function (posInPixel) {

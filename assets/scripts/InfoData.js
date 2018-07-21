@@ -8,6 +8,7 @@ import GoodsData from './GoodsData';
 const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
 const update_user_level = "user/changeLevel.do?";
+const update_user_crystal = "user/changeCrystal.do?";
 const get_levels = "level/allLevels.do?";
 const update_level = "level/updateLevel.do?";
 const get_goods = "goods/allGoods.do?";
@@ -112,7 +113,33 @@ const InfoHandle = cc.Class({
         let url = http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars;
         this.sendRequest(url, null);
     },
+
+    updateCrystal: function(crystal) {
+        InfoData.user.crystal = crystal;
+        //let url = http_head + update_user_crystal + "id=" + InfoData.user.id + "&crystal=" + crystal;
+        //this.sendRequest(url, null);
+    },
+
+    updateLocalGoods: function(goodsId, num) {
+        let isUpdated = false;
+        for (let i = 0; i < InfoData.goods.length; i++) {
+            if (InfoData.goods[i].goodsid === goodsId) {
+                InfoData.goods[i].number += num;
+                isUpdated = true;
+                break;
+            }
+        }
+
+        if (isUpdated !== true) {
+            let goods = new GoodsData();
+            goods.goodsid = goodsId;
+            goods.number = num;
+            InfoData.goods[InfoData.goods.length] = goods;
+        }
+    },
+
     updateGoods: function (goods, num, callback) {
+        this.updateLocalGoods(goods, num);
         let url = http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num;
         this.sendRequest(url, callback);
     },
