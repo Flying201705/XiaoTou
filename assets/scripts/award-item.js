@@ -39,14 +39,17 @@ cc.Class({
         switch (opt.type) {
             case 1:
                 this.icon.spriteFrame = this.typeCrystal[0];
+                this.description.node.color = new cc.color(255, 255, 255, 255);
                 break;
             case 2:
                 var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
                 this.icon.spriteFrame = this.typeProp[icon_index];
+                this.description.node.color = new cc.color(255, 246, 1, 255);
                 break;
             case 3:
                 // var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
                 this.icon.spriteFrame = this.typeHeroChip[0];
+                this.description.node.color = new cc.color(218, 57, 252, 255);
                 break;
         }
 

@@ -225,7 +225,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
+      "width": 36,
       "height": 20
     },
     "_rotationX": 0,
@@ -253,8 +253,8 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 20,
-    "_fontSize": 20,
+    "_actualFontSize": 18,
+    "_fontSize": 18,
     "_lineHeight": 20,
     "_enableWrapText": true,
     "_N$file": null,
@@ -313,7 +313,7 @@
     "_enabled": true,
     "typeCrystal": [
       {
-        "__uuid__": "f4a13ffb-4280-48a9-aa1b-b442eb5f5407"
+        "__uuid__": "56d425b8-dfad-4bed-b2ab-b88798cc3678"
       }
     ],
     "typeProp": [

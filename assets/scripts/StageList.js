@@ -31,7 +31,7 @@ cc.Class({
                 }
                 // 测试代码开始
                 // 放开所有关卡
-                // item.init(i + 1, false, 1);
+                item.init(i + 1, false, 1);
                 //测试代码结束
                 this.node.addChild(item.node);
             }

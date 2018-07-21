@@ -5,7 +5,7 @@
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "crystal": {
+    "crystals": {
       "ver": "1.0.3",
       "uuid": "56d425b8-dfad-4bed-b2ab-b88798cc3678",
       "rawTextureUuid": "206853d8-0569-4c1e-9805-9e25eb559c71",
