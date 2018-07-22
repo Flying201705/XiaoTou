@@ -199,6 +199,27 @@
       },
       {
         "__uuid__": "b04b4f7b-f014-42e8-b013-efab2ede1aa7"
+      },
+      {
+        "__uuid__": "29092a3e-a58e-4b38-9115-ac94bb4a81bd"
+      },
+      {
+        "__uuid__": "4fb18998-a4dc-4b63-9418-74cbc3e9266f"
+      },
+      {
+        "__uuid__": "bcae58b1-a017-46fb-94cb-2feb2ca7cb29"
+      },
+      {
+        "__uuid__": "0836eb9d-3ba7-4979-8257-9bd524e6a3f1"
+      },
+      {
+        "__uuid__": "b4ef799b-e351-404b-8e5f-78ae1dd053cf"
+      },
+      {
+        "__uuid__": "4b4de1ec-800e-4bc9-9948-5ba840b49d71"
+      },
+      {
+        "__uuid__": "545db143-8bac-4aac-9fe7-f0f8e970e9e9"
       }
     ],
     "playOnLoad": false
@@ -551,6 +572,24 @@
       },
       {
         "__uuid__": "73209701-3fb5-465c-8abd-ccffd78b858c"
+      },
+      {
+        "__uuid__": "46787716-6e27-4f8e-b126-65019463088f"
+      },
+      {
+        "__uuid__": "b8ebfdef-2874-42d7-b11f-0ede912b9faa"
+      },
+      {
+        "__uuid__": "8abf5f56-6503-40c8-bc1c-ec98e01188c6"
+      },
+      {
+        "__uuid__": "fd3a1a7d-2578-4fb1-ad6c-66c1404022e9"
+      },
+      {
+        "__uuid__": "db93806f-080c-41b8-ae16-b887ed20eafa"
+      },
+      {
+        "__uuid__": "1a11268a-bbf0-4707-8224-f44db7db3c54"
       }
     ],
     "bossFrames": [
@@ -559,6 +598,9 @@
       },
       {
         "__uuid__": "ff468a87-168f-41a2-8235-de38b338bf01"
+      },
+      {
+        "__uuid__": "2b4795c3-d47c-4f16-8931-6c1314f52e08"
       }
     ],
     "spriteNode": {

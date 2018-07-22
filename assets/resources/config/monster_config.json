@@ -69,6 +69,47 @@
     {"health": 800,"speed": 150,"armor": 8},
     {"health": 1000,"speed": 150,"armor": 8}
   ],
+  "enemy_11": [
+    {"health": 100,"speed": 120,"armor": 2},
+    {"health": 200,"speed": 120,"armor": 2},
+    {"health": 300,"speed": 120,"armor": 4},
+    {"health": 400,"speed": 150,"armor": 4}
+  ],
+
+  "enemy_12": [
+    {"health": 150,"speed": 120,"armor": 2},
+    {"health": 250,"speed": 120,"armor": 2},
+    {"health": 400,"speed": 150,"armor": 4},
+    {"health": 500,"speed": 150,"armor": 4}
+  ],
+
+  "enemy_13": [
+    {"health": 200,"speed": 120,"armor": 4},
+    {"health": 350,"speed": 150,"armor": 4},
+    {"health": 500,"speed": 150,"armor": 8},
+    {"health": 600,"speed": 150,"armor": 8}
+  ],
+
+  "enemy_14": [
+    {"health": 300,"speed": 150,"armor": 4},
+    {"health": 450,"speed": 150,"armor": 8},
+    {"health": 600,"speed": 180,"armor": 8},
+    {"health": 750,"speed": 180,"armor": 8}
+  ],
+
+  "enemy_15": [
+    {"health": 400,"speed": 150,"armor": 8},
+    {"health": 600,"speed": 150,"armor": 8},
+    {"health": 800,"speed": 180,"armor": 16},
+    {"health": 1000,"speed": 180,"armor": 16}
+  ],
+
+  "enemy_16": [
+    {"health": 600,"speed": 180,"armor": 8},
+    {"health": 800,"speed": 180,"armor": 8},
+    {"health": 1000,"speed": 180,"armor": 16},
+    {"health": 1200,"speed": 180,"armor": 16}
+  ],
 
   "enemy_1000": [
     {"boss": 1,"health": 10000,"speed": 40,"armor": 20}
@@ -76,5 +117,9 @@
 
   "enemy_1001": [
     {"boss": 1,"health": 10000,"speed": 40,"armor": 40}
+  ],
+
+  "enemy_1002": [
+    {"boss": 1,"health": 10000,"speed": 40,"armor": 80}
   ]
 }
