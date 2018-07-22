@@ -84,5 +84,102 @@
         "description": "神秘英雄碎片2"
       }
     ]
+  },
+  "level_15": {
+    "mode": 1,
+    "towerName":"射手",
+    "tower_icon": 5,
+    "tower_level": 3,
+    "description": "攻击高，攻击速度稍慢\n群攻英雄，主要的攻击英雄"
+  },
+  "level_16": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶"
+      },
+      {
+        "type": 2,
+        "icon": 2,
+        "description": "初级眩晕弹"
+      },
+      {
+        "type": 3,
+        "icon": 1,
+        "description": "神秘英雄碎片3"
+      }
+    ]
+  },
+  "level_19": {
+    "mode": 1,
+    "towerName":"男巫",
+    "tower_icon": 6,
+    "tower_level": 3,
+    "description": "非攻击英雄\n给其他英雄增加攻击力，攻击速度"
+  },
+  "level_20": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶"
+      },
+      {
+        "type": 2,
+        "icon": 3,
+        "description": "初级炸弹"
+      },
+      {
+        "type": 3,
+        "icon": 1,
+        "description": "神秘英雄碎片3"
+      }
+    ]
+  },
+  "level_21": {
+    "mode": 1,
+    "towerName":"神秘英雄",
+    "tower_icon": 7,
+    "tower_level": 1,
+    "description": "<召唤>神秘英雄，全屏移动\n打怪自动升级，攻击/抢钱，样样精通"
+  },
+  "level_26": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶"
+      },
+      {
+        "type": 2,
+        "icon": 3,
+        "description": "初级炸弹"
+      },
+      {
+        "type": 3,
+        "icon": 1,
+        "description": "飞鞋碎片1"
+      }
+    ]
+  },
+  "level_30": {
+    "mode": 2,
+    "goods": [
+      {
+        "type": 1,
+        "description": "水晶"
+      },
+      {
+        "type": 2,
+        "icon": 1,
+        "description": "初级减速弹"
+      },
+      {
+        "type": 3,
+        "icon": 1,
+        "description": "飞鞋碎片2"
+      }
+    ]
   }
 }
