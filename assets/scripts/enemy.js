@@ -194,12 +194,15 @@ cc.Class({
             cc.log("触发眩晕！");
             this.handleStuned();
         }
+
+        let beCrit = false;
         if (this.beTriggerRate(bullet.critRate)) {
             cc.log("触发暴击！");
             damage = damage * 2;
+            beCrit = true;
         }
 
-        this.handleDamage(damage, bullet.gainRate);
+        this.handleDamage(damage, bullet.gainRate, beCrit);
 
         //减速代码
         if (bullet.slowRate > 0 && bullet.slowRate >= this.slowRate) {
@@ -207,7 +210,7 @@ cc.Class({
         }
     },
 
-    handleDamage: function (damage, gainRate) {
+    handleDamage: function (damage, gainRate, beCrit) {
         //护甲减少伤害
         if (this.armor > 0) {
             let curDamageRate = this.getCutDamageRateByArmor(this.armor);
@@ -230,7 +233,7 @@ cc.Class({
             }*/
         }
 
-        this.damageAnimation(damage);
+        this.damageAnimation(damage, beCrit);
     },
 
     handleStuned: function () {
@@ -293,8 +296,16 @@ cc.Class({
         return false;
     },
 
-    damageAnimation: function (num) {
+    damageAnimation: function (num, beCrit) {
+        if (num <= 0) {
+            return;
+        }
         let damage = cc.instantiate(this.damagePrefab);
+        if (beCrit === true) {
+            damage.color = new cc.color(255, 104, 104, 255);
+        } else {
+            damage.color = new cc.color(255, 255, 255, 255);
+        }
         damage.parent = this.node;
         damage.getComponent("Damage").hit(num);
     }
