@@ -581,6 +581,24 @@ cc.Class({
         }
     },
 
+    hasGoods: function(goodsId) {
+        if (goodsId < 1000) {
+            return false;
+        }
+
+        if (InfoData.goods === undefined || InfoData.goods.length <= 0) {
+            return false;
+        }
+
+        for (let i = 0; i < InfoData.goods.length; i++) {
+            if (InfoData.goods[i].goodsid === goodsId && InfoData.goods[i].number > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    },
+
     dropGoods: function (level) {
         let log = "通关获取奖励";
         let rewards = [];
@@ -588,11 +606,33 @@ cc.Class({
             for (let i = 0; i < this.rewardConfigs[level].length; i++) {
                 let goods = this.rewardConfigs[level][i].goods;
                 let rate = this.rewardConfigs[level][i].rate;
+                // 碎片只需要获取一次
+                if (goods >= 1000 && this.hasGoods(goods) === true) {
+                    continue;
+                }
                 let random = Math.random();
                 if (random < rate) {
                     rewards[rewards.length] = goods + "-" + 1;
                     new InfoHandle().updateGoods(goods, 1);
                 }
+            }
+            
+            if (rewards.length < 2) {
+                // 掉落道具数少于两个，奖励水晶
+                // 两个星-1水晶，三个星-2水晶
+                let crystalNum = this.getStarsForWin() - 1;
+                if (crystalNum > 0) {
+                    rewards[rewards.length] = 0 + "-" + crystalNum;
+                    new InfoHandle().updateCrystal(this.crystalCount + crystalNum);
+                }                    
+            }
+        } else {
+            // 普通关卡，奖励水晶
+            // 两个星-1水晶，三个星-2水晶
+            let crystalNum = this.getStarsForWin() - 1;
+            if (crystalNum > 0) {
+                rewards[rewards.length] = 0 + "-" + crystalNum;
+                new InfoHandle().updateCrystal(this.crystalCount + crystalNum);
             }
         }
         
