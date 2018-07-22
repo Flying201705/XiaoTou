@@ -19,17 +19,23 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.helloworld",
+  "packageName": "org.cocos2d.NewProject",
   "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
   "renderMode": "0",
-  "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
-  "title": "xiaotou_world",
+  "startScene": "76c6c136-2f41-437c-b416-03cbfd31190d",
+  "title": "wx-sub",
   "webOrientation": "auto",
   "wechatgame": {
-    "appid": "wx052c1c7a94625f6d",
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": true,
     "orientation": "landscape",
-    "subContext": "wx-sub"
+    "subContext": ""
   },
-  "xxteaKey": "4dd75723-494f-46",
+  "xxteaKey": "5aa44fbc-5208-43",
   "zipCompressJs": true
 }
