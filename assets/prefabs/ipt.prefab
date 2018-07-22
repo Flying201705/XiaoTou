@@ -48,7 +48,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 81,
+      "width": 73,
       "height": 40
     },
     "_rotationX": 0,
@@ -107,11 +107,11 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 0.5,
+    "_scaleY": 0.5,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -20.5,
+      "x": -16.5,
       "y": 0
     },
     "_skewX": 0,
@@ -180,9 +180,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 228,
-      "g": 23,
-      "b": 23,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -193,8 +193,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
-      "height": 20
+      "width": 32,
+      "height": 30
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -221,9 +221,9 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 20,
-    "_fontSize": 20,
-    "_lineHeight": 20,
+    "_actualFontSize": 16,
+    "_fontSize": 16,
+    "_lineHeight": 30,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -255,7 +255,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 81,
+      "width": 73,
       "height": 40
     },
     "_resize": 1,

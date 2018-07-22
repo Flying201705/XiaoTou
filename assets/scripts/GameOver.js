@@ -67,32 +67,40 @@ cc.Class({
                 switch (reward[0]) {
                     case "1":
                         url = cc.url.raw('resources/image/deceleration.png');
-                        string = "减速x" + reward[1];
+                        string = "减速";
                         break;
                     case "2":
                         url = cc.url.raw('resources/image/dizziness.png');
-                        string = "眩晕x" + reward[1];
+                        string = "眩晕";
                         break;
                     case "3":
                         url = cc.url.raw('resources/image/bomb.png');
-                        string = "炸弹x" + reward[1];
+                        string = "炸弹";
                         break;
                     case "1001":
                         url = cc.url.raw('resources/image/hero_chip.png');
-                        string = "英雄碎片1x" + reward[1];
+                        string = "英雄碎片1";
                         break;
                     case "1002":
                         url = cc.url.raw('resources/image/hero_chip.png');
-                        string = "英雄碎片2x" + reward[1];
+                        string = "英雄碎片2";
                         break;
                     case "1003":
                         url = cc.url.raw('resources/image/hero_chip.png');
-                        string = "英雄碎片3x" + reward[1];
+                        string = "英雄碎片3";
                         break;
                     default:
                         url = cc.url.raw('resources/image/crystal.png');
                         string = "水晶x" + reward[1];
                         break;
+                }
+                let goodsId = Number(reward[0]);
+                if (goodsId > 1000) {
+                    text.color = new cc.color(218, 57, 252, 255);
+                } else if (goodsId > 0) {
+                    text.color = new cc.color(255, 246, 1, 255);
+                } else {
+                    text.color = new cc.color(255, 255, 255, 255);
                 }
                 icon.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(url);
                 text.getComponent(cc.Label).string = string;
