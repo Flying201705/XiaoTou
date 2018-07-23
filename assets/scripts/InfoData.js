@@ -9,6 +9,7 @@ const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
 const update_user_level = "user/changeLevel.do?";
 const update_user_crystal = "user/changeCrystal.do?";
+const update_user_hero = "user/changeHero.do?";
 const get_levels = "level/allLevels.do?";
 const update_level = "level/updateLevel.do?";
 const get_goods = "goods/allGoods.do?";
@@ -81,12 +82,27 @@ const InfoHandle = cc.Class({
             let goods = new GoodsData();
             goods.init(obj[i]);
             InfoData.goods[i] = goods;
+            //检查更新英雄属性
+            if (goods.goodsid === 100 && goods.number > 0 && InfoData.user.hero <= 0) {
+                new InfoHandle().updateHero(1);
+            }
         }
         self.dataCompleteCallback(3);
     },
 
     updateLatestLevel: function (level) {
         let url = http_head + update_user_level + "id=" + InfoData.user.id + "&level=" + level;
+        this.sendRequest(url, null);
+    },
+
+    updateHero: function(hero) {
+        hero = hero > 0 ? 1 : 0;
+        if (InfoData.user.hero === hero) {
+            return;
+        }
+
+        InfoData.user.hero = hero;
+        let url = http_head + update_user_hero + "id=" + InfoData.user.id + "&hero=" + hero;
         this.sendRequest(url, null);
     },
 
@@ -142,6 +158,10 @@ const InfoHandle = cc.Class({
         this.updateLocalGoods(goods, num);
         let url = http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num;
         this.sendRequest(url, callback);
+        //检查更新英雄属性
+        if (goods === 100 && num > 0 && InfoData.user.hero <= 0) {
+            new InfoHandle().updateHero(1);
+        }
     },
 
     sendRequest: function (url, method) {

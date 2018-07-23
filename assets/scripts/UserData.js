@@ -12,7 +12,7 @@ const UserData = cc.Class({
         crystal: 0,
         level: 0,
         title: "",
-        hero: false
+        hero: 0
     },
 
     init: function(obj) {
@@ -24,7 +24,7 @@ const UserData = cc.Class({
         this.crystal = obj.crys;
         this.level = obj.lv;
         this.title = obj.title;
-        this.hero = obj.hero > 0;
+        this.hero = obj.hero;
 
         console.log("<test>user:id-" + this.id + " openid-" + this.openid + " 名称-" + this.name
         + " 头像-" + this.head + " 性别-" + this.sex + " 水晶-" + this.crystal + " 关卡-" + this.level
