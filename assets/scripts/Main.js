@@ -27,6 +27,10 @@ cc.Class({
         this._updaetSubDomainCanvas();
     },
     _updaetSubDomainCanvas() {
+        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+            return;
+        }
+        
         if (!this.tex) {
             console.log('no tex');
             return;
