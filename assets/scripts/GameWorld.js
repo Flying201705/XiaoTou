@@ -623,7 +623,7 @@ cc.Class({
                 let crystalNum = this.getStarsForWin() - 1;
                 if (crystalNum > 0) {
                     rewards[rewards.length] = 0 + "-" + crystalNum;
-                    new InfoHandle().updateCrystal(this.crystalCount + crystalNum);
+                    new InfoHandle().updateCrystal(crystalNum);
                 }                    
             }
         } else {
@@ -632,7 +632,7 @@ cc.Class({
             let crystalNum = this.getStarsForWin() - 1;
             if (crystalNum > 0) {
                 rewards[rewards.length] = 0 + "-" + crystalNum;
-                new InfoHandle().updateCrystal(this.crystalCount + crystalNum);
+                new InfoHandle().updateCrystal(crystalNum);
             }
         }
         
@@ -664,9 +664,10 @@ cc.Class({
     },
 
     updateCrystalCount(count) {
+        let crystalNum = count - this.crystalCount;
         this.crystalCount = count;
         this.crystalLabel.string = count.toString();
-        new InfoHandle().updateCrystal(count);
+        new InfoHandle().updateCrystal(crystalNum);
     },
 
     getTilePos: function (posInPixel) {

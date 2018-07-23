@@ -115,9 +115,9 @@ const InfoHandle = cc.Class({
     },
 
     updateCrystal: function(crystal) {
-        InfoData.user.crystal = crystal;
-        //let url = http_head + update_user_crystal + "id=" + InfoData.user.id + "&crystal=" + crystal;
-        //this.sendRequest(url, null);
+        InfoData.user.crystal += crystal;
+        let url = http_head + update_user_crystal + "id=" + InfoData.user.id + "&crys=" + crystal;
+        this.sendRequest(url, null);
     },
 
     updateLocalGoods: function(goodsId, num) {
