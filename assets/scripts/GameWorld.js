@@ -659,7 +659,8 @@ cc.Class({
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
         } else {
             this.audioMng.playLose();
-            this.gameover.showLoseUI();
+            this.gameover.showLoseUI(
+                this.prefixInteger(this.currentWaveCount - 1, 2) + "/" + this.prefixInteger(this.totalWaveCount, 2));
         }
     },
 

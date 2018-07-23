@@ -40,9 +40,13 @@ cc.Class({
         this.node.active = true;
     },
 
-    showLoseUI:function() {
+    showLoseUI:function(wave) {
         this.win.active = false;
         this.lose.active = true;
+
+        let descNode = this.lose.getChildByName('description');
+        descNode.getComponent(cc.RichText).string = '<color=white>您共击退了</c><color=red>'
+            + wave + '</c><color=white>波怪物</c>';
 
         global.pause();
         this.node.active = true;
