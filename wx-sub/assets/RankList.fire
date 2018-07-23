@@ -63,10 +63,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 9
+        "__id__": 10
       },
       {
-        "__id__": 10
+        "__id__": 11
       }
     ],
     "_prefab": null,
@@ -87,7 +87,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 960,
+      "width": 400,
       "height": 640
     },
     "_rotationX": 0,
@@ -96,7 +96,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 480,
+      "x": 200,
       "y": 320
     },
     "_skewX": 0,
@@ -122,8 +122,12 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
-    "_components": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 9
+      }
+    ],
     "_prefab": null,
     "_id": "c6NZ4crQZPH5HK13fN97Xm",
     "_opacity": 255,
@@ -142,8 +146,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 526,
-      "height": 420
+      "width": 400,
+      "height": 580
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -197,8 +201,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 526,
-      "height": 420
+      "width": 400,
+      "height": 580
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -343,6 +347,32 @@
     "_N$overflow": 0
   },
   {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 3
+    },
+    "_enabled": true,
+    "isAlignOnce": true,
+    "_target": null,
+    "_alignFlags": 21,
+    "_left": 0,
+    "_right": 0,
+    "_top": 30,
+    "_bottom": 30,
+    "_verticalCenter": 0,
+    "_horizontalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 0,
+    "_originalHeight": 580
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -352,7 +382,7 @@
     "_enabled": true,
     "_designResolution": {
       "__type__": "cc.Size",
-      "width": 960,
+      "width": 400,
       "height": 640
     },
     "_fitWidth": false,
@@ -365,9 +395,6 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
-    "content": {
-      "__id__": 3
-    }
+    "_enabled": true
   }
 ]
