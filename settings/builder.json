@@ -7,7 +7,7 @@
   "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
-  "inlineSpriteFrames_native": true,
+  "inlineSpriteFrames_native": false,
   "jailbreakPlatform": false,
   "md5Cache": true,
   "mergeStartScene": false,
@@ -21,11 +21,16 @@
   },
   "packageName": "org.cocos2d.helloworld",
   "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
   "renderMode": "0",
   "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
   "title": "xiaotou_world",
   "webOrientation": "auto",
   "wechatgame": {
+    "REMOTE_SERVER_ROOT": "http://192.168.115.114:8610/fenglp/remote-res",
     "appid": "wx052c1c7a94625f6d",
     "orientation": "landscape",
     "subContext": "wx-sub"

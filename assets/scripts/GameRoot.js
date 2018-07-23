@@ -24,7 +24,6 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        rankList: cc.Sprite,
     },
     update() {
         if (global.isPause()) {
@@ -32,8 +31,6 @@ cc.Class({
         } else {
             this.timeCountDownAnim.resume();
         }
-
-        this._updaetSubDomainCanvas();
     },
     onLoad() {
         this.gameWorld = this.gameNode.getComponent('GameWorld');
@@ -45,20 +42,6 @@ cc.Class({
         global.event.on("show_back_pack_dialog", this.showBackPack.bind(this));
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
-
-        this._isShow = false;
-        this.tex = new cc.Texture2D();
-    },
-    _updaetSubDomainCanvas() {
-        if (!this.tex) {
-            console.log('no tex');
-            return;
-        }
-        var openDataContext = wx.getOpenDataContext();
-        var sharedCanvas = openDataContext.canvas;
-        this.tex.initWithElement(sharedCanvas);
-        this.tex.handleLoadedTexture();
-        this.rankList.spriteFrame = new cc.SpriteFrame(this.tex);
     },
     onDestroy() {
         global.event.off("show_buy_prop_dialog", this.showBuyPropDialog);
@@ -113,17 +96,6 @@ cc.Class({
         var backPackDialog = cc.instantiate(this.backPack);
         backPackDialog.getComponent('back-pack').config(this.node);
         backPackDialog.parent = this.node;
-    },
-    /**
-     * 显示好友排行榜
-     */
-    showRankList() {
-        this._isShow = !this._isShow;
-        // 发消息给子域
-        console.log('showRankList()');
-        wx.postMessage({
-            message: this._isShow ? 'Show' : 'Hide'
-        })
     },
     getOneChipPrice() {
         return 50;
