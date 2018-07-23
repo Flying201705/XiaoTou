@@ -20,6 +20,6 @@ cc.Class({
         this.nickName.string = value;
     },
     setLevel(value) {
-        this.level.string = value;
+        this.level.string = `第${value}关`;
     }
 });

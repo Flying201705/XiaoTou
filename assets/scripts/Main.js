@@ -13,7 +13,6 @@ cc.Class({
     // onLoad () {},
 
     start() {
-        this._isShow = false;
         this.tex = new cc.Texture2D();
     },
     update() {
