@@ -50,14 +50,10 @@ cc.Class({
     },
 
     initWithData: function (gameWorld, type, level, pathPoints) {
-        //速度
-        this.speed = 0;
-        //总血量
-        this.currentHealthCount = 0;
-        //是否BOSS
-        this.isBoss = false;
-        //护甲
-        this.armor = 0;
+        this.speed = 0; //速度
+        this.currentHealthCount = 0; //总血量
+        this.isBoss = false; //是否BOSS
+        this.armor = 0; //护甲
         /**以上为enemy的自有属性 */
 
         this.state = EnemyState.Invalid;
@@ -65,12 +61,9 @@ cc.Class({
         this.direction = cc.p(0, 0);
         this.currentPathPointCount = 0;
         this.totalHealthCount = 1;
-        //被眩晕
-        this.beStuned = false;
-        //减速
-        this.slowRate = 0;
-        //位置标签，标签值越大越靠前
-        this.positionTag = 0;
+        this.beStuned = false; //被眩晕
+        this.slowRate = 0; //减速
+        this.positionTag = 0; //位置标签，标签值越大越靠前
 
         this.gameWorld = gameWorld;
         this.type = type;
@@ -161,18 +154,14 @@ cc.Class({
                 cc.audioEngine.playEffect(this.audioDead, false);
                 let deadAction = cc.fadeOut(1);
                 let deadSequence = cc.sequence(deadAction, cc.callFunc(() => {
-                    // this.node.destroy();
-                    this.gameWorld.enemyMng.remove(this.node);
-                    this.gameWorld.enemyMng.destroyEnemy(this.node);
+                    this.dead();
                 }));
                 this.node.runAction(deadSequence);
                 break;
             case EnemyState.EndPath:
                 let endAction = cc.fadeOut(0.5);
                 let endSequence = cc.sequence(endAction, cc.callFunc(() => {
-                    // this.node.destroy();
-                    this.gameWorld.enemyMng.remove(this.node);
-                    this.gameWorld.enemyMng.destroyEnemy(this.node);
+                    this.dead();
                 }));
                 this.node.runAction(endSequence);
                 this.gameWorld.detractLife(1);
@@ -180,6 +169,16 @@ cc.Class({
             default:
                 break;
         }
+    },
+
+    dead: function () {
+        this.gameWorld.enemyMng.remove(this.node);
+        this.gameWorld.enemyMng.destroyEnemy(this.node);
+
+        this.anim.stop();
+        this.unscheduleAllCallbacks();
+        this.slowDebuff.active = false;
+        this.node.cleanup();
     },
 
     isLiving: function () {
