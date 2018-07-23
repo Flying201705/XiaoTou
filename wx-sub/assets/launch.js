@@ -4,35 +4,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        scrollView: cc.Node,
+        item: cc.Prefab,
     },
-    // onEnable() {
-    //     let self = this;
-    //
-    //     // this.mask.on('touchstart', function (event) {
-    //     //     console.log('touchstart');
-    //     //     event.stopPropagation();
-    //     // });
-    //     this.mask.on('touchend', function (event) {
-    //         console.log('touchend');
-    //         // event.stopPropagation();
-    //
-    //         // 点击弹窗外面区域退出弹窗
-    //         let retWord = self.content.getBoundingBoxToWorld();
-    //         var point = event.getLocation();
-    //
-    //         if (!retWord.contains(point)) {
-    //             self._hide();
-    //         }
-    //     });
-    // },
-    // onDisable() {
-    //     this.mask.off('touchstart', function (event) {
-    //         event.stopPropagation();
-    //     });
-    //     this.mask.off('touchend', function (event) {
-    //         event.stopPropagation();
-    //     });
-    // },
     onLoad() {
         console.log('wx-sub onLoad');
     },
@@ -115,8 +89,17 @@ cc.Class({
             success: (res) => {
                 console.log('get friend success', res);
                 var urList = this.getUserRankList(res);
+                console.log('user rank list:', urList);
+                for (let i = 0; i < urList.length; i++) {
+                    var info = urList[i];
+                    let item = cc.instantiate(this.item).getComponent('item');
+                    item.setNickName(info.nickname);
+                    item.setLevel(info.level);
 
-            },
+                    this.scrollView.addChild(item.node);
+                }
+            }
+            ,
             fail: (res) => {
                 console.log('get friend fail', res);
             },
@@ -133,8 +116,6 @@ cc.Class({
                 level: this.getLevel(data.KVDataList)
             });
         }
-
-        console.log('user rank list:', urList);
 
         return urList;
     },
