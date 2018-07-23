@@ -1,6 +1,7 @@
 import global from './global'
 import {InfoHandle} from './InfoData'
 import {InfoData} from './InfoData'
+import rank from './rank_list'
 
 const TowerPosNodeState = {
     Invalid: -1,
@@ -657,6 +658,8 @@ cc.Class({
             this.gameover.showWinUI(this.getStarsForWin(), rewards);
 
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
+
+            // rank.setRank(this.currentLevel);
         } else {
             this.audioMng.playLose();
             this.gameover.showLoseUI(

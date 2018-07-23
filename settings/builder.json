@@ -7,7 +7,7 @@
   "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
-  "inlineSpriteFrames_native": false,
+  "inlineSpriteFrames_native": true,
   "jailbreakPlatform": false,
   "md5Cache": true,
   "mergeStartScene": false,
@@ -30,7 +30,7 @@
   "title": "xiaotou_world",
   "webOrientation": "auto",
   "wechatgame": {
-    "REMOTE_SERVER_ROOT": "http://192.168.115.114:8610/fenglp/remote-res",
+    "REMOTE_SERVER_ROOT": "",
     "appid": "wx052c1c7a94625f6d",
     "orientation": "landscape",
     "subContext": "wx-sub"

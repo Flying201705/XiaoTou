@@ -1,18 +1,11 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+import rank from './rank_list'
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        rankList: cc.Sprite,
+        rankList: cc.Node,
+        display: cc.Sprite,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -30,7 +23,7 @@ cc.Class({
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
             return;
         }
-        
+
         if (!this.tex) {
             console.log('no tex');
             return;
@@ -39,22 +32,26 @@ cc.Class({
         var sharedCanvas = openDataContext.canvas;
         this.tex.initWithElement(sharedCanvas);
         this.tex.handleLoadedTexture();
-        this.rankList.spriteFrame = new cc.SpriteFrame(this.tex);
+        this.display.spriteFrame = new cc.SpriteFrame(this.tex);
     },
     /**
      * 显示好友排行榜
      */
     showRankList() {
+        this.rankList.active = true;
+
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
             return;
         }
 
-        this._isShow = !this._isShow;
 
         // 发消息给子域
-        console.log('showRankList()');
-        wx.postMessage({
-            message: this._isShow ? 'Show' : 'Hide'
-        })
+        console.log('setRank');
+        // wx.postMessage({
+        //     message: this._isShow ? 'Show' : 'Hide'
+        // })
+
+        // rank.setRank(17);
+        rank.showRankList();
     },
 });
