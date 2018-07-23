@@ -83,6 +83,7 @@ cc.Class({
                         let city = userInfo.city;
                         let country = userInfo.country;
                         console.log("wx : " + nickName + "," + avatarUrl + ", " + gender + ", " + province + ", " + city + ", " + country);
+                        new InfoHandle().init();
                     }
                 });
             },
