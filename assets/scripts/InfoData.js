@@ -7,8 +7,10 @@ import GoodsData from './GoodsData';
 
 const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
+const login_openid = "user/loginForOpenId.do?";
 const update_user_level = "user/changeLevel.do?";
 const update_user_crystal = "user/changeCrystal.do?";
+const get_openid = "user/getOpenId.do?";
 const update_user_hero = "user/changeHero.do?";
 const get_levels = "level/allLevels.do?";
 const update_level = "level/updateLevel.do?";
@@ -32,7 +34,17 @@ const InfoHandle = cc.Class({
         InfoData.user = new UserData();
         InfoData.levels = [];
         InfoData.goods = [];
-        this.getUserInfoById(100);
+        this.loginForOpenId(0);
+    },
+
+    getOpenId: function(code, appid, secret) {
+        let url = http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret;
+        this.sendRequest(url, null);
+    },
+
+    loginForOpenId: function(openid) {
+        let url = http_head + login_openid + "openid=" + openid;
+        this.sendRequest(url, this.handleUserInfo);
     },
 
     getUserInfoById: function (id) {

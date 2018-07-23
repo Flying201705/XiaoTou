@@ -15,7 +15,7 @@ cc.Class({
             type: cc.ProgressBar
         },
         // defaults, set visually when attaching this script to the Canvas
-        text: '欢迎来到小偷世界!'
+        text: '欢迎来到小兵时代!'
     },
 
     // use this for initialization
@@ -24,9 +24,15 @@ cc.Class({
         this.loadBar.progress = 0;
 
         this.isLoad = false;
-        //测试程序
-        //this.sendPostRequest();
-        new InfoHandle().init();
+        if (CC_JSB) { //模拟器
+            new InfoHandle().init();
+        } else {
+            if (cc.sys.platform === cc.sys.WECHAT_GAME) { //微信小游戏
+                this.weChatLogin();
+            } else {
+                new InfoHandle().init();
+            }
+        }
     },
 
     // called every frame
@@ -38,15 +44,7 @@ cc.Class({
             this.isLoad = true;
             if (this.isLoad !== global.loadRes) {
                 global.loadRes = true;
-                if (CC_JSB) { //模拟器
-                    this.goToMainScene();
-                } else {
-                    if (cc.sys.platform === cc.sys.WECHAT_GAME) { //微信小游戏
-                        this.weChatLogin();
-                    } else {
-                        this.goToMainScene();
-                    }
-                }
+                this.goToMainScene();
             }
         }
         this.loadBar.progress += progress;
@@ -60,7 +58,20 @@ cc.Class({
         cc.log('login');
         let that = this;
         wx.login({
-            success: function () {
+            success: function (res) {
+                console.log("wx code : " + res.code);
+                wx.request({
+                    url:"http://zhang395295759.xicp.net:30629/xiaotou/user/getOpenId.do",
+                    header: {"Content-Type": "application/x-www-form-urlencoded"},
+                    method: "POST",
+                    data: {code: res.code},
+                    success: function(res) {
+                        console.log("wx22 success data : " + res.data.data);
+                    },
+                    fail: function (res) {
+                        console.log("wx22 fail data : " + res.data);
+                    }
+                });
                 wx.getUserInfo({
                     success: function (res) {
                         global.userInfo = res.userInfo;
@@ -71,9 +82,7 @@ cc.Class({
                         let province = userInfo.province;
                         let city = userInfo.city;
                         let country = userInfo.country;
-                        cc.log(nickName, avatarUrl, gender, province, city, country);
-
-                        that.goToMainScene();
+                        console.log("wx : " + nickName + "," + avatarUrl + ", " + gender + ", " + province + ", " + city + ", " + country);
                     }
                 });
             },
@@ -87,17 +96,4 @@ cc.Class({
             }
         })
     },
-
-    sendPostRequest: function () {
-        let url = "http://zhang395295759.xicp.net:30629/xiaotou/user/getUserInfoId.do?id=100";
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 400)) {
-                let response = xhr.responseText;
-                console.log("<test> : " + response);
-            }
-        }
-        xhr.open("GET", url, true);
-        xhr.send();
-    }
 });
