@@ -40,7 +40,7 @@ cc.Class({
         this.node.active = true;
     },
 
-    showLoseUI:function(wave) {
+    showLoseUI: function (wave) {
         this.win.active = false;
         this.lose.active = true;
 
@@ -52,13 +52,13 @@ cc.Class({
         this.node.active = true;
     },
 
-    setStar:function(stars) {
+    setStar: function (stars) {
         let star = this.star.getComponent("GameStar");
         cc.log("star: " + stars);
         star.initSprite(stars);
     },
 
-    setReward: function(rewards) {
+    setReward: function (rewards) {
         let rewardNode = this.win.getChildByName('reward');
         if (rewards.length > 0) {
             rewardNode.active = true;
@@ -130,6 +130,10 @@ cc.Class({
     },
 
     share: function () {
-
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            wx.shareAppMessage({
+                title: '一起来玩小兵时代'
+            })
+        }
     }
 });
