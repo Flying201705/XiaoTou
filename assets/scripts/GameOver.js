@@ -132,7 +132,8 @@ cc.Class({
     share: function () {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             wx.shareAppMessage({
-                title: '一起来玩小兵时代'
+                title: '一起来玩小兵时代',
+                imageUrl:'http://zhang395295759.xicp.net:30629/xiaotou-res/share_img.jpg'
             })
         }
     }
