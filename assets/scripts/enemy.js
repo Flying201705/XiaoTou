@@ -65,6 +65,8 @@ cc.Class({
         this.slowRate = 0; //减速
         this.positionTag = 0; //位置标签，标签值越大越靠前
 
+        this.invincible = 0; //无敌时间
+
         this.gameWorld = gameWorld;
         this.type = type;
         if (this.type >= 1000) {
@@ -92,6 +94,8 @@ cc.Class({
                 this.setState(EnemyState.Unbeatable);
 
                 this.schedule(this.playAnim, 1);
+
+                this.doMove();
             }
         });
     },
@@ -104,30 +108,53 @@ cc.Class({
         }
     },
 
-    update: function (dt) {
-        if (global.isPause()) {
+    doMove: function () {
+        if (this.isDead() || this.isEndPath()) {
             return;
         }
 
-        if (this.state === EnemyState.Running || this.state === EnemyState.Unbeatable) {
-            let distance = cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
-            if (distance < 10) {
-                this.currentPathPointCount++;
-                if (this.currentPathPointCount === this.pathPoints.length) {
-                    this.setState(EnemyState.EndPath);
-                    return;
-                }
-                this.direction = cc.pNormalize(cc.pSub(this.pathPoints[this.currentPathPointCount], this.node.position));
-            } else if (!this.beStuned) {
-                this.node.position = cc.pAdd(this.node.position, cc.pMult(this.direction, this.speed * (1 - this.slowRate) * dt));
-            }
+        this.currentPathPointCount++;
+        if (this.currentPathPointCount === this.pathPoints.length) {
+            this.setState(EnemyState.EndPath);
+            return;
+        }
 
-            let startDistance = cc.pDistance(this.node.position, this.pathPoints[0]);
-            //超过一定距离，无敌状态消失
-            if (startDistance > UnbeatableDistance) {
+        let pot = this.pathPoints[this.currentPathPointCount];
+        let distance = cc.pDistance(this.node.position, pot);
+        let move = cc.moveTo(distance / (this.speed * (1 - this.slowRate)), pot);
+        this.moveAction = cc.sequence(move, cc.callFunc(() => {
+            this.doMove();
+        }));
+        this.node.runAction(this.moveAction);
+    },
+
+    stopMove: function() {
+        if (this.moveAction) {
+            this.node.stopAction(this.moveAction);
+        }
+    },
+
+    updateMove: function () {
+        this.stopMove();
+        this.currentPathPointCount--;
+        this.doMove();
+    },
+
+    update: function (dt) {
+        if (global.isPause()) {
+            this.node.pauseAllActions();
+            return;
+        } else {
+            this.node.resumeAllActions();
+        }
+
+        if (this.state === EnemyState.Unbeatable) {
+            this.invincible += dt;
+            if (this.invincible >= 0.1) {
                 this.setState(EnemyState.Running);
             }
         }
+
         if (this.currentHealthCount < this.totalHealthCount) {
             this.healthProgressBar.node.active = true;
             this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
@@ -139,6 +166,7 @@ cc.Class({
             this.positionTag = this.currentPathPointCount * 10000 + cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
         }
     },
+
     setState: function (state) {
         if (this.state === state) {
             return;
@@ -152,6 +180,8 @@ cc.Class({
                 break;
             case EnemyState.Dead:
                 cc.audioEngine.playEffect(this.audioDead, false);
+
+                this.stopMove();
                 let deadAction = cc.fadeOut(1);
                 let deadSequence = cc.sequence(deadAction, cc.callFunc(() => {
                     this.dead();
@@ -159,6 +189,7 @@ cc.Class({
                 this.node.runAction(deadSequence);
                 break;
             case EnemyState.EndPath:
+                this.stopMove();
                 let endAction = cc.fadeOut(0.5);
                 let endSequence = cc.sequence(endAction, cc.callFunc(() => {
                     this.dead();
@@ -176,19 +207,13 @@ cc.Class({
         this.gameWorld.enemyMng.destroyEnemy(this.node);
 
         this.anim.stop();
-        this.unscheduleAllCallbacks();
         this.slowDebuff.active = false;
-        this.node.cleanup();
+        this.node.stopAllActions();
+        this.unscheduleAllCallbacks();
     },
 
-    isLiving: function () {
-        if (this.state === EnemyState.Running) {
-            return true;
-        }
-        return false;
-    },
     beAttacked: function (bullet) {
-        var damage = bullet.damage;
+        let damage = bullet.damage;
         if (this.beTriggerRate(bullet.stunRate)) {
             cc.log("触发眩晕！");
             this.handleStuned();
@@ -205,7 +230,7 @@ cc.Class({
 
         //减速代码
         if (bullet.slowRate > 0 && bullet.slowRate >= this.slowRate) {
-            this.hanleSlowed(bullet.slowRate);
+            this.handleSlowed(bullet.slowRate);
         }
     },
 
@@ -236,30 +261,34 @@ cc.Class({
     },
 
     handleStuned: function () {
-        this.unschedule(this.cancelStuned);
         this.beStuned = true;
+        this.unschedule(this.cancelStuned);
         this.scheduleOnce(this.cancelStuned, 2);
+        this.node.pauseAllActions();
     },
 
     cancelStuned: function () {
         this.beStuned = false;
+        this.node.resumeAllActions();
     },
 
-    hanleSlowed: function (rate) {
+    handleSlowed: function (rate) {
         this.unschedule(this.cancelSlowed);
         this.slowRate = rate;
         this.scheduleOnce(this.cancelSlowed, 2);
         this.slowDebuff.active = true;
+        this.updateMove();
     },
 
     cancelSlowed: function () {
         this.slowRate = 0;
         this.slowDebuff.active = false;
+        this.updateMove();
     },
 
     beTriggerRate: function (rate) {
         if (rate > 0) {
-            var random = Math.random();
+            let random = Math.random();
             if (random < rate) {
                 return true;
             }
@@ -281,18 +310,16 @@ cc.Class({
         this.gameWorld.addGold(Math.floor(gold));
     },
 
+    isLiving: function () {
+        return this.state === EnemyState.Running;
+    },
+
     isDead: function () {
-        if (this.state === EnemyState.Dead) {
-            return true;
-        }
-        return false;
+        return this.state === EnemyState.Dead;
     },
 
     isEndPath: function () {
-        if (this.state === EnemyState.EndPath) {
-            return true;
-        }
-        return false;
+        return this.state === EnemyState.EndPath;
     },
 
     damageAnimation: function (num, beCrit) {
