@@ -90,20 +90,23 @@ cc.Class({
                 console.log('get friend success', res);
                 var urList = this.getUserRankList(res);
                 console.log('user rank list:', urList);
-                for (let i = 0; i < urList.length; i++) {
-                    var info = urList[i];
-                    let item = cc.instantiate(this.item).getComponent('item');
-                    item.setNickName(info.nickname);
-                    item.setLevel(info.level);
-
-                    this.scrollView.addChild(item.node);
-                }
+                this.addToScrollView(urList);
             }
             ,
             fail: (res) => {
                 console.log('get friend fail', res);
             },
         });
+    },
+    addToScrollView(urList) {
+        for (let i = 0; i < urList.length; i++) {
+            var info = urList[i];
+            let item = cc.instantiate(this.item).getComponent('item');
+            item.setNickName(info.nickname);
+            item.setLevel(info.level);
+
+            this.scrollView.addChild(item.node);
+        }
     },
     getUserRankList(res) {
         var urList = [];
