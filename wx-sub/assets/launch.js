@@ -25,6 +25,10 @@ cc.Class({
                         console.log('currentLevel:' + data.currentLevel);
                         this._set(data.currentLevel);
                         break;
+                    case 'hide':
+                        console.log('currentLevel:' + data.currentLevel);
+                        this._hide();
+                        break;
                 }
             });
         }
@@ -131,16 +135,9 @@ cc.Class({
         });
     },
     _show() {
-        // let moveTo = cc.moveTo(0.5, 0, 0);
-        // this.content.runAction(moveTo);
-        // this.display.active = true;
         this.getRankList();
     },
-
     _hide() {
-        // let moveTo = cc.moveTo(0.5, 0, 1000);
-        // this.content.runAction(moveTo);
-        // this.display.active = false;
-    }
-
+        this.scrollView.removeAllChildren();
+    },
 });
