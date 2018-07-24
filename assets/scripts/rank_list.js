@@ -15,4 +15,11 @@ export default {
             })
         }
     },
+    hide: () => {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            wx.postMessage({
+                type: 'hide'
+            })
+        }
+    }
 }

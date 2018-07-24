@@ -25,6 +25,10 @@ cc.Class({
                         console.log('currentLevel:' + data.currentLevel);
                         this._set(data.currentLevel);
                         break;
+                    case 'hide':
+                        console.log('currentLevel:' + data.currentLevel);
+                        this._hide();
+                        break;
                 }
             });
         }
@@ -90,20 +94,23 @@ cc.Class({
                 console.log('get friend success', res);
                 var urList = this.getUserRankList(res);
                 console.log('user rank list:', urList);
-                for (let i = 0; i < urList.length; i++) {
-                    var info = urList[i];
-                    let item = cc.instantiate(this.item).getComponent('item');
-                    item.setNickName(info.nickname);
-                    item.setLevel(info.level);
-
-                    this.scrollView.addChild(item.node);
-                }
+                this.addToScrollView(urList);
             }
             ,
             fail: (res) => {
                 console.log('get friend fail', res);
             },
         });
+    },
+    addToScrollView(urList) {
+        for (let i = 0; i < urList.length; i++) {
+            var info = urList[i];
+            let item = cc.instantiate(this.item).getComponent('item');
+            item.setNickName(info.nickname);
+            item.setLevel(info.level);
+            item.setAvatar(info.avatarUrl);
+            this.scrollView.addChild(item.node);
+        }
     },
     getUserRankList(res) {
         var urList = [];
@@ -117,19 +124,20 @@ cc.Class({
             });
         }
 
-        return urList;
+        return urList.sort((x, y) => {
+            if (x.level < y.level) {
+                return 1;
+            } else if (x.level > y.level) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
     },
     _show() {
-        // let moveTo = cc.moveTo(0.5, 0, 0);
-        // this.content.runAction(moveTo);
-        // this.display.active = true;
         this.getRankList();
     },
-
     _hide() {
-        // let moveTo = cc.moveTo(0.5, 0, 1000);
-        // this.content.runAction(moveTo);
-        // this.display.active = false;
-    }
-
+        this.scrollView.removeAllChildren();
+    },
 });
