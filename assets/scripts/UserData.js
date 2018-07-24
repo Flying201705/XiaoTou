@@ -22,7 +22,7 @@ const UserData = cc.Class({
         this.head = obj.head;
         this.sex = obj.sex;
         this.crystal = obj.crys;
-        this.level = obj.lv;
+        this.level = obj.lv < 1 ? 1 : obj.lv;
         this.title = obj.title;
         this.hero = obj.hero;
 

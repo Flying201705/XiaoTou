@@ -25,12 +25,12 @@ cc.Class({
 
         this.isLoad = false;
         if (CC_JSB) { //模拟器
-            new InfoHandle().init();
+            new InfoHandle().init(0);
         } else {
             if (cc.sys.platform === cc.sys.WECHAT_GAME) { //微信小游戏
                 this.weChatLogin();
             } else {
-                new InfoHandle().init();
+                new InfoHandle().init(0);
             }
         }
     },
@@ -66,10 +66,16 @@ cc.Class({
                     method: "POST",
                     data: {code: res.code},
                     success: function(res) {
-                        console.log("wx22 success data : " + res.data.data);
+                        if (res.data.data.indexOf("openid") !== -1) {
+                            console.log("wx success data.data : " + res.data.data);
+                            var obj = JSON.parse(res.data.data);
+                            new InfoHandle().init(obj.openid);
+                        } else {
+                        console.log("wx fail data.data : " + res.data);
+                        }
                     },
                     fail: function (res) {
-                        console.log("wx22 fail data : " + res.data);
+                        console.log("wx fail data : " + res.data);
                     }
                 });
                 wx.getUserInfo({
@@ -83,7 +89,6 @@ cc.Class({
                         let city = userInfo.city;
                         let country = userInfo.country;
                         console.log("wx : " + nickName + "," + avatarUrl + ", " + gender + ", " + province + ", " + city + ", " + country);
-                        new InfoHandle().init();
                     }
                 });
             },

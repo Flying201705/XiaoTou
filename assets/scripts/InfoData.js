@@ -30,11 +30,11 @@ const InfoData = {
 };
 
 const InfoHandle = cc.Class({
-    init: function () {
+    init: function (openId) {
         InfoData.user = new UserData();
         InfoData.levels = [];
         InfoData.goods = [];
-        this.loginForOpenId(0);
+        this.loginForOpenId(openId);
     },
 
     getOpenId: function(code, appid, secret) {
