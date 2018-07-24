@@ -91,10 +91,13 @@ cc.Class({
 
         this.tileSize = 80;
         this.goldCount = 0;
+
         this.crystalCount = InfoData.user.crystal;
         if (this.crystalCount === undefined) {
             this.crystalCount = 0;
         }
+        this.crystalLabel.string = this.crystalCount.toString();
+
         this.lifeCount = 10;
         this.addEnemyCurrentTime = 0;
         this.addWaveCurrentTime = 0;
@@ -214,14 +217,6 @@ cc.Class({
         return false;
     },
 
-    // 暂时没用
-    setTowerTouchEvent: function (node) {
-        node.on(cc.Node.EventType.TOUCH_START, (event) => {
-            cc.log("touch node name = " + event.target.name);
-            this.showUpdateMenu(event.target);
-        });
-    },
-
     showBuildMenu: function (x, y) {
         this.closeMenu();
         let centerPos = this.getTilePos(cc.p(x, y));
@@ -338,8 +333,7 @@ cc.Class({
             }
             this.levelConfig = result["level_" + this.currentLevel];
             // this.currentWaveConfig = wavesConfig[0];
-            this.goldCount = this.levelConfig.gold;
-            this.isTowerCanUpgrade();
+            this.addGold(this.levelConfig.gold);
             this.towerOp.initBuildMenu(this.levelConfig.towers);
             this.totalWaveCount = this.levelConfig.waves.length;
         });
@@ -371,9 +365,6 @@ cc.Class({
             return;
         }
 
-        this.goldLabel.string = this.goldCount.toString();
-        this.crystalLabel.string = this.crystalCount.toString();
-        this.lifeNode.getComponent("Life").setLife(this.lifeCount);
         if (this.currentWaveConfig) {
             if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
                 this.addEnemyCurrentTime = 0;
@@ -487,7 +478,7 @@ cc.Class({
         } else if (this.goldCount < 500) {
             this.showSummonHint("召唤英雄需要500金币");
         } else {
-            this.goldCount -= 500;
+            this.detractGold(500);
             let x = this.node.getChildByName('bottomBar').x;
             let y = this.node.getChildByName('bottomBar').y + this.hero.height;
             this.hero.position = cc.p(x, y);
@@ -548,6 +539,7 @@ cc.Class({
 
     addGold: function (gold) {
         this.goldCount += gold;
+        this.goldLabel.string = this.goldCount.toString();
         this.isTowerCanUpgrade();
     },
 
@@ -556,6 +548,7 @@ cc.Class({
         if (this.goldCount < 0) {
             this.goldCount = 0;
         }
+        this.goldLabel.string = this.goldCount.toString();
         this.isTowerCanUpgrade();
     },
 
@@ -575,11 +568,17 @@ cc.Class({
 
     detractLife: function (life) {
         this.lifeCount -= life;
+        this.updateLife();
+
         if (this.lifeCount <= 0) {
             this.lifeCount = 0;
             //游戏结束--输了
             this.gameOver(false);
         }
+    },
+
+    updateLife: function() {
+        this.lifeNode.getComponent("Life").setLife(this.lifeCount);
     },
 
     hasGoods: function(goodsId) {

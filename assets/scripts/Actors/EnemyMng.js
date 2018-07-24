@@ -19,10 +19,6 @@ cc.Class({
         this.list = [];
     },
 
-    init: function (game) {
-        this.gameWorld = game;
-    },
-
     createEnemy: function (parentNode) {
         let enemy = null;
         if (this.enemyPool.size() > 0) { // 通过 size 接口判断对象池中是否有空闲的对象
@@ -45,14 +41,12 @@ cc.Class({
 
     add: function (enemy) {
         this.list.push(enemy);
-        // this.gameWorld.updateEnemy();
     },
 
     remove: function (enemy) {
         let index = this.list.indexOf(enemy);
         if (index > -1) {
             this.list.splice(index, 1);
-            // this.gameWorld.updateEnemy();
         }
     }
 });
