@@ -16,10 +16,23 @@ cc.Class({
         nickName: cc.Label,
         level: cc.Label,
     },
+    onLoad() {
+        console.log('item load');
+    },
+    start() {
+        console.log('item start');
+
+    },
     setNickName(value) {
         this.nickName.string = value;
     },
     setLevel(value) {
         this.level.string = `第${value}关`;
+    },
+    setAvatar(url) {
+        var self = this;
+        cc.loader.load({url: url, type: 'jpg'}, function (err, tex) {
+            self.avatar.spriteFrame = new cc.SpriteFrame(tex);
+        })
     }
 });

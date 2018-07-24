@@ -104,7 +104,7 @@ cc.Class({
             let item = cc.instantiate(this.item).getComponent('item');
             item.setNickName(info.nickname);
             item.setLevel(info.level);
-
+            item.setAvatar(info.avatarUrl);
             this.scrollView.addChild(item.node);
         }
     },
@@ -120,7 +120,15 @@ cc.Class({
             });
         }
 
-        return urList;
+        return urList.sort((x, y) => {
+            if (x.level < y.level) {
+                return 1;
+            } else if (x.level > y.level) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
     },
     _show() {
         // let moveTo = cc.moveTo(0.5, 0, 0);
