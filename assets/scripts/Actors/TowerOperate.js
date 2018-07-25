@@ -24,6 +24,7 @@ cc.Class({
     showBuildMenu: function (pos) {
         this.build_menu.position = pos;
         this.build_menu.parent = this.node;
+        this.build_menu.getComponent("build-menu").updatePosition();
     },
 
     showUpdateMenu: function(tower, gold, index) {
