@@ -117,10 +117,12 @@ cc.Class({
 
     goToNextLevel: function () {
         global.currentLevel++;
+        global.resume();
         cc.director.loadScene('game');
     },
 
     restartCurrentLevel: function () {
+        global.resume();
         cc.director.loadScene('game');
     },
 
