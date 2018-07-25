@@ -16,18 +16,18 @@ cc.Class({
         });
         this.node.on('touchend', function (event) {
             console.log('on touchend');
-
-
             event.stopPropagation();
 
             // 点击弹窗外面区域退出弹窗
-            let retWord = self.border.getBoundingBoxToWorld();
-            console.log('width：' + retWord.width + ' height:' + retWord.height);
-            var point = event.getLocation();
+            if (self.border != null) {
+                let retWord = self.border.getBoundingBoxToWorld();
+                console.log('width：' + retWord.width + ' height:' + retWord.height);
+                var point = event.getLocation();
 
-            if (!retWord.contains(point)) {
-                console.log('hide');
-                self.hide();
+                if (!retWord.contains(point)) {
+                    console.log('hide');
+                    self.hide();
+                }
             }
         });
     },

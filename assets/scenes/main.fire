@@ -952,6 +952,13 @@
       "__id__": 8
     },
     "_enabled": true,
+    "adventureButtonClicked": false,
+    "loadingMaskPrefab": {
+      "__uuid__": "e199f4d6-33d4-4721-99c3-a995addbd628"
+    },
+    "rootNode": {
+      "__id__": 2
+    },
     "selectAudio": {
       "__uuid__": "3b81d878-51ed-4e15-92b8-757e6f046883"
     }
