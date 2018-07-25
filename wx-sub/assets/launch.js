@@ -134,6 +134,7 @@ cc.Class({
         for (let i = 0; i < urList.length; i++) {
             var info = urList[i];
             let item = cc.instantiate(this.item).getComponent('item');
+            item.setRank(i + 1);
             item.setNickName(info.nickname);
             item.setLevel(info.level);
             item.setAvatar(info.avatarUrl);

@@ -12,9 +12,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        rank: cc.Label,
         avatar: cc.Sprite,
         nickName: cc.Label,
         level: cc.Label,
+        background: cc.Node,
     },
     onLoad() {
         console.log('item load');
@@ -22,6 +24,14 @@ cc.Class({
     start() {
         console.log('item start');
 
+    },
+    setRank(value) {
+        this.rank.string = value;
+        if (value % 2 == 1) {
+            this.background.opacity = 128;
+        } else {
+            this.background.opacity = 50;
+        }
     },
     setNickName(value) {
         this.nickName.string = value;
