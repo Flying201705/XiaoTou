@@ -138,15 +138,21 @@ cc.Class({
             if (goodsInfo.number <= 0) {
                 continue;
             }
-            var goodsId = goodsInfo.goodsid.toString().substring(0, 3);
-            cc.log('goodsId:' + goodsId)
-            if (goodsId == 100 && goodsInfo.goodsid > 1000 && config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
+
+            var chipType = goodsInfo.goodsid.toString().substring(0, 3);
+            cc.log('chipType:' + chipType)
+
+            // 英雄碎片
+            if (chipType == 100 && goodsInfo.goodsid > 1000 && config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
                 config['chipIds'].push(goodsInfo.goodsid);
             }
         }
 
+        config['composed'] = new InfoHandle().hasHero();
+
         this.configHeroChips(config);
+
         // 二期开放功能。
-        this.configPropChips({kind: 2});
+        this.configPropChips({kind: 2, composed: true});
     }
 });
