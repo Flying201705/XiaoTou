@@ -35,10 +35,6 @@ cc.Class({
             default: null,
             type: cc.Sprite
         },
-        propIcons: {
-            default: [],
-            type: [cc.SpriteFrame]
-        },
         clickAudio: {
             default: null,
             url: cc.AudioClip
@@ -69,7 +65,17 @@ cc.Class({
         cc.log('buy prop type :' + propType);
 
         this.propType = propType;
-        this.propIconSprite.spriteFrame = this.propIcons[propType - 1];
+        switch (propType) {
+            case 1:
+                this.propIconSprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/image/deceleration.png'));
+                break;
+            case 2:
+                this.propIconSprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/image/dizziness.png'));
+                break;
+            case 3:
+                this.propIconSprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/image/bomb.png'));
+                break;
+        }
 
         this.crystalTotalNumber = crystalTotalNumber;
         cc.log("crystalTotalNumber:" + this.crystalTotalNumber)
