@@ -256,7 +256,8 @@ cc.Class({
         if (this.currentHealthCount <= 0) {
             this.currentHealthCount = 0;
             this.setState(EnemyState.Dead);
-            this.gainGold(1);
+            // 普通英雄打死怪物不得金钱
+            // this.gainGold(1);
             // 取消BOSS掉落，改为关卡掉落
             /*if (this.isBoss) {
                 this.gameWorld.dropGoods('enemy_1000');
