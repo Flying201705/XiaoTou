@@ -32,25 +32,27 @@ const InfoData = {
      * 数据下载状态，由以下token通过位或合成，使用FLAG_DATA_ALL_COMPLETE判断是否与之相等，相等则全部数据下载完成。
      */
     FLAG_DATA_DOWNLOAD_STATUS: 0,
+    TOKEN_ERROR: -1,
     /**
      * 用户信息下载完成token
-     * 二进制 0001
+     * 十进制：1
      */
-    TOKEN_USER_INFO: 1,
+    TOKEN_USER_INFO: 0b0001,
     /**
      * 关数信息下载完成token
-     *  二进制 0010
+     * 十进制：2
      */
-    TOKEN_LEVEL: 2,
+    TOKEN_LEVEL: 0b0010,
     /**
      * 物品信息下载完成token
+     * 十进制：4
      */
-    TOKEN_GOODS: 4,
+    TOKEN_GOODS: 0b0100,
     /**
      * 全部信息下载完成token
-     * 二进制 0111
+     * 十进制：7
      */
-    FLAG_DATA_ALL_COMPLETE: 4 | 2 | 1,
+    FLAG_DATA_ALL_COMPLETE: 0b0111,
 };
 
 const InfoHandle = cc.Class({
@@ -68,17 +70,26 @@ const InfoHandle = cc.Class({
 
     loginForOpenId: function (openid) {
         let url = http_head + login_openid + "openid=" + openid;
-        this.sendRequest(url, this.handleUserInfo);
+        this.sendRequest(url, {
+            success: this.handleUserInfo,
+            fail: this.dataErrorCallback
+        });
     },
 
     getUserInfoById: function (id) {
         let url = http_head + get_user_info + "id=" + id;
-        this.sendRequest(url, this.handleUserInfo);
+        this.sendRequest(url, {
+            success: this.handleUserInfo,
+            fail: this.dataErrorCallback
+        });
     },
 
     getLevelsById: function (id) {
         let url = http_head + get_levels + "id=" + id;
-        this.sendRequest(url, this.handleLevels);
+        this.sendRequest(url, {
+            success: this.handleLevels,
+            fail: this.dataErrorCallback
+        });
     },
 
     hasHero: function () {
@@ -97,7 +108,10 @@ const InfoHandle = cc.Class({
 
     getGoodsById: function (id) {
         let url = http_head + get_goods + "id=" + id;
-        this.sendRequest(url, this.handleGoods);
+        this.sendRequest(url, {
+            success: this.handleGoods,
+            fail: this.dataErrorCallback
+        });
     },
 
     handleUserInfo: function (self, obj) {
@@ -218,25 +232,46 @@ const InfoHandle = cc.Class({
     },
 
     sendRequest: function (url, method) {
-        var xhr = new XMLHttpRequest();
         var self = this;
+
+        var xhr = new XMLHttpRequest();
+        xhr.timeout = 5000;
+        xhr.ontimeout = (event) => {
+            console.log('xxx xml timeout');
+            if (method != null && method.fail != null) {
+                method.fail();
+            }
+        }
+
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
+            // console.log('xxx', xhr);
+            console.log('xxx xhr.readyState:' + xhr.readyState + ' xhr.status:' + xhr.status);
+            if ((xhr.readyState == 4) && xhr.status == 200) {
                 var response = xhr.responseText;
                 console.log("<test> json str : " + response);
-                if (method != null) {
+                if (method != null && method.success != null) {
                     var obj = JSON.parse(response);
-                    cc.log("bunny-invoke callback");
-                    method(self, obj.data);
+                    console.log("xxx xml success callback");
+                    method.success(self, obj.data);
+                }
+            } else {
+                if (method != null && method.fail != null) {
+                    console.log("xxx xml fail callback");
+                    method.fail();
                 }
             }
         }
+
         xhr.open("GET", url, true);
         xhr.send();
+
     },
     dataCompleteCallback(token) {
         cc.log('xxx dataCompleteCallback token:' + token);
         global.event.fire("onDataDownloadCallback", token);
+    },
+    dataErrorCallback() {
+        global.event.fire("onDataDownloadCallback", InfoData.TOKEN_ERROR);
     },
 
 });

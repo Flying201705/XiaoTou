@@ -109,10 +109,15 @@ cc.Class({
         return left < 0 ? 0 : left;
     },
     addHeroNumber: function (infoHandle, goodsId) {
-        infoHandle.updateGoods(goodsId, 1, () => {
-            this.updateLocalGoods(goodsId, 1);
-            global.event.fire('update_crystal_count', this.getLeftCrystalCount());
-            this.setComposeStatus();
+        infoHandle.updateGoods(goodsId, 1, {
+            success: () => {
+                this.updateLocalGoods(goodsId, 1);
+                global.event.fire('update_crystal_count', this.getLeftCrystalCount());
+                this.setComposeStatus();
+            },
+            fail: () => {
+
+            }
         });
         return infoHandle;
     },
@@ -150,12 +155,14 @@ cc.Class({
             let chipId = this.chipIds[i];
             cc.log('delete chips ' + chipId);
 
-            infoHandle.updateGoods(chipId, -1, () => {
-                this.updateLocalGoods(chipId, -1);
-                // var index = this.getChipIndex(chipId);
-                //本地碎片图标变暗
-                // this.chips[index].node.opacity = 125;
-                // this.updatePriceLabel(--this.chipCount);
+            infoHandle.updateGoods(chipId, -1, {
+                success: () => {
+                    this.updateLocalGoods(chipId, -1);
+                    // var index = this.getChipIndex(chipId);
+                    //本地碎片图标变暗
+                    // this.chips[index].node.opacity = 125;
+                    // this.updatePriceLabel(--this.chipCount);}
+                }
             });
         }
     },
