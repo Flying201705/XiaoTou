@@ -4,6 +4,7 @@
 import UserData from './UserData';
 import LevelData from './LevelData';
 import GoodsData from './GoodsData';
+import global from './global'
 
 const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
@@ -27,6 +28,29 @@ const InfoData = {
         default: [],
         type: GoodsData
     },
+    /**
+     * 数据下载状态，由以下token通过位或合成，使用FLAG_DATA_ALL_COMPLETE判断是否与之相等，相等则全部数据下载完成。
+     */
+    FLAG_DATA_DOWNLOAD_STATUS: 0,
+    /**
+     * 用户信息下载完成token
+     * 二进制 0001
+     */
+    TOKEN_USER_INFO: 1,
+    /**
+     * 关数信息下载完成token
+     *  二进制 0010
+     */
+    TOKEN_LEVEL: 2,
+    /**
+     * 物品信息下载完成token
+     */
+    TOKEN_GOODS: 4,
+    /**
+     * 全部信息下载完成token
+     * 二进制 0111
+     */
+    FLAG_DATA_ALL_COMPLETE: 4 | 2 | 1,
 };
 
 const InfoHandle = cc.Class({
@@ -37,12 +61,12 @@ const InfoHandle = cc.Class({
         this.loginForOpenId(openId);
     },
 
-    getOpenId: function(code, appid, secret) {
+    getOpenId: function (code, appid, secret) {
         let url = http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret;
         this.sendRequest(url, null);
     },
 
-    loginForOpenId: function(openid) {
+    loginForOpenId: function (openid) {
         let url = http_head + login_openid + "openid=" + openid;
         this.sendRequest(url, this.handleUserInfo);
     },
@@ -57,11 +81,11 @@ const InfoHandle = cc.Class({
         this.sendRequest(url, this.handleLevels);
     },
 
-    hasHero: function() {
+    hasHero: function () {
         if (InfoData.user.hero > 0) {
             return true;
         }
-        
+
         for (let i = 0; i < InfoData.goods.length; i++) {
             if (InfoData.goods[i].goodsid === 100 && InfoData.goods[i].number > 0) {
                 return true;
@@ -74,7 +98,6 @@ const InfoHandle = cc.Class({
     getGoodsById: function (id) {
         let url = http_head + get_goods + "id=" + id;
         this.sendRequest(url, this.handleGoods);
-        this.dataCompleteCallback();
     },
 
     handleUserInfo: function (self, obj) {
@@ -82,7 +105,9 @@ const InfoHandle = cc.Class({
 
         new InfoHandle().getGoodsById(InfoData.user.id);
         new InfoHandle().getLevelsById(InfoData.user.id);
-        self.dataCompleteCallback(1);
+
+        InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
+        self.dataCompleteCallback(InfoData.TOKEN_USER_INFO);
     },
 
     handleLevels: function (self, obj) {
@@ -100,7 +125,8 @@ const InfoHandle = cc.Class({
             level.init(obj[i]);
             InfoData.levels[obj[i].lv - 1] = level;
         }
-        self.dataCompleteCallback(2);
+        InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_LEVEL;
+        self.dataCompleteCallback(InfoData.TOKEN_LEVEL);
     },
 
     handleGoods: function (self, obj) {
@@ -113,7 +139,8 @@ const InfoHandle = cc.Class({
                 new InfoHandle().updateHero(1);
             }
         }
-        self.dataCompleteCallback(3);
+        InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_GOODS;
+        self.dataCompleteCallback(InfoData.TOKEN_GOODS);
     },
 
     updateLatestLevel: function (level) {
@@ -121,7 +148,7 @@ const InfoHandle = cc.Class({
         this.sendRequest(url, null);
     },
 
-    updateHero: function(hero) {
+    updateHero: function (hero) {
         hero = hero > 0 ? 1 : 0;
         if (InfoData.user.hero === hero) {
             return;
@@ -156,13 +183,13 @@ const InfoHandle = cc.Class({
         this.sendRequest(url, null);
     },
 
-    updateCrystal: function(crystal) {
+    updateCrystal: function (crystal) {
         InfoData.user.crystal += crystal;
         let url = http_head + update_user_crystal + "id=" + InfoData.user.id + "&crys=" + crystal;
         this.sendRequest(url, null);
     },
 
-    updateLocalGoods: function(goodsId, num) {
+    updateLocalGoods: function (goodsId, num) {
         let isUpdated = false;
         for (let i = 0; i < InfoData.goods.length; i++) {
             if (InfoData.goods[i].goodsid === goodsId) {
@@ -192,7 +219,7 @@ const InfoHandle = cc.Class({
 
     sendRequest: function (url, method) {
         var xhr = new XMLHttpRequest();
-        var self  = this;
+        var self = this;
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
                 var response = xhr.responseText;
@@ -207,8 +234,9 @@ const InfoHandle = cc.Class({
         xhr.open("GET", url, true);
         xhr.send();
     },
-    dataCompleteCallback() {
-        cc.log('bunny do callback')
+    dataCompleteCallback(token) {
+        cc.log('xxx dataCompleteCallback token:' + token);
+        global.event.fire("onDataDownloadCallback", token);
     },
 
 });

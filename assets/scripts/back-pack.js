@@ -118,7 +118,7 @@ cc.Class({
         infoHandle.dataCompleteCallback = (type) => {
             cc.log('bunny dataUpdateComplete callback type:' + type)
             // 仅监听物品数据更新
-            if (type != 3) {
+            if (type != InfoData.TOKEN_GOODS) {
                 return;
             }
 
@@ -148,7 +148,7 @@ cc.Class({
             }
         }
 
-        config['composed'] = new InfoHandle().hasHero();
+        // config['composed'] = new InfoHandle().hasHero();
 
         this.configHeroChips(config);
 
