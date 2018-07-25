@@ -9,10 +9,38 @@ cc.Class({
     },
     onLoad() {
         console.log('wx-sub onLoad');
+        // const ratio = wx.getSystemInfoSync().pixelRatio;
+        // cc.view._convertPointWithScale = function (point) {
+        //     var viewport = this._viewPortRect;
+        //     point.x = (point.x - viewport.x) / (this._scaleX / ratio);
+        //     point.y = (point.y - viewport.y) / (this._scaleY / ratio);
+        // };
+        // cc.view._convertTouchesWithScale = function (touches) {
+        //     var viewport = this._viewPortRect, scaleX = this._scaleX / ratio, scaleY = this._scaleY / ratio, selTouch, selPoint,
+        //         selPrePoint;
+        //     for (var i = 0; i < touches.length; i++) {
+        //         selTouch = touches[i];
+        //         selPoint = selTouch._point;
+        //         selPrePoint = selTouch._prevPoint;
+        //         selPoint.x = (selPoint.x - viewport.x) / scaleX;
+        //         selPoint.y = (selPoint.y - viewport.y) / scaleY;
+        //         selPrePoint.x = (selPrePoint.x - viewport.x) / scaleX;
+        //         selPrePoint.y = (selPrePoint.y - viewport.y) / scaleY;
+        //     }
+        // };
     },
     start() {
         console.log('wx-sub start');
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            // console.log('xxx sw-:' + window.sharedCanvas.width + ' sh-:' + window.sharedCanvas.width);
+            //
+            // const ratio = wx.getSystemInfoSync().pixelRatio;
+            // window.sharedCanvas.width = cc.game.canvas.width * ratio;
+            // window.sharedCanvas.height = cc.game.canvas.height * ratio;
+            //
+            // console.log('xxx cw:' + cc.game.canvas.width + ' ch:' + cc.game.canvas.height + ' ratio:' + ratio);
+            // console.log('xxx sw:' + window.sharedCanvas.width + ' sh:' + window.sharedCanvas.width);
+
             wx.onMessage(data => {
                 console.log('onMessage:', data);
 

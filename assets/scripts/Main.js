@@ -29,6 +29,11 @@ cc.Class({
         }
         var openDataContext = wx.getOpenDataContext();
         var sharedCanvas = openDataContext.canvas;
+        // if (sharedCanvas) {
+        //     sharedCanvas.width = cc.game.canvas.width * 2;
+        //     sharedCanvas.height = cc.game.canvas.height * 2;
+        // }
+        // console.log('w:' + sharedCanvas.width + ' h:' + sharedCanvas.height);
         this.tex.initWithElement(sharedCanvas);
         this.tex.handleLoadedTexture();
         this.display.spriteFrame = new cc.SpriteFrame(this.tex);
