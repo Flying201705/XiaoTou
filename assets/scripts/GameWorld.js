@@ -492,7 +492,7 @@ cc.Class({
     handleSlow: function () {
         for (let j = 0; j < this.enemyMng.list.length; j++) {
             let enemy = this.enemyMng.list[j];
-            enemy.getComponent("enemy").handleSlowed(0.5);
+            enemy.getComponent("enemy").handleSlowed(0.5, 3);
         }
     },
 

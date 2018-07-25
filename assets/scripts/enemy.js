@@ -236,7 +236,7 @@ cc.Class({
 
         //减速代码
         if (bullet.slowRate > 0 && bullet.slowRate >= this.slowRate) {
-            this.handleSlowed(bullet.slowRate);
+            this.handleSlowed(bullet.slowRate, 1);
         }
     },
 
@@ -279,10 +279,14 @@ cc.Class({
         this.node.resumeAllActions();
     },
 
-    handleSlowed: function (rate) {
+    handleSlowed: function (rate, duration) {
+        if (this.slowRate > rate) {
+            // 当前怪物减速 大于 新受到的减速，不覆盖
+            return;
+        }
         this.unschedule(this.cancelSlowed);
         this.slowRate = rate;
-        this.scheduleOnce(this.cancelSlowed, 2);
+        this.scheduleOnce(this.cancelSlowed, duration);
         this.slowDebuff.active = true;
         this.updateMove();
     },
