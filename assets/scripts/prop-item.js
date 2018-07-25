@@ -1,12 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] http://www.cocos.com/docs/creator/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/class/index.html
-// Learn Attribute:
-//  - [Chinese] http://www.cocos.com/docs/creator/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/reference/attributes/index.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://www.cocos.com/docs/creator/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/life-cycle-callbacks/index.html
 import global from './global'
 import {InfoHandle} from './InfoData'
 import {InfoData} from './InfoData'
@@ -15,27 +6,18 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        propIconNode: {
-            default: null,
-            type: cc.Sprite
-        },
-        propNumNode: {
-            default: null,
-            type: cc.Label
-        },
-        propItemFrames: {
-            default: [],
-            type: cc.SpriteFrame
-        },
+        propIcon: cc.Sprite,
+        propNumLabel: cc.Label,
+        coolDownProgress: cc.ProgressBar,
     },
 
-    onLoad () {
+    onLoad() {
         this.propId = 0;
-        this.propNums = new Map();
-        this.initPropNum();
+        this.propNums = 0;
+        this.coolDownTime = 5000; //道具冷却时间 单位ms
     },
 
-    initData: function(index) {
+    initData: function (index, num) {
         /**
          * 道具ID对应道具位置
          * 减速 id : 1， 位置: 0
@@ -44,32 +26,39 @@ cc.Class({
          * ......
          * **/
         this.propId = index + 1;
-        if (index >= 0 && index < this.propItemFrames.length) {
-            this.propIconNode.spriteFrame = this.propItemFrames[index];
-            this.propNumNode.node.active = true;
+        if (num) {
+            this.propNums = num;
+        }
+        this.propNumLabel.string = this.propNums.toString();
+
+        switch (this.propId) {
+            case 1:
+                this.propIcon.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/image/deceleration.png'));
+                this.propNumLabel.node.active = true;
+                break;
+            case 2:
+                this.propIcon.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/image/dizziness.png'));
+                this.propNumLabel.node.active = true;
+                break;
+            case 3:
+                this.propIcon.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/image/bomb.png'));
+                this.propNumLabel.node.active = true;
+                break;
+            default:
+                break;
         }
     },
 
-    initPropNum: function() {
-        if (InfoData.goods === undefined) {
-            return;
-        }
-
-        for (let i = 0; i < InfoData.goods.length; i++) {
-            let gd = InfoData.goods[i];
-            if (gd.goodsid > 10) {
-                continue;
+    onPressPropBtn: function () {
+        if (this.propNums > 0) {
+            if (this.isCoolDown()) {
+                return;
             }
-            this.propNums.set(gd.goodsid, gd.number);
-        }
-    },
-
-    onPressPropBtn: function() {
-        let propNum = this.propNums.get(this.propId);
-        if (propNum > 0) {
             this.onPropTrigger(this.propId);
-            propNum--;
-            this.propNums.set(this.propId, propNum);
+
+            this.propNums--;
+            this.propNumLabel.string = this.propNums.toString();
+
             // 更新服务器道具数量
             new InfoHandle().updateGoods(this.propId, -1, null);
         } else {
@@ -77,7 +66,7 @@ cc.Class({
         }
     },
 
-    onPropTrigger: function(prop_id) {
+    onPropTrigger: function (prop_id) {
         if (prop_id === 1) {
             console.log("施放道具1--全屏减速");
             global.event.fire("release_slow");
@@ -88,9 +77,11 @@ cc.Class({
             console.log("施放道具3--炸弹100");
             global.event.fire("release_damage");
         }
+
+        this.coolDown();
     },
 
-    onPropBuy: function(prop_id) {
+    onPropBuy: function (prop_id) {
         if (prop_id === 1) {
             console.log("购买道具1--全屏减速");
             global.event.fire("show_buy_prop_dialog", 1);
@@ -103,20 +94,36 @@ cc.Class({
         }
     },
 
-    addPropNum: function(num) {
-        let propNum = this.propNums.get(this.propId);
-        if (propNum === undefined) {
-            propNum = num;
+    addPropNum: function (num) {
+        if (this.propNums === undefined) {
+            this.propNums = num;
         } else {
-            propNum += num;
+            this.propNums += num;
         }
-        this.propNums.set(this.propId, propNum);
+        this.propNumLabel.string = this.propNums.toString();
     },
 
-    update (dt) {
-        let num = this.propNums.get(this.propId);
-        if (num !== undefined) {
-            this.propNumNode.getComponent(cc.Label).string = num.toString();
-        }
+    coolDown: function () {
+        this.coolDownProgress.progress = 1;
+
+        this.updateProgress();
     },
+
+    updateProgress: function () {
+        if (this.coolDownProgress.progress <= 0) {
+            return;
+        }
+
+        let self = this;
+        this.scheduleOnce(function () {
+            if (!global.isPause()) {
+                self.coolDownProgress.progress -= 10 / this.coolDownTime;
+            }
+            self.updateProgress();
+        }, 0.1);
+    },
+
+    isCoolDown: function () {
+        return this.coolDownProgress.progress > 0;
+    }
 });

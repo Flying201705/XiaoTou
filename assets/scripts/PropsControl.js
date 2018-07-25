@@ -17,15 +17,32 @@ cc.Class({
     },
 
     onLoad: function () {
+        this.initPropNum();
+
         for (let i = 0; i < this.propItemNodes.length; i++) {
             let propItem = cc.instantiate(this.propItemPrefab);
             propItem.parent = this.propItemNodes[i];
-            propItem.getComponent("prop-item").initData(i);
+            let num = 10;
+            if (this.propNums) {
+                num = this.propNums.get(i + 1);
+            }
+            propItem.getComponent("prop-item").initData(i, num);
         }
     },
 
-    update: function (dt) {
+    initPropNum: function () {
+        if (InfoData.goods === undefined) {
+            return;
+        }
 
+        this.propNums = new Map();
+        for (let i = 0; i < InfoData.goods.length; i++) {
+            let gd = InfoData.goods[i];
+            if (gd.goodsid > 10) {
+                continue;
+            }
+            this.propNums.set(gd.goodsid, gd.number);
+        }
     },
 
     onPressSummonBtn: function () {
