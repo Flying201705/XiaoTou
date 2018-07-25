@@ -102,10 +102,10 @@ cc.Class({
 
     playAnim: function () {
         // 根据行走的方向，修改节点的方向
-        if (this.node.x > this.pathPoints[this.currentPathPointCount].x) {
-            this.node.scaleX = -1;
+        if (this.node.x - this.pathPoints[this.currentPathPointCount].x > 20) {
+            this.spriteNode.node.scaleX = -1;
         } else {
-            this.node.scaleX = 1;
+            this.spriteNode.node.scaleX = 1;
         }
         if (this.type >= 1000) {
             this.anim.play("boss_" + (this.type % 1000));
