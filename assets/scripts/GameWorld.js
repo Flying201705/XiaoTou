@@ -471,7 +471,7 @@ cc.Class({
     summonHero: function () {
         if (this.currentLevel < 21) {
             this.showSummonHint("21关解锁神秘英雄，加油哦~");
-        } else if (InfoData.user.hero !== 1) {
+        } else if (new InfoHandle().hasHero() !== true) {
             global.event.fire("show_back_pack_dialog");
         } else if (this.hasXiaoBinMaxLevel() !== true) {
             this.showSummonHint("召唤英雄需要小兵升到顶级");

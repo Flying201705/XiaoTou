@@ -57,6 +57,20 @@ const InfoHandle = cc.Class({
         this.sendRequest(url, this.handleLevels);
     },
 
+    hasHero: function() {
+        if (InfoData.user.hero > 0) {
+            return true;
+        }
+        
+        for (let i = 0; i < InfoData.goods.length; i++) {
+            if (InfoData.goods[i].goodsid === 100 && InfoData.goods[i].number > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    },
+
     getGoodsById: function (id) {
         let url = http_head + get_goods + "id=" + id;
         this.sendRequest(url, this.handleGoods);
