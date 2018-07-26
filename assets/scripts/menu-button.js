@@ -1,6 +1,8 @@
 import {InfoData} from './InfoData'
 import global from './global'
 
+const login = require('./common/login');
+var self = null;
 cc.Class({
     extends: cc.Component,
 
@@ -14,6 +16,7 @@ cc.Class({
         }
     },
     onLoad() {
+        self = this;
         global.event.on("onDataDownloadCallback", this.onDataDownloadCallback.bind(this));
         console.log('[page-main] data complete status:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
     },
@@ -25,12 +28,13 @@ cc.Class({
         }
     },
     onDataDownloadCallback(token) {
-        console.log('[page-main] onInitDataComplete token:' + token + ' currentStatus:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
+        console.log('[page-main] onDataDownloadCallback token:' + token + ' currentStatus:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
         if (this.adventureButtonClicked) {
+            // this.adventureButtonClicked = false;
             if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_ALL_COMPLETE) {
                 console.log('[page-main] loadScene stage.fire');
                 cc.director.loadScene("stage.fire");
-            } else if (token === InfoData.TOKEN_ERROR) {
+            } else if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_DOWNLOAD_ERROR) {
                 this.loadingMaskController.setStatus('error');
             }
         }
@@ -38,18 +42,21 @@ cc.Class({
     clickAdventureButton: function (event, customEventData) {
         console.log('[page-main] clickAdventureButton adventureButtonClicked:' + this.adventureButtonClicked + ' currentStatus:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
         this.adventureButtonClicked = true;
-        this.loadingMask = cc.instantiate(this.loadingMaskPrefab);
-        this.loadingMaskController = this.loadingMask.getComponent('loadingMask');
-        this.loadingMask.parent = this.rootNode;
+        this.showLoadingMask();
         this.playSelectAudio();
         if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_ALL_COMPLETE) {
             cc.director.loadScene("stage.fire");
         } else if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_DOWNLOAD_ERROR) {
             //点击按钮前，load界面发起的初始化已返回网络错误，此处重新加载。
-            
+            login.login();
         }
     },
-
+    showLoadingMask() {
+        this.loadingMask = cc.instantiate(this.loadingMaskPrefab);
+        this.loadingMaskController = this.loadingMask.getComponent('loadingMask');
+        this.loadingMaskController.onRetry = login.login;
+        this.loadingMask.parent = this.rootNode;
+    },
     clickBossButton: function (event, customEventData) {
         this.playSelectAudio();
         cc.log("点击Boss按钮");

@@ -74,6 +74,7 @@ const InfoHandle = cc.Class({
     },
 
     loginForOpenId: function (openid) {
+        console.log('[InfoHandle] request user info');
         net.request({
             url: http_head + login_openid + "openid=" + openid,
             success: (ret) => {
@@ -82,6 +83,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_USER_INFO);
             },
             fail: () => {
+                console.log('[InfoHandle] get user info fail');
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
@@ -89,6 +91,7 @@ const InfoHandle = cc.Class({
     },
 
     getUserInfoById: function (id) {
+        console.log('[InfoHandle] request user info2');
         net.request({
             url: http_head + get_user_info + "id=" + id,
             success: (ret) => {
@@ -97,6 +100,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_USER_INFO);
             },
             fail: () => {
+                console.log('[InfoHandle] get user info fail');
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
@@ -104,6 +108,7 @@ const InfoHandle = cc.Class({
     },
 
     getLevelsById: function (id) {
+        console.log('[InfoHandle] request level');
         net.request({
             url: http_head + get_levels + "id=" + id,
             success: (ret) => {
@@ -112,6 +117,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_LEVEL);
             },
             fail: () => {
+                console.log('[InfoHandle] get level fail');
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
@@ -133,6 +139,7 @@ const InfoHandle = cc.Class({
     },
 
     getGoodsById: function (id) {
+        console.log('[InfoHandle] request goods');
         net.request({
             url: http_head + get_goods + "id=" + id,
             success: (ret) => {
@@ -141,6 +148,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_GOODS);
             },
             fail: () => {
+                console.log('[InfoHandle] get goods fail');
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }

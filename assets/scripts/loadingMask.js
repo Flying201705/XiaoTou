@@ -11,17 +11,22 @@ cc.Class({
     },
     retry() {
         this.setStatus('load');
+        this.onRetry && this.onRetry();
     },
     setStatus(type) {
         switch (type) {
             case 'load':
-                this.loadHint.active = true;
-                this.btnRetry.active = false;
+                this.loadHint.node.active = true;
+                this.btnRetry.node.active = false;
                 break;
             case 'error':
-                this.loadHint.active = false;
-                this.btnRetry.active = true;
+                this.loadHint.node.active = false;
+                this.btnRetry.node.active = true;
                 break;
         }
+    },
+    onRetry() {
+        // 通过直接赋值方式，设置回调函数。
+        console.log('onRetry');
     }
 });
