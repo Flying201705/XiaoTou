@@ -31,7 +31,7 @@ cc.Class({
                 console.log('[page-main] loadScene stage.fire');
                 cc.director.loadScene("stage.fire");
             } else if (token === InfoData.TOKEN_ERROR) {
-
+                this.loadingMaskController.setStatus('error');
             }
         }
     },
@@ -39,12 +39,15 @@ cc.Class({
         console.log('[page-main] clickAdventureButton adventureButtonClicked:' + this.adventureButtonClicked + ' currentStatus:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
         this.adventureButtonClicked = true;
         this.loadingMask = cc.instantiate(this.loadingMaskPrefab);
+        this.loadingMaskController = this.loadingMask.getComponent('loadingMask');
         this.loadingMask.parent = this.rootNode;
         this.playSelectAudio();
         if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_ALL_COMPLETE) {
             cc.director.loadScene("stage.fire");
+        } else if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_DOWNLOAD_ERROR) {
+            //点击按钮前，load界面发起的初始化已返回网络错误，此处重新加载。
+            
         }
-
     },
 
     clickBossButton: function (event, customEventData) {

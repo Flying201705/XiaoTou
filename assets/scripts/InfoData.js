@@ -30,10 +30,6 @@ const InfoData = {
         default: [],
         type: GoodsData
     },
-    /**
-     * 数据下载状态，由以下token通过位或合成，使用FLAG_DATA_ALL_COMPLETE判断是否与之相等，相等则全部数据下载完成。
-     */
-    FLAG_DATA_DOWNLOAD_STATUS: 0,
     TOKEN_ERROR: -1,
     /**
      * 用户信息下载完成token
@@ -55,10 +51,16 @@ const InfoData = {
      * 十进制：7
      */
     FLAG_DATA_ALL_COMPLETE: 0b0111,
+    /**
+     * 数据下载状态，由以下token通过位或合成，使用FLAG_DATA_ALL_COMPLETE判断是否与之相等，相等则全部数据下载完成。
+     */
+    FLAG_DATA_DOWNLOAD_STATUS: 0,
+    FLAG_DATA_DOWNLOAD_ERROR: -1,
 };
 
 const InfoHandle = cc.Class({
     init: function (openId) {
+        InfoData.FLAG_DATA_DOWNLOAD_STATUS = 0;
         InfoData.user = new UserData();
         InfoData.levels = [];
         InfoData.goods = [];
@@ -80,6 +82,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_USER_INFO);
             },
             fail: () => {
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
         })
@@ -94,6 +97,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_USER_INFO);
             },
             fail: () => {
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
         })
@@ -108,6 +112,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_LEVEL);
             },
             fail: () => {
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
         })
@@ -136,6 +141,7 @@ const InfoHandle = cc.Class({
                 this.onDataLoaded(InfoData.TOKEN_GOODS);
             },
             fail: () => {
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
             }
         })
