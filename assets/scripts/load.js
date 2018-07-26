@@ -5,22 +5,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        speed: 0.01,
-        label: {
-            default: null,
-            type: cc.Label
-        },
-        loadBar: {
-            default: null,
-            type: cc.ProgressBar
-        },
-        // defaults, set visually when attaching this script to the Canvas
-        text: '欢迎来到小兵时代!'
+        loadBar: cc.ProgressBar
     },
 
     // use this for initialization
     onLoad: function () {
-        this.label.string = this.text;
         this.loadBar.progress = 0;
 
         this.isLoad = false;
@@ -37,9 +26,8 @@ cc.Class({
 
     // called every frame
     update: function (dt) {
-        let progress = this.loadBar.progress;
-        if (progress < 1.0) {
-            progress += this.speed * dt;
+        if (this.loadBar.progress < 0.99) {
+            this.loadBar.progress += 0.5 * dt;
         } else {
             this.isLoad = true;
             if (this.isLoad !== global.loadRes) {
@@ -47,11 +35,12 @@ cc.Class({
                 this.goToMainScene();
             }
         }
-        this.loadBar.progress += progress;
     },
 
     goToMainScene: function () {
-        cc.director.loadScene("main.fire");
+        cc.director.loadScene("main.fire", ()=>{
+            this.loadBar.progress = 1;
+        });
     },
 
     weChatLogin: function () {
