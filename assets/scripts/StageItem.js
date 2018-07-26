@@ -35,7 +35,7 @@ cc.Class({
         }
     },
 
-    init: function(index, isLock, star) {
+    init: function (index, isLock, star) {
         this.index = index;
         this.label.string = index.toString();
         this.button.enabled = !isLock;
@@ -69,10 +69,14 @@ cc.Class({
     },
 
     startGameClick: function (event, customEventData) {
+        this.preOnClick && this.preOnClick();
         cc.audioEngine.playEffect(this.clickAudio, false);
 
         global.currentLevel = this.index;
         cc.log('select level : ' + global.currentLevel);
         cc.director.loadScene("game");
+    },
+    preOnClick() {
+
     }
 });
