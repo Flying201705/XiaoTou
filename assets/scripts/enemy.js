@@ -8,8 +8,6 @@ const EnemyState = {
     EndPath: 2,
     Dead: 3
 };
-//保持无敌状态的距离
-const UnbeatableDistance = 50;
 
 cc.Class({
     extends: cc.Component,
@@ -135,7 +133,7 @@ cc.Class({
         this.node.runAction(this.moveAction);
     },
 
-    stopMove: function() {
+    stopMove: function () {
         if (this.moveAction) {
             this.node.stopAction(this.moveAction);
         }
@@ -272,12 +270,12 @@ cc.Class({
         this.beStuned = true;
         this.unschedule(this.cancelStuned);
         this.scheduleOnce(this.cancelStuned, 2);
-        this.node.pauseAllActions();
+        this.stopMove();
     },
 
     cancelStuned: function () {
         this.beStuned = false;
-        this.node.resumeAllActions();
+        this.updateMove();
     },
 
     handleSlowed: function (rate, duration) {
