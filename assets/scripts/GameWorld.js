@@ -118,7 +118,7 @@ cc.Class({
 
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
-        this.level_map.loadMap("map/level_" + this.currentLevel);
+        this.level_map.loadMap(this.currentLevel);
 
         //音频
         this.audioMng = this.audioMng.getComponent("GameAudio");

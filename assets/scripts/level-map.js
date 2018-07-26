@@ -9,14 +9,30 @@ cc.Class({
         this.tileSize = 80;
     },
 
-    loadMap: function (url) {
-        cc.loader.loadRes(url, cc.TiledMapAsset, (err, tmxAsset) => {
+    loadMap: function (level) {
+        let self = this;
+        let forderName = "map_" + Math.floor((level - 1) / 10);
+        let bgurl = "map/" + forderName + "/map_bg.jpg";
+        cc.loader.loadRes(bgurl, cc.SpriteFrame, function (err, spriteFrame) {
             if (err) {
                 cc.error(err);
                 return;
             }
-            this.initDataFromMap(tmxAsset);
+            self.initBg(spriteFrame);
         });
+
+        let mapurl = "map/" + forderName + "/level_" + level;
+        cc.loader.loadRes(mapurl, cc.TiledMapAsset, (err, tmxAsset) => {
+            if (err) {
+                cc.error(err);
+                return;
+            }
+            self.initDataFromMap(tmxAsset);
+        });
+    },
+
+    initBg: function(spriteFrame) {
+        this.node.parent.getComponent(cc.Sprite).spriteFrame = spriteFrame;
     },
 
     initDataFromMap: function (tmxAsset) {

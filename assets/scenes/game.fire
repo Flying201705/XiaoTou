@@ -66,7 +66,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 162
+        "__id__": 163
       }
     ],
     "_prefab": null,
@@ -118,7 +118,7 @@
         "__id__": 4
       },
       {
-        "__id__": 157
+        "__id__": 158
       },
       {
         "__id__": 87
@@ -134,7 +134,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 161
+        "__id__": 162
       }
     ],
     "_prefab": null,
@@ -200,10 +200,13 @@
     "_components": [
       {
         "__id__": 85
+      },
+      {
+        "__id__": 156
       }
     ],
     "_prefab": {
-      "__id__": 156
+      "__id__": 157
     },
     "_id": "cdLaj/ih5K5o1WsiiJwJw9",
     "_opacity": 255,
@@ -5790,6 +5793,30 @@
     }
   },
   {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 4
+    },
+    "_enabled": true,
+    "_spriteFrame": null,
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_atlas": null
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 4
@@ -5810,13 +5837,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 158
-      },
-      {
         "__id__": 159
       },
       {
         "__id__": 160
+      },
+      {
+        "__id__": 161
       }
     ],
     "_prefab": null,
@@ -5861,7 +5888,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 157
+      "__id__": 158
     },
     "_enabled": true,
     "_defaultClip": {
@@ -5879,7 +5906,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 157
+      "__id__": 158
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -5905,11 +5932,11 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 157
+      "__id__": 158
     },
     "_enabled": true,
     "timeCountDownAnim": {
-      "__id__": 158
+      "__id__": 159
     },
     "countDownAudio": {
       "__uuid__": "aeaf0fc8-259b-4380-a2d1-fa3c3c393e84"
@@ -5927,7 +5954,7 @@
     },
     "_enabled": true,
     "timeCountDown": {
-      "__id__": 157
+      "__id__": 158
     },
     "description": {
       "__uuid__": "66664f67-4315-4937-b86f-5cabef75dab9"
