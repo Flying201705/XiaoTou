@@ -5,13 +5,15 @@ cc.Class({
 
     properties: {
         towersGroup: cc.Node,
-        menuPrefab: cc.Prefab
+        menuPrefab: cc.Prefab,
+        towerSprites: [cc.SpriteFrame],
     },
 
     initWithData: function (towers) {
-        for (let i = 0; i < towers.length; i++) {
+        let len = towers.length > this.towerSprites.length ? this.towerSprites.length : towers.length;
+        for (let i = 0; i < len; i++) {
             let towerMenu = cc.instantiate(this.menuPrefab);
-            towerMenu.getComponent('tower-menu').initWithData(i);
+            towerMenu.getComponent(cc.Sprite).spriteFrame = this.towerSprites[i];
             towerMenu.data = i;
             towerMenu.parent = this.towersGroup;
             towerMenu.on('click', this.buttonClick, this);
@@ -36,9 +38,9 @@ cc.Class({
         }
 
         if (wordPos.y < 0) {
-            pos.y = -60;
+            pos.y = -80;
         } else {
-            pos.y = 60;
+            pos.y = 80;
         }
 
         this.towersGroup.position = cc.p(pos.x, pos.y);

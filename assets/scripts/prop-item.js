@@ -14,7 +14,7 @@ cc.Class({
     onLoad() {
         this.propId = 0;
         this.propNums = 0;
-        this.coolDownTime = 5000; //道具冷却时间 单位ms
+        this.coolDownTime = 20000; //道具冷却时间 单位ms
     },
 
     initData: function (index, num) {

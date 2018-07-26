@@ -100,7 +100,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 200,
-      "height": 40
+      "height": 60
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -128,8 +128,8 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 300,
-      "height": 200
+      "width": 200,
+      "height": 60
     },
     "_resize": 1,
     "_N$layoutType": 1,
@@ -173,7 +173,24 @@
     },
     "menuPrefab": {
       "__uuid__": "5070bff7-aab6-4830-9ed8-27280b15f869"
-    }
+    },
+    "towerSprites": [
+      {
+        "__uuid__": "791aa60b-9f24-49f9-9252-5ee1ec1069b3"
+      },
+      {
+        "__uuid__": "4c14631b-51b5-4fc6-a800-8579b78b9fc5"
+      },
+      {
+        "__uuid__": "4f9bb26f-86c5-4b3f-82fd-4a8369e31c5d"
+      },
+      {
+        "__uuid__": "4877d2ec-36fc-48db-aea6-34f626ab4668"
+      },
+      {
+        "__uuid__": "632c8b12-38d3-4b68-b497-bae7d65d9fcf"
+      }
+    ]
   },
   {
     "__type__": "cc.PrefabInfo",
