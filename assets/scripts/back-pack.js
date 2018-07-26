@@ -115,7 +115,7 @@ cc.Class({
     fetchData() {
         cc.log('bunny fetchData()-2')
         var infoHandle = new InfoHandle();
-        infoHandle.dataCompleteCallback = (type) => {
+        infoHandle.onDataLoaded = (type) => {
             cc.log('bunny dataUpdateComplete callback type:' + type)
             // 仅监听物品数据更新
             if (type != InfoData.TOKEN_GOODS) {
