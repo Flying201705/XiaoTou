@@ -15,7 +15,7 @@ cc.Class({
     },
     onLoad() {
         global.event.on("onDataDownloadCallback", this.onDataDownloadCallback.bind(this));
-        cc.log('xxx data complete status:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
+        console.log('[page-main] data complete status:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
     },
     onDestroy() {
         global.event.off("onDataDownloadCallback", this.onDataDownloadCallback);
@@ -25,12 +25,18 @@ cc.Class({
         }
     },
     onDataDownloadCallback(token) {
-        cc.log('xxx main onInitDataComplete token:' + token);
-        if (this.adventureButtonClicked && (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_ALL_COMPLETE)) {
-            cc.director.loadScene("stage.fire");
+        console.log('[page-main] onInitDataComplete token:' + token + ' currentStatus:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
+        if (this.adventureButtonClicked) {
+            if (InfoData.FLAG_DATA_DOWNLOAD_STATUS === InfoData.FLAG_DATA_ALL_COMPLETE) {
+                console.log('[page-main] loadScene stage.fire');
+                cc.director.loadScene("stage.fire");
+            } else if (token === InfoData.TOKEN_ERROR) {
+
+            }
         }
     },
     clickAdventureButton: function (event, customEventData) {
+        console.log('[page-main] clickAdventureButton adventureButtonClicked:' + this.adventureButtonClicked + ' currentStatus:' + InfoData.FLAG_DATA_DOWNLOAD_STATUS);
         this.adventureButtonClicked = true;
         this.loadingMask = cc.instantiate(this.loadingMaskPrefab);
         this.loadingMask.parent = this.rootNode;
