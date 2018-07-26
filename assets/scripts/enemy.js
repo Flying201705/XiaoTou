@@ -102,7 +102,8 @@ cc.Class({
 
     playAnim: function () {
         // 根据行走的方向，修改节点的方向
-        if (this.node.x - this.pathPoints[this.currentPathPointCount].x > 20) {
+        if (this.node !== undefined && this.pathPoints[this.currentPathPointCount] !== undefined
+            && this.node.x - this.pathPoints[this.currentPathPointCount].x > 20) {
             this.spriteNode.node.scaleX = -1;
         } else {
             this.spriteNode.node.scaleX = 1;
