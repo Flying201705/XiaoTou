@@ -4,7 +4,9 @@
 import UserData from './UserData';
 import LevelData from './LevelData';
 import GoodsData from './GoodsData';
-import global from './global'
+import global from './global';
+
+const net = require('./common/net');
 
 const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
 const get_user_info = "user/getUserInfoId.do?";
@@ -64,32 +66,51 @@ const InfoHandle = cc.Class({
     },
 
     getOpenId: function (code, appid, secret) {
-        let url = http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret;
-        this.sendRequest(url, null);
+        net.request({
+            url: http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret
+        })
     },
 
     loginForOpenId: function (openid) {
-        let url = http_head + login_openid + "openid=" + openid;
-        this.sendRequest(url, {
-            success: this.handleUserInfo,
-            fail: this.dataErrorCallback
-        });
+        net.request({
+            url: http_head + login_openid + "openid=" + openid,
+            success: (ret) => {
+                this.handleUserInfo(ret);
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
+                this.onDataLoaded(InfoData.TOKEN_USER_INFO);
+            },
+            fail: () => {
+                this.onDataLoadError();
+            }
+        })
     },
 
     getUserInfoById: function (id) {
-        let url = http_head + get_user_info + "id=" + id;
-        this.sendRequest(url, {
-            success: this.handleUserInfo,
-            fail: this.dataErrorCallback
-        });
+        net.request({
+            url: http_head + get_user_info + "id=" + id,
+            success: (ret) => {
+                this.handleUserInfo(ret);
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
+                this.onDataLoaded(InfoData.TOKEN_USER_INFO);
+            },
+            fail: () => {
+                this.onDataLoadError();
+            }
+        })
     },
 
     getLevelsById: function (id) {
-        let url = http_head + get_levels + "id=" + id;
-        this.sendRequest(url, {
-            success: this.handleLevels,
-            fail: this.dataErrorCallback
-        });
+        net.request({
+            url: http_head + get_levels + "id=" + id,
+            success: (ret) => {
+                this.handleLevels(ret);
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_LEVEL;
+                this.onDataLoaded(InfoData.TOKEN_LEVEL);
+            },
+            fail: () => {
+                this.onDataLoadError();
+            }
+        })
     },
 
     hasHero: function () {
@@ -107,24 +128,27 @@ const InfoHandle = cc.Class({
     },
 
     getGoodsById: function (id) {
-        let url = http_head + get_goods + "id=" + id;
-        this.sendRequest(url, {
-            success: this.handleGoods,
-            fail: this.dataErrorCallback
-        });
+        net.request({
+            url: http_head + get_goods + "id=" + id,
+            success: (ret) => {
+                this.handleGoods(ret);
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_GOODS;
+                this.onDataLoaded(InfoData.TOKEN_GOODS);
+            },
+            fail: () => {
+                this.onDataLoadError();
+            }
+        })
     },
 
-    handleUserInfo: function (self, obj) {
+    handleUserInfo: function (obj) {
         InfoData.user.init(obj);
 
-        new InfoHandle().getGoodsById(InfoData.user.id);
-        new InfoHandle().getLevelsById(InfoData.user.id);
-
-        InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
-        self.dataCompleteCallback(InfoData.TOKEN_USER_INFO);
+        this.getGoodsById(InfoData.user.id);
+        this.getLevelsById(InfoData.user.id);
     },
 
-    handleLevels: function (self, obj) {
+    handleLevels: function (obj) {
         for (let i = 0; i < obj.length; i++) {
             let level = new LevelData();
 
@@ -139,11 +163,9 @@ const InfoHandle = cc.Class({
             level.init(obj[i]);
             InfoData.levels[obj[i].lv - 1] = level;
         }
-        InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_LEVEL;
-        self.dataCompleteCallback(InfoData.TOKEN_LEVEL);
     },
 
-    handleGoods: function (self, obj) {
+    handleGoods: function (obj) {
         for (let i = 0; i < obj.length; i++) {
             let goods = new GoodsData();
             goods.init(obj[i]);
@@ -153,13 +175,12 @@ const InfoHandle = cc.Class({
                 new InfoHandle().updateHero(1);
             }
         }
-        InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_GOODS;
-        self.dataCompleteCallback(InfoData.TOKEN_GOODS);
     },
 
     updateLatestLevel: function (level) {
-        let url = http_head + update_user_level + "id=" + InfoData.user.id + "&level=" + level;
-        this.sendRequest(url, null);
+        net.request({
+            url: http_head + update_user_level + "id=" + InfoData.user.id + "&level=" + level
+        })
     },
 
     updateHero: function (hero) {
@@ -169,8 +190,10 @@ const InfoHandle = cc.Class({
         }
 
         InfoData.user.hero = hero;
-        let url = http_head + update_user_hero + "id=" + InfoData.user.id + "&hero=" + hero;
-        this.sendRequest(url, null);
+
+        net.request({
+            url: http_head + update_user_hero + "id=" + InfoData.user.id + "&hero=" + hero
+        })
     },
 
     updateLevel: function (lv, score, stars) {
@@ -192,15 +215,16 @@ const InfoHandle = cc.Class({
             InfoData.levels[lv - 1] = level;
         }
 
-
-        let url = http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars;
-        this.sendRequest(url, null);
+        net.request({
+            url: http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars
+        })
     },
 
     updateCrystal: function (crystal) {
         InfoData.user.crystal += crystal;
-        let url = http_head + update_user_crystal + "id=" + InfoData.user.id + "&crys=" + crystal;
-        this.sendRequest(url, null);
+        net.request({
+            url: http_head + update_user_crystal + "id=" + InfoData.user.id + "&crys=" + crystal
+        })
     },
 
     updateLocalGoods: function (goodsId, num) {
@@ -223,54 +247,28 @@ const InfoHandle = cc.Class({
 
     updateGoods: function (goods, num, callback) {
         this.updateLocalGoods(goods, num);
-        let url = http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num;
-        this.sendRequest(url, callback);
+
+        net.request({
+            url: http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num,
+            success: (ret) => {
+                callback && callback.success && callback.success(ret);
+            },
+            fail: () => {
+                callback && callback.fail && callback.fail();
+            }
+        })
+
+
         //检查更新英雄属性
         if (goods === 100 && num > 0 && InfoData.user.hero <= 0) {
             new InfoHandle().updateHero(1);
         }
     },
-
-    sendRequest: function (url, method) {
-        var self = this;
-
-        var xhr = new XMLHttpRequest();
-        xhr.timeout = 5000;
-        xhr.ontimeout = (event) => {
-            console.log('xxx xml timeout');
-            if (method != null && method.fail != null) {
-                method.fail();
-            }
-        }
-
-        xhr.onreadystatechange = function () {
-            // console.log('xxx', xhr);
-            console.log('xxx xhr.readyState:' + xhr.readyState + ' xhr.status:' + xhr.status);
-            if ((xhr.readyState == 4) && xhr.status == 200) {
-                var response = xhr.responseText;
-                console.log("<test> json str : " + response);
-                if (method != null && method.success != null) {
-                    var obj = JSON.parse(response);
-                    console.log("xxx xml success callback");
-                    method.success(self, obj.data);
-                }
-            } else {
-                if (method != null && method.fail != null) {
-                    console.log("xxx xml fail callback");
-                    method.fail();
-                }
-            }
-        }
-
-        xhr.open("GET", url, true);
-        xhr.send();
-
-    },
-    dataCompleteCallback(token) {
-        cc.log('xxx dataCompleteCallback token:' + token);
+    onDataLoaded(token) {
+        // cc.log('xxx onDataLoaded token:' + token);
         global.event.fire("onDataDownloadCallback", token);
     },
-    dataErrorCallback() {
+    onDataLoadError() {
         global.event.fire("onDataDownloadCallback", InfoData.TOKEN_ERROR);
     },
 
