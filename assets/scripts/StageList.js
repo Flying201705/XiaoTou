@@ -1,18 +1,17 @@
 import {InfoData} from './InfoData'
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        itemPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
+        itemPrefab: cc.Prefab,
         itemCount: 0,
         scrollView: cc.ScrollView,
     },
 
-    onLoad () {
-        this.itemList = [];
+    onLoad() {
+        this.firstLockLevel = -1;
+        this.itemHeight = 0;
         this.initList();
     },
 
@@ -28,6 +27,10 @@ cc.Class({
                     }
                 } else {
                     item.init(i + 1, true, 0);
+                    if (this.firstLockLevel < 0) {
+                        this.firstLockLevel = i + 1;
+                        this.itemHeight = item.node.height;
+                    }
                 }
                 // 测试代码开始
                 // 放开所有关卡
@@ -35,7 +38,25 @@ cc.Class({
                 //测试代码结束
                 this.node.addChild(item.node);
             }
-            this.itemList.push(item);
         }
     },
+
+    onEnable() {
+        this.initScrollViewPos();
+    },
+
+    initScrollViewPos: function () {
+        let layout = this.getComponent(cc.Layout);
+        layout.updateLayout();
+
+        let moveStep = Math.floor(this.firstLockLevel / 5);
+        let remainder = this.firstLockLevel % 5;
+        if (remainder === 0) {
+            moveStep -= 1;
+            moveStep = moveStep < 0 ? 0 : moveStep;
+        }
+        let offsetY = moveStep * (this.itemHeight + layout.spacingY);
+
+        this.scrollView.scrollToOffset(cc.p(0, offsetY), 0.1);
+    }
 });

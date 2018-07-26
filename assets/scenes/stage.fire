@@ -63,7 +63,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 29
+        "__id__": 28
       }
     ],
     "_prefab": null,
@@ -121,7 +121,7 @@
         "__id__": 18
       },
       {
-        "__id__": 26
+        "__id__": 25
       }
     ],
     "_tag": -1,
@@ -689,9 +689,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 25
-      },
-      {
         "__id__": 23
       }
     ],
@@ -927,30 +924,6 @@
     "_N$inverted": false
   },
   {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 18
-    },
-    "_enabled": true,
-    "_spriteFrame": null,
-    "_type": 1,
-    "_sizeMode": 0,
-    "_fillType": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_atlas": null
-  },
-  {
     "__type__": "cc.Node",
     "_name": "audioWidget",
     "_objFlags": 0,
@@ -959,7 +932,7 @@
     },
     "_children": [
       {
-        "__id__": 27
+        "__id__": 26
       }
     ],
     "_tag": -1,
@@ -1007,14 +980,14 @@
     "_name": "bgm",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 26
+      "__id__": 25
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 28
+        "__id__": 27
       }
     ],
     "_prefab": null,
@@ -1059,7 +1032,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 27
+      "__id__": 26
     },
     "_enabled": true,
     "_clip": {
