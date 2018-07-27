@@ -129,7 +129,7 @@ cc.Class({
         global.resume();
     },
     getTowerIcon(index) {
-        return this.towerSprites[index - 1];
+        return this.towerSprites[index];
     },
     getLevelIcon(level) {
         return this.levelSprites[level - 1];

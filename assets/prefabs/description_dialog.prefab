@@ -492,8 +492,8 @@
       "y": 0
     },
     "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
+    "_fillRange": 1,
+    "_isTrimmedMode": false,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": null
@@ -1553,6 +1553,9 @@
       "__id__": 25
     },
     "towerSprites": [
+      {
+        "__uuid__": "c2d6cad5-f5c2-4732-86c4-f04d78df9bd3"
+      },
       {
         "__uuid__": "71730e76-8725-49fb-b78f-58701b34f5b4"
       },

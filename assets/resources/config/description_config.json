@@ -1,14 +1,47 @@
 {
+  "comment塔介绍弹窗": {
+    "demo": "配置某关塔介绍弹窗示例（如果该关无介绍，可以不配置level）。示例如下：",
+    "level_[数字]": {
+      "mode": 1,
+      "towerName": "[塔的名称]",
+      "tower_icon": "[0：英雄，1：小兵，2：剑士，3：武士，4：女巫，5：射手，6：男巫]",
+      "tower_level": "[1：一级，2：二级，3：三级，4:四级，5:五级]",
+      "description": "[描述文字]"
+    }
+  },
+  "comment物品介绍弹窗": {
+    "demo": "配置某关物品介绍弹窗示例（如果该关无介绍，可以不配置level）。示例如下：",
+    "goods说明":"数组类型，可以配置0至多个物品元素，按顺序显示",
+    "level_[数字]": {
+      "mode": 2,
+      "goods": [
+        {
+          "type": "[1：水晶，2：道具，3：英雄碎片]",
+          "description": "[描述文字]"
+        },
+        {
+          "type": "[1：水晶，2：道具，3：英雄碎片]",
+          "icon": "[1：初级减速弹，2：初级眩晕弹，3：初级炸弹] 仅type==2时生效。【可选】",
+          "description": "[描述文字]"
+        },
+        {
+          "type": "[1：水晶，2：道具，3：英雄碎片]",
+          "description": "[描述文字]"
+        }
+      ]
+    }
+  },
+
   "level_1": {
     "mode": 1,
-    "towerName":"小兵",
+    "towerName": "小兵",
     "tower_icon": 1,
     "tower_level": 2,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_2": {
     "mode": 1,
-    "towerName":"剑士",
+    "towerName": "剑士",
     "tower_icon": 2,
     "tower_level": 3,
     "description": "高攻击，攻击速度快\n带概率爆击，主要的攻击英雄"
@@ -18,14 +51,14 @@
   },
   "level_4": {
     "mode": 1,
-    "towerName":"小兵",
+    "towerName": "小兵",
     "tower_icon": 1,
     "tower_level": 3,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_5": {
     "mode": 1,
-    "towerName":"武士",
+    "towerName": "武士",
     "tower_icon": 3,
     "tower_level": 3,
     "description": "高攻击，攻击速度稍慢\n带概率眩晕，打BOSS必备"
@@ -54,14 +87,14 @@
   },
   "level_8": {
     "mode": 1,
-    "towerName":"小兵",
+    "towerName": "小兵",
     "tower_icon": 1,
     "tower_level": 5,
     "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
   },
   "level_9": {
     "mode": 1,
-    "towerName":"女巫",
+    "towerName": "女巫",
     "tower_icon": 4,
     "tower_level": 3,
     "description": "范围攻击\n减慢怪物移动速度，减少怪物护甲"
@@ -87,7 +120,7 @@
   },
   "level_15": {
     "mode": 1,
-    "towerName":"射手",
+    "towerName": "射手",
     "tower_icon": 5,
     "tower_level": 3,
     "description": "攻击高，攻击速度稍慢\n群攻英雄，主要的攻击英雄"
@@ -113,7 +146,7 @@
   },
   "level_19": {
     "mode": 1,
-    "towerName":"男巫",
+    "towerName": "男巫",
     "tower_icon": 6,
     "tower_level": 3,
     "description": "非攻击英雄\n给其他英雄增加攻击力，攻击速度"
@@ -139,8 +172,8 @@
   },
   "level_21": {
     "mode": 1,
-    "towerName":"神秘英雄",
-    "tower_icon": 7,
+    "towerName": "神秘英雄",
+    "tower_icon": 0,
     "tower_level": 1,
     "description": "<召唤>神秘英雄，全屏移动\n打怪自动升级，攻击/抢钱，样样精通"
   },
