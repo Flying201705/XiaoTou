@@ -15,6 +15,7 @@ cc.Class({
     onLoad() {
         self = this;
         this.firstLockLevel = -1;
+        this.itemWidth = 0;
         this.itemHeight = 0;
         this.initList();
     },
@@ -33,7 +34,8 @@ cc.Class({
                 } else {
                     item.init(i + 1, true, 0);
                     if (this.firstLockLevel < 0) {
-                        this.firstLockLevel = i + 1;
+                        this.firstLockLevel = i;
+                        this.itemWidth = item.node.width;
                         this.itemHeight = item.node.height;
                     }
                 }
@@ -57,11 +59,11 @@ cc.Class({
         let layout = this.getComponent(cc.Layout);
         layout.updateLayout();
 
-        let moveStep = Math.floor(this.firstLockLevel / 5);
-        let remainder = this.firstLockLevel % 5;
-        if (remainder === 0) {
+        let column = Math.floor(layout.node.width / (this.itemWidth + layout.spacingX));
+        let moveStep = Math.floor(this.firstLockLevel / column);
+        let visibleRow = Math.floor(layout.node.parent.height / (this.itemHeight + layout.spacingY));
+        if (moveStep > visibleRow) {
             moveStep -= 1;
-            moveStep = moveStep < 0 ? 0 : moveStep;
         }
         let offsetY = moveStep * (this.itemHeight + layout.spacingY);
 
