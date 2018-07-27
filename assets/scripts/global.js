@@ -1,6 +1,6 @@
 import EventListener from './event-listener'
 
-var _pause = false;
+let _pause = false;
 let global = {
     loadRes: false,
     currentLevel: 1,

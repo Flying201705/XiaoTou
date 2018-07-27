@@ -42,6 +42,8 @@ cc.Class({
         global.event.on("show_back_pack_dialog", this.showBackPack.bind(this));
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
+
+        global.resume();
     },
     onDestroy() {
         global.event.off("show_buy_prop_dialog", this.showBuyPropDialog);
@@ -56,7 +58,7 @@ cc.Class({
     showDescDialog() {
         cc.loader.loadRes("./config/description_config", (err, result) => {
             if (err) {
-                cc.error("load description_config " + err);
+                cc.log("load description_config " + err);
                 // cc.director.resume();
                 return;
             }
@@ -64,12 +66,12 @@ cc.Class({
             var config = result["level_" + global.currentLevel];
 
             if (config === undefined) {
-                cc.error("level_" + global.currentLevel + " not exist");
+                cc.log("level_" + global.currentLevel + " not exist");
                 return;
             }
 
             if (config.mode === undefined || config.mode === 0) {
-                cc.error("mode undefined or 0 ");
+                cc.log("mode undefined or 0 ");
                 return;
             }
 
