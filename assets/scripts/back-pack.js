@@ -130,7 +130,7 @@ cc.Class({
 
     },
     fillData() {
-        var config = {kind: 0, chipIds: []};
+        let config = {kind: 100, chipIds: []};
         for (let i = 0; i < InfoData.goods.length; i++) {
             var goodsInfo = InfoData.goods[i];
             cc.log('fillData() id:' + goodsInfo.goodsid + " num:" + goodsInfo.number);
@@ -139,7 +139,7 @@ cc.Class({
                 continue;
             }
 
-            var chipType = goodsInfo.goodsid.toString().substring(0, 3);
+            let chipType = goodsInfo.goodsid.toString().substring(0, 3);
             cc.log('chipType:' + chipType)
 
             // 英雄碎片
@@ -148,11 +148,11 @@ cc.Class({
             }
         }
 
-        // config['composed'] = new InfoHandle().hasHero();
+        config['composed'] = new InfoHandle().hasHero();
 
         this.configHeroChips(config);
 
         // 二期开放功能。
-        this.configPropChips({kind: 2, composed: true});
+        this.configPropChips({kind: 200, composed: true});
     }
 });

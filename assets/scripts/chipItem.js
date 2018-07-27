@@ -6,10 +6,12 @@ cc.Class({
 
     properties: {
         composeButton: cc.Button,
+        composeContainer: cc.Node,
         text: {
             default: null,
             type: cc.RichText
         },
+        heroSpriteFrame: cc.SpriteFrame,
         heroChipSprites: {
             default: [],
             type: [cc.SpriteFrame]
@@ -30,6 +32,7 @@ cc.Class({
      * @param opt
      */
     config(opt) {
+        this.kind = opt.kind;
         if (opt.composed) {
             this.setComposeStatus();
         } else {
@@ -37,35 +40,62 @@ cc.Class({
 
             this.chipIds = opt.chipIds === undefined ? [] : opt.chipIds;
             cc.log('chipIds len:' + this.chipIds.length);
-            this.composeButton.enabled = true;
             this.setChipEnable(true);
             this.initIconBg(opt);
             this.highlight();
             this.chipCount = this.getChipCount();
             this.updatePriceLabel(this.chipCount);
         }
+
+        //仅英雄开放按钮可用，二期再做调整。
+        this.setComposeContainerEnable(this.kind == 100);
     },
     /**
      * 合成之后：
-     * 1、背包格不显示碎片图标。
-     * 2、按钮不可点击。
+     * 1、背包格第一位显示合成后的图片。
+     * 2、按钮区域消失。
      */
     setComposeStatus() {
-        this.updatePriceLabel(3);
-        this.composeButton.enabled = false;
-        this.composeButton.node.opacity = 128;
+        // this.updatePriceLabel(3);
+
         this.setChipEnable(false);
+        this.setChipsCompleteStatue();
+
+        //临时功能，二期去掉if。
+        if (this.kind == 100) {
+            this.composeContainer.active = false;
+        }
+    },
+    setComposeContainerEnable(enable) {
+        if (enable) {
+            this.composeButton.enabled = true;
+            this.composeContainer.opacity = 255;
+        } else {
+            this.composeButton.enabled = false;
+            this.composeContainer.opacity = 128;
+        }
     },
     setChipEnable(enable) {
         for (let i = 0; i < this.chips.length; i++) {
             this.chips[i].node.active = enable;
         }
     },
-    getSprite(opt) {
+    setChipsCompleteStatue() {
+        if (this.kind == 100) {
+            this.chips[0].node.active = true;
+            this.chips[0].node.opacity = 255;
+            this.chips[0].spriteFrame = this.heroSpriteFrame;
+        }
+        // 物品碎片，二期增加
+        // else {
+        //     this.chips[0].spriteFrame = this.heroSpriteFrame;
+        // }
 
+    },
+    getSprite(opt) {
         var chipSprite = this.heroChipSprites[0];
 
-        if (opt.kind == 0) {
+        if (opt.kind == 100) {
             chipSprite = this.heroChipSprites[0];
         } else if (opt.kind == 1) {
             chipSprite = this.propChipSprites[opt.propType];
@@ -116,7 +146,7 @@ cc.Class({
                 this.setComposeStatus();
             },
             fail: () => {
-
+                console.log('compose hero fail');
             }
         });
         return infoHandle;
@@ -144,9 +174,9 @@ cc.Class({
 
         // if (this.chipIds.length === 3) {
         cc.log('start compose');
-        var goodsId = this.chipIds[0].toString().substring(0, 3);
+
         var infoHandle = new InfoHandle();
-        this.addHeroNumber(infoHandle, goodsId);
+        this.addHeroNumber(infoHandle, this.kind);
         this.clearChipNumber(infoHandle);
         // }
     },
@@ -181,7 +211,7 @@ cc.Class({
     initIconBg(opt) {
         var chipSprite = this.getSprite(opt);
 
-        if (opt.kind === 0 || this.chipIds.length > 0) {
+        if (opt.kind === 100 || this.chipIds.length > 0) {
             for (let i = 0; i < 3; i++) {
                 this.chips[i].spriteFrame = chipSprite;
                 this.chips[i].node.opacity = 125;
