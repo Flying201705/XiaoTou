@@ -1,3 +1,5 @@
+import global from './global'
+
 const HeroState = {
     Invalid: -1,
     //召唤
