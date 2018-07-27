@@ -15,22 +15,21 @@ cc.Class({
         login.login();
     },
 
+    start() {
+        cc.director.preloadScene('main.fire', () => {
+            this.loadBar.progress = 1;
+            this.scheduleOnce(this.goToMainScene, 0.1);
+        });
+    },
+
     // called every frame
     update: function (dt) {
         if (this.loadBar.progress < 0.99) {
             this.loadBar.progress += 0.5 * dt;
-        } else {
-            this.isLoad = true;
-            if (this.isLoad !== global.loadRes) {
-                global.loadRes = true;
-                this.goToMainScene();
-            }
         }
     },
+
     goToMainScene: function () {
-        cc.director.loadScene("main.fire", () => {
-            // main启动后，load场景已经销毁，this.loadBar已经找不到对象了，会报错。
-            // this.loadBar.progress = 1;
-        });
+        cc.director.loadScene('main.fire');
     },
 });
