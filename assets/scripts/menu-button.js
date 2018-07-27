@@ -10,6 +10,7 @@ cc.Class({
         adventureButtonClicked: false,
         loadingMaskPrefab: cc.Prefab,
         rootNode: cc.Node,
+        hintLabel: cc.Label,
         selectAudio: {
             default: null,
             url: cc.AudioClip
@@ -57,9 +58,22 @@ cc.Class({
         this.loadingMaskController.onRetry = login.login;
         this.loadingMask.parent = this.rootNode;
     },
+
+    showHint: function (hint) {
+        this.hintLabel.node.active = true;
+        this.hintLabel.string = hint;
+        this.scheduleOnce(this.hideHint, 2);
+    },
+
+    hideHint: function () {
+        this.hintLabel.string = "";
+        this.hintLabel.node.active = false;
+    },
+
     clickBossButton: function (event, customEventData) {
         this.playSelectAudio();
         cc.log("点击Boss按钮");
+        this.showHint("50关之后解锁荣誉之战");
     },
 
     clickNestButton: function (event, customEventData) {

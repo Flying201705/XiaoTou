@@ -528,7 +528,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 147,
+      "width": 540,
       "height": 60
     },
     "_rotationX": 0,
@@ -563,7 +563,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Label",
+    "_N$string": "欢迎来到小兵时代！",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -667,13 +667,8 @@
       "__id__": 2
     },
     "_enabled": true,
-    "speed": 0.1,
-    "label": {
-      "__id__": 15
-    },
     "loadBar": {
       "__id__": 13
-    },
-    "text": "欢迎来到小兵时代!"
+    }
   }
 ]
