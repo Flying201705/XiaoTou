@@ -25,6 +25,7 @@ cc.Class({
             default: [],
             type: [cc.SpriteFrame]
         },
+        IMG_HEIGHT: 130,
         contentHero: {
             default: null,
             type: cc.Node
@@ -98,6 +99,9 @@ cc.Class({
             this.towerIcon.spriteFrame = this.getTowerIcon(config.tower_icon);
             this.levelIcon.spriteFrame = this.getLevelIcon(config.tower_level);
 
+            //tower原始图片尺寸不同，需要重新缩放高度。
+            this.resizeSpriteFrame(this.towerIcon.spriteFrame);
+
             this.contentHero.active = true;
             this.contentAward.active = false;
         } else if (mode == 2) {
@@ -120,6 +124,11 @@ cc.Class({
         global.pause();
 
 
+    },
+    resizeSpriteFrame(spriteFrame) {
+        let size = spriteFrame.getOriginalSize();
+        let newWidth = this.IMG_HEIGHT / size.height * size.width;
+        spriteFrame.setOriginalSize(cc.size(newWidth, this.IMG_HEIGHT));
     },
     hideDialog() {
         this.parentNode.removeChild(this.node);
