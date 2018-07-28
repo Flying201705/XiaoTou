@@ -167,9 +167,10 @@ const InfoHandle = cc.Class({
             let level = new LevelData();
 
             //服务器关卡数据异常，跳关
-            if (i < obj[i].lv - 1) {
-                for (let j = i; j < obj[i].lv - 1; j++) {
+            if (obj[i].lv > InfoData.levels.length) {
+                for (let j = InfoData.levels.length; j < obj[i].lv; j++) {
                     let templevel = new LevelData();
+                    templevel.level = j + 1;
                     InfoData.levels[j] = templevel;
                 }
             }
