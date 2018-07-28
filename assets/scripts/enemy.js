@@ -47,23 +47,30 @@ cc.Class({
         }
     },
 
-    initWithData: function (gameWorld, type, level, pathPoints) {
-        this.speed = 0; //速度
-        this.currentHealthCount = 0; //总血量
+    initWithData: function (gameWorld, type, config, pathPoints) {
+        this.speed = config.speed; //速度
+        this.currentHealthCount = config.health; //当前血量
+        this.totalHealthCount = config.health; //总血量
+
         this.isBoss = false; //是否BOSS
+        if (config.boss !== undefined) {
+            this.isBoss = config.boss > 0;
+        }
+
         this.armor = 0; //护甲
-        /**以上为enemy的自有属性 */
+        if (config.armor !== undefined) {
+            this.armor = config.armor;
+        }
 
         this.state = EnemyState.Invalid;
         this.node.opacity = 0;
         this.direction = cc.p(0, 0);
-        this.currentPathPointCount = 0;
-        this.totalHealthCount = 1;
+
         this.beStuned = false; //被眩晕
         this.slowRate = 0; //减速
         this.positionTag = 0; //位置标签，标签值越大越靠前
-
         this.invincible = 0; //无敌时间
+        this.spriteNode.node.scaleX = 1; //复位节点方向
 
         this.gameWorld = gameWorld;
         this.type = type;
@@ -72,30 +79,14 @@ cc.Class({
         } else {
             this.spriteNode.spriteFrame = this.enemyFrames[this.type];
         }
+
+        this.currentPathPointCount = 0;
         this.pathPoints = pathPoints;
         this.node.position = pathPoints[0];
-        cc.loader.loadRes("./config/monster_config", (err, result) => {
-            if (err) {
-                cc.log(err);
-            } else {
-                // cc.log("enemy result = " + JSON.stringify(result));
-                let config = result["enemy_" + type][level];
-                this.speed = config.speed;
-                this.currentHealthCount = config.health;
-                this.totalHealthCount = config.health;
-                if (config.boss !== undefined) {
-                    this.isBoss = config.boss > 0;
-                }
-                if (config.armor !== undefined) {
-                    this.armor = config.armor;
-                }
-                this.setState(EnemyState.Unbeatable);
 
-                this.schedule(this.playAnim, 1);
-
-                this.doMove();
-            }
-        });
+        this.setState(EnemyState.Unbeatable);
+        this.schedule(this.playAnim, 1);
+        this.doMove();
     },
 
     playAnim: function () {
