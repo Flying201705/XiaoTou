@@ -427,7 +427,9 @@ cc.Class({
 
     addEnemy: function (type, level) {
         let enemy = this.enemyMng.createEnemy(this.enemyGroup);
-        enemy.getComponent("enemy").initWithData(this, type, level, this.enemyPathPositions);
+        let configs = this.enemyMng.getEnemyConfigs();
+        let config = configs["enemy_" + type][level];
+        enemy.getComponent("enemy").initWithData(this, type, config, this.enemyPathPositions);
     },
 
     addBullet: function (tower, position) {

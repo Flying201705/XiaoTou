@@ -17,6 +17,14 @@ cc.Class({
         }
 
         this.list = [];
+
+        cc.loader.loadRes("./config/monster_config", (err, result) => {
+            if (err) {
+                cc.log(err);
+            } else {
+                this.enemyConfigs = result;
+            }
+        });
     },
 
     createEnemy: function (parentNode) {
@@ -48,5 +56,9 @@ cc.Class({
         if (index > -1) {
             this.list.splice(index, 1);
         }
+    },
+
+    getEnemyConfigs: function () {
+        return this.enemyConfigs;
     }
 });
