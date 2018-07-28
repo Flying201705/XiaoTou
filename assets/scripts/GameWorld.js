@@ -122,6 +122,8 @@ cc.Class({
 
         //音频
         this.audioMng = this.audioMng.getComponent("GameAudio");
+        // 游戏结束flag
+        this.overFlag = false;
     },
 
     initEvent: function () {
@@ -167,7 +169,7 @@ cc.Class({
             let windowSize = cc.view.getVisibleSize();
             let x = event.touch.getLocation().x - windowSize.width * 0.5;
             let y = event.touch.getLocation().y - windowSize.height * 0.5;
-            console.log("x = " + event.touch.getLocation().x + ", y = " + event.touch.getLocation().y);
+            // console.log("x = " + event.touch.getLocation().x + ", y = " + event.touch.getLocation().y);
 
             // 处理英雄操作
             if (this.hero !== undefined && this.hero.active === true) {
@@ -183,7 +185,7 @@ cc.Class({
 
             // 处理塔操作
             let index = this.getTouchedTowerIdx(x, y);
-            cc.log("touched event:" + x + "," + y + ", index = " + index);
+            // console.log("touched event:" + x + "," + y + ", index = " + index);
             if (index >= 0) {
                 this.showUpdateMenu(index);
             } else if (this.selectBox.active === true) {
@@ -410,7 +412,8 @@ cc.Class({
             }
         }
 
-        if (this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
+        if (this.overFlag === false &&
+            this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
             && this.currentWaveConfig === undefined
             && this.enemyGroup.childrenCount <= 0) {
             //游戏结束--赢了
@@ -568,10 +571,12 @@ cc.Class({
 
     detractLife: function (life) {
         this.lifeCount -= life;
+        if (this.lifeCount < 0) {
+            this.lifeCount = 0;
+        }
         this.updateLife();
 
-        if (this.lifeCount <= 0) {
-            this.lifeCount = 0;
+        if (this.overFlag === false && this.lifeCount <= 0) {
             //游戏结束--输了
             this.gameOver(false);
         }
@@ -649,6 +654,7 @@ cc.Class({
     },
 
     gameOver: function (win) {
+        this.overFlag = true;
         this.gameover = this.gameOverUI.getComponent("GameOver");
 
         if (win === true) {
