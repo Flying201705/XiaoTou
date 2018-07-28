@@ -6,8 +6,14 @@ cc.Class({
     properties: {
         parentNode: cc.Node,
         border: cc.Node,
+        mode: {
+            default: "BORDER",
+            type: cc.Enum({
+                "OUT_BORDER": 0,
+                "BORDER_SIDE": 1,
+            })
+        }
     },
-
     onEnable() {
         let self = this;
 
@@ -21,7 +27,15 @@ cc.Class({
             // 点击弹窗外面区域退出弹窗
             if (self.border != null) {
                 let retWord = self.border.getBoundingBoxToWorld();
-                console.log('width：' + retWord.width + ' height:' + retWord.height);
+
+                //点击窗口两侧区域消失。
+                if (self.mode === 1) {
+                    retWord.height = self.getViewHeight();
+                    retWord.y = 0;
+                }
+
+                console.log('width：' + retWord.width + ' height:' + retWord.height + ' x:' + retWord.x + ' y:' + retWord.y);
+
                 var point = event.getLocation();
 
                 if (!retWord.contains(point)) {
@@ -30,6 +44,9 @@ cc.Class({
                 }
             }
         });
+    },
+    getViewHeight() {
+        return this.parentNode.height;
     },
     onDisable() {
         this.node.off('touchstart', function (event) {

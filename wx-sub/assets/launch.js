@@ -9,38 +9,36 @@ cc.Class({
     },
     onLoad() {
         console.log('wx-sub onLoad');
-        // const ratio = wx.getSystemInfoSync().pixelRatio;
-        // cc.view._convertPointWithScale = function (point) {
-        //     var viewport = this._viewPortRect;
-        //     point.x = (point.x - viewport.x) / (this._scaleX / ratio);
-        //     point.y = (point.y - viewport.y) / (this._scaleY / ratio);
-        // };
-        // cc.view._convertTouchesWithScale = function (touches) {
-        //     var viewport = this._viewPortRect, scaleX = this._scaleX / ratio, scaleY = this._scaleY / ratio, selTouch, selPoint,
-        //         selPrePoint;
-        //     for (var i = 0; i < touches.length; i++) {
-        //         selTouch = touches[i];
-        //         selPoint = selTouch._point;
-        //         selPrePoint = selTouch._prevPoint;
-        //         selPoint.x = (selPoint.x - viewport.x) / scaleX;
-        //         selPoint.y = (selPoint.y - viewport.y) / scaleY;
-        //         selPrePoint.x = (selPrePoint.x - viewport.x) / scaleX;
-        //         selPrePoint.y = (selPrePoint.y - viewport.y) / scaleY;
-        //     }
-        // };
+        let ratio = wx.getSystemInfoSync().pixelRatio;
+        ratio = ratio == 1 ? 1 : ratio / 2;
+
+        cc.view._convertPointWithScale = function (point) {
+            let viewport = this._viewPortRect;
+            point.x = (point.x - viewport.x) / (this._scaleX / ratio);
+            point.y = (point.y - viewport.y) / (this._scaleY / ratio);
+        };
+        cc.view._convertTouchesWithScale = function (touches) {
+            let viewport = this._viewPortRect,
+                scaleX = this._scaleX / ratio,
+                scaleY = this._scaleY / ratio, selTouch,
+                selPoint,
+                selPrePoint;
+            for (let i = 0; i < touches.length; i++) {
+                selTouch = touches[i];
+                selPoint = selTouch._point;
+                selPrePoint = selTouch._prevPoint;
+                selPoint.x = (selPoint.x - viewport.x) / scaleX;
+                selPoint.y = (selPoint.y - viewport.y) / scaleY;
+                selPrePoint.x = (selPrePoint.x - viewport.x) / scaleX;
+                selPrePoint.y = (selPrePoint.y - viewport.y) / scaleY;
+            }
+        };
+
+
     },
     start() {
         console.log('wx-sub start');
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            // console.log('xxx sw-:' + window.sharedCanvas.width + ' sh-:' + window.sharedCanvas.width);
-            //
-            // const ratio = wx.getSystemInfoSync().pixelRatio;
-            // window.sharedCanvas.width = cc.game.canvas.width * ratio;
-            // window.sharedCanvas.height = cc.game.canvas.height * ratio;
-            //
-            // console.log('xxx cw:' + cc.game.canvas.width + ' ch:' + cc.game.canvas.height + ' ratio:' + ratio);
-            // console.log('xxx sw:' + window.sharedCanvas.width + ' sh:' + window.sharedCanvas.width);
-
             wx.onMessage(data => {
                 console.log('onMessage:', data);
 
@@ -66,7 +64,7 @@ cc.Class({
             keyList: [GAME_KEY],
             success: (res) => {
                 console.log('get success', res);
-                var storageLevel = this.getLevel(res.KVDataList);
+                let storageLevel = this.getLevel(res.KVDataList);
                 console.log('storageLevel', storageLevel);
                 if (currentLevel > storageLevel) {
                     this.setStorage(currentLevel);
@@ -83,9 +81,9 @@ cc.Class({
         }
 
         for (let i = 0; i < KVDataList.length; i++) {
-            var data = KVDataList[i];
+            let data = KVDataList[i];
             if (GAME_KEY == data.key) {
-                var val = JSON.parse(data.value);
+                let val = JSON.parse(data.value);
                 return val.wxgame.score;
             }
 
@@ -94,7 +92,7 @@ cc.Class({
         return -1;
     },
     setStorage(currentLevel) {
-        var val = JSON.stringify({
+        let val = JSON.stringify({
             "wxgame": {
                 "score": currentLevel,
                 "update_time": 1513080573
@@ -120,7 +118,7 @@ cc.Class({
             keyList: [GAME_KEY],
             success: (res) => {
                 console.log('get friend success', res);
-                var urList = this.getUserRankList(res);
+                let urList = this.getUserRankList(res);
                 console.log('user rank list:', urList);
                 this.addToScrollView(urList);
             }
@@ -132,7 +130,7 @@ cc.Class({
     },
     addToScrollView(urList) {
         for (let i = 0; i < urList.length; i++) {
-            var info = urList[i];
+            let info = urList[i];
             let item = cc.instantiate(this.item).getComponent('item');
             item.setRank(i + 1);
             item.setNickName(info.nickname);
@@ -142,9 +140,9 @@ cc.Class({
         }
     },
     getUserRankList(res) {
-        var urList = [];
+        let urList = [];
         for (let i = 0; i < res.data.length; i++) {
-            var data = res.data[i];
+            let data = res.data[i];
 
             urList.push({
                 nickname: data.nickname,

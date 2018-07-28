@@ -14,6 +14,19 @@ cc.Class({
 
     start() {
         this.tex = new cc.Texture2D();
+        this._resizeShareCanvas();
+    },
+    _resizeShareCanvas() {
+        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+            return;
+        }
+
+        let ratio = 1;
+        ratio = wx.getSystemInfoSync().pixelRatio;
+        ratio = ratio == 1 ? 1 : ratio / 2;
+        window.sharedCanvas.width = window.sharedCanvas.width * ratio;
+        window.sharedCanvas.height = window.sharedCanvas.height * ratio;
+
     },
     update() {
         this._updaetSubDomainCanvas();
