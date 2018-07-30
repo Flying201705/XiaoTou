@@ -92,7 +92,7 @@ cc.Class({
     shootBullet: function () {
         this.playHeroAnim();
         cc.audioEngine.play(this.shootAudio, false, 1);
-        global.event.fire("shoot_bullet", this.node, this.enemy.position);
+        global.event.fire("shoot_bullet", this.node, this.enemy);
         //英雄自升级，临时：当前等级的十倍攻击次数升一级
         this.AttackCount++;
         if (this.AttackCount > (this.currentHeroLevel + 1) * 10) {

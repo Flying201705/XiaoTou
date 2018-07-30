@@ -437,10 +437,10 @@ cc.Class({
         enemy.getComponent("enemy").initWithData(this, type, config, this.enemyPathPositions);
     },
 
-    addBullet: function (tower, position) {
+    addBullet: function (tower, enemy) {
         let bullet = this.bulletMng.requestBullet(tower.getComponent("tower").bulletType);
         bullet.parent = this.bulletLayer;
-        bullet.getComponent("bullet").initWithData(tower, position, this.enemyMng.list);
+        bullet.getComponent("bullet").initWithData(tower, enemy, this.enemyMng.list);
     },
 
     removeBullet: function (type, obj) {

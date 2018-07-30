@@ -244,7 +244,7 @@ cc.Class({
             global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);
         } else {
             cc.audioEngine.play(this.shootAudio, false, 1);
-            global.event.fire("shoot_bullet", this.node, this.enemy.position);
+            global.event.fire("shoot_bullet", this.node, this.enemy);
         }
     },
     isAreaAttack: function() {
