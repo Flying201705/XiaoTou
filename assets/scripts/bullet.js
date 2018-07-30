@@ -14,8 +14,8 @@ cc.Class({
         this.node.position = tower.position;
         this.enemy = enemy;
 
-        let angle = cc.pAngleSigned(this.node.position, this.enemy.position);
-        this.node.rotation = (180 / Math.PI) * angle;
+        let angle = cc.pAngleSigned(cc.pSub(this.enemy.position, tower.position), cc.p(0, 1));
+        this.node.rotation = cc.radiansToDegrees(angle);
         // this.enemyNodeList = enemyNodeList;
 
         let towerScript = tower.getComponent("tower");
