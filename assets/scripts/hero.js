@@ -51,7 +51,7 @@ cc.Class({
         this.AttackCount = 0;
     },
 
-    update: function(dt) {
+    update: function (dt) {
         if (this.state === HeroState.LeftMove || this.state === HeroState.RightMove) {
             let distance = cc.pDistance(this.node.position, this.targetPosition);
             if (distance < 10) {
@@ -67,21 +67,21 @@ cc.Class({
             if (this.currentShootTime <= shootDt) {
                 this.currentShootTime += dt;
             }
-            
+
             if (this.enemy !== undefined) {
                 let direction = cc.pSub(this.node.position, this.enemy.position);
                 let angle = cc.pAngleSigned(direction, cc.p(0, -1));
                 // cc.log("angle = " + angle);
                 //塔旋转
                 //this.node.rotation = (180 / Math.PI) * angle;
-    
+
                 if (this.currentShootTime > shootDt) {
                     this.currentShootTime = 0;
                     this.shootBullet();
                 }
-    
+
                 let distance = cc.pDistance(this.enemy.position, this.node.position);
-                if (distance > this.currentAttackRange || 
+                if (distance > this.currentAttackRange ||
                     (this.enemy.getComponent("enemy") !== null && this.enemy.getComponent("enemy").isLiving() === false)) {
                     this.enemy = undefined;
                 }
@@ -101,9 +101,10 @@ cc.Class({
         }
     },
 
-    handleTouched: function(x, y) {
+    handleTouched: function (x, y) {
         if (this.heroSelected === true) {
             this.heroSelected = false;
+            this.onHeroSelected(false);
             this.hideSelectedMark();
             if (x <= this.node.x) {
                 this.state = HeroState.LeftMove;
@@ -117,17 +118,18 @@ cc.Class({
             this.targetPosition = cc.p(x, y);
             return true;
         }
- 
+
         if (this.isTouchedHero(x, y)) {
             this.heroSelected = true;
+            this.onHeroSelected(true);
             this.showSelectedMark();
             return true;
         }
 
         return false;
     },
-    
-    isTouchedHero: function(x, y) {
+
+    isTouchedHero: function (x, y) {
         let heroRect = cc.rect(this.node.x - this.node.width * 0.5, this.node.y - this.node.height * 0.5, this.node.width, this.node.height);
         if (cc.rectContainsPoint(heroRect, cc.p(x, y))) {
             return true;
@@ -141,7 +143,7 @@ cc.Class({
         return this.currentDamage * Math.pow(1.1, this.currentHeroLevel) * (1 + this.beAttackBuff);
     },
 
-    moveTo: function(x, y) {
+    moveTo: function (x, y) {
         if (x <= this.node.x) {
             this.state = HeroState.LeftMove;
         } else {
@@ -156,17 +158,17 @@ cc.Class({
         //进行移动
         this.node.runAction(action);
         //移动完成过后。使英雄进入站立状态
-         let moveSequence = cc.sequence(action, cc.callFunc(() => {
+        let moveSequence = cc.sequence(action, cc.callFunc(() => {
             this.node.state = HeroState.Attack;
         }));
         this.node.runAction(moveSequence);
     },
 
-    playHeroAnim: function() {
+    playHeroAnim: function () {
         this.anim.play("hero_" + this.state);
     },
 
-    showHero: function() {
+    showHero: function () {
         this.node.active = true;
         this.state = HeroState.Summon;
         this.playHeroAnim();
@@ -179,5 +181,11 @@ cc.Class({
 
     hideSelectedMark: function () {
         this.selectedNode.active = false;
+    },
+    /**
+     * 英雄被选中时的回调方法
+     */
+    onHeroSelected(selected) {
+        console.log('onHeroSelected selected:' + selected);
     }
 });

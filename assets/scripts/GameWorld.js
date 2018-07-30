@@ -10,6 +10,7 @@ const TowerPosNodeState = {
     Tower: 3,
     UpdateMenu: 4
 };
+let self = null;
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -42,6 +43,7 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        heroPanelFab: cc.Prefab,
         effectPrefab: {
             default: null,
             type: cc.Prefab
@@ -70,6 +72,8 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        bottomBar: cc.Node,
+        bottomContainer: cc.Node,
         audioMng: {
             default: null,
             type: cc.Node
@@ -79,7 +83,7 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         cc.log("GameWorld onLoad");
-
+        self = this;
         this.setTouchEvent();
 
         //当前关卡
@@ -114,6 +118,7 @@ cc.Class({
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
         this.bulletMng = this.bulletLayer.getComponent('BulletMng');
         this.hero = cc.instantiate(this.heroPrefab);
+        this.hero.getComponent("hero").onHeroSelected = this.onHeroSelected;
         this.hero.active = false;
 
         //加载地图
@@ -162,7 +167,7 @@ cc.Class({
 
     setTouchEvent: function () {
         this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
-            if (cc.director.isPaused()) {
+            if (global.isPause()) {
                 return;
             }
 
@@ -438,7 +443,7 @@ cc.Class({
         bullet.getComponent("bullet").initWithData(tower, position, this.enemyMng.list);
     },
 
-    removeBullet: function(type, obj) {
+    removeBullet: function (type, obj) {
         this.bulletMng.returnBullet(type, obj);
     },
 
@@ -449,7 +454,7 @@ cc.Class({
         }
     },
 
-    hasXiaoBinMaxLevel: function() {
+    hasXiaoBinMaxLevel: function () {
         for (let i = 0; i < this.towerGroup.childrenCount; i++) {
             let tower = this.towerGroup.children[i];
             if (tower !== undefined) {
@@ -484,8 +489,8 @@ cc.Class({
             this.showSummonHint("召唤英雄需要500金币");
         } else {
             this.detractGold(500);
-            let x = this.node.getChildByName('bottomBar').x;
-            let y = this.node.getChildByName('bottomBar').y + this.hero.height;
+            let x = this.bottomBar.x;
+            let y = this.bottomBar.y + this.hero.height;
             this.hero.position = cc.p(x, y);
             this.hero.parent = this.heroLayer;
             this.hero.active = true;
@@ -529,17 +534,17 @@ cc.Class({
 
     //购买减速
     buySlow: function (count) {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(1, count);
+        this.bottomBar.getComponent("PropsControl").addProp(1, count);
     },
 
     //购买眩晕
     buyStun: function (count) {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(2, count);
+        this.bottomBar.getComponent("PropsControl").addProp(2, count);
     },
 
     //购买炸弹
     buyDamage: function (count) {
-        this.node.getChildByName('bottomBar').getComponent("PropsControl").addProp(3, count);
+        this.bottomBar.getComponent("PropsControl").addProp(3, count);
     },
 
     addGold: function (gold) {
@@ -584,11 +589,11 @@ cc.Class({
         }
     },
 
-    updateLife: function() {
+    updateLife: function () {
         this.lifeNode.getComponent("Life").setLife(this.lifeCount);
     },
 
-    hasGoods: function(goodsId) {
+    hasGoods: function (goodsId) {
         if (goodsId < 1000) {
             return false;
         }
@@ -623,7 +628,7 @@ cc.Class({
                     new InfoHandle().updateGoods(goods, 1);
                 }
             }
-            
+
             if (rewards.length < 2) {
                 // 掉落道具数少于两个，奖励水晶
                 // 两个星-1水晶，三个星-2水晶
@@ -631,7 +636,7 @@ cc.Class({
                 if (crystalNum > 0) {
                     rewards[rewards.length] = 0 + "-" + crystalNum;
                     new InfoHandle().updateCrystal(crystalNum);
-                }                    
+                }
             }
         } else {
             // 普通关卡，奖励水晶
@@ -642,7 +647,7 @@ cc.Class({
                 new InfoHandle().updateCrystal(crystalNum);
             }
         }
-        
+
         // 打LOG测试奖励
         if (rewards.length > 0) {
             for (let i = 0; i < rewards.length; i++) {
@@ -718,4 +723,15 @@ cc.Class({
             }
         }
     },
+    onHeroSelected(selected) {
+        if (selected) {
+            self.heroPanel = cc.instantiate(self.heroPanelFab);
+            self.heroPanel.getComponent('hero_panel').setLevel(self.hero.getComponent("hero").currentHeroLevel);
+            self.heroPanel.parent = self.bottomContainer;
+            self.bottomBar.active = false;
+        } else {
+            self.bottomContainer.removeChild(self.heroPanel);
+            self.bottomBar.active = true;
+        }
+    }
 });
