@@ -1,6 +1,3 @@
-/**
- * Created by chu on 2017/10/10 0010.
- */
 const EventListener = function (obj) {
     let Register = {};
     obj.on = function (name, method) {

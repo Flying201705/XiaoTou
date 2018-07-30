@@ -4,22 +4,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        maskNode: {
-            default: null,
-            type: cc.Node
-        },
-        levelNode: {
-            default: null,
-            type: cc.Node
-        },
-        clickAudio: {
-            default: null,
-            url: cc.AudioClip
-        }
-    },
-
-    onLoad() {
-        // this.node.active = false;
+        maskNode: cc.Node,
+        levelNode:  cc.Node,
+        clickAudio: cc.AudioClip,
+        pauseMenuSprites:[cc.SpriteFrame]
     },
 
     onEnable: function () {
@@ -72,13 +60,16 @@ cc.Class({
         cc.director.loadScene("stage");
     },
 
-    onClickPauseBtn: function () {
-        // this.node.active = true;
+    onClickPauseBtn: function (event) {
         cc.audioEngine.playEffect(this.clickAudio, false);
-        if (cc.director.isPaused()) {
-            cc.director.resume();
+
+        let button = event.target;
+        if (global.isPause()) {
+            global.resume();
+            button.getComponent(cc.Sprite).spriteFrame = this.pauseMenuSprites[0];
         } else {
-            cc.director.pause();
+            global.pause();
+            button.getComponent(cc.Sprite).spriteFrame = this.pauseMenuSprites[1]
         }
     }
 });
