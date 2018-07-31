@@ -24,6 +24,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        gamehint: {
+            default: null,
+            type: cc.Prefab
+        },
     },
     update() {
         if (global.isPause()) {
@@ -40,6 +44,7 @@ cc.Class({
         global.event.on("update_crystal_count", this.updateCrystalCount.bind(this));
         global.event.on("get_one_chip_price", this.getOneChipPrice.bind(this));
         global.event.on("show_back_pack_dialog", this.showBackPack.bind(this));
+        global.event.on("show_hint_dialog", this.showHintDialog.bind(this));
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
 
@@ -51,6 +56,7 @@ cc.Class({
         global.event.off("update_crystal_count", this.updateCrystalCount);
         global.event.off("get_one_chip_price", this.getOneChipPrice);
         global.event.off("show_back_pack_dialog", this.showBackPack);
+        global.event.off("show_hint_dialog", this.showHintDialog);
     },
     start() {
         this.showDescDialog();
@@ -101,5 +107,10 @@ cc.Class({
     },
     getOneChipPrice() {
         return 50;
+    },
+    showHintDialog: function(hint) {
+        var hintDialog = cc.instantiate(this.gamehint);
+        hintDialog.getComponent('HintDialog').config(this.node, hint);
+        hintDialog.parent = this.node;
     },
 });

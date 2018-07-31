@@ -468,9 +468,11 @@ cc.Class({
     },
 
     showSummonHint: function (hint) {
-        this.summonHintLabel.node.active = true;
-        this.summonHintLabel.string = hint;
-        this.scheduleOnce(this.hideSummonHint, 2);
+        //this.summonHintLabel.node.active = true;
+        //this.summonHintLabel.string = hint;
+        //this.scheduleOnce(this.hideSummonHint, 2);
+
+        global.event.fire("show_hint_dialog", hint);
     },
 
     hideSummonHint: function () {
@@ -479,14 +481,20 @@ cc.Class({
     },
 
     summonHero: function () {
-        if (this.currentLevel < 21) {
-            this.showSummonHint("21关解锁神秘英雄，加油哦~");
+        if (this.hero.active === true) {
+            return;
+        }
+        if (this.currentLevel < 16) {
+            let hint = `<size=25><color=#ffff80>21关</c></size>解锁<b><color=#ff00ff><size=25>神秘英雄</size></c></b>，加油哦~`;
+            this.showSummonHint(hint);
         } else if (new InfoHandle().hasHero() !== true) {
             global.event.fire("show_back_pack_dialog");
         } else if (this.hasXiaoBinMaxLevel() !== true) {
-            this.showSummonHint("召唤英雄需要小兵升到顶级");
+            let hint = `召唤英雄需要<b><color=#ffff80><size=25>小兵</size></c></b>升到顶级`;
+            this.showSummonHint(hint);
         } else if (this.goldCount < 500) {
-            this.showSummonHint("召唤英雄需要500金币");
+            let hint = `召唤英雄需要<b><color=#ffff80><size=25>500金币</size></c></b>`;
+            this.showSummonHint(hint);
         } else {
             this.detractGold(500);
             let x = this.bottomBar.x;
