@@ -102,6 +102,9 @@ cc.Class({
     },
 
     handleTouched: function (x, y) {
+        if (y > 240 || y < -240) {
+            return false;
+        }
         if (this.heroSelected === true) {
             this.heroSelected = false;
             this.onHeroSelected(false);
