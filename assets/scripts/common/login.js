@@ -7,24 +7,7 @@ function weChatLogin() {
     wx.login({
         success: function (res) {
             console.log("wx code : " + res.code);
-            wx.request({
-                url: "http://zhang395295759.xicp.net:30629/xiaotou/user/getOpenId.do",
-                header: {"Content-Type": "application/x-www-form-urlencoded"},
-                method: "POST",
-                data: {code: res.code},
-                success: function (res) {
-                    if (res.data.data.indexOf("openid") !== -1) {
-                        console.log("wx success data.data : " + res.data.data);
-                        var obj = JSON.parse(res.data.data);
-                        new InfoHandle().init(obj.openid);
-                    } else {
-                        console.log("wx fail data.data : " + res.data);
-                    }
-                },
-                fail: function (res) {
-                    console.log("wx fail data : " + res.data);
-                }
-            });
+            new InfoHandle().init(res.code);
             wx.getUserInfo({
                 success: function (res) {
                     global.userInfo = res.userInfo;

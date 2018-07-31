@@ -8,17 +8,17 @@ import global from './global';
 
 const net = require('./common/net');
 
-const http_head = "http://zhang395295759.xicp.net:30629/xiaotou/";
-const get_user_info = "user/getUserInfoId.do?";
-const login_openid = "user/loginForOpenId.do?";
-const update_user_level = "user/changeLevel.do?";
-const update_user_crystal = "user/changeCrystal.do?";
-const get_openid = "user/getOpenId.do?";
-const update_user_hero = "user/changeHero.do?";
-const get_levels = "level/allLevels.do?";
-const update_level = "level/updateLevel.do?";
-const get_goods = "goods/allGoods.do?";
-const update_goods = "goods/updateGoods.do?";
+const http_head = "http://qyx18.com:1234/xiaotou/";
+const get_user_info = "user/getUserInfoId";
+const login = "user/login";
+const update_user_level = "user/changeLevel";
+const update_user_crystal = "user/changeCrystal";
+// const get_openid = "user/getOpenId";
+const update_user_hero = "user/changeHero";
+const get_levels = "level/allLevels";
+const update_level = "level/updateLevel";
+const get_all_goods = "goods/allGoods";
+const update_goods = "goods/updateGoods";
 
 const InfoData = {
     user: UserData,
@@ -58,25 +58,40 @@ const InfoData = {
     FLAG_DATA_DOWNLOAD_ERROR: -1,
 };
 
+function _updateLocalLevel(lv, stars, score) {
+    if (InfoData.levels[lv - 1] != null) {
+        InfoData.levels[lv - 1].stars = stars;
+    } else {
+        let level = new LevelData();
+        level.level = lv;
+        level.score = score;
+        level.stars = stars;
+        InfoData.levels[lv - 1] = level;
+    }
+}
+
 const InfoHandle = cc.Class({
-    init: function (openId) {
+    init: function (wxCode) {
         InfoData.FLAG_DATA_DOWNLOAD_STATUS = 0;
         InfoData.user = new UserData();
         InfoData.levels = [];
         InfoData.goods = [];
-        this.loginForOpenId(openId);
+        this.login(wxCode);
     },
 
-    getOpenId: function (code, appid, secret) {
-        net.request({
-            url: http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret
-        })
-    },
+    // getOpenId: function (code, appid, secret) {
+    //     net.request({
+    //         url: http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret
+    //     })
+    // },
 
-    loginForOpenId: function (openid) {
+    login: function (wxCode) {
         console.log('[InfoHandle] request user info');
         net.request({
-            url: http_head + login_openid + "openid=" + openid,
+            url: http_head + login,
+            data: {
+                code: wxCode
+            },
             success: (ret) => {
                 this.handleUserInfo(ret);
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
@@ -93,7 +108,10 @@ const InfoHandle = cc.Class({
     getUserInfoById: function (id) {
         console.log('[InfoHandle] request user info2');
         net.request({
-            url: http_head + get_user_info + "id=" + id,
+            url: http_head + get_user_info,
+            data: {
+                id: id
+            },
             success: (ret) => {
                 this.handleUserInfo(ret);
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
@@ -110,7 +128,10 @@ const InfoHandle = cc.Class({
     getLevelsById: function (id) {
         console.log('[InfoHandle] request level');
         net.request({
-            url: http_head + get_levels + "id=" + id,
+            url: http_head + get_levels,
+            data: {
+                id: id
+            },
             success: (ret) => {
                 this.handleLevels(ret);
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_LEVEL;
@@ -138,10 +159,13 @@ const InfoHandle = cc.Class({
         return false;
     },
 
-    getGoodsById: function (id) {
+    getAllGoodsByUserId: function (id) {
         console.log('[InfoHandle] request goods');
         net.request({
-            url: http_head + get_goods + "id=" + id,
+            url: http_head + get_all_goods,
+            data: {
+                id: id
+            },
             success: (ret) => {
                 this.handleGoods(ret);
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_GOODS;
@@ -158,7 +182,7 @@ const InfoHandle = cc.Class({
     handleUserInfo: function (obj) {
         InfoData.user.init(obj);
 
-        this.getGoodsById(InfoData.user.id);
+        this.getAllGoodsByUserId(InfoData.user.id);
         this.getLevelsById(InfoData.user.id);
     },
 
@@ -191,54 +215,64 @@ const InfoHandle = cc.Class({
             }
         }
     },
-
-    updateLatestLevel: function (level) {
-        net.request({
-            url: http_head + update_user_level + "id=" + InfoData.user.id + "&level=" + level
-        })
-    },
-
     updateHero: function (hero) {
         hero = hero > 0 ? 1 : 0;
         if (InfoData.user.hero === hero) {
             return;
         }
 
-        InfoData.user.hero = hero;
-
         net.request({
-            url: http_head + update_user_hero + "id=" + InfoData.user.id + "&hero=" + hero
-        })
-    },
-
-    updateLevel: function (lv, score, stars) {
-        if (InfoData.user.level <= lv) {
-            InfoData.user.level = lv + 1;
-            this.updateLatestLevel(InfoData.user.level);
-        }
-
-        if (InfoData.levels[lv - 1] != null) {
-            if (InfoData.levels[lv - 1].stars >= stars) {
-                return;
+            url: http_head + update_user_hero,
+            data: {
+                id: InfoData.user.id,
+                hero: hero
+            },
+            success: () => {
+                InfoData.user.hero = hero;
+            },
+            fail: () => {
+                cc.info('update hero fail');
             }
-            InfoData.levels[lv - 1].stars = stars;
-        } else {
-            let level = new LevelData();
-            level.level = lv;
-            level.score = score;
-            level.stars = stars;
-            InfoData.levels[lv - 1] = level;
+        })
+    },
+    updateLevel: function (lv, score, stars) {
+        if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1].stars >= stars) {
+            return;
         }
 
         net.request({
-            url: http_head + update_level + "id=" + InfoData.user.id + "&lv=" + lv + "&score=" + score + "&stars=" + stars
+            url: http_head + update_level,
+            data: {
+                id: InfoData.user.id,
+                lv: lv,
+                score: score,
+                stars: stars
+            },
+            success: () => {
+                _updateLocalLevel(lv, stars, score);
+                if (lv >= InfoData.user.level) {
+                    InfoData.user.level = lv + 1;
+                }
+            },
+            fail: () => {
+                cc.info('update user level fail');
+            }
         })
     },
-
     updateCrystal: function (crystal) {
-        InfoData.user.crystal += crystal;
+
         net.request({
-            url: http_head + update_user_crystal + "id=" + InfoData.user.id + "&crys=" + crystal
+            url: http_head + update_user_crystal,
+            data: {
+                id: InfoData.user.id,
+                crys: crystal
+            },
+            success: () => {
+                InfoData.user.crystal += crystal;
+            },
+            fail: () => {
+                cc.info('update crystal fail');
+            }
         })
     },
 
@@ -261,12 +295,16 @@ const InfoHandle = cc.Class({
     },
 
     updateGoods: function (goods, num, callback) {
-        this.updateLocalGoods(goods, num);
-
         net.request({
-            url: http_head + update_goods + "id=" + InfoData.user.id + "&goods=" + goods + "&num=" + num,
+            url: http_head + update_goods,
+            data: {
+                id: InfoData.user.id,
+                goods: goods,
+                num: num
+            },
             success: (ret) => {
                 callback && callback.success && callback.success(ret);
+                this.updateLocalGoods(goods, num);
             },
             fail: () => {
                 callback && callback.fail && callback.fail();

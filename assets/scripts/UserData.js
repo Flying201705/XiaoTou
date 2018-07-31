@@ -19,10 +19,10 @@ const UserData = cc.Class({
         this.id = obj.id;
         this.openid = obj.openid;
         this.name = obj.name;
-        this.head = obj.head;
+        this.head = obj.image;
         this.sex = obj.sex;
-        this.crystal = obj.crys;
-        this.level = obj.lv < 1 ? 1 : obj.lv;
+        this.crystal = obj.crystal;
+        this.level = obj.level < 1 ? 1 : obj.level;
         this.title = obj.title;
         this.hero = obj.hero;
 

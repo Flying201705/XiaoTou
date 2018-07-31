@@ -125,7 +125,7 @@ cc.Class({
             this.fillData();
         };
 
-        infoHandle.getGoodsById(InfoData.user.id);
+        infoHandle.getAllGoodsByUserId(InfoData.user.id);
 
 
     },

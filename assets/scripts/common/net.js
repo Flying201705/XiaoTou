@@ -1,7 +1,7 @@
 module.exports = {
     /**
      *
-     *  @param options {
+     *  @param options ={
      *      url,
      *      success,
      *      fail,
@@ -20,14 +20,15 @@ module.exports = {
 
         let xhr = new XMLHttpRequest();
         xhr.timeout = 5000;
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.ontimeout = () => {
             // console.log('xxx xml timeout');
             options.fail && options.fail();
             options.complete && options.complete();
         };
-        xhr.onerror = () => {
+        xhr.onerror = (err) => {
             // console.log('xxx xml onerror');
-            options.fail && options.fail();
+            options.fail && options.fail(err);
             options.complete && options.complete();
         };
         xhr.onload = () => {
@@ -37,15 +38,19 @@ module.exports = {
                 console.log("<test> json str : " + response);
                 let obj = JSON.parse(response);
                 // console.log("xxx xml success callback");
-                options.success && options.success(obj == null ? null : obj.data);
+                if (obj && obj.respcode >= 0) {
+                    options.success && options.success(obj.data);
+                } else {
+                    options.fail && options.fail('respcode:' + obj == null ? 'result null' : obj.respcode);
+                }
             } else {
-                options.fail && options.fail();
+                options.fail && options.fail('readyState:' + xhr.readyState + ' status:' + xhr.status);
             }
 
             options.complete && options.complete();
         };
         // console.log('xxx url:' + options.url);
-        xhr.open("GET", options.url, true);
-        xhr.send();
+        xhr.open("POST", options.url, true);
+        xhr.send(options.data == null ? null : JSON.stringify(options.data));
     }
 };
