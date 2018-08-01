@@ -68,22 +68,10 @@ cc.Class({
                 this.currentShootTime += dt;
             }
 
-            if (this.enemy !== undefined) {
-                let direction = cc.pSub(this.node.position, this.enemy.position);
-                let angle = cc.pAngleSigned(direction, cc.p(0, -1));
-                // cc.log("angle = " + angle);
-                //塔旋转
-                //this.node.rotation = (180 / Math.PI) * angle;
-
-                if (this.currentShootTime > shootDt) {
+            if (this.currentShootTime > shootDt) {
+                if (this.hasAtkTarget() && this.enemy.getComponent("enemy").isLiving()) {
                     this.currentShootTime = 0;
                     this.shootBullet();
-                }
-
-                let distance = cc.pDistance(this.enemy.position, this.node.position);
-                if (distance > this.currentAttackRange ||
-                    (this.enemy.getComponent("enemy") !== null && this.enemy.getComponent("enemy").isLiving() === false)) {
-                    this.enemy = undefined;
                 }
             }
         }

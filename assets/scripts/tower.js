@@ -77,13 +77,17 @@ cc.Class({
         this.areaTowerList = [];
     },
 
-    initWithData: function(towerConfig, maxLevel) {
+    initWithData: function (gameWorld, towerConfig, maxLevel) {
+        this.enemyMng = gameWorld.enemyMng;
+
         this.towerConfig = towerConfig;
         this.maxLevel = maxLevel;
         this.updateTowerConfig();
+
+        this.schedule(this.checkAtkTarget, 0.1);
     },
 
-    updateTowerConfig: function() {
+    updateTowerConfig: function () {
         if (this.currentLevel < this.towerConfig.costs.length - 1) {
             this.currentUpgradeCost = this.towerConfig.costs[this.currentLevel + 1];
         }
@@ -123,6 +127,73 @@ cc.Class({
         }
     },
 
+    hasAtkTarget: function () {
+        return !(this.enemy === undefined || this.enemy === null);
+    },
+
+    missAtkTarget: function () {
+        this.enemy = undefined;
+    },
+
+    checkAtkTarget: function () {
+        if (this.areaAttack === true && this.buffAttack !== true) {
+            this.chooseAtkTargets();
+        } else {
+            if (!this.hasAtkTarget()) {
+                this.chooseAtkTarget();
+            } else {
+                if (!this.enemy.getComponent("enemy").isLiving()) {
+                    this.missAtkTarget();
+                    return;
+                }
+                this.checkTargetIsOutOfRange();
+            }
+        }
+    },
+
+    chooseAtkTarget: function () {
+        let enemyList = this.enemyMng.list;
+        for (let i = 0; i < enemyList.length; i++) {
+            let enemy = enemyList[i];
+            if (this.isInAtkRange(enemy)) {
+                this.enemy = enemy;
+                break;
+            }
+        }
+    },
+
+    chooseAtkTargets: function () {
+        this.areaEnemyList = [];
+        let enemyList = this.enemyMng.list;
+        for (let i = 0; i < enemyList.length; i++) {
+            let enemy = enemyList[i];
+            if (this.isInAtkRange(enemy)) {
+                if (!this.hasAtkTarget()) {
+                    this.enemy = enemy;
+                }
+                this.areaEnemyList.push(enemy);
+            }
+        }
+    },
+
+    isInAtkRange: function (enemy) {
+        if (enemy.getComponent("enemy").isLiving()) {
+            let distance = cc.pDistance(enemy.position, this.node.position);
+            if (distance < this.lookRange) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    checkTargetIsOutOfRange: function() {
+        if (this.hasAtkTarget()) {
+            if (this.isInAtkRange(this.enemy)) {
+                this.missAtkTarget();
+            }
+        }
+    },
+
     updateTower: function () {
         cc.log("update tower");
         if (this.currentLevel < this.spriteFrames.length - 1) {
@@ -133,18 +204,15 @@ cc.Class({
         } else {
             cc.log("满级");
         }
-
-
     },
+
     sellTower: function () {
         cc.log("sell tower");
 
         this.node.destroy();
     },
-    isFree: function () {
-        return this.enemy === undefined;
-    },
-    setTowerList: function(towerList) {
+
+    setTowerList: function (towerList) {
         if (this.buffAttack !== true) {
             return;
         }
@@ -158,35 +226,8 @@ cc.Class({
             }
         }
     },
-    /*setEnemy: function (enemy) {
 
-        let distance = cc.pDistance(enemy.position, this.node.position);
-        if (distance < this.lookRange) {
-            this.enemy = enemy;
-        }
-    },*/
-    setEnemyList: function(enemyList) {
-        this.areaEnemyList = [];
-        for (let i = 0; i < enemyList.length; i++) {
-            if (this.isFree() !== true && this.areaAttack !== true) {
-                break;
-            }
-            let enemy = enemyList[i];
-            if (enemy.getComponent("enemy").isLiving()) {
-                let distance = cc.pDistance(enemy.position, this.node.position);
-                if (distance < this.lookRange) {
-                    if (this.isFree() === true) {
-                        this.enemy = enemy;
-                    }
-
-                    if (this.areaAttack === true && this.buffAttack !== true) {
-                        this.areaEnemyList.push(enemy);
-                    }
-                }
-            }
-        }
-    },
-    beBuffed: function(attackRate, speedRate) {
+    beBuffed: function (attackRate, speedRate) {
         if (attackRate >= this.beAttackBuff) {
             this.handleAttackBuff(attackRate);
         }
@@ -194,50 +235,41 @@ cc.Class({
             this.handleSpeedBuff(speedRate);
         }
     },
-    handleAttackBuff: function(attackRate) {
+
+    handleAttackBuff: function (attackRate) {
         this.unschedule(this.cancelAttackBuff);
         this.beAttackBuff = attackRate;
         this.scheduleOnce(this.cancelAttackBuff, 3);
     },
-    cancelAttackBuff: function() {
+
+    cancelAttackBuff: function () {
         this.beAttackBuff = 0;
     },
-    handleSpeedBuff: function(speedRate) {
+
+    handleSpeedBuff: function (speedRate) {
         this.unschedule(this.cancelSpeedBuff);
         this.beSpeedBuff = speedRate;
         this.scheduleOnce(this.cancelSpeedBuff, 3);
     },
-    cancelSpeedBuff: function() {
+
+    cancelSpeedBuff: function () {
         this.beSpeedBuff = 0;
     },
-    update: function (dt) {
-        //人物添加级数说明
-        //this.node.getChildByName("lv").getComponent(cc.Label).string = "LV" + (this.currentLevel + 1);
 
+    update: function (dt) {
         let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
         if (this.currentShootTime <= shootDt) {
             this.currentShootTime += dt;
         }
 
-        if (this.enemy !== undefined) {
-            // let direction = cc.pSub(this.node.position, this.enemy.position);
-            // let angle = cc.pAngleSigned(direction, cc.p(0, -1));
-            // cc.log("angle = " + angle);
-            //塔旋转
-            //this.node.rotation = (180 / Math.PI) * angle;
-
-            if (this.currentShootTime > shootDt) {
+        if (this.currentShootTime > shootDt) {
+            if (this.hasAtkTarget() && this.enemy.getComponent("enemy").isLiving()) {
                 this.currentShootTime = 0;
                 this.shootBullet();
             }
-
-            let distance = cc.pDistance(this.enemy.position, this.node.position);
-            if (distance > this.currentAttackRange || 
-                (this.enemy.getComponent("enemy") !== null && this.enemy.getComponent("enemy").isLiving() === false)) {
-                this.enemy = undefined;
-            }
         }
     },
+
     shootBullet: function () {
         this.anim.play(this.towerType);
         if (this.buffAttack === true) {
@@ -247,67 +279,81 @@ cc.Class({
             global.event.fire("shoot_bullet", this.node, this.enemy);
         }
     },
-    isAreaAttack: function() {
+
+    isAreaAttack: function () {
         if (this.areaAttack !== undefined) {
             return this.areaAttack;
         }
         return false;
     },
-    ifBuffAttack: function() {
+
+    ifBuffAttack: function () {
         if (this.buffAttack !== undefined) {
             return this.buffAttack;
         }
         return false;
     },
-    getAreaEnemyList: function() {
+
+    getAreaEnemyList: function () {
         return this.areaEnemyList;
     },
-    getAreaTowerList: function() {
+
+    getAreaTowerList: function () {
         return this.areaTowerList;
     },
+
     getDamage: function () {
         return this.currentDamage * (1 + this.beAttackBuff);
     },
-    canUpgrade: function() {
+
+    canUpgrade: function () {
         return this.currentLevel < this.maxLevel;
     },
-    getGainRate: function() {
+
+    getGainRate: function () {
         if (this.currentGainRate !== undefined) {
             return this.currentGainRate;
         }
         return 0;
     },
-    getStunRate: function() {
+
+    getStunRate: function () {
         if (this.currentStunRate !== undefined) {
             return this.currentStunRate;
         }
         return 0;
     },
-    getCritRate: function() {
+
+    getCritRate: function () {
         if (this.currentCritRate !== undefined) {
             return this.currentCritRate;
         }
         return 0;
     },
-    getSlowRate: function() {
+
+    getSlowRate: function () {
         if (this.currentSlowRate !== undefined) {
             return this.currentSlowRate;
         }
         return 0;
     },
-    getUpgradeCost: function() {
+
+    getUpgradeCost: function () {
         return this.currentUpgradeCost;
     },
-    getSelledGold: function() {
+
+    getSelledGold: function () {
         let gold = 0;
         for (let i = 0; i <= this.currentLevel; i++) {
             gold += this.towerConfig.costs[i];
         }
         return Math.floor(gold / 2);
     },
+
     showGradeMark: function () {
         this.upgradeNode.active = true;
     },
+
     hideGradeMark: function () {
         this.upgradeNode.active = false;
     }

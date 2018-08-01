@@ -283,8 +283,7 @@ cc.Class({
 
         let tower = this.towerMng.createTower(this.towerGroup, data);
         tower.position = this.getTilePos(this.towerOp.getBuildMenuPosition());
-        // this.setTowerTouchEvent(tower);
-        tower.getComponent("tower").initWithData(this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
+        tower.getComponent("tower").initWithData(this, this.towerConfigs[tower_type], this.levelConfig.towers[data].level);
 
         this.detractGold(create_cost);
         this.audioMng.playTowerBuild();
@@ -402,9 +401,9 @@ cc.Class({
 
         this.sortEnemyList(this.enemyMng.list);
         // 处理英雄操作
-        if (this.hero !== undefined && this.hero.active === true) {
-            this.hero.getComponent("hero").setEnemyList(this.enemyMng.list);
-        }
+        // if (this.hero !== undefined && this.hero.active === true) {
+        //     this.hero.getComponent("hero").setEnemyList(this.enemyMng.list);
+        // }
 
         // 处理塔操作
         for (let i = 0; i < this.towerGroup.childrenCount; i++) {
@@ -413,7 +412,7 @@ cc.Class({
                 if (tower.getComponent("tower").ifBuffAttack()) {
                     tower.getComponent("tower").setTowerList(this.towerGroup.children);
                 }
-                tower.getComponent("tower").setEnemyList(this.enemyMng.list);
+                // tower.getComponent("tower").setEnemyList(this.enemyMng.list);
             }
         }
 
@@ -502,7 +501,7 @@ cc.Class({
             this.hero.position = cc.p(x, y);
             this.hero.parent = this.heroLayer;
             this.hero.active = true;
-            this.hero.getComponent("hero").initWithData(this.towerConfigs["hero"], 1000);
+            this.hero.getComponent("hero").initWithData(this, this.towerConfigs["hero"], 1000);
             this.hero.getComponent("hero").showHero();
         }
     },
