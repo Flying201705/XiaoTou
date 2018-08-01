@@ -508,13 +508,21 @@ cc.Class({
     },
 
     handleSlow: function () {
+        let effectNode = cc.instantiate(this.effectPrefab);
+        effectNode.position = cc.p(0, 0);
+        effectNode.parent = this.node;
+        effectNode.getComponent("Effect").playAnim();
         for (let j = 0; j < this.enemyMng.list.length; j++) {
             let enemy = this.enemyMng.list[j];
-            enemy.getComponent("enemy").handleSlowed(0.5, 3);
+            enemy.getComponent("enemy").handleSlowed(0.5, 3.5);
         }
     },
 
     handleStun: function () {
+        let effectNode = cc.instantiate(this.effectPrefab);
+        effectNode.position = cc.p(0, 0);
+        effectNode.parent = this.node;
+        effectNode.getComponent("Effect").playAnim();
         for (let j = 0; j < this.enemyMng.list.length; j++) {
             let enemy = this.enemyMng.list[j];
             enemy.getComponent("enemy").handleStuned();

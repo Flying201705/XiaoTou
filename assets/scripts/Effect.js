@@ -13,6 +13,6 @@ cc.Class({
     },
 
     playAnim: function() {
-        this.node.getComponent(cc.Animation).play("bobm_effect");
+        this.node.getComponent(cc.Animation).play("effect_normal");
     },
 });
