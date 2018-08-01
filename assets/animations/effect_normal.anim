@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "bobm_effect",
+  "_name": "effect_normal",
   "_objFlags": 0,
   "_rawFiles": null,
   "_duration": 0.5,
@@ -21,7 +21,7 @@
       ],
       "opacity": [
         {
-          "frame": 0,
+          "frame": 0.3333333333333333,
           "value": 255
         },
         {
@@ -42,8 +42,8 @@
           "frame": 0.5,
           "value": {
             "__type__": "cc.Vec2",
-            "x": 2,
-            "y": 2
+            "x": 3,
+            "y": 3
           }
         }
       ]
