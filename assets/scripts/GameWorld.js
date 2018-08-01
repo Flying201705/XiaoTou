@@ -406,15 +406,15 @@ cc.Class({
         // }
 
         // 处理塔操作
-        for (let i = 0; i < this.towerGroup.childrenCount; i++) {
-            let tower = this.towerGroup.children[i];
-            if (tower !== undefined) {
-                if (tower.getComponent("tower").ifBuffAttack()) {
-                    tower.getComponent("tower").setTowerList(this.towerGroup.children);
-                }
-                // tower.getComponent("tower").setEnemyList(this.enemyMng.list);
-            }
-        }
+        // for (let i = 0; i < this.towerGroup.childrenCount; i++) {
+        //     let tower = this.towerGroup.children[i];
+        //     if (tower !== undefined) {
+        //         if (tower.getComponent("tower").ifBuffAttack()) {
+        //             tower.getComponent("tower").setTowerList(this.towerGroup.children);
+        //         }
+        //         tower.getComponent("tower").setEnemyList(this.enemyMng.list);
+        //     }
+        // }
 
         if (this.overFlag === false &&
             this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length

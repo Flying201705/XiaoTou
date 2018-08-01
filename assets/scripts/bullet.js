@@ -31,9 +31,9 @@ cc.Class({
         //减速率
         this.slowRate = towerScript.getSlowRate();
         //范围攻击
-        this.areaAtt = towerScript.isAreaAttack();
+        // this.areaAtt = towerScript.isAreaAttack();
         //攻击列表
-        this.attList = towerScript.getAreaEnemyList();
+        // this.attList = towerScript.getAreaEnemyList();
 
         this.doMove();
     },
@@ -42,11 +42,11 @@ cc.Class({
         let distance = cc.pDistance(this.node.position, this.enemy.position);
         let move = cc.moveTo(distance / this.speed , this.enemy.position);
         this.moveAction = cc.sequence(move, cc.callFunc(() => {
-            if (this.areaAtt) {
-                this.handleAreaAttack();
-            } else {
+            // if (this.areaAtt) {
+            //     this.handleAreaAttack();
+            // } else {
                 this.enemy.getComponent("enemy").beAttacked(this);
-            }
+            // }
             global.event.fire("destroy_bullet", this.type, this.node);
         }));
         this.node.runAction(this.moveAction);
@@ -79,10 +79,10 @@ cc.Class({
     //
     // },
 
-    handleAreaAttack: function () {
-        for (let i = 0; i < this.attList.length; i++) {
-            let enemy = this.attList[i];
-            enemy.getComponent("enemy").beAttacked(this);
-        }
-    }
+    // handleAreaAttack: function () {
+    //     for (let i = 0; i < this.attList.length; i++) {
+    //         let enemy = this.attList[i];
+    //         enemy.getComponent("enemy").beAttacked(this);
+    //     }
+    // }
 });

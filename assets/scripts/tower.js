@@ -79,12 +79,18 @@ cc.Class({
 
     initWithData: function (gameWorld, towerConfig, maxLevel) {
         this.enemyMng = gameWorld.enemyMng;
+        this.towers = gameWorld.towersGroup;
 
         this.towerConfig = towerConfig;
         this.maxLevel = maxLevel;
         this.updateTowerConfig();
 
         this.schedule(this.checkAtkTarget, 0.1);
+
+        if (this.buffAttack === true) {
+            this.schedule(this.checkBuffTowers, 0.1);
+            this.schedule(this.buff, 1);
+        }
     },
 
     updateTowerConfig: function () {
@@ -136,7 +142,7 @@ cc.Class({
     },
 
     checkAtkTarget: function () {
-        if (this.areaAttack === true && this.buffAttack !== true) {
+        if (this.areaAttack === true) {
             this.chooseAtkTargets();
         } else {
             if (!this.hasAtkTarget()) {
@@ -168,9 +174,6 @@ cc.Class({
         for (let i = 0; i < enemyList.length; i++) {
             let enemy = enemyList[i];
             if (this.isInAtkRange(enemy)) {
-                if (!this.hasAtkTarget()) {
-                    this.enemy = enemy;
-                }
                 this.areaEnemyList.push(enemy);
             }
         }
@@ -186,12 +189,29 @@ cc.Class({
         return false;
     },
 
-    checkTargetIsOutOfRange: function() {
+    checkTargetIsOutOfRange: function () {
         if (this.hasAtkTarget()) {
             if (this.isInAtkRange(this.enemy)) {
                 this.missAtkTarget();
             }
         }
+    },
+
+    checkBuffTowers: function () {
+        this.areaTowerList = [];
+        let towerList = this.towerGroup.children;
+        for (let i = 0; i < towerList.length; i++) {
+            let tower = towerList[i];
+            let distance = cc.pDistance(tower.position, this.node.position);
+            if (distance < this.lookRange) {
+                this.areaTowerList.push(tower);
+            }
+        }
+    },
+
+    buff: function() {
+        this.anim.play(this.towerType);
+        global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);
     },
 
     updateTower: function () {
@@ -210,21 +230,6 @@ cc.Class({
         cc.log("sell tower");
 
         this.node.destroy();
-    },
-
-    setTowerList: function (towerList) {
-        if (this.buffAttack !== true) {
-            return;
-        }
-
-        this.areaTowerList = [];
-        for (let i = 0; i < towerList.length; i++) {
-            let tower = towerList[i];
-            let distance = cc.pDistance(tower.position, this.node.position);
-            if (distance < this.lookRange) {
-                this.areaTowerList.push(tower);
-            }
-        }
     },
 
     beBuffed: function (attackRate, speedRate) {
@@ -263,7 +268,10 @@ cc.Class({
         }
 
         if (this.currentShootTime > shootDt) {
-            if (this.hasAtkTarget() && this.enemy.getComponent("enemy").isLiving()) {
+            if (this.areaAttack === true && this.areaEnemyList.length > 0) {
+                this.currentShootTime = 0;
+                this.shootBullets();
+            } else if (this.hasAtkTarget() && this.enemy.getComponent("enemy").isLiving()) {
                 this.currentShootTime = 0;
                 this.shootBullet();
             }
@@ -272,11 +280,18 @@ cc.Class({
 
     shootBullet: function () {
         this.anim.play(this.towerType);
-        if (this.buffAttack === true) {
-            global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);
-        } else {
-            cc.audioEngine.play(this.shootAudio, false, 1);
-            global.event.fire("shoot_bullet", this.node, this.enemy);
+        cc.audioEngine.play(this.shootAudio, false, 1);
+        global.event.fire("shoot_bullet", this.node, this.enemy);
+    },
+
+    shootBullets: function() {
+        this.anim.play(this.towerType);
+        cc.audioEngine.play(this.shootAudio, false, 1);
+        for (let i = 0; i < this.areaEnemyList.length; i++) {
+            let enemy = this.areaEnemyList[i];
+            if (enemy && enemy.getComponent("enemy").isLiving()) {
+                global.event.fire("shoot_bullet", this.node, enemy);
+            }
         }
     },
 
