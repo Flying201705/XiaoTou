@@ -7,6 +7,7 @@ import GoodsData from './GoodsData';
 import global from './global';
 
 const net = require('./common/net');
+const util = require('./common/util');
 
 const http_head = "http://qyx18.com:1234/xiaotou/";
 const get_user_info = "user/getUserInfoId";
@@ -68,6 +69,16 @@ function _updateLocalLevel(lv, stars, score) {
         level.stars = stars;
         InfoData.levels[lv - 1] = level;
     }
+}
+
+function _getGoodsInfoById(goodsId) {
+    for (let i = 0; i < InfoData.goods.length; i++) {
+        if (InfoData.goods[i].goodsid === goodsId) {
+            return InfoData.goods[i];
+        }
+    }
+
+    return null;
 }
 
 const InfoHandle = cc.Class({
@@ -246,7 +257,9 @@ const InfoHandle = cc.Class({
                 id: InfoData.user.id,
                 lv: lv,
                 score: score,
-                stars: stars
+                stars: stars,
+                crystal: InfoData.user.crystal,
+                goods: InfoData.goods
             },
             success: () => {
                 _updateLocalLevel(lv, stars, score);
@@ -277,20 +290,18 @@ const InfoHandle = cc.Class({
     },
 
     updateLocalGoods: function (goodsId, num) {
-        let isUpdated = false;
-        for (let i = 0; i < InfoData.goods.length; i++) {
-            if (InfoData.goods[i].goodsid === goodsId) {
-                InfoData.goods[i].number += num;
-                isUpdated = true;
-                break;
+        let goodsInfo = _getGoodsInfoById(goodsId);
+        if (util.isEmpty(goodsInfo)) {
+            if (num > 0) {
+                let goods = new GoodsData();
+                goods.goodsid = goodsId;
+                goods.number = num;
+                InfoData.goods[InfoData.goods.length] = goods;
             }
-        }
-
-        if (isUpdated !== true) {
-            let goods = new GoodsData();
-            goods.goodsid = goodsId;
-            goods.number = num;
-            InfoData.goods[InfoData.goods.length] = goods;
+        } else {
+            let newNum = goodsInfo.number + num;
+            newNum = newNum > 0 ? newNum : 0;
+            goodsInfo.number = newNum;
         }
     },
 
@@ -303,13 +314,13 @@ const InfoHandle = cc.Class({
                 num: num
             },
             success: (ret) => {
-                callback && callback.success && callback.success(ret);
                 this.updateLocalGoods(goods, num);
+                callback && callback.success && callback.success(ret);
             },
             fail: () => {
                 callback && callback.fail && callback.fail();
             }
-        })
+        });
 
 
         //检查更新英雄属性
