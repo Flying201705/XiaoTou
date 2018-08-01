@@ -37,14 +37,14 @@
     "towerName": "小兵",
     "tower_icon": 1,
     "tower_level": 2,
-    "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
+    "description": "<size=25><color=#ffff80>打钱能手</c></size>，前期唯一的金钱来源\n每次攻击都会获取一定比例金钱"
   },
   "level_2": {
     "mode": 1,
     "towerName": "剑士",
     "tower_icon": 2,
     "tower_level": 3,
-    "description": "高攻击，攻击速度快\n带概率爆击，主要的攻击英雄"
+    "description": "高攻击，攻击速度快\n带<b><color=#ffff80>概率爆击</c></b>，主要的攻击英雄"
   },
   "level_3": {
     "mode": 0
@@ -54,14 +54,14 @@
     "towerName": "小兵",
     "tower_icon": 1,
     "tower_level": 3,
-    "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
+    "description": "<size=25><color=#ffff80>打钱能手</c></size>，前期唯一的金钱来源\n每次攻击都会获取一定比例金钱"
   },
   "level_5": {
     "mode": 1,
     "towerName": "武士",
     "tower_icon": 3,
     "tower_level": 3,
-    "description": "高攻击，攻击速度稍慢\n带概率眩晕，打BOSS必备"
+    "description": "高攻击，攻击速度稍慢\n带<b><color=#ffff80>概率眩晕</c></b>，打<b><color=#ffff80>BOSS</c></b>必备"
   },
   "level_6": {
     "mode": 2,
@@ -90,14 +90,14 @@
     "towerName": "小兵",
     "tower_icon": 1,
     "tower_level": 5,
-    "description": "打钱能手，主要的金钱来源\n每次攻击获取一定比例金钱"
+    "description": "<size=25><color=#ffff80>打钱能手</c></size>，前期唯一的金钱来源\n每次攻击都会获取一定比例金钱"
   },
   "level_9": {
     "mode": 1,
     "towerName": "女巫",
     "tower_icon": 4,
     "tower_level": 3,
-    "description": "范围攻击\n减慢怪物移动速度，减少怪物护甲"
+    "description": "范围攻击\n<b><color=#ff00ff>减慢怪物移动速度，减少怪物护甲</c></b>"
   },
   "level_10": {
     "mode": 2,
@@ -149,7 +149,7 @@
     "towerName": "男巫",
     "tower_icon": 6,
     "tower_level": 3,
-    "description": "非攻击英雄\n给其他英雄增加攻击力，攻击速度"
+    "description": "非攻击英雄\n给其他英雄<b><color=#ff00ff>增加攻击力，增加攻击速度</c></b>"
   },
   "level_20": {
     "mode": 2,
@@ -175,7 +175,7 @@
     "towerName": "神秘英雄",
     "tower_icon": 0,
     "tower_level": 1,
-    "description": "<召唤>神秘英雄，全屏移动\n打怪自动升级，攻击/抢钱，样样精通"
+    "description": "<size=25><color=#ff00ff>召唤</c></size>神秘英雄，可<b><color=#ffff80>全屏移动</c></b>\n打怪<b><color=#ffff80>自动升级</c></b>，攻击/抢钱，样样精通\n可携带<b><color=#ff00ff>装备和技能</c></b>"
   },
   "level_26": {
     "mode": 2,
