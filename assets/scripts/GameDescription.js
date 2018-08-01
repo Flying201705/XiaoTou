@@ -25,7 +25,7 @@ cc.Class({
             default: [],
             type: [cc.SpriteFrame]
         },
-        IMG_HEIGHT: 130,
+        IMG_HEIGHT: 80,
         contentHero: {
             default: null,
             type: cc.Node
@@ -48,7 +48,7 @@ cc.Class({
         },
         description: {
             default: null,
-            type: cc.Label
+            type: cc.RichText
         },
         towerSprites: {
             default: [],
