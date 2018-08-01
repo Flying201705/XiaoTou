@@ -60,7 +60,7 @@ cc.Class({
         let index = type - 1;
         if (index < this.propItemNodes.length) {
             this.propItemNodes[index].getChildByName('prop_item').getComponent("prop-item").addPropNum(num);
-            new InfoHandle().updateGoods(type, num, null);
+            new InfoHandle().updateLocalGoods(type, num, null);
         }
     },
 });

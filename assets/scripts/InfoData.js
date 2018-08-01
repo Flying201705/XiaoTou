@@ -22,6 +22,8 @@ const get_all_goods = "goods/allGoods";
 const update_goods = "goods/updateGoods";
 const compound_goods = "goods/compound";
 
+const sync_user_info = "user/sync";
+
 const InfoData = {
     user: UserData,
     levels: {
@@ -90,13 +92,6 @@ const InfoHandle = cc.Class({
         InfoData.goods = [];
         this.login(wxCode);
     },
-
-    // getOpenId: function (code, appid, secret) {
-    //     net.request({
-    //         url: http_head + get_openid + "code=" + code + "&appid=" + appid + "&appsecret=" + secret
-    //     })
-    // },
-
     login: function (wxCode) {
         console.log('[InfoHandle] request user info');
         net.request({
@@ -116,61 +111,12 @@ const InfoHandle = cc.Class({
             }
         })
     },
+    handleUserInfo: function (obj) {
+        InfoData.user.init(obj);
 
-    getUserInfoById: function (id) {
-        console.log('[InfoHandle] request user info2');
-        net.request({
-            url: http_head + get_user_info,
-            data: {
-                id: id
-            },
-            success: (ret) => {
-                this.handleUserInfo(ret);
-                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
-                this.onDataLoaded(InfoData.TOKEN_USER_INFO);
-            },
-            fail: () => {
-                console.log('[InfoHandle] get user info fail');
-                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
-                this.onDataLoadError();
-            }
-        })
+        this.getAllGoodsByUserId(InfoData.user.id);
+        this.getLevelsByUserId(InfoData.user.id);
     },
-
-    getLevelsById: function (id) {
-        console.log('[InfoHandle] request level');
-        net.request({
-            url: http_head + get_levels,
-            data: {
-                id: id
-            },
-            success: (ret) => {
-                this.handleLevels(ret);
-                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_LEVEL;
-                this.onDataLoaded(InfoData.TOKEN_LEVEL);
-            },
-            fail: () => {
-                console.log('[InfoHandle] get level fail');
-                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
-                this.onDataLoadError();
-            }
-        })
-    },
-
-    hasHero: function () {
-        if (InfoData.user.hero > 0) {
-            return true;
-        }
-
-        for (let i = 0; i < InfoData.goods.length; i++) {
-            if (InfoData.goods[i].goodsid === 100 && InfoData.goods[i].number > 0) {
-                return true;
-            }
-        }
-
-        return false;
-    },
-
     getAllGoodsByUserId: function (id) {
         console.log('[InfoHandle] request goods');
         net.request({
@@ -190,14 +136,38 @@ const InfoHandle = cc.Class({
             }
         })
     },
-
-    handleUserInfo: function (obj) {
-        InfoData.user.init(obj);
-
-        this.getAllGoodsByUserId(InfoData.user.id);
-        this.getLevelsById(InfoData.user.id);
+    getLevelsByUserId: function (id) {
+        console.log('[InfoHandle] request level');
+        net.request({
+            url: http_head + get_levels,
+            data: {
+                id: id
+            },
+            success: (ret) => {
+                this.handleLevels(ret);
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_LEVEL;
+                this.onDataLoaded(InfoData.TOKEN_LEVEL);
+            },
+            fail: () => {
+                console.log('[InfoHandle] get level fail');
+                InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
+                this.onDataLoadError();
+            }
+        })
     },
+    hasHero: function () {
+        if (InfoData.user.hero > 0) {
+            return true;
+        }
 
+        for (let i = 0; i < InfoData.goods.length; i++) {
+            if (InfoData.goods[i].goodsid === 100 && InfoData.goods[i].number > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    },
     handleLevels: function (obj) {
         for (let i = 0; i < obj.length; i++) {
             let level = new LevelData();
@@ -215,7 +185,6 @@ const InfoHandle = cc.Class({
             InfoData.levels[obj[i].lv - 1] = level;
         }
     },
-
     handleGoods: function (obj) {
         for (let i = 0; i < obj.length; i++) {
             let goods = new GoodsData();
@@ -223,29 +192,12 @@ const InfoHandle = cc.Class({
             InfoData.goods[i] = goods;
             //检查更新英雄属性
             if (goods.goodsid === 100 && goods.number > 0 && InfoData.user.hero <= 0) {
-                new InfoHandle().updateHero(1);
+                new InfoHandle().updateLocalHero(1);
             }
         }
     },
-    updateHero: function (hero) {
-        hero = hero > 0 ? 1 : 0;
-        if (InfoData.user.hero === hero) {
-            return;
-        }
-
-        net.request({
-            url: http_head + update_user_hero,
-            data: {
-                id: InfoData.user.id,
-                hero: hero
-            },
-            success: () => {
-                InfoData.user.hero = hero;
-            },
-            fail: () => {
-                cc.info('update hero fail');
-            }
-        })
+    updateLocalHero: function (hero) {
+        InfoData.user.hero = hero > 0 ? 1 : 0;
     },
     updateLevel: function (lv, score, stars) {
         if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1].stars >= stars) {
@@ -273,21 +225,26 @@ const InfoHandle = cc.Class({
             }
         })
     },
-    updateCrystal: function (crystal) {
-
-        // net.request({
-        //     url: http_head + update_user_crystal,
+    syncUserInfo() {
+        // 待调试
+        cc.info('xxx待调试xxx');
+        // net.r、equest({
+        //     url: http_head + sync_user_info,
         //     data: {
-        //         id: InfoData.user.id,
-        //         crys: crystal
+        //         userId: InfoData.user.id,
+        //         crystal: InfoData.user.crystal,
+        //         goods: InfoData.goods
         //     },
         //     success: () => {
-        InfoData.user.crystal += crystal;
-        // },
-        // fail: () => {
-        //     cc.info('update crystal fail');
-        // }
+        //         cc.info('update user success');
+        //     },
+        //     fail: () => {
+        //         cc.info('update user fail');
+        //     }
         // })
+    },
+    updateLocalCrystal: function (crystal) {
+        InfoData.user.crystal += crystal;
     },
     /**
      * 更新本地物品数量。
@@ -296,6 +253,12 @@ const InfoHandle = cc.Class({
      * @returns {更新成功，返回物品ID；失败返回-1}
      */
     updateLocalGoods: function (goodsId, num) {
+
+        //检查更新英雄属性
+        if (goodsId === 100 && num > 0 && InfoData.user.hero <= 0) {
+            new InfoHandle().updateLocalHero(1);
+        }
+
         let goodsInfo = _getGoodsInfoById(goodsId);
         if (util.isEmpty(goodsInfo)) {
             if (num > 0) {
@@ -314,30 +277,6 @@ const InfoHandle = cc.Class({
 
         return -1;
     },
-
-    updateGoods: function (goods, num, callback) {
-        net.request({
-            url: http_head + update_goods,
-            data: {
-                id: InfoData.user.id,
-                goods: goods,
-                num: num
-            },
-            success: (ret) => {
-                this.updateLocalGoods(goods, num);
-                callback && callback.success && callback.success(ret);
-            },
-            fail: () => {
-                callback && callback.fail && callback.fail();
-            }
-        });
-
-
-        //检查更新英雄属性
-        if (goods === 100 && num > 0 && InfoData.user.hero <= 0) {
-            new InfoHandle().updateHero(1);
-        }
-    },
     onDataLoaded(token) {
         // cc.log('xxx onDataLoaded token:' + token);
         global.event.fire("onDataDownloadCallback", token);
@@ -345,7 +284,6 @@ const InfoHandle = cc.Class({
     onDataLoadError() {
         global.event.fire("onDataDownloadCallback", InfoData.TOKEN_ERROR);
     },
-
 });
 
 export {

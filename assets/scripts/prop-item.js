@@ -59,8 +59,7 @@ cc.Class({
             this.propNums--;
             this.propNumLabel.string = this.propNums.toString();
 
-            // 更新服务器道具数量
-            new InfoHandle().updateGoods(this.propId, -1, null);
+            new InfoHandle().updateLocalGoods(this.propId, -1, null);
         } else {
             this.onPropBuy(this.propId);
         }
