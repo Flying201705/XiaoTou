@@ -20,6 +20,7 @@ const get_levels = "level/allLevels";
 const update_level = "level/updateLevel";
 const get_all_goods = "goods/allGoods";
 const update_goods = "goods/updateGoods";
+const compound_goods = "goods/compound";
 
 const InfoData = {
     user: UserData,
@@ -274,21 +275,26 @@ const InfoHandle = cc.Class({
     },
     updateCrystal: function (crystal) {
 
-        net.request({
-            url: http_head + update_user_crystal,
-            data: {
-                id: InfoData.user.id,
-                crys: crystal
-            },
-            success: () => {
-                InfoData.user.crystal += crystal;
-            },
-            fail: () => {
-                cc.info('update crystal fail');
-            }
-        })
+        // net.request({
+        //     url: http_head + update_user_crystal,
+        //     data: {
+        //         id: InfoData.user.id,
+        //         crys: crystal
+        //     },
+        //     success: () => {
+        InfoData.user.crystal += crystal;
+        // },
+        // fail: () => {
+        //     cc.info('update crystal fail');
+        // }
+        // })
     },
-
+    /**
+     * 更新本地物品数量。
+     * @param goodsId
+     * @param num 待更新数量，正数增加，负数减少。
+     * @returns {更新成功，返回物品ID；失败返回-1}
+     */
     updateLocalGoods: function (goodsId, num) {
         let goodsInfo = _getGoodsInfoById(goodsId);
         if (util.isEmpty(goodsInfo)) {
@@ -297,12 +303,16 @@ const InfoHandle = cc.Class({
                 goods.goodsid = goodsId;
                 goods.number = num;
                 InfoData.goods[InfoData.goods.length] = goods;
+                return goodsId;
             }
         } else {
             let newNum = goodsInfo.number + num;
             newNum = newNum > 0 ? newNum : 0;
             goodsInfo.number = newNum;
+            return goodsId;
         }
+
+        return -1;
     },
 
     updateGoods: function (goods, num, callback) {
