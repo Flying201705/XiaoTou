@@ -87,7 +87,7 @@ cc.Class({
 
         this.schedule(this.checkAtkTarget, 0.1);
 
-        if (this.buffAttack === true) {
+        if (this.isBuffAttack()) {
             this.schedule(this.checkBuffTowers, 0.1);
             this.schedule(this.buff, 1);
         }
@@ -142,10 +142,10 @@ cc.Class({
     },
 
     checkAtkTarget: function () {
-        if (this.areaAttack === true) {
+        if (this.isAreaAttack()) { //群体攻击
             this.chooseAtkTargets();
         } else {
-            if (!this.hasAtkTarget()) {
+            if (!this.hasAtkTarget()) { //单体攻击
                 this.chooseAtkTarget();
             } else {
                 if (!this.enemy.getComponent("enemy").isLiving()) {
@@ -191,7 +191,7 @@ cc.Class({
 
     checkTargetIsOutOfRange: function () {
         if (this.hasAtkTarget()) {
-            if (this.isInAtkRange(this.enemy)) {
+            if (!this.isInAtkRange(this.enemy)) {
                 this.missAtkTarget();
             }
         }
@@ -268,7 +268,7 @@ cc.Class({
         }
 
         if (this.currentShootTime > shootDt) {
-            if (this.areaAttack === true && this.areaEnemyList.length > 0) {
+            if (this.isAreaAttack() && this.areaEnemyList.length > 0) {
                 this.currentShootTime = 0;
                 this.shootBullets();
             } else if (this.hasAtkTarget() && this.enemy.getComponent("enemy").isLiving()) {
@@ -296,22 +296,16 @@ cc.Class({
     },
 
     isAreaAttack: function () {
-        if (this.areaAttack !== undefined) {
-            return this.areaAttack;
-        }
-        return false;
+        return this.areaAttack === true;
     },
 
-    ifBuffAttack: function () {
-        if (this.buffAttack !== undefined) {
-            return this.buffAttack;
-        }
-        return false;
+    isBuffAttack: function () {
+        return this.buffAttack === true;
     },
 
-    getAreaEnemyList: function () {
-        return this.areaEnemyList;
-    },
+    // getAreaEnemyList: function () {
+    //     return this.areaEnemyList;
+    // },
 
     getAreaTowerList: function () {
         return this.areaTowerList;
