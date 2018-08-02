@@ -7,10 +7,11 @@ cc.Class({
         parentNode: cc.Node,
         border: cc.Node,
         mode: {
-            default: "BORDER",
+            default: "OUT_BORDER",
             type: cc.Enum({
-                "OUT_BORDER": 0,
-                "BORDER_SIDE": 1,
+                "NONE": 0,
+                "OUT_BORDER": 1,
+                "BORDER_SIDE": 2,
             })
         }
     },
@@ -23,6 +24,10 @@ cc.Class({
         this.node.on('touchend', function (event) {
             console.log('on touchend');
             event.stopPropagation();
+
+            if (self.mode == 0) {
+                return;
+            }
 
             // 点击弹窗外面区域退出弹窗
             if (self.border != null) {

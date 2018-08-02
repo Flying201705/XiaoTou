@@ -242,7 +242,30 @@ const InfoHandle = cc.Class({
         });
     },
     updateLocalCrystal: function (crystal) {
-        InfoData.user.crystal += crystal;
+        if (util.isEmpty(crystal)) {
+            return;
+        }
+        let newCount = InfoData.user.crystal + crystal;
+        InfoData.user.crystal = newCount > 0 ? newCount : 0;
+    },
+    /**
+     * 更新服务器水晶数
+     */
+    updateRemoteCrystal(num) {
+        net.request({
+            url: http_head + update_user_crystal,
+            data: {
+                userId: InfoData.user.id,
+                crystal: num
+            },
+            success: () => {
+                cc.info('updateRemoteCrystal success');
+            },
+            fail: () => {
+                cc.info('updateRemoteCrystal fail');
+            }
+        });
+        this.updateLocalCrystal(num);
     },
     /**
      * 更新本地物品数量。
@@ -285,6 +308,7 @@ const InfoHandle = cc.Class({
 });
 
 export {
+    http_head,
     InfoHandle,
     InfoData
 };

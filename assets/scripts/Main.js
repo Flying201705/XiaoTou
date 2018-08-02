@@ -1,4 +1,9 @@
 import rank from './rank_list'
+import global from "./global";
+import {InfoData} from "./InfoData";
+
+const net = require("./common/net");
+const remoteHelper = require("./common/RemoteHelper");
 
 cc.Class({
     extends: cc.Component,
@@ -6,12 +11,18 @@ cc.Class({
     properties: {
         rankList: cc.Node,
         display: cc.Sprite,
+        signIn: cc.Prefab,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
-
+    onLoad() {
+        global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
+        this.checkSignIn();
+    },
+    onDestroy() {
+        global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
+    },
     start() {
         this.tex = new cc.Texture2D();
         this._resizeShareCanvas();
@@ -71,4 +82,17 @@ cc.Class({
         // rank.setRank(17);
         rank.showRankList();
     },
+    checkSignIn() {
+        if (InfoData.user.id > 0) {
+            remoteHelper.checkSignIn(InfoData.user.id, data => {
+                let signIn = cc.instantiate(this.signIn);
+                signIn.parent = this.node;
+            });
+        }
+    },
+    onDataDownloadCallback(token) {
+        if (token === InfoData.TOKEN_USER_INFO) {
+            this.checkSignIn();
+        }
+    }
 });
