@@ -226,22 +226,20 @@ const InfoHandle = cc.Class({
         })
     },
     syncUserInfo() {
-        // 待调试
-        cc.info('xxx待调试xxx');
-        // net.r、equest({
-        //     url: http_head + sync_user_info,
-        //     data: {
-        //         userId: InfoData.user.id,
-        //         crystal: InfoData.user.crystal,
-        //         goods: InfoData.goods
-        //     },
-        //     success: () => {
-        //         cc.info('update user success');
-        //     },
-        //     fail: () => {
-        //         cc.info('update user fail');
-        //     }
-        // })
+        net.request({
+            url: http_head + sync_user_info,
+            data: {
+                userId: InfoData.user.id,
+                crystal: InfoData.user.crystal,
+                goods: InfoData.goods
+            },
+            success: () => {
+                cc.info('update user success');
+            },
+            fail: () => {
+                cc.info('update user fail');
+            }
+        });
     },
     updateLocalCrystal: function (crystal) {
         InfoData.user.crystal += crystal;
