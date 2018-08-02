@@ -6,7 +6,7 @@ module.exports = {
     checkSignIn: (userId, success) => {
         cc.info('query sign in status');
         net.request({
-            url: http_head + `user/${userId}/sign_in`,
+            url: http_head + `user/${userId}/check_sign_in`,
             success: data => {
                 cc.info('success', data);
                 success && success(data);
