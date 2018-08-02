@@ -2,10 +2,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        enemyPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
+        enemyPrefab: cc.Prefab,
+        enemyFrames:  [cc.SpriteFrame],
+        bossFrames: [cc.SpriteFrame],
     },
 
     onLoad() {
@@ -60,5 +59,13 @@ cc.Class({
 
     getEnemyConfigs: function () {
         return this.enemyConfigs;
+    },
+    
+    getMonsterSprite: function (type) {
+        return this.enemyFrames[type];
+    },
+
+    getBossSprite: function (type) {
+        return this.bossFrames[type];
     }
 });

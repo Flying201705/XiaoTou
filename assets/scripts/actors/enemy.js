@@ -13,14 +13,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        enemyFrames: {
-            default: [],
-            type: cc.SpriteFrame
-        },
-        bossFrames: {
-            default: [],
-            type: cc.SpriteFrame
-        },
         spriteNode: {
             default: null,
             type: cc.Sprite
@@ -45,8 +37,10 @@ cc.Class({
 
     initWithData: function (gameWorld, type, config, pathPoints) {
         this.speed = config.speed; //速度
+
         this.currentHealthCount = config.health; //当前血量
         this.totalHealthCount = config.health; //总血量
+        this.healthProgressBar.node.active = false;
 
         this.isBoss = false; //是否BOSS
         if (config.boss !== undefined) {
@@ -69,11 +63,12 @@ cc.Class({
         this.spriteNode.node.scaleX = 1; //复位节点方向
 
         this.gameWorld = gameWorld;
+
         this.type = type;
         if (this.type >= 1000) {
-            this.spriteNode.spriteFrame = this.bossFrames[this.type % 1000];
+            this.spriteNode.spriteFrame = this.gameWorld.enemyMng.getBossSprite(this.type % 1000);
         } else {
-            this.spriteNode.spriteFrame = this.enemyFrames[this.type];
+            this.spriteNode.spriteFrame = this.gameWorld.enemyMng.getMonsterSprite(this.type);
         }
 
         this.currentPathPointCount = 0;
@@ -147,12 +142,6 @@ cc.Class({
             }
         }
 
-        if (this.currentHealthCount < this.totalHealthCount) {
-            this.healthProgressBar.node.active = true;
-            this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
-        } else {
-            this.healthProgressBar.node.active = false;
-        }
         //位置标签 = 当前节点 * 10000 + distance
         if (this.node.position.active === true) {
             this.positionTag = this.currentPathPointCount * 10000 + cc.pDistance(this.node.position, this.pathPoints[this.currentPathPointCount]);
@@ -239,6 +228,13 @@ cc.Class({
         }
         this.gainGold(damage * gainRate);
         this.currentHealthCount -= damage;
+
+        /* 受过伤害后显示血条 */
+        if (this.currentHealthCount < this.totalHealthCount) {
+            this.healthProgressBar.node.active = true;
+            this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
+        }
+
         if (this.currentHealthCount <= 0) {
             this.currentHealthCount = 0;
             this.setState(EnemyState.Dead);

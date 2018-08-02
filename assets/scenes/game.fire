@@ -3483,7 +3483,71 @@
     "_enabled": true,
     "enemyPrefab": {
       "__uuid__": "7deaee16-f3af-4ba6-9946-5d399e5a6b33"
-    }
+    },
+    "enemyFrames": [
+      {
+        "__uuid__": "7589766f-1404-43c8-8c75-efdd3db25ec4"
+      },
+      {
+        "__uuid__": "1faf2443-60a9-46ad-a60a-793e76049ed6"
+      },
+      {
+        "__uuid__": "e714806b-7701-491b-8c58-20f066b171fc"
+      },
+      {
+        "__uuid__": "ca8dbebf-755f-40f9-8ab7-c25699304ba6"
+      },
+      {
+        "__uuid__": "04219ef7-1968-4125-95b6-74bf2c43caa8"
+      },
+      {
+        "__uuid__": "b51b4163-e45b-4935-acc6-95fa6cb6de15"
+      },
+      {
+        "__uuid__": "5cf680b8-3928-4d5c-8e65-bfbacea696db"
+      },
+      {
+        "__uuid__": "5baa78ea-5692-44b5-b5fa-39394968845b"
+      },
+      {
+        "__uuid__": "850514b9-8a5e-48bb-aca3-6660f874d100"
+      },
+      {
+        "__uuid__": "1985be8c-0ef1-4b71-8076-dfe8a42a6e8c"
+      },
+      {
+        "__uuid__": "73209701-3fb5-465c-8abd-ccffd78b858c"
+      },
+      {
+        "__uuid__": "46787716-6e27-4f8e-b126-65019463088f"
+      },
+      {
+        "__uuid__": "b8ebfdef-2874-42d7-b11f-0ede912b9faa"
+      },
+      {
+        "__uuid__": "8abf5f56-6503-40c8-bc1c-ec98e01188c6"
+      },
+      {
+        "__uuid__": "fd3a1a7d-2578-4fb1-ad6c-66c1404022e9"
+      },
+      {
+        "__uuid__": "db93806f-080c-41b8-ae16-b887ed20eafa"
+      },
+      {
+        "__uuid__": "1a11268a-bbf0-4707-8224-f44db7db3c54"
+      }
+    ],
+    "bossFrames": [
+      {
+        "__uuid__": "a3293db8-1396-43cb-b15e-e75caebac7e7"
+      },
+      {
+        "__uuid__": "ff468a87-168f-41a2-8235-de38b338bf01"
+      },
+      {
+        "__uuid__": "2b4795c3-d47c-4f16-8931-6c1314f52e08"
+      }
+    ]
   },
   {
     "__type__": "cc.Node",
