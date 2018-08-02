@@ -1,5 +1,5 @@
 import {InfoData} from './InfoData'
-import global from './global'
+const global = require("global");
 
 const login = require('./common/login');
 var self = null;

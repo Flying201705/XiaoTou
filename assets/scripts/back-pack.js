@@ -8,7 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 import {InfoHandle, InfoData} from './InfoData'
-import global from './global'
+const global = require("global");
 
 cc.Class({
     extends: cc.Component,

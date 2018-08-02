@@ -1,4 +1,4 @@
-import global from './global'
+const global = require("global");
 import {InfoHandle} from './InfoData'
 import {InfoData} from './InfoData'
 

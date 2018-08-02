@@ -1,5 +1,3 @@
-import global from "./global";
-
 const login = require('./common/login');
 
 cc.Class({

@@ -4,7 +4,7 @@
 import UserData from './UserData';
 import LevelData from './LevelData';
 import GoodsData from './GoodsData';
-import global from './global';
+const global = require("global");
 
 const net = require('./common/net');
 const util = require('./common/util');

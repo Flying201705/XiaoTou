@@ -1,4 +1,4 @@
-import global from './global'
+const global = require("./../global");
 
 const HeroState = {
     Invalid: -1,

@@ -1,4 +1,4 @@
-const global = require("global");
+const global = require("./../global");
 
 const EnemyState = {
     Invalid: -1,
