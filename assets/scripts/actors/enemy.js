@@ -1,4 +1,4 @@
-import global from './global'
+const global = require("global");
 
 const EnemyState = {
     Invalid: -1,
@@ -41,10 +41,6 @@ cc.Class({
             default: null,
             url: cc.AudioClip
         },
-        damagePrefab: {
-            default: null,
-            type: cc.Prefab
-        }
     },
 
     initWithData: function (gameWorld, type, config, pathPoints) {
@@ -327,13 +323,10 @@ cc.Class({
         if (num <= 0) {
             return;
         }
-        let damage = cc.instantiate(this.damagePrefab);
-        if (beCrit === true) {
-            damage.color = new cc.color(255, 104, 104, 255);
-        } else {
-            damage.color = new cc.color(255, 255, 255, 255);
-        }
-        damage.parent = this.node;
-        damage.getComponent("Damage").hit(num);
+
+        let damage = this.gameWorld.damageMng.createDamage(this.node);
+        let damageScript = damage.getComponent("Damage");
+        damageScript.init(this.gameWorld.damageMng);
+        damageScript.hit(num, beCrit);
     }
 });

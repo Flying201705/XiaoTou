@@ -14,70 +14,25 @@ let self = null;
 cc.Class({
     extends: cc.Component,
     properties: {
-        //选中背景框
-        selectBox: {
-            default: null,
-            type: cc.Node
-        },
-        towerGroup: {
-            default: null,
-            type: cc.Node
-        },
-        towerOperate: {
-            default: null,
-            type: cc.Node
-        },
-        enemyGroup: {
-            default: null,
-            type: cc.Node
-        },
-        heroLayer: {
-            default: null,
-            type: cc.Node
-        },
-        bulletLayer: {
-            default: null,
-            type: cc.Node
-        },
-        heroPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
+        selectBox: cc.Node,
+        towerGroup: cc.Node,
+        towerOperate: cc.Node,
+        enemyGroup: cc.Node,
+        heroLayer:  cc.Node,
+        bulletLayer: cc.Node,
+        damageLayer: cc.Node,
+        heroPrefab: cc.Prefab,
         heroPanelFab: cc.Prefab,
-        effectPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
-        goldLabel: {
-            default: null,
-            type: cc.Label
-        },
-        crystalLabel: {
-            default: null,
-            type: cc.Label
-        },
-        waveDetails: {
-            default: null,
-            type: cc.Label
-        },
-        lifeNode: {
-            default: null,
-            type: cc.Node
-        },
-        summonHintLabel: {
-            default: null,
-            type: cc.Label
-        },
-        gameOverUI: {
-            default: null,
-            type: cc.Node
-        },
+        effectPrefab: cc.Prefab,
+        goldLabel: cc.Label,
+        crystalLabel: cc.Label,
+        waveDetails: cc.Label,
+        lifeNode: cc.Node,
+        summonHintLabel: cc.Label,
+        gameOverUI: cc.Node,
         bottomBar: cc.Node,
         bottomContainer: cc.Node,
-        audioMng: {
-            default: null,
-            type: cc.Node
-        }
+        audioMng: cc.Node
     },
 
     // use this for initialization
@@ -117,6 +72,7 @@ cc.Class({
         this.towerOp = this.towerOperate.getComponent('TowerOperate');
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
         this.bulletMng = this.bulletLayer.getComponent('BulletMng');
+        this.damageMng = this.damageLayer.getComponent('DamageMng');
         this.hero = cc.instantiate(this.heroPrefab);
         this.hero.getComponent("hero").onHeroSelected = this.onHeroSelected;
         this.hero.active = false;
