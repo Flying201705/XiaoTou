@@ -8,11 +8,23 @@ module.exports = {
         net.request({
             url: http_head + `user/${userId}/check_sign_in`,
             success: data => {
-                cc.info('success', data);
+                cc.info('checkSignIn success', data);
                 success && success(data);
             },
             fail: res => {
-                cc.info('fail', res);
+                cc.info('checkSignIn fail', res);
+            },
+        });
+    },
+    signIn: (userId, success) => {
+        net.request({
+            url: http_head + `user/${userId}/sign_in`,
+            success: data => {
+                cc.info('signIn success', data);
+                success && success(data);
+            },
+            fail: res => {
+                cc.info('signIn fail', res);
             },
         });
     }
