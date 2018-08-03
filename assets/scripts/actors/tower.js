@@ -211,6 +211,10 @@ cc.Class({
     },
 
     fire: function (dt) {
+        if (global.isPause()) {
+            return;
+        }
+
         let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
         if (this.currentShootTime <= shootDt) {
             this.currentShootTime += dt;

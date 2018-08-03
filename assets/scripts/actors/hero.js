@@ -54,6 +54,10 @@ cc.Class({
     },
 
     fire: function (dt) {
+        if (global.isPause()) {
+            return;
+        }
+        
         if (this.state === HeroState.Attack) {
             let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
             if (this.currentShootTime <= shootDt) {
