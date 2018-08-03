@@ -53,18 +53,8 @@ cc.Class({
         this.AttackCount = 0;
     },
 
-    update: function (dt) {
-        if (this.state === HeroState.LeftMove || this.state === HeroState.RightMove) {
-            let distance = cc.pDistance(this.node.position, this.targetPosition);
-            if (distance < 10) {
-                this.unschedule(this.playHeroAnim);
-                this.state = HeroState.Attack;
-                this.playHeroAnim();
-            } else {
-                let direction = cc.pNormalize(cc.pSub(this.targetPosition, this.node.position));
-                this.node.position = cc.pAdd(this.node.position, cc.pMult(direction, this.speed * dt));
-            }
-        } else if (this.state === HeroState.Attack) {
+    fire: function (dt) {
+        if (this.state === HeroState.Attack) {
             let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
             if (this.currentShootTime <= shootDt) {
                 this.currentShootTime += dt;
@@ -75,6 +65,20 @@ cc.Class({
                     this.currentShootTime = 0;
                     this.shootBullet();
                 }
+            }
+        }
+    },
+
+    update: function (dt) {
+        if (this.state === HeroState.LeftMove || this.state === HeroState.RightMove) {
+            let distance = cc.pDistance(this.node.position, this.targetPosition);
+            if (distance < 10) {
+                this.unschedule(this.playHeroAnim);
+                this.state = HeroState.Attack;
+                this.playHeroAnim();
+            } else {
+                let direction = cc.pNormalize(cc.pSub(this.targetPosition, this.node.position));
+                this.node.position = cc.pAdd(this.node.position, cc.pMult(direction, this.speed * dt));
             }
         }
     },
@@ -104,7 +108,7 @@ cc.Class({
                 this.node.position = cc.p(x, y);
                 return true;
             }
-            
+
             if (x <= this.node.x) {
                 this.state = HeroState.LeftMove;
             } else {

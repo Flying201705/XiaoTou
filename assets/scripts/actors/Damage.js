@@ -35,7 +35,6 @@ cc.Class({
     },
 
     onAnimationFinished: function () {
-        cc.log("zzz onAnimationFinished");
         this.damageMng.destroyDamage(this.node);
     }
 });

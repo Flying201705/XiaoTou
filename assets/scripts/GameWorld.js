@@ -46,7 +46,6 @@ cc.Class({
 
         this.currentWaveCount = 0;
         this.totalWaveCount = 0;
-        this.currentEnemyCount = 0;
 
         this.tileSize = 80;
         this.goldCount = 0;
@@ -58,8 +57,6 @@ cc.Class({
         this.crystalLabel.string = this.crystalCount.toString();
 
         this.lifeCount = 10;
-        this.addEnemyCurrentTime = 0;
-        this.addWaveCurrentTime = 0;
 
         this.selectBox.active = false;
 
@@ -67,24 +64,29 @@ cc.Class({
         this.towerRects = [];
 
         this.initEvent();
+        this.loadConfigs();
 
         this.towerMng = this.towerGroup.getComponent('TowerMng');
         this.towerOp = this.towerOperate.getComponent('TowerOperate');
         this.enemyMng = this.enemyGroup.getComponent('EnemyMng');
+        this.enemyMng.init(this);
         this.bulletMng = this.bulletLayer.getComponent('BulletMng');
         this.damageMng = this.damageLayer.getComponent('DamageMng');
         this.hero = cc.instantiate(this.heroPrefab);
         this.hero.getComponent("hero").onHeroSelected = this.onHeroSelected;
         this.hero.active = false;
 
-        //加载地图
-        this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
-        this.level_map.loadMap(this.currentLevel);
-
         //音频
         this.audioMng = this.audioMng.getComponent("GameAudio");
         // 游戏结束flag
         this.overFlag = false;
+    },
+
+    loadConfigs: function() {
+        this.loadMapConfig();
+        this.loadLevelConfig();
+        this.loadTowerConfig();
+        this.loadRewardConfig();
     },
 
     initEvent: function () {
@@ -278,12 +280,17 @@ cc.Class({
     },
 
     gameStart: function () {
-        this.loadLevelConfig();
-        this.loadTowerConfig();
-        this.loadRewardConfig();
         this.enemyPathPositions = this.level_map.getPathPositions();
         this.towerRects = this.level_map.getObjRects();
         this.tileSize = this.level_map.getTileSize();
+
+        this.enemyMng.startBuildMonster();
+    },
+
+    loadMapConfig: function() {
+        //加载地图
+        this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
+        this.level_map.loadMap(this.currentLevel);
     },
 
     loadLevelConfig: function () {
@@ -292,12 +299,12 @@ cc.Class({
                 cc.log("load config " + err);
             } else {
                 //cc.log("level config" + JSON.stringify(result));
+                this.levelConfig = result["level_" + this.currentLevel];
+                this.addGold(this.levelConfig.gold);
+                this.towerOp.initBuildMenu(this.levelConfig.towers);
+                this.totalWaveCount = this.levelConfig.waves.length;
+                this.updateWaveDetails(this.currentWaveCount);
             }
-            this.levelConfig = result["level_" + this.currentLevel];
-            // this.currentWaveConfig = wavesConfig[0];
-            this.addGold(this.levelConfig.gold);
-            this.towerOp.initBuildMenu(this.levelConfig.towers);
-            this.totalWaveCount = this.levelConfig.waves.length;
         });
     },
 
@@ -327,69 +334,21 @@ cc.Class({
             return;
         }
 
-        if (this.currentWaveConfig) {
-            if (this.addEnemyCurrentTime > this.currentWaveConfig.dt) {
-                this.addEnemyCurrentTime = 0;
-                this.currentEnemyCount++;
-                this.addEnemy(this.currentWaveConfig.type, this.currentWaveConfig.lv);
-                if (this.currentEnemyCount === this.currentWaveConfig.count) {
-                    this.currentWaveConfig = undefined;
-                    this.currentEnemyCount = 0;
-                }
-            }
-            else {
-                this.addEnemyCurrentTime += dt;
-            }
-        } else if (this.levelConfig) {
-            if (this.addWaveCurrentTime > this.levelConfig.dt) {
-                this.currentWaveConfig = this.levelConfig.waves[this.currentWaveCount];
-                if (this.currentWaveCount < this.levelConfig.waves.length) {
-                    this.currentWaveCount++;
-                    this.updateWaveDetails();
-                } else {
-                    this.currentWaveConfig = undefined;
-                }
-                this.addWaveCurrentTime = 0;
-            } else {
-                this.addWaveCurrentTime += dt;
-            }
-        }
-
         this.sortEnemyList(this.enemyMng.list);
-        // 处理英雄操作
-        // if (this.hero !== undefined && this.hero.active === true) {
-        //     this.hero.getComponent("hero").setEnemyList(this.enemyMng.list);
-        // }
-
-        // 处理塔操作
-        // for (let i = 0; i < this.towerGroup.childrenCount; i++) {
-        //     let tower = this.towerGroup.children[i];
-        //     if (tower !== undefined) {
-        //         if (tower.getComponent("tower").ifBuffAttack()) {
-        //             tower.getComponent("tower").setTowerList(this.towerGroup.children);
-        //         }
-        //         tower.getComponent("tower").setEnemyList(this.enemyMng.list);
-        //     }
-        // }
 
         if (this.overFlag === false &&
             this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
-            && this.currentWaveConfig === undefined
+            && this.enemyMng.currentWaveConfig === undefined
             && this.enemyGroup.childrenCount <= 0) {
             //游戏结束--赢了
             this.gameOver(true);
         }
     },
 
-    updateWaveDetails: function () {
-        this.waveDetails.string = this.prefixInteger(this.currentWaveCount, 2) + "/" + this.prefixInteger(this.totalWaveCount, 2);
-    },
-
-    addEnemy: function (type, level) {
-        let enemy = this.enemyMng.createEnemy(this.enemyGroup);
-        let configs = this.enemyMng.getEnemyConfigs();
-        let config = configs["enemy_" + type][level];
-        enemy.getComponent("enemy").initWithData(this, type, config, this.enemyPathPositions);
+    updateWaveDetails: function (wave) {
+        this.currentWaveCount = wave;
+        this.waveDetails.string = this.prefixInteger(this.currentWaveCount, 2)
+            + "/" + this.prefixInteger(this.totalWaveCount, 2);
     },
 
     addBullet: function (tower, enemy) {

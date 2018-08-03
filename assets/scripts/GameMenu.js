@@ -7,6 +7,7 @@ cc.Class({
         maskNode: cc.Node,
         levelNode:  cc.Node,
         clickAudio: cc.AudioClip,
+        speedMenuSprites:[cc.SpriteFrame],
         pauseMenuSprites:[cc.SpriteFrame]
     },
 
@@ -52,16 +53,20 @@ cc.Class({
         cc.director.loadScene('game');
     },
 
-    selcetStage: function () {
+    playButtonAudio: function() {
         cc.audioEngine.playEffect(this.clickAudio, false);
+    },
+
+    selcetStage: function () {
+        this.playButtonAudio();
+
         this.node.active = true;
-        // cc.director.resume();
         global.resume();
         cc.director.loadScene("stage");
     },
 
     onClickPauseBtn: function (event) {
-        cc.audioEngine.playEffect(this.clickAudio, false);
+        this.playButtonAudio();
 
         let button = event.target;
         if (global.isPause()) {
@@ -71,5 +76,15 @@ cc.Class({
             global.pause();
             button.getComponent(cc.Sprite).spriteFrame = this.pauseMenuSprites[1]
         }
+    },
+    
+    onClickSpeedBtn: function (event) {
+        this.playButtonAudio();
+
+        let scheduler = cc.director.getScheduler();
+        this.isOpenSpeedUp = (this.isOpenSpeedUp !== true);
+        scheduler.setTimeScale(this.isOpenSpeedUp ? 2 : 1);
+        let button = event.target;
+        button.getComponent(cc.Sprite).spriteFrame = this.speedMenuSprites[this.isOpenSpeedUp ? 1 : 0];
     }
 });
