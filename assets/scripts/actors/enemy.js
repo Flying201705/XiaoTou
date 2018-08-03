@@ -176,7 +176,11 @@ cc.Class({
                     this.dead();
                 }));
                 this.node.runAction(endSequence);
-                this.gameWorld.detractLife(1);
+                if (this.isBoss === true) {
+                    this.gameWorld.detractLife(5);
+                } else {
+                    this.gameWorld.detractLife(1);
+                }
                 break;
             default:
                 break;
