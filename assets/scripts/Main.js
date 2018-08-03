@@ -2,7 +2,6 @@ import rank from './rank_list'
 import global from "./global";
 import {InfoData} from "./InfoData";
 
-const net = require("./common/net");
 const remoteHelper = require("./common/RemoteHelper");
 
 cc.Class({
@@ -86,6 +85,7 @@ cc.Class({
         if (InfoData.user.id > 0) {
             remoteHelper.checkSignIn(InfoData.user.id, data => {
                 let signIn = cc.instantiate(this.signIn);
+                signIn.getComponent('sign_in').init(data.sign_days);
                 signIn.parent = this.node;
             });
         }

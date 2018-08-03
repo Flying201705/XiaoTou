@@ -849,7 +849,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 27
@@ -875,8 +875,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -901,7 +901,7 @@
     "node": {
       "__id__": 26
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -1387,7 +1387,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 45
@@ -1413,8 +1413,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -1439,7 +1439,7 @@
     "node": {
       "__id__": 44
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -1925,7 +1925,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 63
@@ -1951,8 +1951,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -1977,7 +1977,7 @@
     "node": {
       "__id__": 62
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -2463,7 +2463,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 81
@@ -2489,8 +2489,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -2515,7 +2515,7 @@
     "node": {
       "__id__": 80
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -3001,7 +3001,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 99
@@ -3027,8 +3027,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -3053,7 +3053,7 @@
     "node": {
       "__id__": 98
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -3539,7 +3539,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 117
@@ -3565,8 +3565,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -3591,7 +3591,7 @@
     "node": {
       "__id__": 116
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -4077,7 +4077,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 135
@@ -4103,8 +4103,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 57,
+      "height": 30
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -4129,7 +4129,7 @@
     "node": {
       "__id__": 134
     },
-    "_enabled": false,
+    "_enabled": true,
     "_N$string": "<outline color=black width=3><b><color=#00ff00>已领取</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 16,
@@ -4641,8 +4641,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 57,
-      "height": 30
+      "width": 0,
+      "height": 0
     },
     "_rotationX": -45,
     "_rotationY": -45,
@@ -5052,27 +5052,33 @@
     "_enabled": true,
     "gotFlag": [
       {
-        "__id__": 27
+        "__id__": 26
       },
       {
-        "__id__": 45
+        "__id__": 44
       },
       {
-        "__id__": 63
+        "__id__": 62
       },
       {
-        "__id__": 81
+        "__id__": 80
       },
       {
-        "__id__": 99
+        "__id__": 98
       },
       {
-        "__id__": 117
+        "__id__": 116
       },
       {
-        "__id__": 135
+        "__id__": 134
       }
-    ]
+    ],
+    "moreDayNode": {
+      "__id__": 139
+    },
+    "moreDayLabel": {
+      "__id__": 149
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
