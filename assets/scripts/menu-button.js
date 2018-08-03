@@ -1,8 +1,8 @@
 import {InfoData} from './InfoData'
-const global = require("global");
+const global = require("./global");
 
 const login = require('./common/login');
-var self = null;
+let self = null;
 cc.Class({
     extends: cc.Component,
 

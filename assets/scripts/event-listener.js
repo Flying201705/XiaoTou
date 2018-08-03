@@ -7,6 +7,7 @@ const EventListener = function (obj) {
         Register[name].push(method);
     };
     obj.fire = function (name) {
+        let ret = undefined;
         if (Register.hasOwnProperty(name)) {
             let handlerList = Register[name];
             for (let i = 0; i < handlerList.length; i++) {
@@ -15,9 +16,11 @@ const EventListener = function (obj) {
                 for (let j = 1; j < arguments.length; j++) {
                     args.push(arguments[j]);
                 }
-                return handler.apply(this, args);
+                ret = handler.apply(this, args);
             }
         }
+
+        return ret;
     };
     obj.off = function (name, method) {
         if (Register.hasOwnProperty(name)) {
