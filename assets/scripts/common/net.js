@@ -51,6 +51,11 @@ module.exports = {
         };
         // console.log('xxx url:' + options.url);
         xhr.open("POST", options.url, true);
-        xhr.send(options.data == null ? null : JSON.stringify(options.data));
+        if (options.data == null) {
+            xhr.send();
+        } else {
+            xhr.send(JSON.stringify(options.data));
+        }
+
     }
 };
