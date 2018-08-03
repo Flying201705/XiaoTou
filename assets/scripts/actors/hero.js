@@ -24,6 +24,8 @@ cc.Class({
         this.speed = 200;
         //英雄是否选中
         this.heroSelected = false;
+        // 英雄是否可以闪现
+        this.flashMove = false;
         this.state = HeroState.Invalid;
         this.targetPosition = this.node.position;
         //当前英雄级别，从0级开始
@@ -97,6 +99,12 @@ cc.Class({
             this.heroSelected = false;
             this.onHeroSelected(false);
             this.hideSelectedMark();
+            if (this.flashMove === true) {
+                // 有飞鞋的情况下，英雄瞬间移动
+                this.node.position = cc.p(x, y);
+                return true;
+            }
+            
             if (x <= this.node.x) {
                 this.state = HeroState.LeftMove;
             } else {
