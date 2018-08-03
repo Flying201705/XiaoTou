@@ -41,7 +41,7 @@
     "waves": [
       {"dt": 2,"type": 1,"lv": 0,"count": 10},
       {"dt": 2,"type": 0,"lv": 2,"count": 5},
-      {"dt": 1,"type": 2,"lv": 0,"count": 10},
+      {"dt": 2,"type": 2,"lv": 0,"count": 10},
       {"dt": 1,"type": 1,"lv": 2,"count": 10},
       {"dt": 2,"type": 2,"lv": 1,"count": 10},
       {"dt": 1,"type": 3,"lv": 0,"count": 15}
@@ -58,8 +58,8 @@
     "waves": [
       {"dt": 2,"type": 0,"lv": 2,"count": 5},
       {"dt": 2,"type": 1,"lv": 1,"count": 10},
-      {"dt": 1,"type": 2,"lv": 0,"count": 10},
-      {"dt": 1,"type": 3,"lv": 0,"count": 10},
+      {"dt": 2,"type": 2,"lv": 0,"count": 10},
+      {"dt": 2,"type": 3,"lv": 0,"count": 10},
       {"dt": 1,"type": 1,"lv": 2,"count": 15},
       {"dt": 1,"type": 2,"lv": 1,"count": 10},
       {"dt": 1,"type": 3,"lv": 1,"count": 10},
@@ -77,7 +77,7 @@
     ],
     "waves": [
       {"dt": 2,"type": 1,"lv": 0,"count": 10},
-      {"dt": 1,"type": 0,"lv": 2,"count": 10},
+      {"dt": 2,"type": 0,"lv": 2,"count": 10},
       {"dt": 2,"type": 2,"lv": 0,"count": 10},
       {"dt": 1,"type": 3,"lv": 0,"count": 8},
       {"dt": 1,"type": 1,"lv": 2,"count": 10},
@@ -97,7 +97,7 @@
     ],
     "waves": [
       {"dt": 2,"type": 0,"lv": 2,"count": 10},
-      {"dt": 1,"type": 2,"lv": 0,"count": 10},
+      {"dt": 2,"type": 2,"lv": 0,"count": 10},
       {"dt": 1,"type": 3,"lv": 0,"count": 10},
       {"dt": 1,"type": 2,"lv": 1,"count": 10},
       {"dt": 1,"type": 3,"lv": 1,"count": 10},
@@ -116,7 +116,7 @@
       {"type": "tower_c","level": 2}
     ],
     "waves": [
-      {"dt": 1,"type": 0,"lv": 2,"count": 10},
+      {"dt": 2,"type": 0,"lv": 2,"count": 10},
       {"dt": 2,"type": 1,"lv": 2,"count": 10},
       {"dt": 1,"type": 3,"lv": 0,"count": 10},
       {"dt": 2,"type": 2,"lv": 1,"count": 10},
@@ -141,7 +141,7 @@
       {"dt": 2,"type": 1,"lv": 1,"count": 10},
       {"dt": 2,"type": 3,"lv": 0,"count": 10},
       {"dt": 1,"type": 1,"lv": 2,"count": 10},
-      {"dt": 2,"type": 2,"lv": 1,"count": 15},
+      {"dt": 1,"type": 2,"lv": 1,"count": 15},
       {"dt": 1,"type": 3,"lv": 1,"count": 8},
       {"dt": 1,"type": 2,"lv": 2,"count": 10},
       {"dt": 1,"type": 4,"lv": 0,"count": 10},
@@ -176,7 +176,7 @@
 
   "level_10":{
     "dt": 1,
-    "gold": 250,
+    "gold": 450,
     "towers": [
       {"type": "tower_a","level": 4},
       {"type": "tower_b","level": 2},
