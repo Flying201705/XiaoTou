@@ -70,10 +70,10 @@ cc.Class({
 
         let button = event.target;
         if (global.isPause()) {
-            global.resume();
+            global.resume(global.pauseState.ButtonPause);
             button.getComponent(cc.Sprite).spriteFrame = this.pauseMenuSprites[0];
         } else {
-            global.pause();
+            global.pause(global.pauseState.ButtonPause);
             button.getComponent(cc.Sprite).spriteFrame = this.pauseMenuSprites[1]
         }
     },

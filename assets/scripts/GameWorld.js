@@ -127,10 +127,6 @@ cc.Class({
 
     setTouchEvent: function () {
         this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
-            if (global.isPause()) {
-                return;
-            }
-
             let windowSize = cc.view.getVisibleSize();
             let x = event.touch.getLocation().x - windowSize.width * 0.5;
             let y = event.touch.getLocation().y - windowSize.height * 0.5;
@@ -148,14 +144,17 @@ cc.Class({
                 }
             }
 
+            if (this.selectBox.active === true) {
+                this.closeMenu();
+                this.audioMng.playTowerDeselect();
+                return;
+            }
+
             // 处理塔操作
             let index = this.getTouchedTowerIdx(x, y);
             // console.log("touched event:" + x + "," + y + ", index = " + index);
             if (index >= 0) {
                 this.showUpdateMenu(index);
-            } else if (this.selectBox.active === true) {
-                this.closeMenu();
-                this.audioMng.playTowerDeselect();
             } else if (this.isTouchEnable(x, y)) {
                 this.showBuildMenu(x, y);
             }

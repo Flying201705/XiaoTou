@@ -1,20 +1,39 @@
 import EventListener from './event-listener'
 
-let _pause = false;
+const PauseState = {
+    NoPause: 0x00,
+    DefaultPause: 0x01,
+    ButtonPause: 0x02
+};
+
+let _pause = PauseState.NoPause;
+
 let global = {
     currentLevel: 1,
     userInfo: null,
     event: EventListener({}),
-    pause: () => {
-        _pause = true;
+    pauseState: PauseState,
+    pause: (ps) => {
+        if (ps) {
+            if (ps > _pause) {
+                _pause = ps;
+            }
+        } else if (_pause < PauseState.DefaultPause) {
+            _pause = PauseState.DefaultPause;
+        }
     },
-    resume: () => {
-        _pause = false;
+    resume: (ps) => {
+        if (ps) {
+            if (ps >= _pause) {
+                _pause = PauseState.NoPause;
+            }
+        } else if (_pause === PauseState.DefaultPause) {
+            _pause = PauseState.NoPause;
+        }
     },
     isPause: () => {
-        return _pause;
+        return _pause !== PauseState.NoPause;
     },
-
 };
 
 module.exports = global;
