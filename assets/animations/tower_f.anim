@@ -1,0 +1,43 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "tower_f",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.5166666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "6b5a8906-8cf3-44e6-8976-c79306a3240f"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "09d7ea60-cde2-4a4b-886c-4bf7c6395f84"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "515c9087-a860-4f3d-9bb1-cdd912077c54"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "f7075b2c-282b-4471-a56f-acc8e056e255"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

@@ -79,7 +79,7 @@ cc.Class({
 
     initWithData: function (gameWorld, towerConfig, maxLevel) {
         this.enemyMng = gameWorld.enemyMng;
-        this.towers = gameWorld.towersGroup;
+        this.towers = gameWorld.towerGroup;
 
         this.towerConfig = towerConfig;
         this.maxLevel = maxLevel;
@@ -200,7 +200,7 @@ cc.Class({
 
     checkBuffTowers: function () {
         this.areaTowerList = [];
-        let towerList = this.towerGroup.children;
+        let towerList = this.towers.children;
         for (let i = 0; i < towerList.length; i++) {
             let tower = towerList[i];
             let distance = cc.pDistance(tower.position, this.node.position);
