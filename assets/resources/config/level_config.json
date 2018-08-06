@@ -479,7 +479,7 @@
 
   "level_21":{
     "dt": 1,
-    "gold": 250,
+    "gold": 450,
     "towers": [
       {"type": "tower_a","level": 4},
       {"type": "tower_b","level": 2},
@@ -511,7 +511,7 @@
 
   "level_22":{
     "dt": 1,
-    "gold": 250,
+    "gold": 450,
     "towers": [
       {"type": "tower_a","level": 4},
       {"type": "tower_b","level": 2},
@@ -543,7 +543,7 @@
 
   "level_23":{
     "dt": 1,
-    "gold": 250,
+    "gold": 450,
     "towers": [
       {"type": "tower_a","level": 4},
       {"type": "tower_b","level": 2},
@@ -575,7 +575,7 @@
 
   "level_24":{
     "dt": 1,
-    "gold": 250,
+    "gold": 400,
     "towers": [
       {"type": "tower_a","level": 4},
       {"type": "tower_b","level": 2},
@@ -608,7 +608,7 @@
 
 "level_25":{
   "dt": 1,
-  "gold": 250,
+  "gold": 400,
   "towers": [
     {"type": "tower_a","level": 4},
     {"type": "tower_b","level": 2},
@@ -641,7 +641,7 @@
 
 "level_26":{
   "dt": 1,
-  "gold": 250,
+  "gold": 400,
   "towers": [
     {"type": "tower_a","level": 4},
     {"type": "tower_b","level": 2},
@@ -674,7 +674,7 @@
 
 "level_27":{
   "dt": 1,
-  "gold": 250,
+  "gold": 400,
   "towers": [
     {"type": "tower_a","level": 4},
     {"type": "tower_b","level": 2},
@@ -709,7 +709,7 @@
 
 "level_28":{
   "dt": 1,
-  "gold": 250,
+  "gold": 400,
   "towers": [
     {"type": "tower_a","level": 4},
     {"type": "tower_b","level": 2},
@@ -744,7 +744,7 @@
 
 "level_29":{
   "dt": 1,
-  "gold": 250,
+  "gold": 400,
   "towers": [
     {"type": "tower_a","level": 4},
     {"type": "tower_b","level": 2},
@@ -779,7 +779,7 @@
 
 "level_30":{
   "dt": 1,
-  "gold": 250,
+  "gold": 400,
   "towers": [
     {"type": "tower_a","level": 4},
     {"type": "tower_b","level": 2},
