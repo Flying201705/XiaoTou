@@ -399,8 +399,8 @@ cc.Class({
         if (this.hero.active === true) {
             return;
         }
-        if (this.currentLevel < 16) {
-            let hint = `<size=25><color=#ffff80>21关</c></size>解锁<b><color=#ff00ff><size=25>神秘英雄</size></c></b>，加油哦~`;
+        if (this.currentLevel < 17) {
+            let hint = `<size=25><color=#ffff80>17关</c></size>解锁<b><color=#ff00ff><size=25>神秘英雄</size></c></b>，加油哦~`;
             this.showSummonHint(hint);
         } else if (new InfoHandle().hasHero() !== true) {
             global.event.fire("show_back_pack_dialog");

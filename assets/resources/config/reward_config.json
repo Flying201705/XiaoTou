@@ -18,18 +18,29 @@
     {"goods": 2,"rate": 1}
   ],
   "level_20": [
-    {"goods": 1003,"rate": 0.6},
+    {"goods": 1011,"rate": 1},
     {"goods": 3,"rate": 1}
   ],
   "level_24": [
     {"goods": 3,"rate": 1}
   ],
   "level_26": [
-    {"goods": 1011,"rate": 1},
+    {"goods": 1012,"rate": 0.8},
     {"goods": 1,"rate": 1}
   ],
   "level_30": [
-    {"goods": 1012,"rate": 0.6},
+    {"goods": 1013,"rate": 0.6},
     {"goods": 2,"rate": 1}
+  ],
+  "level_34": [
+    {"goods": 1,"rate": 1}
+  ],
+  "level_36": [
+    {"goods": 1021,"rate": 1},
+    {"goods": 2,"rate": 1}
+  ],
+  "level_40": [
+    {"goods": 1022,"rate": 0.8},
+    {"goods": 3,"rate": 1}
   ]
 }
