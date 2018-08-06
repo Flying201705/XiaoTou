@@ -4,13 +4,14 @@
 import UserData from './UserData';
 import LevelData from './LevelData';
 import GoodsData from './GoodsData';
+
 const global = require("global");
 
 const net = require('./common/net');
 const util = require('./common/util');
 
 const http_head = "http://qyx18.com:1234/xiaotou/";
-const get_user_info = "user/getUserInfoId";
+const check_user = "user/check/";
 const login = "user/login";
 const update_user_level = "user/changeLevel";
 const update_user_crystal = "user/changeCrystal";
@@ -108,6 +109,28 @@ const InfoHandle = cc.Class({
                 console.log('[InfoHandle] get user info fail');
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
                 this.onDataLoadError();
+            }
+        })
+    },
+    /**
+     * 检查user是否存在，用于网络连通判断。
+     * @param userId
+     * @param success
+     * @param fail
+     */
+    checkUserById({
+        success = () => {
+        },
+        fail = () => {
+        }
+    } = {}) {
+        net.request({
+            url: http_head + check_user + InfoData.user.id,
+            success: (ret) => {
+                success(ret);
+            },
+            fail: () => {
+                fail();
             }
         })
     },

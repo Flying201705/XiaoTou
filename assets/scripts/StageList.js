@@ -1,6 +1,6 @@
 import {InfoData} from './InfoData'
 
-var self = null;
+let self = null;
 cc.Class({
     extends: cc.Component,
 
@@ -25,6 +25,7 @@ cc.Class({
             let item = cc.instantiate(this.itemPrefab).getComponent('StageItem');
             if (item !== null) {
                 item.preOnClick = this.showLoadingMask;
+                item.onFail = this.startItemFail;
                 if (i < InfoData.user.level) {
                     if (i < InfoData.levels.length) {
                         item.init(i + 1, false, InfoData.levels[i].stars);
@@ -48,8 +49,18 @@ cc.Class({
         }
     },
     showLoadingMask() {
-        let loadingMask = cc.instantiate(self.loadingMaskPrefab);
-        loadingMask.parent = self.rootNode;
+        self.loadingMask = cc.instantiate(self.loadingMaskPrefab);
+        self.loadingMask.parent = self.rootNode;
+    },
+    startItemFail() {
+        cc.info('startItemFail');
+        self.rootNode.removeChild(self.loadingMask);
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            wx.showToast({
+                title: '无法连接服务器',
+                icon: 'none'
+            })
+        }
     },
     onEnable() {
         this.initScrollViewPos();

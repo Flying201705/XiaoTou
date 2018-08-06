@@ -1,3 +1,5 @@
+import {InfoHandle} from "./InfoData";
+
 const global = require("global");
 
 cc.Class({
@@ -119,9 +121,23 @@ cc.Class({
     },
 
     goToNextLevel: function () {
-        global.currentLevel++;
-        global.resume();
-        cc.director.loadScene('game');
+        new InfoHandle().checkUserById({
+            success: () => {
+                cc.info('check user success');
+                global.currentLevel++;
+                global.resume();
+                cc.director.loadScene('game');
+            },
+            fail:()=>{
+                cc.info('check user fail');
+                if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+                    wx.showToast({
+                        title: '无法连接服务器',
+                        icon: 'none'
+                    })
+                }
+            }
+        });
     },
 
     restartCurrentLevel: function () {

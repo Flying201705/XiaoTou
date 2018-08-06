@@ -1,3 +1,5 @@
+import {InfoData, InfoHandle} from "./InfoData";
+
 const global = require("global");
 
 cc.Class({
@@ -72,11 +74,28 @@ cc.Class({
         this.preOnClick && this.preOnClick();
         cc.audioEngine.playEffect(this.clickAudio, false);
 
+        new InfoHandle().checkUserById({
+            success: () => {
+                cc.info('check user success');
+                this.loadSceneByIndex();
+            },
+            fail:()=>{
+                cc.info('check user fail');
+                this.onFail();
+            }
+        });
+
+    },
+    loadSceneByIndex() {
         global.currentLevel = this.index;
-        cc.log('select level : ' + global.currentLevel);
+        cc.info('select level : ' + global.currentLevel);
         cc.director.loadScene("game");
+        cc.info('after load game scene');
     },
     preOnClick() {
+
+    },
+    onFail(){
 
     }
 });
