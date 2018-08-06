@@ -1,6 +1,7 @@
 import rank from './rank_list'
 import global from "./global";
 import {InfoData} from "./InfoData";
+import * as WxHelper from "./common/WxHelper";
 
 const remoteHelper = require("./common/RemoteHelper");
 
@@ -94,5 +95,24 @@ cc.Class({
         if (token === InfoData.TOKEN_USER_INFO) {
             this.checkSignIn();
         }
-    }
+    },
+    /**
+     * 显示游戏说明
+     */
+    showGameDesc() {
+        cc.info('showGameDesc');
+    },
+    /**
+     * 微信分享
+     */
+    share() {
+        cc.info('share');
+        WxHelper.share();
+    },
+    /**
+     * 跳转更多游戏
+     */
+    showMoreGame() {
+        cc.info('showMoreGame');
+    },
 });
