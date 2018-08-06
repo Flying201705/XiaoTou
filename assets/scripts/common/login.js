@@ -1,4 +1,4 @@
-import {InfoHandle} from "../InfoData";
+import {InfoData, InfoHandle} from "../InfoData";
 import global from "../global";
 
 function weChatLogin() {
@@ -29,6 +29,10 @@ function weChatLogin() {
                 console.log('拒绝授权');
                 global.userInfo = null;
             }
+
+            cc.info('login fail');
+            InfoData.FLAG_DATA_DOWNLOAD_STATUS = -1;
+            global.event.fire("onDataDownloadCallback", InfoData.TOKEN_ERROR);
         }
     })
 }
