@@ -413,8 +413,8 @@ cc.Class({
             this.showSummonHint(hint);
         } else {
             this.detractGold(500);
-            let x = this.bottomBar.x;
-            let y = this.bottomBar.y + this.hero.height;
+            let x = this.bottomContainer.x;
+            let y = this.bottomContainer.y + this.hero.height;
             this.hero.position = cc.p(x, y);
             this.hero.parent = this.heroLayer;
             this.hero.active = true;
