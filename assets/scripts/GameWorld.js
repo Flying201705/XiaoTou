@@ -480,6 +480,9 @@ cc.Class({
 
     addGold: function (gold) {
         this.goldCount += gold;
+        if (this.goldCount > 9999) {
+            this.goldCount = 9999;
+        }
         this.goldLabel.string = this.goldCount.toString();
         this.isTowerCanUpgrade();
     },
