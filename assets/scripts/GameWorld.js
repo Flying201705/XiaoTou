@@ -37,7 +37,9 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        cc.log("GameWorld onLoad");
+        let scheduler = cc.director.getScheduler();
+        scheduler.setTimeScale(1);
+
         self = this;
         this.setTouchEvent();
 

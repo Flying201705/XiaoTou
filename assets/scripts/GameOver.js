@@ -18,6 +18,9 @@ cc.Class({
         this.maskNode.on('touchend', function (event) {
             event.stopPropagation();
         });
+
+        let scheduler = cc.director.getScheduler();
+        scheduler.setTimeScale(1);
     },
 
     onDisable: function () {
