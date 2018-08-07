@@ -249,6 +249,10 @@ cc.Class({
     },
 
     buff: function () {
+        if (global.isPause()) {
+            return;
+        }
+
         this.anim.play(this.towerType);
         global.event.fire("shoot_buff", this.node, this.currentAttackRate, this.currentSpeedRate);
     },
