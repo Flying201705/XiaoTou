@@ -6,11 +6,12 @@ import LevelData from './LevelData';
 import GoodsData from './GoodsData';
 
 const global = require("global");
+const config = require("./common/config");
+
 
 const net = require('./common/net');
 const util = require('./common/util');
-
-const http_head = "https://xyxxbsd.raink.com.cn:8086/xiaotou/";
+const http_head = config.host + "/xiaotou/";
 const check_user = "user/check/";
 const login = "user/login";
 const update_user_level = "user/changeLevel";
@@ -119,11 +120,11 @@ const InfoHandle = cc.Class({
      * @param fail
      */
     checkUserById({
-        success = () => {
-        },
-        fail = () => {
-        }
-    } = {}) {
+                      success = () => {
+                      },
+                      fail = () => {
+                      }
+                  } = {}) {
         net.request({
             url: http_head + check_user + InfoData.user.id,
             success: (ret) => {
