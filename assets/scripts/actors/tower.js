@@ -138,27 +138,29 @@ cc.Class({
         return !(this.enemy === undefined || this.enemy === null);
     },
 
-    missAtkTarget: function () {
-        this.enemy = undefined;
-    },
+    // missAtkTarget: function () {
+    //     this.enemy = undefined;
+    // },
 
     checkAtkTarget: function () {
-        if (this.isAreaAttack()) { //群体攻击
+        if (this.isAreaAttack()) {  //群体攻击
             this.chooseAtkTargets();
-        } else {
-            if (!this.hasAtkTarget()) { //单体攻击
-                this.chooseAtkTarget();
-            } else {
-                if (!this.enemy.getComponent("enemy").isLiving()) {
-                    this.missAtkTarget();
-                    return;
-                }
-                this.checkTargetIsOutOfRange();
-            }
+        } else {                    //单体攻击
+            this.chooseAtkTarget();
+            // if (!this.hasAtkTarget()) {
+            //     this.chooseAtkTarget();
+            // } else {
+            //     if (!this.enemy.getComponent("enemy").isLiving()) {
+            //         this.missAtkTarget();
+            //         return;
+            //     }
+            //     this.checkTargetIsOutOfRange();
+            // }
         }
     },
 
     chooseAtkTarget: function () {
+        this.enemy = undefined;
         let enemyList = this.enemyMng.list;
         for (let i = 0; i < enemyList.length; i++) {
             let enemy = enemyList[i];
