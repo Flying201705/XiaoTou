@@ -32,6 +32,8 @@ cc.Class({
             this.moreDayNode.active = true;
             this.moreDayLabel.string = `第${signDays + 1}天`;
         }
+
+        this.signDays = signDays;
     },
     /**
      * 签到
@@ -44,6 +46,8 @@ cc.Class({
         });
     },
     _showWxShare() {
-        WxHelper.share('normal');
+        if (this.signDays > 1) {
+            WxHelper.share('normal');
+        }
     }
 });
