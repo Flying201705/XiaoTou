@@ -260,8 +260,8 @@ cc.Class({
                 cc.log("满级!!");
                 return;
             }
-            this.detractGold(cost);
             tower.getComponent("tower").updateTower();
+            this.detractGold(cost);
 
             this.audioMng.playTowerUpdate();
         }
