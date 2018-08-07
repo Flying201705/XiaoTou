@@ -18,19 +18,11 @@ cc.Class({
 
     requestBullet(type) {
         let thePool = this.bulletPools[type];
-        if (thePool.idx >= 0) {
-            return thePool.request();
-        } else {
-            return null;
-        }
+        return thePool.request();
     },
 
     returnBullet(type, obj) {
         let thePool = this.bulletPools[type];
-        if (thePool.idx < thePool.size) {
-            thePool.return(obj);
-        } else {
-            cc.log('Return obj to a full pool, something has gone wrong');
-        }
+        thePool.return(obj);
     },
 });
