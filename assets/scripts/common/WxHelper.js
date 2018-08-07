@@ -8,8 +8,9 @@ module.exports = {
 /**
  * 微信分享
  * @param mode success|fail|normal
+ * @param control local|server
  */
-function share(mode = 'normal') {
+function share(mode = 'normal', control = 'local') {
     if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
         return;
     }
@@ -17,7 +18,8 @@ function share(mode = 'normal') {
     net.request({
         url: http_head + 'shareInfo',
         data: {
-            mode: mode
+            mode: mode,
+            control: control
         },
         success: ret => {
             wx.shareAppMessage({

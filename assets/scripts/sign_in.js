@@ -47,7 +47,7 @@ cc.Class({
     },
     _showWxShare() {
         if (this.signDays > 1) {
-            WxHelper.share('normal');
+            WxHelper.share('normal', 'server');
         }
     }
 });
