@@ -2509,8 +2509,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 153,
-      "height": 50
+      "width": 0,
+      "height": 25
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -2536,12 +2536,12 @@
       "__id__": 68
     },
     "_enabled": true,
-    "_N$string": "<color=#00ff00>Rich</c><color=#0fffff>Text</color>",
+    "_N$string": "",
     "_N$horizontalAlign": 0,
-    "_N$fontSize": 40,
+    "_N$fontSize": 20,
     "_N$font": null,
     "_N$maxWidth": 0,
-    "_N$lineHeight": 50,
+    "_N$lineHeight": 25,
     "_N$imageAtlas": null,
     "_N$handleTouchEvent": true
   },
