@@ -12,6 +12,7 @@ const config = require("./common/config");
 const net = require('./common/net');
 const util = require('./common/util');
 const http_head = config.host + "/xiaotou/";
+const res_head = config.res_host + "/xiaotou-res/";
 const check_user = "user/check/";
 const login = "user/login";
 const update_user_level = "user/changeLevel";
@@ -337,6 +338,7 @@ const InfoHandle = cc.Class({
 
 export {
     http_head,
+    res_head,
     InfoHandle,
     InfoData
 };

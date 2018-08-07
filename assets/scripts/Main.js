@@ -2,6 +2,7 @@ import rank from './rank_list'
 import global from "./global";
 import {InfoData} from "./InfoData";
 import * as WxHelper from "./common/WxHelper";
+import {res_head} from "./InfoData";
 
 const remoteHelper = require("./common/RemoteHelper");
 
@@ -116,5 +117,10 @@ cc.Class({
      */
     showMoreGame() {
         cc.info('showMoreGame');
+        let url = res_head + 'more1.jpg';
+        wx.previewImage({
+            current: url,  
+            urls: [url]
+          })
     },
 });
