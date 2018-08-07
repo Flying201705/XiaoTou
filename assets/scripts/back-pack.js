@@ -8,6 +8,8 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 import {InfoHandle, InfoData} from './InfoData'
+import * as util from "./common/util";
+
 const global = require("global");
 
 cc.Class({
@@ -33,8 +35,20 @@ cc.Class({
         itemPrefab: {
             default: null,
             type: cc.Prefab
-        }
-        // selfPause: false
+        },
+        heroSpriteFrame: cc.SpriteFrame,
+        heroChipSprites: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        propSpriteFrames: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+        propChipSpriteFrames: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
     },
     onEnable() {
         let self = this;
@@ -97,16 +111,21 @@ cc.Class({
         }
 
     },
-    configPropChips(opt) {
-        var children = this.propItemContainer.node.children;
+    configPropChips(opts) {
+        let propConfigArray = [];
+        for (let e in opts) {
+            propConfigArray.push(opts[e]);
+        }
+
+        let children = this.propItemContainer.node.children;
         if (children.length > 0) {
-            for (var i = 0; i < children.length; ++i) {
-                children[i].getComponent('chipItem').config(opt);
+            for (let i = 0; i < children.length; ++i) {
+                children[i].getComponent('chipItem').config(propConfigArray[i]);
             }
         } else {
-            for (let j = 0; j < 3; j++) {
+            for (let i = 0; i < 3; i++) {
                 let item = cc.instantiate(this.itemPrefab);
-                item.getComponent('chipItem').config(opt);
+                item.getComponent('chipItem').config(propConfigArray[i]);
                 this.propItemContainer.node.addChild(item);
                 // cc.log('add prop ' + j);
             }
@@ -130,29 +149,74 @@ cc.Class({
 
     },
     fillData() {
-        let config = {kind: 100, chipIds: []};
+        let heroConfig = {};
+        let propConfigs = {};
+
+        this._setHeroDefault(heroConfig);
+        this._setPropDefault(propConfigs, 101, 0);
+
+
         for (let i = 0; i < InfoData.goods.length; i++) {
-            var goodsInfo = InfoData.goods[i];
+            let goodsInfo = InfoData.goods[i];
             cc.log('fillData() id:' + goodsInfo.goodsid + " num:" + goodsInfo.number);
 
-            if (goodsInfo.number <= 0) {
+            // 过滤掉普通道具和数量为0的道具。仅显示英雄、英雄道具及碎片。
+            if (goodsInfo.goodsid < 100 || goodsInfo.number <= 0) {
                 continue;
             }
 
-            let chipType = goodsInfo.goodsid.toString().substring(0, 3);
+            let chipType = this._getChipType(goodsInfo.goodsid);
             cc.log('chipType:' + chipType)
 
             // 英雄碎片
-            if (chipType == 100 && goodsInfo.goodsid > 1000 && config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
-                config['chipIds'].push(goodsInfo.goodsid);
+            if (chipType == 100) {
+                if (goodsInfo.goodsid === 100) {
+                    heroConfig['composed'] = goodsInfo.number > 0;
+                } else if (heroConfig['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
+                    heroConfig['chipIds'].push(goodsInfo.goodsid);
+                }
+            } else if (chipType > 100) {
+                let config = this._getChipConfig(propConfigs, chipType);
+                if (goodsInfo.goodsid < 1000) {
+                    config['composed'] = goodsInfo.number > 0;
+                } else if (config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
+                    config['chipIds'].push(goodsInfo.goodsid);
+                }
             }
         }
 
-        config['composed'] = new InfoHandle().hasHero();
+        this.configHeroChips(heroConfig);
 
-        this.configHeroChips(config);
-
-        // 二期开放功能。
-        this.configPropChips({kind: 200, composed: true});
-    }
+        this.configPropChips(propConfigs);
+    },
+    /**
+     * 获取碎片类型
+     */
+    _getChipType(goodsId) {
+        return goodsId < 1000 ? goodsId : parseInt(goodsId / 10);
+    },
+    _getChipConfig(propConfigs, chipType) {
+        if (util.isEmpty(propConfigs[chipType])) {
+            propConfigs[chipType] = {
+                chipIds: []
+            };
+        }
+        return propConfigs[chipType];
+    },
+    _setHeroDefault(config) {
+        config['propId'] = 100;
+        config['chipIds'] = [];
+        config['completeSpriteFrame'] = this.heroSpriteFrame;
+        config['chipSpriteFrame'] = this.heroChipSprites[0];
+    },
+    _setPropDefault(config, propId, sprIndex) {
+        if (util.isEmpty(config[propId])) {
+            config[propId] = {
+                chipIds: [],
+                propId: propId
+            };
+        }
+        config[propId]['completeSpriteFrame'] = this.propSpriteFrames[sprIndex];
+        config[propId]['chipSpriteFrame'] = this.propChipSpriteFrames[sprIndex];
+    },
 });

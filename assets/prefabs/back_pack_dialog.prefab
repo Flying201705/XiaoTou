@@ -1177,7 +1177,25 @@
     },
     "itemPrefab": {
       "__uuid__": "a9bf207b-a4d4-4651-9e6a-a99e0af54496"
-    }
+    },
+    "heroSpriteFrame": {
+      "__uuid__": "8b0ca516-fc10-4feb-bbdf-a7d0d8efa54f"
+    },
+    "heroChipSprites": [
+      {
+        "__uuid__": "12df9f25-fdef-456c-8d94-c4ab36fb5aba"
+      }
+    ],
+    "propSpriteFrames": [
+      {
+        "__uuid__": "1246393e-362f-4685-bcf5-ee5552ef1297"
+      }
+    ],
+    "propChipSpriteFrames": [
+      {
+        "__uuid__": "d8818b78-6baa-4d6a-b658-e70ad84caea5"
+      }
+    ]
   },
   {
     "__type__": "cc.PrefabInfo",

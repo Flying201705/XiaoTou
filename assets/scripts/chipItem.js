@@ -1,4 +1,6 @@
 import {InfoHandle, InfoData} from './InfoData'
+import * as util from "./common/util";
+
 const global = require("global");
 
 cc.Class({
@@ -10,15 +12,6 @@ cc.Class({
         text: {
             default: null,
             type: cc.RichText
-        },
-        heroSpriteFrame: cc.SpriteFrame,
-        heroChipSprites: {
-            default: [],
-            type: [cc.SpriteFrame]
-        },
-        propChipSprites: {
-            default: [],
-            type: [cc.SpriteFrame]
         },
         chips: {
             default: [],
@@ -32,39 +25,39 @@ cc.Class({
      * @param opt
      */
     config(opt) {
-        this.kind = opt.kind;
+        this.propCompelteSpriteFrame = opt && opt.completeSpriteFrame;
+        this.propChipSpriteFrame = opt && opt.chipSpriteFrame;
+        this.propId = opt && opt.propId;
+
+        if (util.isEmpty(this.propCompelteSpriteFrame) || util.isEmpty(this.propChipSpriteFrame)) {
+            this._setComposeContainerEnable(false);
+            return;
+        }
+
         if (opt.composed) {
-            this._setComposeStatus();
+            this._setCompleteStatus();
         } else {
             this.oneChipPrice = global.event.fire('get_one_chip_price');
 
             this.chipIds = opt.chipIds === undefined ? [] : opt.chipIds;
             cc.log('chipIds len:' + this.chipIds.length);
-            this._setChipEnable(true);
-            this._initIconBg(opt);
-            this._highlight();
             this.chipCount = this._getChipCount();
+            this._setChipEnable(true);
+            this._initIconBg();
+            this._highlight();
             this._updatePriceLabel(this.chipCount);
         }
-
-        //仅英雄开放按钮可用，二期再做调整。
-        this._setComposeContainerEnable(this.kind == 100);
     },
     /**
      * 合成之后：
      * 1、背包格第一位显示合成后的图片。
      * 2、按钮区域消失。
      */
-    _setComposeStatus() {
-        // this._updatePriceLabel(3);
-
+    _setCompleteStatus() {
         this._setChipEnable(false);
-        this._setChipsCompleteStatue();
+        this._showCompleteSprite();
 
-        //临时功能，二期去掉if。
-        if (this.kind == 100) {
-            this.composeContainer.active = false;
-        }
+        this.composeContainer.active = false;
     },
     _setComposeContainerEnable(enable) {
         if (enable) {
@@ -80,27 +73,11 @@ cc.Class({
             this.chips[i].node.active = enable;
         }
     },
-    _setChipsCompleteStatue() {
-        if (this.kind == 100) {
-            this.chips[0].node.active = true;
-            this.chips[0].node.opacity = 255;
-            this.chips[0].spriteFrame = this.heroSpriteFrame;
-        }
-        // 物品碎片，二期增加
-        // else {
-        //     this.chips[0].spriteFrame = this.heroSpriteFrame;
-        // }
+    _showCompleteSprite() {
+        this.chips[0].node.active = true;
+        this.chips[0].node.opacity = 255;
+        this.chips[0].spriteFrame = this.propCompelteSpriteFrame;
 
-    },
-    _getSprite(opt) {
-        let chipSprite = this.heroChipSprites[0];
-
-        if (opt.kind == 100) {
-            chipSprite = this.heroChipSprites[0];
-        } else if (opt.kind == 1) {
-            chipSprite = this.propChipSprites[opt.propType];
-        }
-        return chipSprite;
     },
     _highlight: function () {
         for (let i = 0; i < this.chipIds.length; i++) {
@@ -151,38 +128,35 @@ cc.Class({
         }
 
         cc.log('start compose');
-        this._updateData(this.kind, this.chipIds);
+        this._updateData(this.propId, this.chipIds);
     },
     _updateData(propId, chipIds) {
-        if (propId && chipIds && chipIds.length === 3) {
+        if (propId) {
             let tempIds = Array.from(new Set(chipIds));
-            if (tempIds.length != 3) {
-                callback && callback.fail && callback.fail('物品ID重复，总数不足3');
+            if (tempIds.length > 3) {
+                // callback && callback.fail && callback.fail('物品ID重复，总数不足3');
                 return;
             }
 
 
             let infoHandle = new InfoHandle();
-            infoHandle.updateLocalGoods(propId, 1);
+            let ret = infoHandle.updateLocalGoods(propId, 1);
+            cc.info('增加物品：' + ret);
             for (let i = 0; i < chipIds.length; i++) {
                 infoHandle.updateLocalGoods(chipIds[i], -1);
             }
 
             global.event.fire('update_crystal_count', this._getLeftCrystalCount());
-            this._setComposeStatus();
+            this._setCompleteStatus();
             // callback && callback.success && callback.success(ret);
         } else {
             // callback && callback.fail && callback.fail();
         }
     },
-    _initIconBg(opt) {
-        let chipSprite = this._getSprite(opt);
-
-        if (opt.kind === 100 || this.chipIds.length > 0) {
-            for (let i = 0; i < 3; i++) {
-                this.chips[i].spriteFrame = chipSprite;
-                this.chips[i].node.opacity = 125;
-            }
+    _initIconBg() {
+        for (let i = 0; i < 3; i++) {
+            this.chips[i].spriteFrame = this.propChipSpriteFrame;
+            this.chips[i].node.opacity = 125;
         }
     }
 });

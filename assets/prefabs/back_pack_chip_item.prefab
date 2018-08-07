@@ -1691,7 +1691,11 @@
         "__uuid__": "12df9f25-fdef-456c-8d94-c4ab36fb5aba"
       }
     ],
-    "propChipSprites": [],
+    "propChipSprites": [
+      {
+        "__uuid__": "d8818b78-6baa-4d6a-b658-e70ad84caea5"
+      }
+    ],
     "chips": [
       {
         "__id__": 11
