@@ -1,5 +1,9 @@
 import EventListener from './event-listener'
 
+ /**
+  * 暂停优先级，数字越大，优先级越高
+  * 当高数值在暂停时，使用低数值恢复无法恢复游戏
+  */
 const PauseState = {
     NoPause: 0x00,
     DefaultPause: 0x01,

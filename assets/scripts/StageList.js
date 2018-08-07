@@ -72,8 +72,8 @@ cc.Class({
 
         let column = Math.floor(layout.node.width / (this.itemWidth + layout.spacingX));
         let moveStep = Math.floor(this.firstLockLevel / column);
-        let visibleRow = Math.floor(layout.node.parent.height / (this.itemHeight + layout.spacingY));
-        if (moveStep > visibleRow) {
+        // let visibleRow = Math.floor(layout.node.parent.height / (this.itemHeight + layout.spacingY));
+        if (moveStep > 0) {
             moveStep -= 1;
         }
         let offsetY = moveStep * (this.itemHeight + layout.spacingY);
