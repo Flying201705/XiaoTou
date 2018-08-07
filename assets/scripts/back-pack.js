@@ -153,8 +153,10 @@ cc.Class({
         let propConfigs = {};
 
         this._setHeroDefault(heroConfig);
-        this._setPropDefault(propConfigs, 101, 0);
 
+        if (InfoData.user.level >= 20) {
+            this._setPropDefault(propConfigs, 101, 0);
+        }
 
         for (let i = 0; i < InfoData.goods.length; i++) {
             let goodsInfo = InfoData.goods[i];
