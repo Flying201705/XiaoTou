@@ -146,7 +146,7 @@ cc.Class({
     },
 
     getDamage: function () {
-        console.log("hero getDamage " + this.currentDamage * Math.pow(1.1, this.currentHeroLevel) * (1 + this.beAttackBuff));
+        // console.log("hero getDamage " + this.currentDamage * Math.pow(1.1, this.currentHeroLevel) * (1 + this.beAttackBuff));
         return this.currentDamage * Math.pow(1.1, this.currentHeroLevel) * (1 + this.beAttackBuff);
     },
 
