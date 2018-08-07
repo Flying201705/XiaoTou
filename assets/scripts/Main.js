@@ -12,6 +12,7 @@ cc.Class({
         rankList: cc.Node,
         display: cc.Sprite,
         signIn: cc.Prefab,
+        gameHelp: require("GameHelp")
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -101,6 +102,7 @@ cc.Class({
      */
     showGameDesc() {
         cc.info('showGameDesc');
+        this.gameHelp.show();
     },
     /**
      * 微信分享
