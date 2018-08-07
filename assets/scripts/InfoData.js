@@ -217,6 +217,8 @@ const InfoHandle = cc.Class({
             //检查更新英雄属性
             if (goods.goodsid === 100 && goods.number > 0 && InfoData.user.hero <= 0) {
                 new InfoHandle().updateLocalHero(1);
+            } else if (goods.goodsid === 101 && goods.number > 0) {
+                InfoData.user.prop_boot = 1;
             }
         }
     },
@@ -302,6 +304,8 @@ const InfoHandle = cc.Class({
         //检查更新英雄属性
         if (goodsId === 100 && num > 0 && InfoData.user.hero <= 0) {
             new InfoHandle().updateLocalHero(1);
+        } else if (goodsId === 101 && num > 0) {
+            InfoData.user.prop_boot = 1;
         }
 
         let goodsInfo = _getGoodsInfoById(goodsId);

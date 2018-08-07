@@ -1,3 +1,5 @@
+import {InfoData} from "../InfoData";
+
 const global = require("./../global");
 
 const HeroState = {
@@ -24,8 +26,6 @@ cc.Class({
         this.speed = 200;
         //英雄是否选中
         this.heroSelected = false;
-        // 英雄是否可以闪现
-        this.flashMove = false;
         this.state = HeroState.Invalid;
         this.targetPosition = this.node.position;
         //当前英雄级别，从0级开始
@@ -57,7 +57,7 @@ cc.Class({
         if (global.isPause()) {
             return;
         }
-        
+
         if (this.state === HeroState.Attack) {
             let shootDt = this.shootBulletDt * (1 - this.beSpeedBuff);
             if (this.currentShootTime <= shootDt) {
@@ -107,7 +107,7 @@ cc.Class({
             this.heroSelected = false;
             this.onHeroSelected(false);
             this.hideSelectedMark();
-            if (this.flashMove === true) {
+            if (this.isFlashMove() === true) {
                 // 有飞鞋的情况下，英雄瞬间移动
                 this.node.position = cc.p(x, y);
                 return true;
@@ -194,5 +194,11 @@ cc.Class({
      */
     onHeroSelected(selected) {
         console.log('onHeroSelected selected:' + selected);
+    },
+    /**
+     * 英雄是否可以闪现
+     */
+    isFlashMove() {
+        return InfoData.user.prop_boot > 0;
     }
 });

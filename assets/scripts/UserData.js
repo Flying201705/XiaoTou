@@ -12,10 +12,11 @@ const UserData = cc.Class({
         crystal: 0,
         level: 0,
         title: "",
-        hero: 0
+        hero: 0,
+        prop_boot: 0
     },
 
-    init: function(obj) {
+    init: function (obj) {
         this.id = obj.id;
         this.openid = obj.openid;
         this.name = obj.name;
@@ -27,9 +28,9 @@ const UserData = cc.Class({
         this.hero = obj.hero;
 
         console.log("<test>user:id-" + this.id + " openid-" + this.openid + " 名称-" + this.name
-        + " 头像-" + this.head + " 性别-" + this.sex + " 水晶-" + this.crystal + " 关卡-" + this.level
-        + " 称号-" + this.title + " 英雄-" + this.hero);
+            + " 头像-" + this.head + " 性别-" + this.sex + " 水晶-" + this.crystal + " 关卡-" + this.level
+            + " 称号-" + this.title + " 英雄-" + this.hero);
     },
- });
+});
 
- export default UserData;
+export default UserData;
