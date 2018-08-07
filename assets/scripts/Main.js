@@ -107,7 +107,7 @@ cc.Class({
      */
     share() {
         cc.info('share');
-        WxHelper.share();
+        WxHelper.share('normal');
     },
     /**
      * 跳转更多游戏

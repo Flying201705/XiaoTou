@@ -2,6 +2,7 @@
  * 每日签到
  */
 import {InfoData, InfoHandle} from "./InfoData";
+import * as WxHelper from "./common/WxHelper";
 
 const remoteHelper = require("./common/RemoteHelper");
 
@@ -43,19 +44,6 @@ cc.Class({
         });
     },
     _showWxShare() {
-        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
-            return;
-        }
-
-        wx.shareAppMessage({
-            title: '一起来玩小兵时代',
-            imageUrl: 'http://zhang395295759.xicp.net:30629/xiaotou-res/share_img.jpg',
-            success: () => {
-                cc.info('share success');
-            },
-            fail: () => {
-                cc.info('share fail');
-            }
-        })
+        WxHelper.share('normal');
     }
 });

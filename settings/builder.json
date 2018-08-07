@@ -30,8 +30,8 @@
   "title": "xiaotou_world",
   "webOrientation": "auto",
   "wechatgame": {
-    "REMOTE_SERVER_ROOT": "http://qyx18.com:1234/res/fenglp",
-    "appid": "wx052c1c7a94625f6d",
+    "REMOTE_SERVER_ROOT": "https://xyxxbsd.raink.com.cn:8086/res/fenglp",
+    "appid": "wxafbaaa17fada0e47",
     "orientation": "landscape",
     "subContext": "wx-sub"
   },

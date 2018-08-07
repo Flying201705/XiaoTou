@@ -5215,7 +5215,7 @@
     },
     "component": "GameOver",
     "handler": "share",
-    "customEventData": ""
+    "customEventData": "success"
   },
   {
     "__type__": "cc.Node",
@@ -5957,7 +5957,7 @@
     },
     "component": "GameOver",
     "handler": "share",
-    "customEventData": ""
+    "customEventData": "fail"
   },
   {
     "__type__": "2e2daQvNUpBt6dDTXIBktDM",

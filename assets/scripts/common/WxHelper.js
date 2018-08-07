@@ -5,13 +5,20 @@ module.exports = {
     share: share
 };
 
-function share() {
+/**
+ * 微信分享
+ * @param mode success|fail|normal
+ */
+function share(mode = 'normal') {
     if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
         return;
     }
 
     net.request({
         url: http_head + 'shareInfo',
+        data: {
+            mode: mode
+        },
         success: ret => {
             wx.shareAppMessage({
                 title: ret.title,

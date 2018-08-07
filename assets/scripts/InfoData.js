@@ -10,7 +10,7 @@ const global = require("global");
 const net = require('./common/net');
 const util = require('./common/util');
 
-const http_head = "http://qyx18.com:1234/xiaotou/";
+const http_head = "https://xyxxbsd.raink.com.cn:8086/xiaotou/";
 const check_user = "user/check/";
 const login = "user/login";
 const update_user_level = "user/changeLevel";

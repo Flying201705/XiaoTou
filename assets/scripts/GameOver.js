@@ -129,7 +129,7 @@ cc.Class({
                 global.resume();
                 cc.director.loadScene('game');
             },
-            fail:()=>{
+            fail: () => {
                 cc.info('check user fail');
                 if (cc.sys.platform === cc.sys.WECHAT_GAME) {
                     wx.showToast({
@@ -151,7 +151,8 @@ cc.Class({
         cc.director.loadScene("stage");
     },
 
-    share: function () {
-        WxHelper.share();
+    share: function (event, customEventData) {
+        cc.info('share mode:' + customEventData);
+        WxHelper.share(customEventData);
     }
 });
