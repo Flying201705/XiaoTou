@@ -10,6 +10,7 @@ cc.Class({
         itemPrefab: cc.Prefab,
         itemCount: 0,
         scrollView: cc.ScrollView,
+        display: cc.Sprite,
     },
 
     onLoad() {
@@ -18,8 +19,41 @@ cc.Class({
         this.itemWidth = 0;
         this.itemHeight = 0;
         this.initList();
-    },
 
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            let sys = wx.getSystemInfoSync();
+            cc.info('windowWidth:' + sys.windowWidth);
+            cc.info('windowHeight:' + sys.windowHeight);
+            cc.info('ww:'+window.sharedCanvas.width +' wh:'+window.sharedCanvas.height );
+            // window.sharedCanvas.width = window.sharedCanvas.width * ratio;
+            // window.sharedCanvas.height = window.sharedCanvas.height * ratio;
+        }
+    },
+    start() {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            this.tex = new cc.Texture2D();
+            wx.postMessage({
+                type: 'show'
+            })
+        }
+    },
+    update() {
+        // this._updaetSubDomainCanvas();
+    },
+    _updaetSubDomainCanvas() {
+        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+            return;
+        }
+
+        if (!this.tex) {
+            console.log('no tex');
+            return;
+        }
+
+        this.tex.initWithElement(wx.getOpenDataContext().canvas);
+        this.tex.handleLoadedTexture();
+        this.display.spriteFrame = new cc.SpriteFrame(this.tex);
+    },
     initList: function () {
         for (let i = 0; i < this.itemCount; ++i) {
             let item = cc.instantiate(this.itemPrefab).getComponent('StageItem');
