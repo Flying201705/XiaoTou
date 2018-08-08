@@ -117,10 +117,6 @@ cc.Class({
      */
     showMoreGame() {
         cc.info('showMoreGame');
-        let url = res_head + 'more1.jpg';
-        wx.previewImage({
-            current: url,  
-            urls: [url]
-          })
+        WxHelper.showMoreGame();
     },
 });

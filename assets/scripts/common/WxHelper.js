@@ -2,7 +2,8 @@ import * as net from "./net";
 import {http_head} from "../InfoData";
 
 module.exports = {
-    share: share
+    share: share,
+    showMoreGame: showMoreGame
 };
 
 /**
@@ -16,7 +17,7 @@ function share(mode = 'normal', control = 'local') {
     }
 
     net.request({
-        url: http_head + 'shareInfo',
+        url: http_head + 'more/shareInfo',
         data: {
             mode: mode,
             control: control
@@ -31,6 +32,26 @@ function share(mode = 'normal', control = 'local') {
             cc.info('get share info fail');
         }
     });
+}
 
+/**
+ * 显示更多好玩图片
+ */
+function showMoreGame() {
+    if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+        return;
+    }
 
+    net.request({
+        url: http_head + 'more/moreGameInfo',
+        success: url => {
+            wx.previewImage({
+                current: url,
+                urls: [url]
+            });
+        },
+        fail: () => {
+            cc.info('get share info fail');
+        }
+    });
 }
