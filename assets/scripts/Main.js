@@ -21,6 +21,10 @@ cc.Class({
         WxHelper.showShareMenu();
         global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
         this.checkSignIn();
+        this.isRankListShow = false;
+        let mask = this.rankList.getChildByName('bg_mask').getComponent('mask');
+        mask.setSelf(this);
+        mask.onHide = this.onRankListHide;
     },
     onDestroy() {
         global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
@@ -42,7 +46,10 @@ cc.Class({
 
     },
     update() {
-        this._updaetSubDomainCanvas();
+        // cc.info('this.isRankListShow:' + this.isRankListShow)
+        if (this.isRankListShow) {
+            this._updaetSubDomainCanvas();
+        }
     },
     _updaetSubDomainCanvas() {
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
@@ -83,6 +90,7 @@ cc.Class({
 
         // rank.setRank(17);
         rank.showRankList();
+        this.isRankListShow = true;
     },
     checkSignIn() {
         if (InfoData.user.id > 0) {
@@ -119,4 +127,8 @@ cc.Class({
         cc.info('showMoreGame');
         WxHelper.showMoreGame();
     },
+    onRankListHide(self) {
+        self.isRankListShow = false;
+        cc.info('onRankListHide');
+    }
 });

@@ -17,6 +17,7 @@ cc.Class({
     },
     onEnable() {
         let self = this;
+        let parentSelf = this.parentSelf;
 
         this.node.on('touchstart', function (event) {
             event.stopPropagation();
@@ -45,6 +46,7 @@ cc.Class({
 
                 if (!retWord.contains(point)) {
                     console.log('hide');
+                    self.onHide(parentSelf);
                     self.hide();
                 }
             }
@@ -66,4 +68,10 @@ cc.Class({
         this.parentNode.active = false;
         rank.hide();
     },
+    onHide() {
+        cc.info('onHide');
+    },
+    setSelf(self){
+       this.parentSelf = self;
+    }
 });
