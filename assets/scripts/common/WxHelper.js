@@ -1,10 +1,29 @@
 import * as net from "./net";
-import {http_head} from "../InfoData";
+import {http_head, InfoHandle} from "../InfoData";
+
+const {shareForCrystal: shareForCrystal} = require("./config");
 
 module.exports = {
     share: share,
-    showMoreGame: showMoreGame
+    showMoreGame: showMoreGame,
+    showShareMenu: showShareMenu
 };
+
+function showShareMenu() {
+    wx.showShareMenu({
+        withShareTicket: true,
+        success: function (res) {
+            // 分享成功
+            console.log('showShareMenu success')
+            console.log('分享' + res)
+        },
+        fail: function (res) {
+            // 分享失败
+            console.log('showShareMenu fail')
+            console.log(res)
+        }
+    });
+}
 
 /**
  * 微信分享
@@ -23,15 +42,38 @@ function share(mode = 'normal', control = 'local') {
             control: control
         },
         success: ret => {
+            let crystalEnable = ret.crystalEnable;
             wx.shareAppMessage({
                 title: ret.title,
-                imageUrl: ret.imageUrl
+                imageUrl: ret.imageUrl,
+                success: ret => {
+                    cc.info('share success', ret);
+                    if (crystalEnable) {
+                        _addCrystal(ret)
+                    }
+                },
+                fail: ret => {
+                    cc.info('share fail', ret);
+                }
             })
         },
         fail: () => {
             cc.info('get share info fail');
         }
     });
+}
+
+function _addCrystal(data) {
+    let crystalCount = _isShareViaGroup(data) ? shareForCrystal.group : shareForCrystal.person;
+    cc.info('_addCrystal:' + crystalCount);
+    new InfoHandle().updateRemoteCrystal(crystalCount);
+}
+
+/**
+ * 从返回结果判断是否通过群组分享
+ */
+function _isShareViaGroup(data) {
+    return data.shareTickets && data.shareTickets.length > 0;
 }
 
 /**

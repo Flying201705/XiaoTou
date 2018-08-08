@@ -18,6 +18,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        WxHelper.showShareMenu();
         global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
         this.checkSignIn();
     },
