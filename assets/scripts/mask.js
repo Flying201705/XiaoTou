@@ -34,7 +34,7 @@ cc.Class({
                 let retWord = self.border.getBoundingBoxToWorld();
 
                 //点击窗口两侧区域消失。
-                if (self.mode === 1) {
+                if (self.mode === 2) {
                     retWord.height = self.getViewHeight();
                     retWord.y = 0;
                 }
