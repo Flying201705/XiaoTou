@@ -10,6 +10,10 @@ module.exports = {
 };
 
 function showShareMenu() {
+    if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+        return;
+    }
+
     wx.showShareMenu({
         withShareTicket: true,
         success: function (res) {
