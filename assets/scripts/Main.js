@@ -2,7 +2,6 @@ import rank from './rank_list'
 import global from "./global";
 import {InfoData} from "./InfoData";
 import * as WxHelper from "./common/WxHelper";
-import {res_head} from "./InfoData";
 
 const remoteHelper = require("./common/RemoteHelper");
 

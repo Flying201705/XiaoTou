@@ -8,22 +8,15 @@ import GoodsData from './GoodsData';
 const global = require("global");
 const config = require("./common/config");
 
-
 const net = require('./common/net');
 const util = require('./common/util');
 const http_head = config.host + "/xiaotou/";
-const res_head = config.res_host + "/xiaotou-res/";
 const check_user = "user/check/";
 const login = "user/login";
-const update_user_level = "user/changeLevel";
 const update_user_crystal = "user/changeCrystal";
-// const get_openid = "user/getOpenId";
-const update_user_hero = "user/changeHero";
 const get_levels = "level/allLevels";
 const update_level = "level/updateLevel";
 const get_all_goods = "goods/allGoods";
-const update_goods = "goods/updateGoods";
-const compound_goods = "goods/compound";
 
 const sync_user_info = "user/sync";
 
@@ -338,7 +331,6 @@ const InfoHandle = cc.Class({
 
 export {
     http_head,
-    res_head,
     InfoHandle,
     InfoData
 };
