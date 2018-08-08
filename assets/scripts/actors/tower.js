@@ -192,13 +192,13 @@ cc.Class({
         return false;
     },
 
-    checkTargetIsOutOfRange: function () {
-        if (this.hasAtkTarget()) {
-            if (!this.isInAtkRange(this.enemy)) {
-                this.missAtkTarget();
-            }
-        }
-    },
+    // checkTargetIsOutOfRange: function () {
+    //     if (this.hasAtkTarget()) {
+    //         if (!this.isInAtkRange(this.enemy)) {
+    //             this.missAtkTarget();
+    //         }
+    //     }
+    // },
 
     checkBuffTowers: function () {
         this.areaTowerList = [];
