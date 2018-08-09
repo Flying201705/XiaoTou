@@ -57,6 +57,8 @@ cc.Class({
         global.event.off("get_one_chip_price", this.getOneChipPrice);
         global.event.off("show_back_pack_dialog", this.showBackPack);
         global.event.off("show_hint_dialog", this.showHintDialog);
+
+        cc.loader.release("./config/description_config");
     },
     start() {
         this.showDescDialog();
