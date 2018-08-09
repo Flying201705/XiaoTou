@@ -4,7 +4,10 @@ const PROP_URL = [
     'resources/image/bomb.png'
 ];
 const CRYSTAL_URL = 'resources/image/crystal.png';
-const HERO_CHIP_URL = 'resources/image/hero_chip.png';
+const CHIP_URL = [
+    'resources/image/hero_chip.png',
+    'resources/image/prop_boot_chip.png'
+];
 
 cc.Class({
     extends: cc.Component,
@@ -33,8 +36,8 @@ cc.Class({
                 this.description.node.color = new cc.color(255, 246, 1, 255);
                 break;
             case 3:
-                // var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
-                this.icon.spriteFrame = this.getHeroChipSpriteFrame();
+                var icon_index = opt.icon === undefined ? 0 : opt.icon - 1;
+                this.icon.spriteFrame = this.getHeroChipSpriteFrame(icon_index);
                 this.description.node.color = new cc.color(218, 57, 252, 255);
                 break;
         }
@@ -44,8 +47,8 @@ cc.Class({
     getPropSpriteFrame(index) {
         return new cc.SpriteFrame(cc.url.raw(PROP_URL[index]));
     },
-    getHeroChipSpriteFrame() {
-        return new cc.SpriteFrame(cc.url.raw(HERO_CHIP_URL));
+    getHeroChipSpriteFrame(index) {
+        return new cc.SpriteFrame(cc.url.raw(CHIP_URL[index]));
     },
     getCrystalChipSpriteFrame() {
         return new cc.SpriteFrame(cc.url.raw(CRYSTAL_URL));

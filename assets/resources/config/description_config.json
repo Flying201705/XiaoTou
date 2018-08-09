@@ -172,7 +172,7 @@
       },
       {
         "type": 3,
-        "icon": 1,
+        "icon": 2,
         "description": "飞鞋碎片1"
       }
     ]
@@ -191,7 +191,7 @@
       },
       {
         "type": 3,
-        "icon": 1,
+        "icon": 2,
         "description": "飞鞋碎片2"
       }
     ]
@@ -210,7 +210,7 @@
       },
       {
         "type": 3,
-        "icon": 1,
+        "icon": 2,
         "description": "飞鞋碎片3"
       }
     ]
@@ -229,7 +229,7 @@
       },
       {
         "type": 3,
-        "icon": 1,
+        "icon": 2,
         "description": "攻击之爪碎片1"
       }
     ]
@@ -248,7 +248,7 @@
       },
       {
         "type": 3,
-        "icon": 1,
+        "icon": 2,
         "description": "攻击之爪碎片2"
       }
     ]
