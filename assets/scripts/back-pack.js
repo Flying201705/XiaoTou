@@ -88,6 +88,7 @@ cc.Class({
     hideDialog() {
         cc.log('bunny hideDialog');
         this.parentNode.removeChild(this.node);
+        this.node.destroy();
         this.parentNode = null;
         // cc.director.resume();
         // global.pause = false;

@@ -86,6 +86,8 @@ cc.Class({
         global.resume();
         // this.node.active = false;
         this.parentNode.removeChild(this.node);
+        this.node.destroy();
+        this.parentNode = null;
     },
     refreshNumber(propNumber) {
         cc.audioEngine.playEffect(this.clickAudio, false);

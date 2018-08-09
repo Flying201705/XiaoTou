@@ -27,6 +27,7 @@ cc.Class({
 
     hideDialog: function() {
         this.parentNode.removeChild(this.node);
+        this.node.destroy();
         this.parentNode = null;
         global.resume();
     },

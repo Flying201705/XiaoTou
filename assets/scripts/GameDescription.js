@@ -123,6 +123,7 @@ cc.Class({
     },
     hideDialog() {
         this.parentNode.removeChild(this.node);
+        this.node.destroy();
         this.parentNode = null;
         cc.audioEngine.playEffect(this.clickAudio, false);
         // cc.director.resume();
