@@ -79,6 +79,7 @@ cc.Class({
 
     initWithData: function (gameWorld, towerConfig, maxLevel) {
         this.enemyMng = gameWorld.enemyMng;
+        this.bulletMng = gameWorld.bulletMng;
         this.towers = gameWorld.towerGroup;
 
         this.towerConfig = towerConfig;
@@ -236,7 +237,7 @@ cc.Class({
     shootBullet: function () {
         this.anim.play(this.towerType);
         cc.audioEngine.play(this.shootAudio, false, 1);
-        global.event.fire("shoot_bullet", this.node, this.enemy);
+        this.bulletMng.addBullet(this.node, this.enemy);
     },
 
     shootBullets: function () {
@@ -245,7 +246,7 @@ cc.Class({
         for (let i = 0; i < this.areaEnemyList.length; i++) {
             let enemy = this.areaEnemyList[i];
             if (enemy && enemy.getComponent("enemy").isLiving()) {
-                global.event.fire("shoot_bullet", this.node, enemy);
+                this.bulletMng.addBullet(this.node, this.enemy);
             }
         }
     },
