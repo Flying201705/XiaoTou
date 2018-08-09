@@ -71,6 +71,10 @@ cc.Class({
     },
 
     startGameClick: function (event, customEventData) {
+        if (this.index > 40) {
+            this.showStageHintDialog();
+            return;
+        }
         this.preOnClick && this.preOnClick();
         cc.audioEngine.playEffect(this.clickAudio, false);
 
@@ -92,6 +96,11 @@ cc.Class({
         cc.director.loadScene("game");
         cc.info('after load game scene');
     },
+
+    showStageHintDialog() {
+        global.event.fire("show_stage_hint_dialog");
+    },
+
     preOnClick() {
 
     },
