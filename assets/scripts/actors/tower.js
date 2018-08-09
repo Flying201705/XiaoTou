@@ -246,7 +246,7 @@ cc.Class({
         for (let i = 0; i < this.areaEnemyList.length; i++) {
             let enemy = this.areaEnemyList[i];
             if (enemy && enemy.getComponent("enemy").isLiving()) {
-                this.bulletMng.addBullet(this.node, this.enemy);
+                this.bulletMng.addBullet(this.node, enemy);
             }
         }
     },

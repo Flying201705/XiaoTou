@@ -9,9 +9,8 @@ cc.Class({
         this.speed = 800;
 
         this.bulletMng = mng;
-        this.enemy = enemy;
-
         this.node.position = tower.position;
+        this.enemy = enemy;
 
         let angle = cc.pAngleSigned(cc.pSub(this.enemy.position, tower.position), cc.p(0, 1));
         this.node.rotation = cc.radiansToDegrees(angle);
