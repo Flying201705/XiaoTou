@@ -36,6 +36,7 @@ cc.Class({
                 type: 'show'
             })
         }
+        // cc.log("zzz load resCount:" + cc.loader.getResCount());
     },
     update() {
         // this._updaetSubDomainCanvas();

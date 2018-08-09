@@ -89,7 +89,7 @@ cc.Class({
         this.loadLevelConfig();
         this.loadTowerConfig();
         this.loadRewardConfig();
-        cc.log("zzz world resCount:" + cc.loader.getResCount());
+        // cc.log("zzz world resCount:" + cc.loader.getResCount());
     },
 
     initEvent: function () {
@@ -130,9 +130,6 @@ cc.Class({
         }
         if (this.audioMng) {
             this.audioMng.destroy();
-        }
-        if (this.level_map) {
-            this.level_map.release();
         }
         cc.loader.release("./config/level_config");
         cc.loader.release("./config/tower_config");

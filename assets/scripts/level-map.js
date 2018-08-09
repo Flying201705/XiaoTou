@@ -31,15 +31,6 @@ cc.Class({
         });
     },
 
-    release() {
-        if (this.bgUrl) {
-            cc.loader.releaseRes(this.bgUrl, cc.SpriteFrame);
-        }
-        if (this.mapUrl) {
-            cc.loader.releaseRes(this.mapUrl, cc.TiledMapAsset);
-        }
-    },
-
     initBg: function(spriteFrame) {
         this.node.parent.getComponent(cc.Sprite).spriteFrame = spriteFrame;
     },
@@ -71,7 +62,15 @@ cc.Class({
         }
     },
 
-    // update (dt) {},
+    onDestroy() {
+        if (this.bgUrl) {
+            cc.loader.releaseRes(this.bgUrl, cc.SpriteFrame);
+        }
+        if (this.mapUrl) {
+            cc.loader.releaseRes(this.mapUrl, cc.TiledMapAsset);
+        }
+    },
+
     getPathPositions() {
         return this.pathPositions;
     },
