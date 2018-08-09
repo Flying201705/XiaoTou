@@ -4,18 +4,18 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        spriteFrames: {
-            default: [],
-            type: cc.SpriteFrame
-        },
+        // spriteFrames: {
+        //     default: [],
+        //     type: cc.SpriteFrame
+        // },
         levelFrames: {
             default: [],
             type: cc.SpriteFrame
         },
-        spriteNode: {
-            default: null,
-            type: cc.Sprite
-        },
+        // spriteNode: {
+        //     default: null,
+        //     type: cc.Sprite
+        // },
         levelNode: {
             default: null,
             type: cc.Sprite
@@ -261,9 +261,9 @@ cc.Class({
 
     updateTower: function () {
         cc.log("update tower");
-        if (this.currentLevel < this.spriteFrames.length - 1) {
+        if (this.currentLevel < this.maxLevel) {
             this.currentLevel++;
-            this.spriteNode.spriteFrame = this.spriteFrames[this.currentLevel];
+            // this.spriteNode.spriteFrame = this.spriteFrames[this.currentLevel];
             this.levelNode.spriteFrame = this.levelFrames[this.currentLevel];
             this.updateTowerConfig();
         } else {

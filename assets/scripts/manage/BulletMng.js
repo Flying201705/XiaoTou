@@ -1,4 +1,4 @@
-const NodePool = require('NodePool');
+const NodePool = require('../NodePool');
 
 cc.Class({
     extends: cc.Component,
