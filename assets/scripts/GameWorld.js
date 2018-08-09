@@ -3,13 +3,6 @@ import {InfoHandle} from './InfoData'
 import {InfoData} from './InfoData'
 import rank from './rank_list'
 
-// const TowerPosNodeState = {
-//     Invalid: -1,
-//     Null: 1,
-//     BuildMenu: 2,
-//     Tower: 3,
-//     UpdateMenu: 4
-// };
 let self = null;
 cc.Class({
     extends: cc.Component,
@@ -97,8 +90,6 @@ cc.Class({
         global.event.on("update_tower", this.updateTower.bind(this));
         global.event.on("sell_tower", this.sellTower.bind(this));
         global.event.on("game_start", this.gameStart.bind(this));
-        global.event.on("shoot_bullet", this.addBullet.bind(this));
-        global.event.on("destroy_bullet", this.removeBullet.bind(this));
         global.event.on("shoot_buff", this.addBuff.bind(this));
         global.event.on("summon_hero", this.summonHero.bind(this));
         global.event.on("release_slow", this.handleSlow.bind(this));
@@ -114,8 +105,6 @@ cc.Class({
         global.event.off("update_tower", this.updateTower);
         global.event.off("sell_tower", this.sellTower);
         global.event.off("game_start", this.gameStart);
-        global.event.off("shoot_bullet", this.addBullet);
-        global.event.off("destroy_bullet", this.removeBullet);
         global.event.off("shoot_buff", this.addBuff);
         global.event.off("summon_hero", this.summonHero);
         global.event.off("release_slow", this.handleSlow);
@@ -226,21 +215,6 @@ cc.Class({
         this.selectBox.active = false;
         return this.towerOp.getUpdateMenuIndex();
     },
-
-    // setState: function (node, state) {
-    //     if (node.state === state) {
-    //         return;
-    //     }
-    //     switch (state) {
-    //         case TowerPosNodeState.Null:
-    //             break;
-    //         case TowerPosNodeState.BuildMenu:
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     node.state = state;
-    // },
 
     buildTower: function (data) {
         cc.log("build tower " + data);
@@ -361,16 +335,6 @@ cc.Class({
         this.currentWaveCount = wave;
         this.waveDetails.string = this.prefixInteger(this.currentWaveCount, 2)
             + "/" + this.prefixInteger(this.totalWaveCount, 2);
-    },
-
-    addBullet: function (tower, enemy) {
-        let bullet = this.bulletMng.requestBullet(tower.getComponent("tower").bulletType);
-        bullet.parent = this.bulletLayer;
-        bullet.getComponent("bullet").initWithData(tower, enemy, this.enemyMng.list);
-    },
-
-    removeBullet: function (type, obj) {
-        this.bulletMng.returnBullet(type, obj);
     },
 
     addBuff: function (tower, attackRate, speedRate) {

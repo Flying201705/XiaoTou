@@ -22,6 +22,16 @@ cc.Class({
         }
     },
 
+    addBullet: function (tower, enemy) {
+        let bullet = this.requestBullet(tower.getComponent("tower").bulletType);
+        bullet.parent = this.node;
+        bullet.getComponent("bullet").initWithData(this, tower, enemy);
+    },
+
+    removeBullet: function (type, obj) {
+        this.returnBullet(type, obj);
+    },
+
     requestBullet(type) {
         let thePool = this.bulletPools[type];
         return thePool.request();
