@@ -12,8 +12,8 @@ cc.Class({
     loadMap: function (level) {
         let self = this;
         let forderName = "map_" + Math.floor((level - 1) / 10);
-        let bgurl = "map/" + forderName + "/map_bg.jpg";
-        cc.loader.loadRes(bgurl, cc.SpriteFrame, function (err, spriteFrame) {
+        this.bgUrl = "map/" + forderName + "/map_bg.jpg";
+        cc.loader.loadRes(this.bgUrl, cc.SpriteFrame, function (err, spriteFrame) {
             if (err) {
                 cc.error(err);
                 return;
@@ -21,14 +21,23 @@ cc.Class({
             self.initBg(spriteFrame);
         });
 
-        let mapurl = "map/" + forderName + "/level_" + level;
-        cc.loader.loadRes(mapurl, cc.TiledMapAsset, (err, tmxAsset) => {
+        this.mapUrl = "map/" + forderName + "/level_" + level;
+        cc.loader.loadRes(this.mapUrl, cc.TiledMapAsset, (err, tmxAsset) => {
             if (err) {
                 cc.error(err);
                 return;
             }
             self.initDataFromMap(tmxAsset);
         });
+    },
+
+    release() {
+        if (this.bgUrl) {
+            cc.loader.releaseRes(this.bgUrl, cc.SpriteFrame);
+        }
+        if (this.mapUrl) {
+            cc.loader.releaseRes(this.mapUrl, cc.TiledMapAsset);
+        }
     },
 
     initBg: function(spriteFrame) {

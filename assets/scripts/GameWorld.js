@@ -3,13 +3,13 @@ import {InfoHandle} from './InfoData'
 import {InfoData} from './InfoData'
 import rank from './rank_list'
 
-const TowerPosNodeState = {
-    Invalid: -1,
-    Null: 1,
-    BuildMenu: 2,
-    Tower: 3,
-    UpdateMenu: 4
-};
+// const TowerPosNodeState = {
+//     Invalid: -1,
+//     Null: 1,
+//     BuildMenu: 2,
+//     Tower: 3,
+//     UpdateMenu: 4
+// };
 let self = null;
 cc.Class({
     extends: cc.Component,
@@ -89,6 +89,7 @@ cc.Class({
         this.loadLevelConfig();
         this.loadTowerConfig();
         this.loadRewardConfig();
+        cc.log("zzz world resCount:" + cc.loader.getResCount());
     },
 
     initEvent: function () {
@@ -123,6 +124,19 @@ cc.Class({
         global.event.off("buy_slow", this.buySlow);
         global.event.off("buy_stun", this.buyStun);
         global.event.off("buy_damage", this.buyDamage);
+
+        if (this.hero) {
+            this.hero.destroy();
+        }
+        if (this.audioMng) {
+            this.audioMng.destroy();
+        }
+        if (this.level_map) {
+            this.level_map.release();
+        }
+        cc.loader.release("./config/level_config");
+        cc.loader.release("./config/tower_config");
+        cc.loader.release("./config/reward_config");
     },
 
     setTouchEvent: function () {
@@ -216,20 +230,20 @@ cc.Class({
         return this.towerOp.getUpdateMenuIndex();
     },
 
-    setState: function (node, state) {
-        if (node.state === state) {
-            return;
-        }
-        switch (state) {
-            case TowerPosNodeState.Null:
-                break;
-            case TowerPosNodeState.BuildMenu:
-                break;
-            default:
-                break;
-        }
-        node.state = state;
-    },
+    // setState: function (node, state) {
+    //     if (node.state === state) {
+    //         return;
+    //     }
+    //     switch (state) {
+    //         case TowerPosNodeState.Null:
+    //             break;
+    //         case TowerPosNodeState.BuildMenu:
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //     node.state = state;
+    // },
 
     buildTower: function (data) {
         cc.log("build tower " + data);

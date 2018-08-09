@@ -16,6 +16,10 @@ let NodePool = cc.Class({
         }
     },
 
+    clear() {
+        this.pool.clear();
+    },
+
     request() {
         let obj = null;
         if (this.pool.size() > 0) {

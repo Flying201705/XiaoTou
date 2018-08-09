@@ -16,6 +16,12 @@ cc.Class({
         }
     },
 
+    onDestroy() {
+        for (let i = 0; i < this.bulletPools.length; ++i) {
+            this.bulletPools[i].clear();
+        }
+    },
+
     requestBullet(type) {
         let thePool = this.bulletPools[type];
         return thePool.request();

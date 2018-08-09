@@ -18,6 +18,7 @@ cc.Class({
             this.loadBar.progress = 1;
             this.scheduleOnce(this.goToMainScene, 0.1);
         });
+        cc.log("zzz load resCount:" + cc.loader.getResCount());
     },
 
     // called every frame
