@@ -17,6 +17,15 @@ cc.Class({
         this.update_menu = cc.instantiate(this.updateMenuPrefab);
     },
 
+    onDestroy() {
+        if(this.build_menu) {
+            this.build_menu.destroy();
+        }
+        if(this.update_menu) {
+            this.update_menu.destroy();
+        }
+    },
+
     initBuildMenu: function (towers) {
         this.build_menu.getComponent("build-menu").initWithData(towers);
     },

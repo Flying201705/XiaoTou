@@ -100,6 +100,10 @@ cc.Class({
         this.initScrollViewPos();
     },
 
+    onDestroy() {
+        this.node.destroyAllChildren();
+    },
+
     initScrollViewPos: function () {
         let layout = this.getComponent(cc.Layout);
         layout.updateLayout();

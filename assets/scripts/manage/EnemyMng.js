@@ -36,6 +36,13 @@ cc.Class({
         this.currentEnemyCount = 0;
     },
 
+    onDestroy() {
+        cc.loader.release("./config/monster_config");
+        this.enemyConfigs = null;
+        this.list = null;
+        this.enemyPool.clear();
+    },
+
     startBuildMonster: function () {
         this.schedule(this.createMonsterUpdate, 0.5);
     },

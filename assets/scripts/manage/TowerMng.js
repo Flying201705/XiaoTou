@@ -18,5 +18,9 @@ cc.Class({
 
     destroyTower: function (tower) {
         tower.destroy();
+    },
+
+    onDestroy() {
+        this.node.destroyAllChildren();
     }
 });
