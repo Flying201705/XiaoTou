@@ -254,16 +254,6 @@ cc.Class({
         }
 
     },
-    _setAvatarsPos(urList) {
-
-        for (let i = 0; i < urList.length; i++) {
-            if (i == 0) {
-                item.node.setPositionX(i * 60);
-            }
-
-            this.rankAxisContainer.addChild(item.node);
-        }
-    },
     _set(currentLevel) {
         wx.getUserCloudStorage({
             keyList: [GAME_KEY],
@@ -379,6 +369,11 @@ cc.Class({
         this._getRankList();
     },
     _hide() {
-        this.scrollView.removeAllChildren();
+        if (this.scrollView != null) {
+            this.scrollView.removeAllChildren();
+        }
+        if (this.rankAxisContainer != null) {
+            this.rankAxisContainer.removeAllChildren();
+        }
     },
 });

@@ -37,6 +37,7 @@ cc.Class({
         this.tex = new cc.Texture2D();
         this._resizeShareCanvas();
         cc.info('main start');
+        rank.hide();
     },
     _resizeShareCanvas() {
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
