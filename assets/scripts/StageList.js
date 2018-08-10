@@ -32,9 +32,9 @@ cc.Class({
     start() {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             this.tex = new cc.Texture2D();
-            wx.postMessage({
-                type: 'show'
-            })
+            // wx.postMessage({
+            //     type: 'show'
+            // })
         }
         // cc.log("zzz load resCount:" + cc.loader.getResCount());
     },

@@ -22,6 +22,7 @@ cc.Class({
         WxHelper.showShareMenu();
         global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
         global.event.on("add_reward_hint", this.addRewardHint.bind(this));
+        this.rankListInit();
         this.checkSignIn();
         this.isRankListShow = false;
         let mask = this.rankList.getChildByName('bg_mask').getComponent('mask');
@@ -49,7 +50,6 @@ cc.Class({
 
     },
     update() {
-        // cc.info('this.isRankListShow:' + this.isRankListShow)
         if (this.isRankListShow) {
             this._updaetSubDomainCanvas();
         }
@@ -63,13 +63,8 @@ cc.Class({
             console.log('no tex');
             return;
         }
-        var openDataContext = wx.getOpenDataContext();
-        var sharedCanvas = openDataContext.canvas;
-        // if (sharedCanvas) {
-        //     sharedCanvas.width = cc.game.canvas.width * 2;
-        //     sharedCanvas.height = cc.game.canvas.height * 2;
-        // }
-        // console.log('w:' + sharedCanvas.width + ' h:' + sharedCanvas.height);
+        let openDataContext = wx.getOpenDataContext();
+        let sharedCanvas = openDataContext.canvas;
         this.tex.initWithElement(sharedCanvas);
         this.tex.handleLoadedTexture();
         this.display.spriteFrame = new cc.SpriteFrame(this.tex);
@@ -84,14 +79,8 @@ cc.Class({
             return;
         }
 
-
         // 发消息给子域
         console.log('setRank');
-        // wx.postMessage({
-        //     message: this._isShow ? 'Show' : 'Hide'
-        // })
-
-        // rank.setRank(17);
         rank.showRankList();
         this.isRankListShow = true;
     },
@@ -104,9 +93,15 @@ cc.Class({
             });
         }
     },
+    rankListInit(){
+        if (InfoData.user.id > 0) {
+            rank.initRank(InfoData.user.level);
+        }
+    },
     onDataDownloadCallback(token) {
         if (token === InfoData.TOKEN_USER_INFO) {
             this.checkSignIn();
+            this.rankListInit();
         }
     },
     hideRewardHint: function() {
