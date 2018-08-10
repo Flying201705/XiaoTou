@@ -2,6 +2,7 @@
  * 每日签到
  */
 const global = require("global");
+const config = require("./common/config");
 import {InfoData, InfoHandle} from "./InfoData";
 import * as WxHelper from "./common/WxHelper";
 
@@ -45,7 +46,9 @@ cc.Class({
             //签到成功领取水晶界面提示
             global.event.fire("add_reward_hint", data);
             new InfoHandle().updateLocalCrystal(data);
-            this._showWxShare();
+            if (config.aliveFunEnable === true) {
+                this._showWxShare();
+            }
         });
     },
     _showWxShare() {

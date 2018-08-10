@@ -1,7 +1,7 @@
 import * as net from "./net";
 import {http_head, InfoHandle} from "../InfoData";
 const global = require("global");
-
+const config = require("./common/config");
 const {shareForCrystal: shareForCrystal} = require("./config");
 
 module.exports = {
@@ -53,7 +53,7 @@ function share(mode = 'normal', control = 'local') {
                 imageUrl: ret.imageUrl,
                 success: ret => {
                     cc.info('share success', ret);
-                    if (crystalEnable) {
+                    if (crystalEnable && config.aliveFunEnable === true) {
                         _addCrystal(ret)
                     }
                 },

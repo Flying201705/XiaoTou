@@ -90,6 +90,9 @@ const InfoHandle = cc.Class({
     },
     login: function (wxCode) {
         console.log('[InfoHandle] request user info');
+        /**获取敏感功能配置开始 */
+        this.updateAliveEnable();
+        /**获取敏感功能配置结束 */
         net.request({
             url: http_head + login,
             data: {
@@ -106,6 +109,21 @@ const InfoHandle = cc.Class({
                 this.onDataLoadError();
             }
         })
+    },
+    //更新敏感功能开关
+    updateAliveEnable: function() {
+        let request = new XMLHttpRequest();
+        request.open("GET", config.versionUrl, true);
+        request.send(null);
+        request.onreadystatechange = function() {
+            if(request.readyState == 4 && request.status == 200) {
+                let obj = JSON.parse(request.responseText);
+                if (obj.codeVer === config.version && obj.status === 0) {
+                    config.aliveFunEnable = false;
+                }
+                // console.log("zhangxx, aliveFunEnable = " + config.aliveFunEnable);
+            }
+        };
     },
     /**
      * 检查user是否存在，用于网络连通判断。
