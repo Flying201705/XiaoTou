@@ -6,33 +6,47 @@ let NodePool = cc.Class({
     },
 
     ctor() {
-        this.pool = new cc.NodePool();
+        this.pool = [];
     },
 
-    init() {
+    init(parentNode) {
         for (let i = 0; i < this.size; ++i) {
             let obj = cc.instantiate(this.prefab);
-            this.pool.put(obj);
+            obj.parent = parentNode;
+            obj.position = cc.p(0, 1000);
+            this.pool.push(obj);
         }
+        this.parentNode = parentNode;
     },
 
     clear() {
-        this.pool.clear();
+        let count = this.pool.length;
+        for (let i = 0; i < count; ++i) {
+            this.pool[i].destroy();
+        }
+        this.pool.length = 0;
     },
 
     request() {
         let obj = null;
-        if (this.pool.size() > 0) {
-            obj = this.pool.get();
-        } else {
+        let last = this.pool.length-1;
+        if (last < 0) {
             obj = cc.instantiate(this.prefab);
+            obj.parent = this.parentNode;
+        } else {
+            obj = this.pool[last];
+            this.pool.length = last;
         }
 
         return obj;
     },
 
     return(obj) {
-        this.pool.put(obj);
+        if (obj && this.pool.indexOf(obj) === -1) {
+            // obj.removeFromParent(false);
+            obj.position = cc.p(0, 1000);
+            this.pool.push(obj);
+        }
     }
 });
 

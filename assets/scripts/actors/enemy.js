@@ -40,7 +40,7 @@ cc.Class({
 
         this.currentHealthCount = config.health; //当前血量
         this.totalHealthCount = config.health; //总血量
-        this.healthProgressBar.node.active = false;
+        this.healthProgressBar.node.opacity = 0;
 
         this.isBoss = false; //是否BOSS
         if (config.boss !== undefined) {
@@ -188,11 +188,10 @@ cc.Class({
     },
 
     dead: function () {
-        this.gameWorld.enemyMng.remove(this.node);
         this.gameWorld.enemyMng.destroyEnemy(this.node);
 
         this.anim.stop();
-        this.slowDebuff.active = false;
+        this.slowDebuff.opacity = 0;
         this.node.stopAllActions();
         this.unscheduleAllCallbacks();
     },
@@ -235,7 +234,7 @@ cc.Class({
 
         /* 受过伤害后显示血条 */
         if (this.currentHealthCount < this.totalHealthCount) {
-            this.healthProgressBar.node.active = true;
+            this.healthProgressBar.node.opacity = 255;
             this.healthProgressBar.progress = this.currentHealthCount / this.totalHealthCount;
         }
 
@@ -280,7 +279,7 @@ cc.Class({
             }
             this.slowRate = rate;
             this.scheduleOnce(this.cancelSlowed, duration);
-            this.slowDebuff.active = true;
+            this.slowDebuff.opacity = 255;
             this.updateMove();
         } else if (this.slowRate === rate && this.slowRate > 0) {
             this.unschedule(this.cancelSlowed);
@@ -290,7 +289,7 @@ cc.Class({
 
     cancelSlowed: function () {
         this.slowRate = 0;
-        this.slowDebuff.active = false;
+        this.slowDebuff.opacity = 0;
         this.updateMove();
     },
 

@@ -12,7 +12,7 @@ cc.Class({
 
     onLoad() {
         for (let i = 0; i < this.bulletPools.length; ++i) {
-            this.bulletPools[i].init();
+            this.bulletPools[i].init(this.node);
         }
     },
 
@@ -24,7 +24,7 @@ cc.Class({
 
     addBullet: function (tower, enemy) {
         let bullet = this.requestBullet(tower.getComponent("tower").bulletType);
-        bullet.parent = this.node;
+        // bullet.parent = this.node;
         bullet.getComponent("bullet").initWithData(this, tower, enemy);
     },
 

@@ -325,7 +325,7 @@ cc.Class({
         if (this.overFlag === false &&
             this.levelConfig && this.currentWaveCount >= this.levelConfig.waves.length
             && this.enemyMng.currentWaveConfig === undefined
-            && this.enemyGroup.childrenCount <= 0) {
+            && this.enemyMng.list.length <= 0) {
             //游戏结束--赢了
             this.gameOver(true);
         }
