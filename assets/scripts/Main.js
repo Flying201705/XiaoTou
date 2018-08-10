@@ -36,6 +36,7 @@ cc.Class({
     start() {
         this.tex = new cc.Texture2D();
         this._resizeShareCanvas();
+        cc.info('main start');
     },
     _resizeShareCanvas() {
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
@@ -93,7 +94,7 @@ cc.Class({
             });
         }
     },
-    rankListInit(){
+    rankListInit() {
         if (InfoData.user.id > 0) {
             rank.initRank(InfoData.user.level);
         }
@@ -104,14 +105,14 @@ cc.Class({
             this.rankListInit();
         }
     },
-    hideRewardHint: function() {
+    hideRewardHint: function () {
         this.rewardHint.string = "";
         this.rewardHint.node.active = false;
     },
     /**
      * 每日奖励水晶领取提示
      */
-    addRewardHint: function(count) {
+    addRewardHint: function (count) {
         this.rewardHint.string = "水晶+" + count;
         this.rewardHint.node.active = true;
         this.scheduleOnce(this.hideRewardHint, 3);

@@ -785,7 +785,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -13.5
+      "y": -11.5
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -834,7 +834,7 @@
     "_left": 0,
     "_right": 0,
     "_top": 84.5,
-    "_bottom": 10,
+    "_bottom": 12,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,

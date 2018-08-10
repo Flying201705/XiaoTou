@@ -10,6 +10,7 @@ cc.Class({
         item: cc.Prefab,
         rankAxisContainer: cc.Node,
         rankAvatarPrefab: cc.Prefab,
+        rankDesc: cc.RichText,
     },
     onLoad() {
         console.log('wx-sub onLoad');
@@ -205,22 +206,31 @@ cc.Class({
 
         }
 
+        this.rankDesc.string = '';
+
         if (urList.length == 1) {
             let first = urList[0];
             let pos = total * first.level / TOTAL_LEVEL;
-            pos = (total - pos) < AVATAR_WIDTH ? (total - AVATAR_WIDTH) : pos;
+            pos = Math.max(AVATAR_WIDTH * 0.5, pos);
+            pos = Math.min(total - AVATAR_WIDTH * 0.5, pos);
             this.avatarList[0].setPositionX(pos);
+
+            let percent = first.level / TOTAL_LEVEL * 100;
+            percent = Math.min(percent, 90);
+            percent = percent + Math.floor(Math.random() * 6);
+            this.rankDesc.string = `<color=f412305>您已超越<color=#0f43e7d>${percent}%</color>的玩家</color>`;
         } else if (urList.length == 2) {
             let first = urList[0];
             let last = urList[1];
 
             let pos = total * first.level / TOTAL_LEVEL;
-            pos = (total - pos) < 2 * AVATAR_WIDTH ? (total - 2 * AVATAR_WIDTH) : pos;
+            pos = Math.max(AVATAR_WIDTH * 0.5, pos);
+            pos = Math.min(total - AVATAR_WIDTH * 1.5, pos);
             this.avatarList[0].setPositionX(pos);
 
             let lastPos = total * last.level / TOTAL_LEVEL;
-            lastPos = lastPos < pos + AVATAR_WIDTH ? pos + AVATAR_WIDTH : lastPos;
-            lastPos = lastPos + AVATAR_WIDTH > total ? total - AVATAR_WIDTH : lastPos;
+            lastPos = Math.max(pos + AVATAR_WIDTH, lastPos);
+            lastPos = Math.min(total - AVATAR_WIDTH * 0.5, lastPos);
             this.avatarList[1].setPositionX(lastPos);
         } else if (urList.length == 3) {
             let first = urList[0];
@@ -228,17 +238,18 @@ cc.Class({
             let last = urList[2];
 
             let firstPos = total * first.level / TOTAL_LEVEL;
-            firstPos = (total - firstPos) < 3 * AVATAR_WIDTH ? (total - 3 * AVATAR_WIDTH) : firstPos;
+            firstPos = Math.max(AVATAR_WIDTH * 0.5, firstPos);
+            firstPos = Math.min(total - AVATAR_WIDTH * 2.5, firstPos);
             this.avatarList[0].setPositionX(firstPos);
 
             let secondPos = total * second.level / TOTAL_LEVEL;
-            secondPos = secondPos < firstPos + AVATAR_WIDTH ? firstPos + AVATAR_WIDTH : secondPos;
-            secondPos = (total - secondPos) < 2 * AVATAR_WIDTH ? (total - 2 * AVATAR_WIDTH) : secondPos;
+            secondPos = Math.max(firstPos + AVATAR_WIDTH, secondPos);
+            secondPos = Math.min(total - AVATAR_WIDTH * 1.5, secondPos);
             this.avatarList[1].setPositionX(secondPos);
 
             let lastPos = total * last.level / TOTAL_LEVEL;
-            lastPos = lastPos < secondPos + AVATAR_WIDTH ? secondPos + AVATAR_WIDTH : lastPos;
-            lastPos = lastPos + AVATAR_WIDTH > total ? total - AVATAR_WIDTH : lastPos;
+            lastPos = Math.max(secondPos + AVATAR_WIDTH, lastPos);
+            lastPos = Math.min(total - AVATAR_WIDTH * 0.5, lastPos);
             this.avatarList[2].setPositionX(lastPos);
         }
 
