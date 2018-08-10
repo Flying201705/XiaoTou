@@ -1,4 +1,6 @@
 const GAME_KEY = '小兵传奇';
+const AVATAR_WIDTH = 50;
+const TOTAL_LEVEL = 50;
 
 cc.Class({
     extends: cc.Component,
@@ -73,6 +75,41 @@ cc.Class({
             keyList: [GAME_KEY],
             success: (res) => {
                 console.log('get friend success', res);
+                //temp code
+                // res = {
+                //     data: [
+                //         {
+                //             KVDataList: [{
+                //                 key: "小兵传奇",
+                //                 value: "{\"wxgame\":{\"score\":48,\"update_time\":1533896085812}}"
+                //             }],
+                //             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/hrTPJATib69FAmkOIpVVLq8R5D33gO2QuOHibU3yuQV7gLVWgZqmyH8o0LuJxLTVYibXglqzIPictvgMaL835P6iaDA/132",
+                //             nickname: "在路上",
+                //             openid: "oVL0X0Usze9sx5PVrryp9hcWccY0",
+                //         },
+                //         {
+                //             KVDataList: [{
+                //                 key: "小兵传奇",
+                //                 value: "{\"wxgame\":{\"score\":48,\"update_time\":1533899202161}}"
+                //             }],
+                //             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/a1nDkic8T3LQ53tPuXBF1VsoSaiauNJOlKU6hWPES7s9badBmzGOsibW1WesVibaRNeR7C2q37GX5fGUsqZVRon0EQ/132",
+                //             nickname: "浩S",
+                //             openid: "oVL0X0a5g1anxIss_WVtmRdb3G2c",
+                //         },
+                //         {
+                //             KVDataList: [{
+                //                 key: "小兵传奇",
+                //                 value: "{\"wxgame\":{\"score\":48,\"update_time\":1533903450362}}"
+                //             }],
+                //             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/2CTFQ6kHnAccby5NLOsaKfhDnicJ23p0k0AD7tv9q6vmq7ZcXibEZwicN1yxKmoRgV9o7BeXbQ0RhXMicAIUMibGbnQ/132",
+                //             nickname: "HotBunny",
+                //             openid: "oVL0X0bnObYaYWxhAkyBQdXliMa0",
+                //         },
+                //     ]
+                // };
+                //temp code
+
+
                 let urList = this._getUserRankAxisList(res, openid);
                 console.log('user rank list:', urList);
                 // this.addToScrollView(urList);
@@ -97,7 +134,7 @@ cc.Class({
                 openid: data.openid,
                 avatarUrl: data.avatarUrl,
                 level: kvData.wxgame.score,
-                time: kvData.wxgame.score.update_time
+                time: kvData.wxgame.update_time
             };
 
             urList.push(urData);
@@ -118,8 +155,8 @@ cc.Class({
             }
         });
 
-
         let userCount = 1;
+        let userLevel = userRankAxisList[0].level;
         for (let i = 0; i < urList.length; i++) {
             let lastUrData = userRankAxisList[userRankAxisList.length - 1];
             let urData = urList[i];
@@ -128,7 +165,14 @@ cc.Class({
                 userCount++;
                 userRankAxisList.push(urData);
             } else if (urData.level === lastUrData.level) {
-                if (urData.time < lastUrData.level) {
+                if (urData.level <= userLevel) {
+                    continue;
+                }
+                if (urData.openid === lastUrData.openid) {
+                    continue;
+                }
+                // cc.info('urData.time:' + urData.time + ' lastUrData.time:' + lastUrData.time);
+                if (urData.time < lastUrData.time) {
                     // 保留自己不被替换。
                     if (userRankAxisList.length > 1) {
                         userRankAxisList.pop();
@@ -148,20 +192,56 @@ cc.Class({
     },
     _drawAvatars(urList) {
         let total = this.rankAxisContainer.width;
+        cc.info('total width:' + total);
 
+        this.avatarList = [];
         for (let i = 0; i < urList.length; i++) {
             let info = urList[i];
             let item = cc.instantiate(this.rankAvatarPrefab).getComponent('avatar');
             item.setAvatar(info.avatarUrl);
             item.setLevel(info.level);
-
-            // if (i == 0) {
-
-                item.node.setPositionX(i * 60);
-            // }
-
             this.rankAxisContainer.addChild(item.node);
+            this.avatarList.push(item.node);
+
         }
+
+        if (urList.length == 1) {
+            let first = urList[0];
+            let pos = total * first.level / TOTAL_LEVEL;
+            pos = (total - pos) < AVATAR_WIDTH ? (total - AVATAR_WIDTH) : pos;
+            this.avatarList[0].setPositionX(pos);
+        } else if (urList.length == 2) {
+            let first = urList[0];
+            let last = urList[1];
+
+            let pos = total * first.level / TOTAL_LEVEL;
+            pos = (total - pos) < 2 * AVATAR_WIDTH ? (total - 2 * AVATAR_WIDTH) : pos;
+            this.avatarList[0].setPositionX(pos);
+
+            let lastPos = total * last.level / TOTAL_LEVEL;
+            lastPos = lastPos < pos + AVATAR_WIDTH ? pos + AVATAR_WIDTH : lastPos;
+            lastPos = lastPos + AVATAR_WIDTH > total ? total - AVATAR_WIDTH : lastPos;
+            this.avatarList[1].setPositionX(lastPos);
+        } else if (urList.length == 3) {
+            let first = urList[0];
+            let second = urList[1];
+            let last = urList[2];
+
+            let firstPos = total * first.level / TOTAL_LEVEL;
+            firstPos = (total - firstPos) < 3 * AVATAR_WIDTH ? (total - 3 * AVATAR_WIDTH) : firstPos;
+            this.avatarList[0].setPositionX(firstPos);
+
+            let secondPos = total * second.level / TOTAL_LEVEL;
+            secondPos = secondPos < firstPos + AVATAR_WIDTH ? firstPos + AVATAR_WIDTH : secondPos;
+            secondPos = (total - secondPos) < 2 * AVATAR_WIDTH ? (total - 2 * AVATAR_WIDTH) : secondPos;
+            this.avatarList[1].setPositionX(secondPos);
+
+            let lastPos = total * last.level / TOTAL_LEVEL;
+            lastPos = lastPos < secondPos + AVATAR_WIDTH ? secondPos + AVATAR_WIDTH : lastPos;
+            lastPos = lastPos + AVATAR_WIDTH > total ? total - AVATAR_WIDTH : lastPos;
+            this.avatarList[2].setPositionX(lastPos);
+        }
+
     },
     _setAvatarsPos(urList) {
 
@@ -261,7 +341,7 @@ cc.Class({
                 nickname: data.nickname,
                 avatarUrl: data.avatarUrl,
                 level: kvData.wxgame.score,
-                time: kvData.wxgame.score.update_time
+                time: kvData.wxgame.update_time
             });
         }
 
