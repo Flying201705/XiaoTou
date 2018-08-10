@@ -254,10 +254,13 @@ cc.Class({
     },
 
     handleStuned: function () {
-        this.beStuned = true;
-        this.unschedule(this.cancelStuned);
+        if (!this.beStuned) {
+            this.beStuned = true;
+            this.stopMove();
+        } else {
+            this.unschedule(this.cancelStuned);
+        }
         this.scheduleOnce(this.cancelStuned, 2);
-        this.stopMove();
     },
 
     cancelStuned: function () {
@@ -270,11 +273,19 @@ cc.Class({
             // 当前怪物减速 大于 新受到的减速，不覆盖
             return;
         }
-        this.unschedule(this.cancelSlowed);
-        this.slowRate = rate;
-        this.scheduleOnce(this.cancelSlowed, duration);
-        this.slowDebuff.active = true;
-        this.updateMove();
+
+        if (this.slowRate < rate) {
+            if (this.slowRate > 0) {
+                this.unschedule(this.cancelSlowed);
+            }
+            this.slowRate = rate;
+            this.scheduleOnce(this.cancelSlowed, duration);
+            this.slowDebuff.active = true;
+            this.updateMove();
+        } else if (this.slowRate === rate && this.slowRate > 0) {
+            this.unschedule(this.cancelSlowed);
+            this.scheduleOnce(this.cancelSlowed, duration);
+        }
     },
 
     cancelSlowed: function () {
