@@ -371,9 +371,11 @@ cc.Class({
     _hide() {
         if (this.scrollView != null) {
             this.scrollView.removeAllChildren();
+            this.scrollView.destroyAllChildren();
         }
         if (this.rankAxisContainer != null) {
             this.rankAxisContainer.removeAllChildren();
+            this.rankAxisContainer.destroyAllChildren();
         }
     },
 });
