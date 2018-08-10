@@ -2834,7 +2834,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148,
+      "width": 0,
       "height": 40
     },
     "_rotationX": 0,

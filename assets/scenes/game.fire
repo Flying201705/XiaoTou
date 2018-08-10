@@ -6459,7 +6459,7 @@
         "__uuid__": "8fd5e72c-dec0-46b6-91d7-d5963bbcfd60"
       }
     ],
-    "playOnLoad": false
+    "playOnLoad": true
   },
   {
     "__type__": "8f377IQHHNIho5wJhm6RBxH",
