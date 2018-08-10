@@ -6,6 +6,8 @@ cc.Class({
     properties: {
         scrollView: cc.Node,
         item: cc.Prefab,
+        rankAxisContainer: cc.Node,
+        rankAvatarPrefab: cc.Prefab,
     },
     onLoad() {
         console.log('wx-sub onLoad');
@@ -59,8 +61,116 @@ cc.Class({
                         console.log('currentLevel:' + data.currentLevel);
                         this._hide();
                         break;
+                    case 'rankAxis':
+                        this._drawRankAxis(data.openid);
+                        break;
                 }
             });
+        }
+    },
+    _drawRankAxis(openid) {
+        wx.getFriendCloudStorage({
+            keyList: [GAME_KEY],
+            success: (res) => {
+                console.log('get friend success', res);
+                let urList = this._getUserRankAxisList(res, openid);
+                console.log('user rank list:', urList);
+                // this.addToScrollView(urList);
+                this._drawAvatars(urList);
+            }
+            ,
+            fail: (res) => {
+                console.log('get friend fail', res);
+            },
+        });
+    },
+    _getUserRankAxisList(res, openid) {
+        let userData = null;
+        let userRankAxisList = [];
+
+        let urList = [];
+        for (let i = 0; i < res.data.length; i++) {
+            let data = res.data[i];
+            let kvData = this.getLevel(data.KVDataList);
+
+            let urData = {
+                openid: data.openid,
+                avatarUrl: data.avatarUrl,
+                level: kvData.wxgame.score,
+                time: kvData.wxgame.score.update_time
+            };
+
+            urList.push(urData);
+
+            if (openid === data.openid) {
+                userData = urData;
+                userRankAxisList.push(urData)
+            }
+        }
+
+        urList.sort((x, y) => {
+            if (x.level > y.level) {
+                return 1;
+            } else if (x.level < y.level) {
+                return -1;
+            } else {
+                return this._sortByTime(x, y);
+            }
+        });
+
+
+        let userCount = 1;
+        for (let i = 0; i < urList.length; i++) {
+            let lastUrData = userRankAxisList[userRankAxisList.length - 1];
+            let urData = urList[i];
+
+            if (urData.level > lastUrData.level) {
+                userCount++;
+                userRankAxisList.push(urData);
+            } else if (urData.level === lastUrData.level) {
+                if (urData.time < lastUrData.level) {
+                    // 保留自己不被替换。
+                    if (userRankAxisList.length > 1) {
+                        userRankAxisList.pop();
+                        userCount--;
+                    }
+                    userRankAxisList.push(urData);
+                    userCount++;
+                }
+            }
+
+            if (userCount > 2) {
+                break;
+            }
+        }
+
+        return userRankAxisList;
+    },
+    _drawAvatars(urList) {
+        let total = this.rankAxisContainer.width;
+
+        for (let i = 0; i < urList.length; i++) {
+            let info = urList[i];
+            let item = cc.instantiate(this.rankAvatarPrefab).getComponent('avatar');
+            item.setAvatar(info.avatarUrl);
+            item.setLevel(info.level);
+
+            // if (i == 0) {
+
+                item.node.setPositionX(i * 60);
+            // }
+
+            this.rankAxisContainer.addChild(item.node);
+        }
+    },
+    _setAvatarsPos(urList) {
+
+        for (let i = 0; i < urList.length; i++) {
+            if (i == 0) {
+                item.node.setPositionX(i * 60);
+            }
+
+            this.rankAxisContainer.addChild(item.node);
         }
     },
     _set(currentLevel) {
@@ -68,7 +178,7 @@ cc.Class({
             keyList: [GAME_KEY],
             success: (res) => {
                 console.log('get success', res);
-                let storageLevel = this.getLevel(res.KVDataList);
+                let storageLevel = this.getLevel(res.KVDataList).wxgame.score;
                 console.log('storageLevel', storageLevel);
                 if (currentLevel > storageLevel) {
                     this.setStorage(currentLevel);
@@ -81,19 +191,18 @@ cc.Class({
     },
     getLevel(KVDataList) {
         if (KVDataList === null || KVDataList.length == 0) {
-            return -1;
+            return {};
         }
 
         for (let i = 0; i < KVDataList.length; i++) {
             let data = KVDataList[i];
             if (GAME_KEY == data.key) {
-                let val = JSON.parse(data.value);
-                return val.wxgame.score;
+                return JSON.parse(data.value);
             }
 
         }
 
-        return -1;
+        return {};
     },
     setStorage(currentLevel) {
         let val = JSON.stringify({
@@ -117,12 +226,12 @@ cc.Class({
             }
         });
     },
-    getRankList() {
+    _getRankList() {
         wx.getFriendCloudStorage({
             keyList: [GAME_KEY],
             success: (res) => {
                 console.log('get friend success', res);
-                let urList = this.getUserRankList(res);
+                let urList = this._getUserRankList(res);
                 console.log('user rank list:', urList);
                 this.addToScrollView(urList);
             }
@@ -143,15 +252,16 @@ cc.Class({
             this.scrollView.addChild(item.node);
         }
     },
-    getUserRankList(res) {
+    _getUserRankList(res) {
         let urList = [];
         for (let i = 0; i < res.data.length; i++) {
             let data = res.data[i];
-
+            let kvData = this.getLevel(data.KVDataList);
             urList.push({
                 nickname: data.nickname,
                 avatarUrl: data.avatarUrl,
-                level: this.getLevel(data.KVDataList)
+                level: kvData.wxgame.score,
+                time: kvData.wxgame.score.update_time
             });
         }
 
@@ -161,12 +271,21 @@ cc.Class({
             } else if (x.level > y.level) {
                 return -1;
             } else {
-                return 0;
+                return this._sortByTime(x, y);
             }
         });
     },
+    _sortByTime(x, y) {
+        if (x.time > y.time) {
+            return 1;
+        } else if (x.time < y.time) {
+            return -1;
+        } else {
+            return 0;
+        }
+    },
     _show() {
-        this.getRankList();
+        this._getRankList();
     },
     _hide() {
         this.scrollView.removeAllChildren();

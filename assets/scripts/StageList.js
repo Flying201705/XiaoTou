@@ -19,29 +19,38 @@ cc.Class({
         this.itemWidth = 0;
         this.itemHeight = 0;
         this.initList();
-
-        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            let sys = wx.getSystemInfoSync();
-            cc.info('windowWidth:' + sys.windowWidth);
-            cc.info('windowHeight:' + sys.windowHeight);
-            cc.info('ww:'+window.sharedCanvas.width +' wh:'+window.sharedCanvas.height );
-            // window.sharedCanvas.width = window.sharedCanvas.width * ratio;
-            // window.sharedCanvas.height = window.sharedCanvas.height * ratio;
+    },
+    _resizeShareCanvas() {
+        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+            return;
         }
+
+        let ratio = 1;
+        ratio = wx.getSystemInfoSync().pixelRatio;
+        // ratio = ratio == 1 ? 1 : ratio / 2;
+        window.sharedCanvas.width = window.sharedCanvas.width * ratio;
+        window.sharedCanvas.height = window.sharedCanvas.height * ratio;
+
     },
     start() {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             this.tex = new cc.Texture2D();
-            // wx.postMessage({
-            //     type: 'show'
-            // })
+            this._resizeShareCanvas();
+            wx.postMessage({
+                type: 'rankAxis',
+                openid: InfoData.user.openid
+            });
+            // this._updaetSubDomainCanvas();
+            this.scheduleOnce(this._updaetSubDomainCanvas, 1);
+            this.scheduleOnce(this._updaetSubDomainCanvas, 3);
+            this.scheduleOnce(this._updaetSubDomainCanvas, 5);
         }
-        // cc.log("zzz load resCount:" + cc.loader.getResCount());
     },
-    update() {
+    update(dt) {
         // this._updaetSubDomainCanvas();
     },
     _updaetSubDomainCanvas() {
+        cc.info('_updaetSubDomainCanvas');
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
             return;
         }
