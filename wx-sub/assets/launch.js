@@ -43,6 +43,10 @@ cc.Class({
                 console.log('onMessage:', data);
 
                 switch (data.type) {
+                    case 'initRank':
+                        console.log('initRank');
+                        this.setStorage(data.level);
+                        break;
                     case 'show':
                         console.log('Show');
                         this._show();
@@ -95,7 +99,7 @@ cc.Class({
         let val = JSON.stringify({
             "wxgame": {
                 "score": currentLevel,
-                "update_time": 1513080573
+                "update_time": new Date().getTime()
             }
         });
         console.log('set:' + val);

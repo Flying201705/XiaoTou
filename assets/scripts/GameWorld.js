@@ -580,7 +580,7 @@ cc.Class({
 
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
 
-            rank.setRank(this.currentLevel);
+            rank.setRank(this.currentLevel + 1);
         } else {
             this.audioMng.playLose();
             this.gameover.showLoseUI(
