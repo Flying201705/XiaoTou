@@ -28,6 +28,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        crystalhint: {
+            default: null,
+            type: cc.Label
+        },
     },
     update() {
         if (global.isPause()) {
@@ -45,6 +49,7 @@ cc.Class({
         global.event.on("get_one_chip_price", this.getOneChipPrice.bind(this));
         global.event.on("show_back_pack_dialog", this.showBackPack.bind(this));
         global.event.on("show_hint_dialog", this.showHintDialog.bind(this));
+        global.event.on("add_crystal_hint", this.addCrystalHint.bind(this));
 
         this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
 
@@ -57,6 +62,7 @@ cc.Class({
         global.event.off("get_one_chip_price", this.getOneChipPrice);
         global.event.off("show_back_pack_dialog", this.showBackPack);
         global.event.off("show_hint_dialog", this.showHintDialog);
+        global.event.off("add_crystal_hint", this.addCrystalHint);
 
         cc.loader.release("./config/description_config");
     },
@@ -115,4 +121,13 @@ cc.Class({
         hintDialog.getComponent('HintDialog').config(this.node, hint);
         hintDialog.parent = this.node;
     },
+    hideCrystalHint: function(count) {
+        this.crystalhint.string = "";
+        this.crystalhint.node.active = false;
+    },
+    addCrystalHint: function(count) {
+        this.crystalhint.string = "水晶+" + count;
+        this.crystalhint.node.active = true;
+        this.scheduleOnce(this.hideCrystalHint, 3);
+    }
 });

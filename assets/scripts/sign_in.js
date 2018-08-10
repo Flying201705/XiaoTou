@@ -1,6 +1,7 @@
 /**
  * 每日签到
  */
+const global = require("global");
 import {InfoData, InfoHandle} from "./InfoData";
 import * as WxHelper from "./common/WxHelper";
 
@@ -41,6 +42,8 @@ cc.Class({
     signIn() {
         this.node.parent.removeChild(this.node);
         remoteHelper.signIn(InfoData.user.id, data => {
+            //签到成功领取水晶界面提示
+            global.event.fire("add_reward_hint", data);
             new InfoHandle().updateLocalCrystal(data);
             this._showWxShare();
         });

@@ -12,6 +12,7 @@ cc.Class({
         rankList: cc.Node,
         display: cc.Sprite,
         signIn: cc.Prefab,
+        rewardHint: cc.Label,
         gameHelp: require("GameHelp")
     },
 
@@ -20,6 +21,7 @@ cc.Class({
     onLoad() {
         WxHelper.showShareMenu();
         global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
+        global.event.on("add_reward_hint", this.addRewardHint.bind(this));
         this.checkSignIn();
         this.isRankListShow = false;
         let mask = this.rankList.getChildByName('bg_mask').getComponent('mask');
@@ -28,6 +30,7 @@ cc.Class({
     },
     onDestroy() {
         global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
+        global.event.off("add_reward_hint", this.addRewardHint);
     },
     start() {
         this.tex = new cc.Texture2D();
@@ -105,6 +108,18 @@ cc.Class({
         if (token === InfoData.TOKEN_USER_INFO) {
             this.checkSignIn();
         }
+    },
+    hideRewardHint: function() {
+        this.rewardHint.string = "";
+        this.rewardHint.node.active = false;
+    },
+    /**
+     * 每日奖励水晶领取提示
+     */
+    addRewardHint: function(count) {
+        this.rewardHint.string = "水晶+" + count;
+        this.rewardHint.node.active = true;
+        this.scheduleOnce(this.hideRewardHint, 3);
     },
     /**
      * 显示游戏说明

@@ -1,5 +1,6 @@
 import * as net from "./net";
 import {http_head, InfoHandle} from "../InfoData";
+const global = require("global");
 
 const {shareForCrystal: shareForCrystal} = require("./config");
 
@@ -70,6 +71,8 @@ function share(mode = 'normal', control = 'local') {
 function _addCrystal(data) {
     let crystalCount = _isShareViaGroup(data) ? shareForCrystal.group : shareForCrystal.person;
     cc.info('_addCrystal:' + crystalCount);
+    //分享成功获得水晶界面提示
+    global.event.fire("add_crystal_hint", crystalCount);
     new InfoHandle().updateRemoteCrystal(crystalCount);
 }
 
