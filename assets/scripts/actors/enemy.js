@@ -54,7 +54,6 @@ cc.Class({
 
         this.state = EnemyState.Invalid;
         this.node.opacity = 0;
-        this.direction = cc.p(0, 0);
 
         this.beStuned = false; //被眩晕
         this.slowRate = 0; //减速
@@ -76,18 +75,12 @@ cc.Class({
         this.node.position = pathPoints[0];
 
         this.setState(EnemyState.Unbeatable);
-        this.schedule(this.playAnim, 1);
+        // this.schedule(this.playAnim, 1);
+        this.playAnim();
         this.doMove();
     },
 
     playAnim: function () {
-        // 根据行走的方向，修改节点的方向
-        if (this.node !== undefined && this.pathPoints[this.currentPathPointCount] !== undefined
-            && this.node.x - this.pathPoints[this.currentPathPointCount].x > 20) {
-            this.spriteNode.node.scaleX = -1;
-        } else {
-            this.spriteNode.node.scaleX = 1;
-        }
         if (this.type >= 1000) {
             this.anim.play("boss_" + (this.type % 1000));
         } else {
@@ -107,6 +100,13 @@ cc.Class({
         }
 
         let pot = this.pathPoints[this.currentPathPointCount];
+        // 根据行走的方向，修改节点的方向
+        if (this.node.x - pot.x > 20) {
+            this.spriteNode.node.scaleX = -1;
+        } else {
+            this.spriteNode.node.scaleX = 1;
+        }
+
         let distance = cc.pDistance(this.node.position, pot);
         let move = cc.moveTo(distance / (this.speed * (1 - this.slowRate)), pot);
         this.moveAction = cc.sequence(move, cc.callFunc(() => {

@@ -1,12 +1,12 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "boss_0",
+  "_name": "boss_3",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.35,
+  "_duration": 0.4166666666666667,
   "sample": 60,
   "speed": 1,
-  "wrapMode": 1,
+  "wrapMode": "22",
   "curveData": {
     "comps": {
       "cc.Sprite": {

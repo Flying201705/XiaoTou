@@ -1,12 +1,12 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "enemy_1",
+  "_name": "enemy_17",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.36666666666666664,
+  "_duration": 0.4166666666666667,
   "sample": 60,
   "speed": 1,
-  "wrapMode": 1,
+  "wrapMode": "22",
   "curveData": {
     "comps": {
       "cc.Sprite": {
@@ -18,7 +18,7 @@
             }
           },
           {
-            "frame": 0.35,
+            "frame": 0.3333333333333333,
             "value": {
               "__uuid__": "7589766f-1404-43c8-8c75-efdd3db25ec4"
             }
