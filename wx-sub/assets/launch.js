@@ -10,7 +10,6 @@ cc.Class({
         item: cc.Prefab,
         rankAxisContainer: cc.Node,
         rankAvatarPrefab: cc.Prefab,
-        rankDesc: cc.RichText,
     },
     onLoad() {
         console.log('wx-sub onLoad');
@@ -100,7 +99,7 @@ cc.Class({
                 //         {
                 //             KVDataList: [{
                 //                 key: "小兵传奇",
-                //                 value: "{\"wxgame\":{\"score\":48,\"update_time\":1533903450362}}"
+                //                 value: "{\"wxgame\":{\"score\":25,\"update_time\":1533903450362}}"
                 //             }],
                 //             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/2CTFQ6kHnAccby5NLOsaKfhDnicJ23p0k0AD7tv9q6vmq7ZcXibEZwicN1yxKmoRgV9o7BeXbQ0RhXMicAIUMibGbnQ/132",
                 //             nickname: "HotBunny",
@@ -206,7 +205,8 @@ cc.Class({
 
         }
 
-        this.rankDesc.string = '';
+        let rankDesc = this._createRankDesc();
+        this.rankAxisContainer.addChild(rankDesc.node);
 
         if (urList.length == 1) {
             let first = urList[0];
@@ -218,7 +218,7 @@ cc.Class({
             let percent = first.level / TOTAL_LEVEL * 100;
             percent = Math.min(percent, 90);
             percent = percent + Math.floor(Math.random() * 6);
-            this.rankDesc.string = `<color=f412305>您已超越<color=#0f43e7d>${percent}%</color>的玩家</color>`;
+            rankDesc.string = `<color=#f412305>您已超越<color=#0f43e7d>${percent}%</color>的玩家</color>`;
         } else if (urList.length == 2) {
             let first = urList[0];
             let last = urList[1];
@@ -232,6 +232,8 @@ cc.Class({
             lastPos = Math.max(pos + AVATAR_WIDTH, lastPos);
             lastPos = Math.min(total - AVATAR_WIDTH * 0.5, lastPos);
             this.avatarList[1].setPositionX(lastPos);
+
+            rankDesc.string = `<color=#f412305>还差<color=#0f43e7d>${last.level - first.level}关</color>超越好友</color>`;
         } else if (urList.length == 3) {
             let first = urList[0];
             let second = urList[1];
@@ -251,8 +253,22 @@ cc.Class({
             lastPos = Math.max(secondPos + AVATAR_WIDTH, lastPos);
             lastPos = Math.min(total - AVATAR_WIDTH * 0.5, lastPos);
             this.avatarList[2].setPositionX(lastPos);
+
+            rankDesc.string = `<color=#f412305>还差<color=#0f43e7d>${second.level - first.level}关</color>超越好友</color>`;
         }
 
+    },
+    _createRankDesc() {
+        let node = new cc.Node();
+        node.setPosition(480, -65);
+        node.anchorX = 0.5;
+        node.anchorY = 0.5;
+        let rankDesc = node.addComponent(cc.RichText);
+        rankDesc.fontSize = 12;
+        rankDesc.lineHeight = 12;
+        let widget = node.addComponent(cc.Widget);
+        widget.horizontalCenter = 0;
+        return rankDesc;
     },
     _set(currentLevel) {
         wx.getUserCloudStorage({
