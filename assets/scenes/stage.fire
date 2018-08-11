@@ -716,12 +716,12 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 1
     },
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 960,
-      "height": 70
+      "height": 72
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -730,7 +730,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 205
+      "y": 242
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -785,7 +785,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -11.5
+      "y": -44
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -834,7 +834,7 @@
     "_left": 0,
     "_right": 0,
     "_top": 84.5,
-    "_bottom": 12,
+    "_bottom": 16.5,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
@@ -859,7 +859,7 @@
     "_alignFlags": 1,
     "_left": 0,
     "_right": 0,
-    "_top": 80,
+    "_top": 78,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,

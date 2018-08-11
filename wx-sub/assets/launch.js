@@ -260,7 +260,7 @@ cc.Class({
     },
     _createRankDesc() {
         let node = new cc.Node();
-        node.setPosition(480, -65);
+        node.setPosition(480, -68);
         node.anchorX = 0.5;
         node.anchorY = 0.5;
         let rankDesc = node.addComponent(cc.RichText);
