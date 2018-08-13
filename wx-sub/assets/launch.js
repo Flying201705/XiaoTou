@@ -64,6 +64,7 @@ cc.Class({
                         this._hide();
                         break;
                     case 'rankAxis':
+                        this._clearRankAxis();
                         this._drawRankAxis(data.openid);
                         break;
                 }
@@ -389,9 +390,12 @@ cc.Class({
             this.scrollView.removeAllChildren();
             this.scrollView.destroyAllChildren();
         }
+        this._clearRankAxis();
+    },
+    _clearRankAxis() {
         if (this.rankAxisContainer != null) {
             this.rankAxisContainer.removeAllChildren();
             this.rankAxisContainer.destroyAllChildren();
         }
-    },
+    }
 });
