@@ -11,5 +11,7 @@ module.exports = {
     shareForCrystal: {
         person: 2,
         group: 10
-    }
+    },
+    /*目前开放凑数*/
+    openLevel: 40
 };

@@ -2,6 +2,7 @@ import {InfoHandle} from "./InfoData";
 import * as WxHelper from "./common/WxHelper";
 
 const global = require("global");
+const config = require("./common/config");
 
 cc.Class({
     extends: cc.Component,
@@ -122,6 +123,10 @@ cc.Class({
     },
 
     goToNextLevel: function () {
+        if (global.currentLevel >= config.openLevel) {
+            this.goToPreviousScene();
+            return;
+        }
         new InfoHandle().checkUserById({
             success: () => {
                 cc.info('check user success');

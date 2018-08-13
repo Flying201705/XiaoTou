@@ -1,6 +1,7 @@
 import {InfoData, InfoHandle} from "./InfoData";
 
 const global = require("global");
+const config = require("./common/config");
 
 cc.Class({
     extends: cc.Component,
@@ -71,7 +72,7 @@ cc.Class({
     },
 
     startGameClick: function (event, customEventData) {
-        if (this.index > 40) {
+        if (this.index > config.openLevel) {
             this.showStageHintDialog();
             return;
         }
