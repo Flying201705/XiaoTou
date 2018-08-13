@@ -7,27 +7,19 @@ cc.Class({
         loadBar: cc.ProgressBar
     },
 
-    // use this for initialization
     onLoad: function () {
         this.loadBar.progress = 0;
         login.login();
     },
 
     start() {
+        let self = this;
+        cc.loader.onProgress = function (completedCount, totalCount, item) {
+            self.loadBar.progress = completedCount / totalCount;
+        };
         cc.director.preloadScene('main.fire', () => {
-            this.loadBar.progress = 1;
-            this.scheduleOnce(this.goToMainScene, 0.1);
+            cc.loader.onProgress = null;
+            cc.director.loadScene('main.fire');
         });
-    },
-
-    // called every frame
-    update: function (dt) {
-        if (this.loadBar.progress < 0.99) {
-            this.loadBar.progress += 0.5 * dt;
-        }
-    },
-
-    goToMainScene: function () {
-        cc.director.loadScene('main.fire');
-    },
+    }
 });
