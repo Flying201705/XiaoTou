@@ -20,6 +20,7 @@ cc.Class({
 
     onLoad() {
         WxHelper.showShareMenu();
+        WxHelper.onShareAppMessage();
         global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
         global.event.on("add_reward_hint", this.addRewardHint.bind(this));
         this.rankListInit();

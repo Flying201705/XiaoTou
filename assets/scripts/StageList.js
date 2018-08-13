@@ -25,13 +25,9 @@ cc.Class({
             return;
         }
 
-        // cc.info(wx.getSystemInfoSync());
-
-        let ratio = wx.getSystemInfoSync().pixelRatio;
-        // ratio = ratio == 1 ? 1 : ratio / 2;
-        // cc.info('sharedCanvasWidth:' + window.sharedCanvas.width + ' ratio:' + ratio);
-        window.sharedCanvas.width = window.sharedCanvas.width * ratio;
-        window.sharedCanvas.height = window.sharedCanvas.height * ratio;
+        let sysInfo = wx.getSystemInfoSync();
+        window.sharedCanvas.width = sysInfo.screenWidth * sysInfo.pixelRatio;
+        window.sharedCanvas.height = sysInfo.screenHeight * sysInfo.pixelRatio;
     },
     start() {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
@@ -48,7 +44,7 @@ cc.Class({
         this.unschedule(this._updateSubDomainCanvas);
     },
     // update(dt) {
-        // this._updateSubDomainCanvas();
+    // this._updateSubDomainCanvas();
     // },
     _updateSubDomainCanvas() {
         cc.info('_updateSubDomainCanvas');

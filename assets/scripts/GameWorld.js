@@ -2,6 +2,7 @@ const global = require("global");
 import {InfoHandle} from './InfoData'
 import {InfoData} from './InfoData'
 import rank from './rank_list'
+import * as WxHelper from "./common/WxHelper";
 
 let self = null;
 cc.Class({
@@ -30,6 +31,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        WxHelper.onShareAppMessage();
         let scheduler = cc.director.getScheduler();
         scheduler.setTimeScale(1);
 

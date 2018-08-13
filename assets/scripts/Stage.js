@@ -1,4 +1,6 @@
 const global = require("global");
+const config = require("common/config");
+import {InfoData} from './InfoData'
 
 cc.Class({
     extends: cc.Component,
@@ -21,7 +23,11 @@ cc.Class({
     },
 
     start () {
-
+        if (InfoData.user.level >= config.openLevel) {
+            let hintDialog = cc.instantiate(this.stagehint);
+            hintDialog.getComponent('StageHintDialog').config(this.node, `您已完成所有开放关卡\n敬请期待新关卡开放`);
+            hintDialog.parent = this.node;
+        }
     },
 
     // update (dt) {},

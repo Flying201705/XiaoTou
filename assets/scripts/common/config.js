@@ -12,6 +12,6 @@ module.exports = {
         person: 2,
         group: 10
     },
-    //开放最大关卡
-    maxLevel: 40
+    //开放最大关卡数
+    openLevel: 40
 };

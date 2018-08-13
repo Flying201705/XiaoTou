@@ -78,8 +78,8 @@ cc.Class({
             event.stopPropagation();
         });
     },
-    config(parentNode, config) {
-        this.parentNode = parentNode;
+    config(root, config) {
+        this.gameRoot = root;
 
         var mode = config.mode;
 
@@ -110,11 +110,6 @@ cc.Class({
             this.contentHero.active = false;
             this.contentAward.active = true;
         }
-
-        // cc.director.pause();
-        global.pause();
-
-
     },
     resizeSpriteFrame(spriteFrame) {
         let size = spriteFrame.getOriginalSize();
@@ -122,12 +117,9 @@ cc.Class({
         spriteFrame.setOriginalSize(cc.size(newWidth, this.IMG_HEIGHT));
     },
     hideDialog() {
-        this.parentNode.removeChild(this.node);
         this.node.destroy();
-        this.parentNode = null;
         cc.audioEngine.playEffect(this.clickAudio, false);
-        // cc.director.resume();
-        global.resume();
+        this.gameRoot.startCountDown();
     },
     getTowerIcon(index) {
         return this.towerSprites[index];

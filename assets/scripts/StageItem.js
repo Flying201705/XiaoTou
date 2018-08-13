@@ -1,6 +1,7 @@
 import {InfoData, InfoHandle} from "./InfoData";
 const config = require("./common/config");
 const global = require("global");
+const config = require("./common/config");
 
 cc.Class({
     extends: cc.Component,
@@ -82,7 +83,7 @@ cc.Class({
             }
         }
 
-        if (this.index > config.maxLevel) {
+        if (this.index > config.openLevel) {
             let hint = `继续前面的关卡，可以解锁更多关卡\n加油哦~`;
             this.showStageHintDialog(hint);
             return;
