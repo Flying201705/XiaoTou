@@ -91,7 +91,7 @@ cc.Class({
                 //         {
                 //             KVDataList: [{
                 //                 key: "小兵传奇",
-                //                 value: "{\"wxgame\":{\"score\":48,\"update_time\":1533899202161}}"
+                //                 value: "{\"wxgame\":{\"score\":30,\"update_time\":1533899202161}}"
                 //             }],
                 //             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/a1nDkic8T3LQ53tPuXBF1VsoSaiauNJOlKU6hWPES7s9badBmzGOsibW1WesVibaRNeR7C2q37GX5fGUsqZVRon0EQ/132",
                 //             nickname: "浩S",
@@ -209,64 +209,34 @@ cc.Class({
         let rankDesc = this._createRankDesc();
         this.rankAxisContainer.addChild(rankDesc.node);
 
-        if (urList.length == 1) {
-            let first = urList[0];
-            let pos = total * first.level / TOTAL_LEVEL;
-            pos = Math.max(AVATAR_WIDTH * 0.5, pos);
-            pos = Math.min(total - AVATAR_WIDTH * 0.5, pos);
-            this.avatarList[0].setPositionX(pos);
+        this.avatarList[0].setPositionX(150);
+        let first = urList[0];
 
+        if (urList.length == 1) {
             let percent = first.level / TOTAL_LEVEL * 100;
             percent = Math.min(percent, 90);
             percent = percent + Math.floor(Math.random() * 6);
             rankDesc.string = `<color=#f412305>您已超越<color=#0f43e7d>${percent}%</color>的玩家</color>`;
         } else if (urList.length == 2) {
-            let first = urList[0];
             let last = urList[1];
-
-            let pos = total * first.level / TOTAL_LEVEL;
-            pos = Math.max(AVATAR_WIDTH * 0.5, pos);
-            pos = Math.min(total - AVATAR_WIDTH * 1.5, pos);
-            this.avatarList[0].setPositionX(pos);
-
-            let lastPos = total * last.level / TOTAL_LEVEL;
-            lastPos = Math.max(pos + AVATAR_WIDTH, lastPos);
-            lastPos = Math.min(total - AVATAR_WIDTH * 0.5, lastPos);
-            this.avatarList[1].setPositionX(lastPos);
-
+            this.avatarList[1].setPositionX(total - AVATAR_WIDTH * 3);
             rankDesc.string = `<color=#f412305>还差<color=#0f43e7d>${last.level - first.level}关</color>超越好友</color>`;
         } else if (urList.length == 3) {
-            let first = urList[0];
             let second = urList[1];
-            let last = urList[2];
 
-            let firstPos = total * first.level / TOTAL_LEVEL;
-            firstPos = Math.max(AVATAR_WIDTH * 0.5, firstPos);
-            firstPos = Math.min(total - AVATAR_WIDTH * 2.5, firstPos);
-            this.avatarList[0].setPositionX(firstPos);
-
-            let secondPos = total * second.level / TOTAL_LEVEL;
-            secondPos = Math.max(firstPos + AVATAR_WIDTH, secondPos);
-            secondPos = Math.min(total - AVATAR_WIDTH * 1.5, secondPos);
-            this.avatarList[1].setPositionX(secondPos);
-
-            let lastPos = total * last.level / TOTAL_LEVEL;
-            lastPos = Math.max(secondPos + AVATAR_WIDTH, lastPos);
-            lastPos = Math.min(total - AVATAR_WIDTH * 0.5, lastPos);
-            this.avatarList[2].setPositionX(lastPos);
-
+            this.avatarList[1].setPositionX(total - AVATAR_WIDTH * 5);
+            this.avatarList[2].setPositionX(total - AVATAR_WIDTH * 3);
             rankDesc.string = `<color=#f412305>还差<color=#0f43e7d>${second.level - first.level}关</color>超越好友</color>`;
         }
-
     },
     _createRankDesc() {
         let node = new cc.Node();
-        node.setPosition(480, -68);
+        node.setPosition(480, -58);
         node.anchorX = 0.5;
         node.anchorY = 0.5;
         let rankDesc = node.addComponent(cc.RichText);
-        rankDesc.fontSize = 12;
-        rankDesc.lineHeight = 12;
+        rankDesc.fontSize = 14;
+        rankDesc.lineHeight = 14;
         let widget = node.addComponent(cc.Widget);
         widget.horizontalCenter = 0;
         return rankDesc;
