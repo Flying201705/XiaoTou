@@ -26,9 +26,9 @@ cc.Class({
 
     // update (dt) {},
 
-    showStageHintDialog: function() {
+    showStageHintDialog: function(hint) {
         let hintDialog = cc.instantiate(this.stagehint);
-        hintDialog.getComponent('StageHintDialog').config(this.node, `继续前面的关卡，可以解锁更多关卡\n加油哦~`);
+        hintDialog.getComponent('StageHintDialog').config(this.node, hint);
         hintDialog.parent = this.node;
     },
 });

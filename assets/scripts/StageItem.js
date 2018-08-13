@@ -1,5 +1,5 @@
 import {InfoData, InfoHandle} from "./InfoData";
-
+const config = require("./common/config");
 const global = require("global");
 
 cc.Class({
@@ -71,8 +71,20 @@ cc.Class({
     },
 
     startGameClick: function (event, customEventData) {
-        if (this.index > 40) {
-            this.showStageHintDialog();
+        if (this.index > 30) {
+            let minStars = 25 * Math.floor(this.index / 10);
+            let currentStars = new InfoHandle().getStarsForLevels();
+            // console.log("zhangxx minStars = " + minStars + ", currentStars = " + currentStars);
+            if (currentStars < minStars) {
+                let hint = `您已获得 <size=20>${currentStars}</size> 颗星星\n还需 <size=20><color=#fa6868>${minStars - currentStars}</color></size> 颗星星解锁此关`;
+                this.showStageHintDialog(hint);
+                return;
+            }
+        }
+
+        if (this.index > config.maxLevel) {
+            let hint = `继续前面的关卡，可以解锁更多关卡\n加油哦~`;
+            this.showStageHintDialog(hint);
             return;
         }
         this.preOnClick && this.preOnClick();
@@ -97,8 +109,8 @@ cc.Class({
         cc.info('after load game scene');
     },
 
-    showStageHintDialog() {
-        global.event.fire("show_stage_hint_dialog");
+    showStageHintDialog(hint) {
+        global.event.fire("show_stage_hint_dialog", hint);
     },
 
     preOnClick() {

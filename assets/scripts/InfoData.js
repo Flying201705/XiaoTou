@@ -59,7 +59,7 @@ const InfoData = {
 };
 
 function _updateLocalLevel(lv, stars, score) {
-    if (InfoData.levels[lv - 1] != null) {
+    if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1] != undefined) {
         InfoData.levels[lv - 1].stars = stars;
     } else {
         let level = new LevelData();
@@ -204,6 +204,16 @@ const InfoHandle = cc.Class({
 
         return false;
     },
+    getStarsForLevels: function() {
+        let stars = 0;
+        for (let i = 0; i < InfoData.levels.length; i++) {
+            if (InfoData.levels[i] != null && InfoData.levels[i] != undefined) {
+                stars += InfoData.levels[i].stars;
+            }
+        }
+
+        return stars;
+    },
     handleLevels: function (obj) {
         for (let i = 0; i < obj.length; i++) {
             let level = new LevelData();
@@ -238,7 +248,7 @@ const InfoHandle = cc.Class({
         InfoData.user.hero = hero > 0 ? 1 : 0;
     },
     updateLevel: function (lv, score, stars) {
-        if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1].stars >= stars) {
+        if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1] != undefined && InfoData.levels[lv - 1].stars >= stars) {
             return;
         }
 

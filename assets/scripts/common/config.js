@@ -11,5 +11,7 @@ module.exports = {
     shareForCrystal: {
         person: 2,
         group: 10
-    }
+    },
+    //开放最大关卡
+    maxLevel: 40
 };
