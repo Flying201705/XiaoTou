@@ -25,12 +25,13 @@ cc.Class({
             return;
         }
 
-        let ratio = 1;
-        ratio = wx.getSystemInfoSync().pixelRatio;
+        // cc.info(wx.getSystemInfoSync());
+
+        let ratio = wx.getSystemInfoSync().pixelRatio;
         // ratio = ratio == 1 ? 1 : ratio / 2;
+        // cc.info('sharedCanvasWidth:' + window.sharedCanvas.width + ' ratio:' + ratio);
         window.sharedCanvas.width = window.sharedCanvas.width * ratio;
         window.sharedCanvas.height = window.sharedCanvas.height * ratio;
-
     },
     start() {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
@@ -40,17 +41,17 @@ cc.Class({
                 type: 'rankAxis',
                 openid: InfoData.user.openid
             });
-            // this._updaetSubDomainCanvas();
-            this.scheduleOnce(this._updaetSubDomainCanvas, 1);
-            this.scheduleOnce(this._updaetSubDomainCanvas, 3);
-            this.scheduleOnce(this._updaetSubDomainCanvas, 5);
+            this.schedule(this._updateSubDomainCanvas, 2, 2, 1);
         }
     },
-    update(dt) {
-        // this._updaetSubDomainCanvas();
+    onDestroy() {
+        this.unschedule(this._updateSubDomainCanvas);
     },
-    _updaetSubDomainCanvas() {
-        cc.info('_updaetSubDomainCanvas');
+    // update(dt) {
+        // this._updateSubDomainCanvas();
+    // },
+    _updateSubDomainCanvas() {
+        cc.info('_updateSubDomainCanvas');
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
             return;
         }
@@ -59,10 +60,19 @@ cc.Class({
             console.log('no tex');
             return;
         }
-
-        this.tex.initWithElement(wx.getOpenDataContext().canvas);
-        this.tex.handleLoadedTexture();
-        this.display.spriteFrame = new cc.SpriteFrame(this.tex);
+        try {
+            let openDataContext = wx.getOpenDataContext();
+            if (openDataContext) {
+                let sharedCanvas = openDataContext.canvas;
+                this.tex.initWithElement(sharedCanvas);
+                this.tex.handleLoadedTexture();
+                this.display.spriteFrame = new cc.SpriteFrame(this.tex);
+            } else {
+                cc.info('wx.getOpenDataContext() return wrong');
+            }
+        } catch (e) {
+            cc.info(e);
+        }
     },
     initList: function () {
         for (let i = 0; i < this.itemCount; ++i) {

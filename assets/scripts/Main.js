@@ -53,10 +53,10 @@ cc.Class({
     },
     update() {
         if (this.isRankListShow) {
-            this._updaetSubDomainCanvas();
+            this._updateSubDomainCanvas();
         }
     },
-    _updaetSubDomainCanvas() {
+    _updateSubDomainCanvas() {
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
             return;
         }
