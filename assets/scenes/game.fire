@@ -6327,7 +6327,7 @@
         "__uuid__": "e006f6b9-daf5-4043-907f-f74cdd402a28"
       }
     ],
-    "playOnLoad": true
+    "playOnLoad": false
   },
   {
     "__type__": "cc.Sprite",
@@ -6337,9 +6337,7 @@
       "__id__": 166
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "4600bc58-5f26-4976-a987-5084541ba9f2"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -6477,7 +6475,7 @@
     },
     "_enabled": true,
     "timeCountDown": {
-      "__id__": 166
+      "__id__": 167
     },
     "description": {
       "__uuid__": "66664f67-4315-4937-b86f-5cabef75dab9"

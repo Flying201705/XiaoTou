@@ -6,7 +6,7 @@ cc.Class({
     properties: {
         timeCountDown: {
             default: null,
-            type: cc.Node
+            type: cc.Animation
         },
         description: {
             default: null,
@@ -33,13 +33,7 @@ cc.Class({
             type: cc.Label
         },
     },
-    update() {
-        if (global.isPause()) {
-            this.timeCountDownAnim.pause();
-        } else {
-            this.timeCountDownAnim.resume();
-        }
-    },
+
     onLoad() {
         this.gameWorld = this.gameNode.getComponent('GameWorld');
 
@@ -51,9 +45,7 @@ cc.Class({
         global.event.on("show_hint_dialog", this.showHintDialog.bind(this));
         global.event.on("add_crystal_hint", this.addCrystalHint.bind(this));
 
-        this.timeCountDownAnim = this.timeCountDown.getComponent(cc.Animation);
-
-        global.resume();
+        cc.loader.loadRes("./config/description_config", this.loadDescConfigCallback.bind(this));
     },
     onDestroy() {
         global.event.off("show_buy_prop_dialog", this.showBuyPropDialog);
@@ -66,35 +58,33 @@ cc.Class({
 
         cc.loader.release("./config/description_config");
     },
-    start() {
-        this.showDescDialog();
-    },
-    showDescDialog() {
-        cc.loader.loadRes("./config/description_config", (err, result) => {
-            if (err) {
-                cc.log("load description_config " + err);
-                // cc.director.resume();
-                return;
-            }
 
-            var config = result["level_" + global.currentLevel];
-
+    loadDescConfigCallback(err, result) {
+        if (err) {
+            cc.log("load description_config " + err);
+            this.startCountDown();
+        } else {
+            let config = result["level_" + global.currentLevel];
             if (config === undefined) {
                 cc.log("level_" + global.currentLevel + " not exist");
-                return;
-            }
-
-            if (config.mode === undefined || config.mode === 0) {
+                this.startCountDown();
+            } else if (config.mode === undefined || config.mode === 0) {
                 cc.log("mode undefined or 0 ");
-                return;
+                this.startCountDown();
+            } else {
+                this.showDescDialog(config);
             }
+        }
+    },
 
-            let descriptionDialog = cc.instantiate(this.description);
-            descriptionDialog.getComponent('GameDescription').config(this.node, config);
-            descriptionDialog.parent = this.node;
+    startCountDown() {
+        this.timeCountDown.play("time_count_down");
+    },
 
-        });
-
+    showDescDialog(config) {
+        let descriptionDialog = cc.instantiate(this.description);
+        descriptionDialog.getComponent('GameDescription').config(this, config);
+        descriptionDialog.parent = this.node;
     },
     showBuyPropDialog(propType) {
         var crystalCount = this.getCrystalCount();
