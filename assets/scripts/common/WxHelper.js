@@ -7,8 +7,46 @@ const {shareForCrystal, aliveFunEnable} = require("./config");
 module.exports = {
     share: share,
     showMoreGame: showMoreGame,
-    showShareMenu: showShareMenu
+    showShareMenu: showShareMenu,
+    onShareAppMessage: onShareAppMessage
 };
+
+function onShareAppMessage() {
+    if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+        return;
+    }
+
+    net.request({
+        url: http_head + 'more/shareInfo',
+        data: {
+            mode: 'normal',
+            control: 'local'
+        },
+        success: ret => {
+            let crystalEnable = ret.crystalEnable;
+            wx.onShareAppMessage(() => {
+                return {
+                    title: ret.title,
+                    imageUrl: ret.imageUrl,
+                    success: ret => {
+                        cc.info('share success', ret);
+                        if (crystalEnable && aliveFunEnable === true) {
+                            _addCrystal(ret)
+                        }
+                    },
+                    fail: ret => {
+                        cc.info('share fail', ret);
+                    }
+                }
+            });
+        },
+        fail: () => {
+            cc.info('get share info fail');
+        }
+    });
+
+
+}
 
 function showShareMenu() {
     if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
