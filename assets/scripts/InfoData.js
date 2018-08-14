@@ -214,6 +214,13 @@ const InfoHandle = cc.Class({
 
         return stars;
     },
+    isLevelFinish: function(lv) {
+        if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1] != undefined && InfoData.levels[lv - 1].stars > 0) {
+            return true;
+        }
+
+        return false;
+    },
     handleLevels: function (obj) {
         for (let i = 0; i < obj.length; i++) {
             let level = new LevelData();

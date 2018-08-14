@@ -71,7 +71,7 @@ cc.Class({
     },
 
     startGameClick: function (event, customEventData) {
-        if (this.index > 30) {
+        if (this.index > 30 && new InfoHandle().isLevelFinish(this.index) === false) {
             let minStars = 25 * Math.floor(this.index / 10);
             let currentStars = new InfoHandle().getStarsForLevels();
             // console.log("zhangxx minStars = " + minStars + ", currentStars = " + currentStars);
