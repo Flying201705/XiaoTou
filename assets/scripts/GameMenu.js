@@ -50,6 +50,7 @@ cc.Class({
     },
 
     restartGame: function() {
+        global.resume();
         cc.director.loadScene('game');
     },
 
