@@ -4,7 +4,7 @@
     "name": "小兵之神",
     "costs": [0],
     "damages": [100],
-    "gain_rates": [0.25],
+    "gain_rates": [0.2],
     "attack_ranges": [250],
     "look_range": 300,
     "shoot_dts": [0.6]
