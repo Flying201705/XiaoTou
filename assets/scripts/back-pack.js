@@ -180,14 +180,14 @@ cc.Class({
             // 英雄碎片
             if (chipType == 100) {
                 if (goodsInfo.goodsid === 100) {
-                    // heroConfig['composed'] = goodsInfo.number > 0;
+                    heroConfig['composed'] = goodsInfo.number > 0;
                 } else if (heroConfig['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
                     heroConfig['chipIds'].push(goodsInfo.goodsid);
                 }
             } else if (chipType > 100) {
                 let config = this._getChipConfig(propConfigs, chipType);
                 if (goodsInfo.goodsid < 1000) {
-                    // config['composed'] = goodsInfo.number > 0;
+                    config['composed'] = goodsInfo.number > 0;
                 } else if (config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
                     config['chipIds'].push(goodsInfo.goodsid);
                 }
