@@ -24,7 +24,8 @@ cc.Class({
      * 初始化预制件显示内容
      * @param opt
      */
-    config(opt) {
+    config(self, opt) {
+        this.target = self;
         this.propCompelteSpriteFrame = opt && opt.completeSpriteFrame;
         this.propChipSpriteFrame = opt && opt.chipSpriteFrame;
         this.propId = opt && opt.propId;
@@ -158,5 +159,19 @@ cc.Class({
             this.chips[i].spriteFrame = this.propChipSpriteFrame;
             this.chips[i].node.opacity = 125;
         }
+    },
+    /**
+     * 物品item点击回调方法
+     */
+    onItemClick(e) {
+        if (e.target.active) {
+            this.onItemClickCallback(this.target);
+        }
+    },
+    /**
+     * 物品item点击，对外提供的回调方法
+     */
+    onItemClickCallback() {
+        cc.info('onItemClickCallback');
     }
 });

@@ -7,7 +7,7 @@ cc.Class({
         parentNode: cc.Node,
         border: cc.Node,
         mode: {
-            default: "OUT_BORDER",
+            default: 0,
             type: cc.Enum({
                 "NONE": 0,
                 "OUT_BORDER": 1,
@@ -42,7 +42,7 @@ cc.Class({
 
                 console.log('width：' + retWord.width + ' height:' + retWord.height + ' x:' + retWord.x + ' y:' + retWord.y);
 
-                var point = event.getLocation();
+                let point = event.getLocation();
 
                 if (!retWord.contains(point)) {
                     console.log('hide');
@@ -65,13 +65,15 @@ cc.Class({
         console.log('off touchend');
     },
     hide() {
-        this.parentNode.active = false;
+        if (this.parentNode != null) {
+            this.parentNode.active = false;
+        }
         rank.hide();
     },
     onHide() {
         cc.info('onHide');
     },
-    setSelf(self){
-       this.parentSelf = self;
+    setSelf(self) {
+        this.parentSelf = self;
     }
 });

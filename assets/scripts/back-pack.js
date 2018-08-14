@@ -49,6 +49,8 @@ cc.Class({
             default: [],
             type: [cc.SpriteFrame]
         },
+        descHero: cc.Node,
+        descProp: cc.Node,
     },
     onEnable() {
         let self = this;
@@ -95,17 +97,17 @@ cc.Class({
         global.resume();
     },
     configHeroChips(opt) {
-        var children = this.heroItemContainer.node.children;
+        let children = this.heroItemContainer.node.children;
         if (children.length > 0) {
-            cc.log('bunny-configHeroChips-1')
-            for (var i = 0; i < children.length; ++i) {
-                children[i].getComponent('chipItem').config(opt);
+            // cc.log('bunny-configHeroChips-1');
+            for (let i = 0; i < children.length; ++i) {
+                this._config(children[i], opt, this._showDescHero);
             }
         } else {
-            cc.log('bunny-configHeroChips-2')
+            // cc.log('bunny-configHeroChips-2');
             for (let i = 0; i < 1; i++) {
                 let item = cc.instantiate(this.itemPrefab);
-                item.getComponent('chipItem').config(opt);
+                this._config(item, opt, this._showDescHero);
                 this.heroItemContainer.node.addChild(item);
                 cc.log('add hero')
             }
@@ -121,16 +123,20 @@ cc.Class({
         let children = this.propItemContainer.node.children;
         if (children.length > 0) {
             for (let i = 0; i < children.length; ++i) {
-                children[i].getComponent('chipItem').config(propConfigArray[i]);
+                this._config(children[i], propConfigArray[i], this._showDescProp);
             }
         } else {
             for (let i = 0; i < 3; i++) {
                 let item = cc.instantiate(this.itemPrefab);
-                item.getComponent('chipItem').config(propConfigArray[i]);
+                this._config(item, propConfigArray[i], this._showDescProp);
                 this.propItemContainer.node.addChild(item);
-                // cc.log('add prop ' + j);
             }
         }
+    },
+    _config(node, configOpt, callback) {
+        let chipItem = node.getComponent('chipItem');
+        chipItem.config(this, configOpt);
+        chipItem.onItemClickCallback = callback;
     },
     fetchData() {
         cc.log('bunny fetchData()-2')
@@ -174,14 +180,14 @@ cc.Class({
             // 英雄碎片
             if (chipType == 100) {
                 if (goodsInfo.goodsid === 100) {
-                    heroConfig['composed'] = goodsInfo.number > 0;
+                    // heroConfig['composed'] = goodsInfo.number > 0;
                 } else if (heroConfig['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
                     heroConfig['chipIds'].push(goodsInfo.goodsid);
                 }
             } else if (chipType > 100) {
                 let config = this._getChipConfig(propConfigs, chipType);
                 if (goodsInfo.goodsid < 1000) {
-                    config['composed'] = goodsInfo.number > 0;
+                    // config['composed'] = goodsInfo.number > 0;
                 } else if (config['chipIds'].indexOf(goodsInfo.goodsid) < 0) {
                     config['chipIds'].push(goodsInfo.goodsid);
                 }
@@ -221,5 +227,17 @@ cc.Class({
         }
         config[propId]['completeSpriteFrame'] = this.propSpriteFrames[sprIndex];
         config[propId]['chipSpriteFrame'] = this.propChipSpriteFrames[sprIndex];
+    },
+    /**
+     * 显示英雄介绍弹窗
+     */
+    _showDescHero(target) {
+        target.descHero.active = true;
+    },
+    /**
+     * 显示物品介绍弹窗
+     */
+    _showDescProp(target) {
+        target.descProp.active = true;
     },
 });
