@@ -32,6 +32,7 @@ cc.Class({
             default: null,
             type: cc.Label
         },
+        addCrystalDialog: cc.Prefab,
     },
 
     onLoad() {
@@ -119,5 +120,10 @@ cc.Class({
         this.crystalhint.string = "水晶+" + count;
         this.crystalhint.node.active = true;
         this.scheduleOnce(this.hideCrystalHint, 3);
+    },
+
+    onClickAddCrystal() {
+        let addCrystal = cc.instantiate(this.addCrystalDialog);
+        addCrystal.parent = this.node;
     }
 });
