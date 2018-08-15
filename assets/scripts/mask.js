@@ -1,4 +1,5 @@
 import rank from './rank_list'
+const global = require("global");
 
 cc.Class({
     extends: cc.Component,
@@ -49,6 +50,9 @@ cc.Class({
                     self.onHide(parentSelf);
                     self.hide();
                 }
+
+                // 弹窗消失，游戏继续
+                global.resume();
             }
         });
     },
