@@ -23,7 +23,7 @@ cc.Class({
         if (this.damagePool.size() > 0) {
             damage = this.damagePool.get();
         } else {
-            damage = cc.instantiate(this.enemyPrefab);
+            damage = cc.instantiate(this.damagePrefab);
         }
 
         damage.parent = parentNode;

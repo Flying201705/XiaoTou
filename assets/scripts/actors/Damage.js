@@ -1,5 +1,3 @@
-const damageMng = require("DamageMng");
-
 cc.Class({
     extends: cc.Component,
 
