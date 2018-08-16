@@ -580,6 +580,11 @@ cc.Class({
             this.audioMng.playWin();
             this.gameover.showWinUI(this.getStarsForWin(), rewards);
 
+            //第一次通关某些关卡获得新手大礼包
+            if (this.isNeedGift(this.currentLevel) === true) {
+                this.scheduleOnce(this.showGiftDialog, 2);
+            }
+
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());
 
             rank.setRank(this.currentLevel + 1);
@@ -590,6 +595,26 @@ cc.Class({
         }
 
         new InfoHandle().syncUserInfo();
+    },
+
+    /**
+     * 是否奖励新手大礼包
+     * 1,3,6,9关第一次通关可获得大礼包
+     */
+    isNeedGift: function(lv) {
+        if (lv != 1 && lv != 3 && lv != 9) {
+            return false;
+        }
+
+        if (new InfoHandle().isLevelFinish(this.currentLevel) === true) {
+            return false;
+        }
+
+        return true;
+    },
+
+    showGiftDialog: function() {
+        global.event.fire("show_gift_dialog");
     },
 
     updateCrystalCount(count) {

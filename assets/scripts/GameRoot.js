@@ -33,6 +33,10 @@ cc.Class({
             type: cc.Label
         },
         addCrystalDialog: cc.Prefab,
+        noviceGift: {
+            default: null,
+            type: cc.Prefab
+        },
     },
 
     onLoad() {
@@ -45,6 +49,7 @@ cc.Class({
         global.event.on("show_back_pack_dialog", this.showBackPack.bind(this));
         global.event.on("show_hint_dialog", this.showHintDialog.bind(this));
         global.event.on("add_crystal_hint", this.addCrystalHint.bind(this));
+        global.event.on("show_gift_dialog", this.showGiftDialog.bind(this));
 
         cc.loader.loadRes("./config/description_config", this.loadDescConfigCallback.bind(this));
     },
@@ -56,6 +61,7 @@ cc.Class({
         global.event.off("show_back_pack_dialog", this.showBackPack);
         global.event.off("show_hint_dialog", this.showHintDialog);
         global.event.off("add_crystal_hint", this.addCrystalHint);
+        global.event.off("show_gift_dialog", this.showGiftDialog);
 
         cc.loader.release("./config/description_config");
     },
@@ -125,5 +131,11 @@ cc.Class({
     onClickAddCrystal() {
         let addCrystal = cc.instantiate(this.addCrystalDialog);
         addCrystal.parent = this.node;
-    }
+    },
+
+    showGiftDialog: function() {
+        let giftDialog = cc.instantiate(this.noviceGift);
+        giftDialog.getComponent('NoviceGiftDialog').config(this.node);
+        giftDialog.parent = this.node;
+    },
 });

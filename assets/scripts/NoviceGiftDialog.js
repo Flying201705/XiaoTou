@@ -34,11 +34,23 @@ cc.Class({
 
     // update (dt) {},
 
-    getGift: function() {
+    config(parentNode) {
+        this.parentNode = parentNode;
+    },
 
+    hideDialog: function() {
+        this.parentNode.removeChild(this.node);
+        this.node.destroy();
+        this.parentNode = null;
+    },
+
+    getGift: function() {
+        console.log("zhangxx, getGift");
+        this.hideDialog();
     },
 
     getDoubleGift: function() {
-
+        console.log("zhangxx, getDoubleGift");
+        this.hideDialog();
     },
 });
