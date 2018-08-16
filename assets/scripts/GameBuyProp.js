@@ -1,4 +1,6 @@
 const global = require("global");
+const {appConfig} = require("./common/config");
+const WxHelper = require("common/WxHelper");
 
 const ONE_PROP_PRICE = 10;
 cc.Class({
@@ -25,6 +27,10 @@ cc.Class({
             default: null,
             type: cc.Sprite
         },
+        propShare: {
+            default: null,
+            type: cc.Node
+        },
         clickAudio: {
             default: null,
             url: cc.AudioClip
@@ -36,6 +42,8 @@ cc.Class({
     },
     onLoad() {
         this.mask.getComponent('mask').onHide = this.onDialogHide;
+
+        this.propShare.active = appConfig.weichat.share.shareForMoreEnable;
     },
     onDialogHide() {
         global.resume();
@@ -131,4 +139,8 @@ cc.Class({
 
         this.hideDialog();
     },
+
+    onClickPropShareBtn() {
+        WxHelper.share();
+    }
 });

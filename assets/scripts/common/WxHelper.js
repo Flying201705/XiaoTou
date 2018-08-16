@@ -77,6 +77,7 @@ function share(mode = 'normal') {
             cc.info('shareForMoreEnable:' + appConfig.weichat.share.shareForMoreEnable);
             if (appConfig.weichat.share.shareForMoreEnable) {
                 _addCrystal(ret)
+                global.event.fire("add_reward_hint", data);
             }
         },
         fail: ret => {

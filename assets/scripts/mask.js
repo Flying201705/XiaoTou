@@ -67,7 +67,8 @@ cc.Class({
     },
     hide() {
         if (this.parentNode != null) {
-            this.parentNode.active = false;
+            this.parentNode.removeFromParent();
+            this.parentNode.destroy();
         }
         rank.hide();
     },

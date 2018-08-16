@@ -23,6 +23,7 @@ cc.Class({
         WxHelper.onShareAppMessage();
         global.event.on('onDataDownloadCallback', this.onDataDownloadCallback.bind(this));
         global.event.on("add_reward_hint", this.addRewardHint.bind(this));
+        global.event.on("showAwardGotDialog", this.showAwardGotDialog.bind(this));
         this.rankListInit();
         this.checkSignIn();
         this.isRankListShow = false;
@@ -33,6 +34,7 @@ cc.Class({
     onDestroy() {
         global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
         global.event.off("add_reward_hint", this.addRewardHint);
+        global.event.off("showAwardGotDialog", this.showAwardGotDialog);
     },
     start() {
         this.tex = new cc.Texture2D();
@@ -143,5 +145,8 @@ cc.Class({
     onRankListHide(self) {
         self.isRankListShow = false;
         cc.info('onRankListHide');
+    },
+    showAwardGotDialog(){
+        // let dialog = cc.instantiate();
     }
 });
