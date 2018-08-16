@@ -2,6 +2,8 @@
  * 新手大礼包对话框
  */
 const {appConfig} = require("./common/config");
+import * as WxHelper from "./common/WxHelper";
+import {InfoHandle} from './InfoData'
 cc.Class({
     extends: cc.Component,
 
@@ -51,7 +53,9 @@ cc.Class({
     },
 
     getGift: function() {
-        console.log("zhangxx, getGift, crystal : 4, " + ", rewards : " + getRewards);
+        console.log("zhangxx, getGift, crystal : 4, " + ", rewards : " + this.getRewards());
+        new InfoHandle().updateRemoteCrystal(4);
+        new InfoHandle().updateRemoteGoods(this.getRewards(), 1);
         this.hideDialog();
     },
 
@@ -59,8 +63,13 @@ cc.Class({
         WxHelper.share("normal", this.shareSuccess.bind(this), this.shareFail.bind(this));
     },
 
+    /**
+     * 分享群组成功得双倍礼包
+     */
     shareSuccess: function() {
-        console.log("zhangxx, getDoubleGift, crystal : 8, " + ", rewards : " + getRewards);
+        console.log("zhangxx, getDoubleGift, crystal : 8, " + ", rewards : " + this.getRewards());
+        new InfoHandle().updateRemoteCrystal(8);
+        new InfoHandle().updateRemoteGoods(this.getRewards(), 2);
         this.hideDialog();
     },
 

@@ -582,7 +582,7 @@ cc.Class({
 
             //第一次通关某些关卡获得新手大礼包
             if (this.isNeedGift(this.currentLevel) === true) {
-                this.scheduleOnce(this.showGiftDialog, 2);
+                this.scheduleOnce(this.showGiftDialog, 1);
             }
 
             new InfoHandle().updateLevel(this.currentLevel, 100, this.getStarsForWin());

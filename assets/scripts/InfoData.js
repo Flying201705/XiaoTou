@@ -344,6 +344,14 @@ const InfoHandle = cc.Class({
 
         return -1;
     },
+        /**
+     * 更新服务器物品数量。
+     */
+    updateRemoteGoods: function (goodsId, num) {
+        /**更新服务器代码 */
+        /**更新服务器代码 */
+        this.updateLocalGoods(goodsId, num);
+    },
     onDataLoaded(token) {
         // cc.log('xxx onDataLoaded token:' + token);
         global.event.fire("onDataDownloadCallback", token);
