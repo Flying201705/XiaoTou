@@ -144,17 +144,19 @@ cc.Class({
         WxHelper.share("normal", this.shareSuccess.bind(this), this.shareFail.bind(this));
     },
 
-    shareSuccess() {
-        switch (this.propType) {
-            case 1:
-                global.event.fire("buy_slow", 1);
-                break;
-            case 2:
-                global.event.fire("buy_stun", 1);
-                break;
-            case 3:
-                global.event.fire("buy_damage", 1);
-                break;
+    shareSuccess(isShareViaGroup) {
+        if (isShareViaGroup) {
+            switch (this.propType) {
+                case 1:
+                    global.event.fire("buy_slow", 1);
+                    break;
+                case 2:
+                    global.event.fire("buy_stun", 1);
+                    break;
+                case 3:
+                    global.event.fire("buy_damage", 1);
+                    break;
+            }
         }
 
         this.hideDialog();

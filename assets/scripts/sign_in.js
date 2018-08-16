@@ -43,7 +43,7 @@ cc.Class({
             this.moreDayLabel.string = `第${signDays + 1}天`;
         }
 
-        this.signDays = signDays;
+        // this.signDays = signDays;
     },
     /**
      * 签到
@@ -59,11 +59,11 @@ cc.Class({
             // }
         });
     },
-    _showWxShare() {
-        // if (this.signDays > 1) {
-            WxHelper.share('normal', 'server');
-        // }
-    },
+    // _showWxShare() {
+    //     if (this.signDays > 1) {
+    //         WxHelper.share('normal', 'server');
+    //     }
+    // },
 
     hide() {
         this.node.removeFromParent();
@@ -71,14 +71,16 @@ cc.Class({
     },
 
     onClickDoubleBtn() {
+        WxHelper.share('normal', this.shareSuccess.bind(this), this.signIn.bind(this));
+    },
+
+    shareSuccess(isShareViaGroup) {
         this.hide();
         remoteHelper.signIn(InfoData.user.id, data => {
             //签到成功领取水晶界面提示
-            global.event.fire("add_reward_hint", data);
-            new InfoHandle().updateLocalCrystal(data);
-            if (appConfig.weichat.share.shareForMoreEnable) {
-                this._showWxShare();
-            }
+            let count = isShareViaGroup ? data * 2 : data;
+            global.event.fire("add_reward_hint", count);
+            new InfoHandle().updateLocalCrystal(count);
         });
     }
 });
