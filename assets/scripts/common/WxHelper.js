@@ -79,7 +79,7 @@ function share(mode = 'normal', successCallback, failCallback) {
             cc.info('shareForMoreEnable:' + appConfig.weichat.share.shareForMoreEnable);
             if (appConfig.weichat.share.shareForMoreEnable) {
                 if (successCallback) {
-                    successCallback();
+                    successCallback(_isShareViaGroup(ret));
                 } else {
                     _addCrystal(ret)
                     global.event.fire("add_reward_hint", data);
