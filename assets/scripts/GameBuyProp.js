@@ -1,6 +1,6 @@
 const global = require("global");
 const {appConfig} = require("./common/config");
-const WxHelper = require("common/WxHelper");
+const WxHelper = require("./common/WxHelper");
 
 const ONE_PROP_PRICE = 10;
 cc.Class({
@@ -141,6 +141,26 @@ cc.Class({
     },
 
     onClickPropShareBtn() {
-        WxHelper.share();
-    }
+        WxHelper.share("normal", this.shareSuccess.bind(this), this.shareFail.bind(this));
+    },
+
+    shareSuccess() {
+        switch (this.propType) {
+            case 1:
+                global.event.fire("buy_slow", 1);
+                break;
+            case 2:
+                global.event.fire("buy_stun", 1);
+                break;
+            case 3:
+                global.event.fire("buy_damage", 1);
+                break;
+        }
+
+        this.hideDialog();
+    },
+
+    shareFail() {
+        this.hideDialog();
+    },
 });

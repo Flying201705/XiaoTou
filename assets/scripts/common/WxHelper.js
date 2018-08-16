@@ -62,8 +62,10 @@ function showShareMenu() {
 /**
  * 发起主动微信分享
  * @param mode success|fail|normal
+ * @param successCallback 分享成功后回调函数
+ * @param failCallback 分享失败后回调函数
  */
-function share(mode = 'normal') {
+function share(mode = 'normal', successCallback, failCallback) {
     if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
         return;
     }
@@ -76,12 +78,19 @@ function share(mode = 'normal') {
             cc.info('share success', ret);
             cc.info('shareForMoreEnable:' + appConfig.weichat.share.shareForMoreEnable);
             if (appConfig.weichat.share.shareForMoreEnable) {
-                _addCrystal(ret)
-                global.event.fire("add_reward_hint", data);
+                if (successCallback) {
+                    successCallback();
+                } else {
+                    _addCrystal(ret)
+                    global.event.fire("add_reward_hint", data);
+		}
             }
         },
         fail: ret => {
             cc.info('share fail', ret);
+            if (failCallback) {
+                failCallback();
+            }
         }
     })
 }
