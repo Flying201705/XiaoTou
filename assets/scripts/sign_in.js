@@ -20,7 +20,7 @@ cc.Class({
     },
 
     onLoad() {
-        if (appConfig.weichat.share.shareForGiftEnable) {
+        if (appConfig.weichat.share.shareForMoreEnable) {
             this.dailyButton.node.active = false;
             this.controlNode.active = true;
         } else {
@@ -76,7 +76,7 @@ cc.Class({
             //签到成功领取水晶界面提示
             global.event.fire("add_reward_hint", data);
             new InfoHandle().updateLocalCrystal(data);
-            if (appConfig.weichat.share.shareForGiftEnable) {
+            if (appConfig.weichat.share.shareForMoreEnable) {
                 this._showWxShare();
             }
         });

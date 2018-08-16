@@ -9,13 +9,9 @@ const appConfig = {
     weichat: {
         share: {
             /**
-             * 签到分享开关
-             */
-            signInEnable: false,
-            /**
              * 分享得礼包开关
              */
-            shareForGiftEnable: false,
+            shareForMoreEnable: false,
             /**
              * 游戏成功分享内容
              */

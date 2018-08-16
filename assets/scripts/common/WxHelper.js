@@ -27,8 +27,8 @@ function onShareAppMessage() {
             imageUrl: content.imageUrl,
             success: ret => {
                 cc.info('share success', ret);
-                cc.info('shareForGiftEnable:' + appConfig.weichat.share.shareForGiftEnable);
-                if (appConfig.weichat.share.shareForGiftEnable) {
+                cc.info('shareForMoreEnable:' + appConfig.weichat.share.shareForMoreEnable);
+                if (appConfig.weichat.share.shareForMoreEnable) {
                     _addCrystal(ret)
                 }
             },
@@ -74,8 +74,8 @@ function share(mode = 'normal') {
         imageUrl: content.imageUrl,
         success: ret => {
             cc.info('share success', ret);
-            cc.info('shareForGiftEnable:' + appConfig.weichat.share.shareForGiftEnable);
-            if (appConfig.weichat.share.shareForGiftEnable) {
+            cc.info('shareForMoreEnable:' + appConfig.weichat.share.shareForMoreEnable);
+            if (appConfig.weichat.share.shareForMoreEnable) {
                 _addCrystal(ret)
             }
         },
