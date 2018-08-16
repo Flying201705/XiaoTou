@@ -38,6 +38,12 @@ cc.Class({
         this.parentNode = parentNode;
     },
 
+    getRewards: function() {
+        let index = Math.floor(Math.random() * 10 / 3);
+        index = index < 3 ? index + 1 : 3;
+        return index;
+    },
+
     hideDialog: function() {
         this.parentNode.removeChild(this.node);
         this.node.destroy();
@@ -45,12 +51,20 @@ cc.Class({
     },
 
     getGift: function() {
-        console.log("zhangxx, getGift");
+        console.log("zhangxx, getGift, crystal : 4, " + ", rewards : " + getRewards);
         this.hideDialog();
     },
 
     getDoubleGift: function() {
-        console.log("zhangxx, getDoubleGift");
+        WxHelper.share("normal", this.shareSuccess.bind(this), this.shareFail.bind(this));
+    },
+
+    shareSuccess: function() {
+        console.log("zhangxx, getDoubleGift, crystal : 8, " + ", rewards : " + getRewards);
         this.hideDialog();
+    },
+
+    shareFail: function() {
+
     },
 });

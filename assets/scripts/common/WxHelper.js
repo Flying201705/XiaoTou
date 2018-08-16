@@ -83,7 +83,7 @@ function share(mode = 'normal', successCallback, failCallback) {
                 } else {
                     _addCrystal(ret)
                     global.event.fire("add_reward_hint", data);
-		}
+		        }
             }
         },
         fail: ret => {
