@@ -50,9 +50,6 @@ cc.Class({
                     self.onHide(parentSelf);
                     self.hide();
                 }
-
-                // 弹窗消失，游戏继续
-                global.resume();
             }
         });
     },

@@ -52,30 +52,8 @@ cc.Class({
         descHero: cc.Node,
         descProp: cc.Node,
     },
-    onEnable() {
-        let self = this;
-        this.mask.on('touchstart', function (event) {
-            event.stopPropagation();
-        });
-        this.mask.on('touchend', function (event) {
-            event.stopPropagation();
-
-            // 点击弹窗外面区域退出弹窗
-            let retWord = self.container.getBoundingBoxToWorld();
-            var point = event.getLocation();
-
-            if (!retWord.contains(point)) {
-                self.hideDialog();
-            }
-        });
-    },
-    onDisable() {
-        this.mask.off('touchstart', function (event) {
-            event.stopPropagation();
-        });
-        this.mask.off('touchend', function (event) {
-            event.stopPropagation();
-        });
+    onLoad() {
+        this.mask.getComponent('mask').onHide = this.onDialogHide;
     },
     start() {
         // cc.director.pause();
@@ -87,13 +65,7 @@ cc.Class({
         this.fillData();
         this.fetchData();
     },
-    hideDialog() {
-        cc.log('bunny hideDialog');
-        this.parentNode.removeChild(this.node);
-        this.node.destroy();
-        this.parentNode = null;
-        // cc.director.resume();
-        // global.pause = false;
+    onDialogHide() {
         global.resume();
     },
     configHeroChips(opt) {

@@ -34,21 +34,11 @@ cc.Class({
         crystalNumber: 0,
         crystalTotalNumber: 0,
     },
-    onEnable() {
-        this.mask.on('touchstart', function (event) {
-            event.stopPropagation();
-        });
-        this.mask.on('touchend', function (event) {
-            event.stopPropagation();
-        });
+    onLoad() {
+        this.mask.getComponent('mask').onHide = this.onDialogHide;
     },
-    onDisable() {
-        this.mask.off('touchstart', function (event) {
-            event.stopPropagation();
-        });
-        this.mask.off('touchend', function (event) {
-            event.stopPropagation();
-        });
+    onDialogHide() {
+        global.resume();
     },
     config(parentNode, propType, crystalTotalNumber) {
         this.parentNode = parentNode;
