@@ -9,7 +9,7 @@ const appConfig = {
     weichat: {
         share: {
             /**
-             * 分享得礼包开关
+             * 分享获得更多福利开关
              */
             shareForMoreEnable: false,
             /**
