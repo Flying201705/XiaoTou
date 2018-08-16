@@ -90,16 +90,15 @@ const InfoHandle = cc.Class({
     },
     login: function (wxCode) {
         console.log('[InfoHandle] request user info');
-        /**获取敏感功能配置开始 */
-        this.updateAliveEnable();
-        /**获取敏感功能配置结束 */
         net.request({
             url: http_head + login,
             data: {
-                code: wxCode
+                code: wxCode,
+                version: config.version
             },
             success: (ret) => {
                 this.handleUserInfo(ret);
+                this.handleCongfInfo(ret);
                 InfoData.FLAG_DATA_DOWNLOAD_STATUS |= InfoData.TOKEN_USER_INFO;
                 this.onDataLoaded(InfoData.TOKEN_USER_INFO);
             },
@@ -109,21 +108,6 @@ const InfoHandle = cc.Class({
                 this.onDataLoadError();
             }
         })
-    },
-    //更新敏感功能开关
-    updateAliveEnable: function() {
-        let request = new XMLHttpRequest();
-        request.open("GET", config.versionUrl, true);
-        request.send(null);
-        request.onreadystatechange = function() {
-            if(request.readyState == 4 && request.status == 200) {
-                let obj = JSON.parse(request.responseText);
-                if (obj.codeVer === config.version && obj.status === 0) {
-                    config.aliveFunEnable = false;
-                }
-                // console.log("zhangxx, aliveFunEnable = " + config.aliveFunEnable);
-            }
-        };
     },
     /**
      * 检查user是否存在，用于网络连通判断。
@@ -148,10 +132,15 @@ const InfoHandle = cc.Class({
         })
     },
     handleUserInfo: function (obj) {
-        InfoData.user.init(obj);
+        InfoData.user.init(obj.userInfo);
 
         this.getAllGoodsByUserId(InfoData.user.id);
         this.getLevelsByUserId(InfoData.user.id);
+    },
+    handleCongfInfo(obj) {
+        config.appConfig.weichat = obj.config.weichat;
+        config.appConfig.moreGame = obj.config.moreGame;
+        cc.info('appConfig:', config.appConfig);
     },
     getAllGoodsByUserId: function (id) {
         console.log('[InfoHandle] request goods');
@@ -204,7 +193,7 @@ const InfoHandle = cc.Class({
 
         return false;
     },
-    getStarsForLevels: function() {
+    getStarsForLevels: function () {
         let stars = 0;
         for (let i = 0; i < InfoData.levels.length; i++) {
             if (InfoData.levels[i] != null && InfoData.levels[i] != undefined) {
@@ -214,7 +203,7 @@ const InfoHandle = cc.Class({
 
         return stars;
     },
-    isLevelFinish: function(lv) {
+    isLevelFinish: function (lv) {
         if (InfoData.levels[lv - 1] != null && InfoData.levels[lv - 1] != undefined && InfoData.levels[lv - 1].stars > 0) {
             return true;
         }

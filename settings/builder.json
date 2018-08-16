@@ -33,7 +33,7 @@
     "REMOTE_SERVER_ROOT": "http://qyx18.com:1234/res/fenglp",
     "appid": "wx052c1c7a94625f6d",
     "orientation": "landscape",
-    "subContext": "wx-sub"
+    "subContext": ""
   },
   "xxteaKey": "4dd75723-494f-46",
   "zipCompressJs": true

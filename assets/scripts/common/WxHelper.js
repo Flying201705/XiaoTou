@@ -2,7 +2,7 @@ import * as net from "./net";
 import {http_head, InfoHandle} from "../InfoData";
 
 const global = require("global");
-const {shareForCrystal, aliveFunEnable} = require("./config");
+const {appConfig, shareForCrystal} = require("./config");
 
 module.exports = {
     share: share,
@@ -11,41 +11,32 @@ module.exports = {
     onShareAppMessage: onShareAppMessage
 };
 
+/**
+ * 点击微信菜单分享时回调方法。
+ */
 function onShareAppMessage() {
     if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
         return;
     }
 
-    net.request({
-        url: http_head + 'more/shareInfo',
-        data: {
-            mode: 'normal',
-            control: 'local'
-        },
-        success: ret => {
-            let crystalEnable = ret.crystalEnable;
-            wx.onShareAppMessage(() => {
-                return {
-                    title: ret.title,
-                    imageUrl: ret.imageUrl,
-                    success: ret => {
-                        cc.info('share success', ret);
-                        if (crystalEnable && aliveFunEnable === true) {
-                            _addCrystal(ret)
-                        }
-                    },
-                    fail: ret => {
-                        cc.info('share fail', ret);
-                    }
+    let content = _getShareContentByMode('normal');
+
+    wx.onShareAppMessage(() => {
+        return {
+            title: content.title,
+            imageUrl: content.imageUrl,
+            success: ret => {
+                cc.info('share success', ret);
+                cc.info('shareForGiftEnable:' + appConfig.weichat.share.shareForGiftEnable);
+                if (appConfig.weichat.share.shareForGiftEnable) {
+                    _addCrystal(ret)
                 }
-            });
-        },
-        fail: () => {
-            cc.info('get share info fail');
+            },
+            fail: ret => {
+                cc.info('share fail', ret);
+            }
         }
     });
-
-
 }
 
 function showShareMenu() {
@@ -69,41 +60,52 @@ function showShareMenu() {
 }
 
 /**
- * 微信分享
+ * 发起主动微信分享
  * @param mode success|fail|normal
- * @param control local|server
  */
-function share(mode = 'normal', control = 'local') {
+function share(mode = 'normal') {
     if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
         return;
     }
+    let content = _getShareContentByMode(mode);
 
-    net.request({
-        url: http_head + 'more/shareInfo',
-        data: {
-            mode: mode,
-            control: control
-        },
+    wx.shareAppMessage({
+        title: content.title,
+        imageUrl: content.imageUrl,
         success: ret => {
-            let crystalEnable = ret.crystalEnable;
-            wx.shareAppMessage({
-                title: ret.title,
-                imageUrl: ret.imageUrl,
-                success: ret => {
-                    cc.info('share success', ret);
-                    if (crystalEnable && aliveFunEnable === true) {
-                        _addCrystal(ret)
-                    }
-                },
-                fail: ret => {
-                    cc.info('share fail', ret);
-                }
-            })
+            cc.info('share success', ret);
+            cc.info('shareForGiftEnable:' + appConfig.weichat.share.shareForGiftEnable);
+            if (appConfig.weichat.share.shareForGiftEnable) {
+                _addCrystal(ret)
+            }
         },
-        fail: () => {
-            cc.info('get share info fail');
+        fail: ret => {
+            cc.info('share fail', ret);
         }
-    });
+    })
+}
+
+function _getShareContentByMode(mode) {
+    let title = '';
+    let imgUrl = '';
+
+    switch (mode) {
+        case 'success':
+            title = appConfig.weichat.share.success.title;
+            imgUrl = appConfig.weichat.share.success.imageUrl;
+            break;
+        case 'fail':
+            title = appConfig.weichat.share.fail.title;
+            imgUrl = appConfig.weichat.share.fail.imageUrl;
+            break;
+        default:
+            title = appConfig.weichat.share.normal.title;
+            imgUrl = appConfig.weichat.share.normal.imageUrl;
+    }
+
+    return {
+        title: title, imageUrl: imgUrl
+    };
 }
 
 function _addCrystal(data) {
@@ -129,16 +131,9 @@ function showMoreGame() {
         return;
     }
 
-    net.request({
-        url: http_head + 'more/moreGameInfo',
-        success: url => {
-            wx.previewImage({
-                current: url,
-                urls: [url]
-            });
-        },
-        fail: () => {
-            cc.info('get share info fail');
-        }
+    wx.previewImage({
+        current: appConfig.moreGame.imgUrl,
+        urls: [appConfig.moreGame.imgUrl]
     });
+
 }
