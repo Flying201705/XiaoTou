@@ -66,10 +66,15 @@ cc.Class({
     /**
      * 分享群组成功得双倍礼包
      */
-    shareSuccess: function() {
+    shareSuccess: function(isShareViaGroup) {
         console.log("zhangxx, getDoubleGift, crystal : 8, " + ", rewards : " + this.getRewards());
-        new InfoHandle().updateRemoteCrystal(8);
-        new InfoHandle().updateRemoteGoods(this.getRewards(), 2);
+        if (isShareViaGroup === true) {
+            new InfoHandle().updateRemoteCrystal(8);
+            new InfoHandle().updateRemoteGoods(this.getRewards(), 2);
+        } else {
+            new InfoHandle().updateRemoteCrystal(4);
+            new InfoHandle().updateRemoteGoods(this.getRewards(), 1);
+        }
         this.hideDialog();
     },
 

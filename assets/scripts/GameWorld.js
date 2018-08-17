@@ -602,7 +602,7 @@ cc.Class({
      * 1,3,6,9关第一次通关可获得大礼包
      */
     isNeedGift: function(lv) {
-        if (lv != 1 && lv != 3 && lv != 9) {
+        if (lv != 1 && lv != 3  && lv != 6 && lv != 9) {
             return false;
         }
 
