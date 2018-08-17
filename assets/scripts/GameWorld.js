@@ -12,7 +12,7 @@ cc.Class({
         towerGroup: cc.Node,
         towerOperate: cc.Node,
         enemyGroup: cc.Node,
-        heroLayer:  cc.Node,
+        heroLayer: cc.Node,
         bulletLayer: cc.Node,
         damageLayer: cc.Node,
         heroPrefab: cc.Prefab,
@@ -79,7 +79,7 @@ cc.Class({
         this.overFlag = false;
     },
 
-    loadConfigs: function() {
+    loadConfigs: function () {
         this.loadMapConfig();
         this.loadLevelConfig();
         this.loadTowerConfig();
@@ -100,6 +100,7 @@ cc.Class({
         global.event.on("buy_slow", this.buySlow.bind(this));
         global.event.on("buy_stun", this.buyStun.bind(this));
         global.event.on("buy_damage", this.buyDamage.bind(this));
+        global.event.on("noti_crystal_update", this.onCrystalUpdate.bind(this));
     },
 
     onDestroy: function () {
@@ -115,6 +116,7 @@ cc.Class({
         global.event.off("buy_slow", this.buySlow);
         global.event.off("buy_stun", this.buyStun);
         global.event.off("buy_damage", this.buyDamage);
+        global.event.off("noti_crystal_update", this.onCrystalUpdate);
 
         if (this.hero) {
             this.hero.destroy();
@@ -275,7 +277,7 @@ cc.Class({
         this.enemyMng.startBuildMonster();
     },
 
-    loadMapConfig: function() {
+    loadMapConfig: function () {
         //加载地图
         this.level_map = this.node.getChildByName('level_map').getComponent("level-map");
         this.level_map.loadMap(this.currentLevel);
@@ -613,7 +615,7 @@ cc.Class({
         return true;
     },
 
-    showGiftDialog: function() {
+    showGiftDialog: function () {
         global.event.fire("show_gift_dialog");
     },
 
@@ -671,5 +673,9 @@ cc.Class({
             self.bottomContainer.removeChild(self.heroPanel);
             self.bottomBar.active = true;
         }
-    }
+    },
+    onCrystalUpdate() {
+        this.crystalLabel.string = InfoData.user.crystal.toString();
+    },
+
 });

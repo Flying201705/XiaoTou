@@ -162,8 +162,12 @@ cc.Class({
         WxHelper.share(customEventData, this.shareSuccess.bind(this));
     },
     shareSuccess(isShareViaGroup) {
+        let crystalCount = isShareViaGroup ? 10 : 2;
+
         let awardGotDialog = cc.instantiate(this.awardGotDialog);
-        awardGotDialog.getComponent('awardGotDialog').config([{type: 0, count: isShareViaGroup ? 10 : 2}]);
+        awardGotDialog.getComponent('awardGotDialog').config([{type: 0, count: crystalCount}]);
         awardGotDialog.parent = this.node;
+
+        new InfoHandle().updateRemoteCrystal(crystalCount);
     }
 });

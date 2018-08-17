@@ -291,6 +291,8 @@ const InfoHandle = cc.Class({
         }
         let newCount = InfoData.user.crystal + crystal;
         InfoData.user.crystal = newCount > 0 ? newCount : 0;
+
+        global.event.fire("noti_crystal_update");
     },
     /**
      * 更新服务器水晶数
