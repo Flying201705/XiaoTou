@@ -53,7 +53,9 @@ cc.Class({
         descProp: cc.Node,
     },
     onLoad() {
-        this.mask.getComponent('mask').onHide = this.onDialogHide;
+        this.mask.getComponent('mask').onHide = this.onDialogHide.bind(this);
+        this.descHero.getComponent('mask').onHide = this.onDescHide.bind(this);
+        this.descProp.getComponent('mask').onHide = this.onDescHide.bind(this);
     },
     start() {
         // cc.director.pause();
@@ -73,13 +75,13 @@ cc.Class({
         if (children.length > 0) {
             // cc.log('bunny-configHeroChips-1');
             for (let i = 0; i < children.length; ++i) {
-                this._config(children[i], opt, this._showDescHero);
+                this._config(children[i], opt, this._showDescHero.bind(this));
             }
         } else {
             // cc.log('bunny-configHeroChips-2');
             for (let i = 0; i < 1; i++) {
                 let item = cc.instantiate(this.itemPrefab);
-                this._config(item, opt, this._showDescHero);
+                this._config(item, opt, this._showDescHero.bind(this));
                 this.heroItemContainer.node.addChild(item);
                 cc.log('add hero')
             }
@@ -95,12 +97,12 @@ cc.Class({
         let children = this.propItemContainer.node.children;
         if (children.length > 0) {
             for (let i = 0; i < children.length; ++i) {
-                this._config(children[i], propConfigArray[i], this._showDescProp);
+                this._config(children[i], propConfigArray[i], this._showDescProp.bind(this));
             }
         } else {
             for (let i = 0; i < 3; i++) {
                 let item = cc.instantiate(this.itemPrefab);
-                this._config(item, propConfigArray[i], this._showDescProp);
+                this._config(item, propConfigArray[i], this._showDescProp.bind(this));
                 this.propItemContainer.node.addChild(item);
             }
         }
@@ -203,13 +205,17 @@ cc.Class({
     /**
      * 显示英雄介绍弹窗
      */
-    _showDescHero(target) {
-        target.descHero.active = true;
+    _showDescHero() {
+        this.descHero.active = true;
     },
     /**
      * 显示物品介绍弹窗
      */
-    _showDescProp(target) {
-        target.descProp.active = true;
+    _showDescProp() {
+        this.descProp.active = true;
+    },
+    onDescHide(){
+        this.descHero.active = false;
+        this.descProp.active = false;
     },
 });

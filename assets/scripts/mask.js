@@ -75,7 +75,4 @@ cc.Class({
     onHide() {
         cc.info('onHide');
     },
-    setSelf(self) {
-        this.parentSelf = self;
-    }
 });
