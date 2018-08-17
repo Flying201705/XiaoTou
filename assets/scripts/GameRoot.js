@@ -37,6 +37,7 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        awardGotDialog: cc.Prefab,
     },
 
     onLoad() {
@@ -113,16 +114,16 @@ cc.Class({
     getOneChipPrice() {
         return 50;
     },
-    showHintDialog: function(hint) {
+    showHintDialog: function (hint) {
         var hintDialog = cc.instantiate(this.gamehint);
         hintDialog.getComponent('HintDialog').config(this.node, hint);
         hintDialog.parent = this.node;
     },
-    hideCrystalHint: function(count) {
+    hideCrystalHint: function (count) {
         this.crystalhint.string = "";
         this.crystalhint.node.active = false;
     },
-    addCrystalHint: function(count) {
+    addCrystalHint: function (count) {
         this.crystalhint.string = "水晶+" + count;
         this.crystalhint.node.active = true;
         this.scheduleOnce(this.hideCrystalHint, 3);
@@ -133,9 +134,16 @@ cc.Class({
         addCrystal.parent = this.node;
     },
 
-    showGiftDialog: function() {
+    showGiftDialog: function () {
         let giftDialog = cc.instantiate(this.noviceGift);
-        giftDialog.getComponent('NoviceGiftDialog').config(this.node);
+        let giftDialogController = giftDialog.getComponent('NoviceGiftDialog');
+        giftDialogController.config(this.node);
+        giftDialogController.onHideDialog = this._onGiftDialogHide.bind(this);
         giftDialog.parent = this.node;
     },
+    _onGiftDialogHide(giftConfig) {
+        let awardGotDialog = cc.instantiate(this.awardGotDialog);
+        awardGotDialog.getComponent('awardGotDialog').config(giftConfig);
+        awardGotDialog.parent = this.node;
+    }
 });

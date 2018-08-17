@@ -4,6 +4,7 @@
 const {appConfig} = require("./common/config");
 import * as WxHelper from "./common/WxHelper";
 import {InfoHandle} from './InfoData'
+
 cc.Class({
     extends: cc.Component,
 
@@ -20,7 +21,7 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         if (appConfig.weichat.share.shareForMoreEnable === true) {
             this.giftBtn.active = false;
             this.moreContent.active = true;
@@ -30,7 +31,7 @@ cc.Class({
         }
     },
 
-    start () {
+    start() {
 
     },
 
@@ -40,26 +41,28 @@ cc.Class({
         this.parentNode = parentNode;
     },
 
-    getRewards: function() {
+    getRewards: function () {
         let index = Math.floor(Math.random() * 10 / 3);
         index = index < 3 ? index + 1 : 3;
         return index;
     },
 
-    hideDialog: function() {
+    hideDialog: function (gift) {
         this.parentNode.removeChild(this.node);
         this.node.destroy();
         this.parentNode = null;
+        this.onHideDialog(gift);
     },
 
-    getGift: function() {
-        console.log("zhangxx, getGift, crystal : 4, " + ", rewards : " + this.getRewards());
+    getGift: function () {
+        let rewardId = this.getRewards();
+
         new InfoHandle().updateRemoteCrystal(4);
-        new InfoHandle().updateRemoteGoods(this.getRewards(), 1);
-        this.hideDialog();
+        new InfoHandle().updateRemoteGoods(rewardId, 1);
+        this.hideDialog([{type: 0, count: 4}, {type: rewardId, count: 1}]);
     },
 
-    getDoubleGift: function() {
+    getDoubleGift: function () {
         WxHelper.share("normal", this.shareSuccess.bind(this), this.shareFail.bind(this));
     },
 
@@ -67,18 +70,24 @@ cc.Class({
      * 分享群组成功得双倍礼包
      */
     shareSuccess: function(isShareViaGroup) {
-        console.log("zhangxx, getDoubleGift, crystal : 8, " + ", rewards : " + this.getRewards());
+        let rewardId = this.getRewards();
         if (isShareViaGroup === true) {
             new InfoHandle().updateRemoteCrystal(8);
-            new InfoHandle().updateRemoteGoods(this.getRewards(), 2);
+            new InfoHandle().updateRemoteGoods(rewardId, 2);
+            this.hideDialog([{type: 0, count: 8}, {type: rewardId, count: 2}]);
         } else {
             new InfoHandle().updateRemoteCrystal(4);
-            new InfoHandle().updateRemoteGoods(this.getRewards(), 1);
+            new InfoHandle().updateRemoteGoods(rewardId, 1);
+            this.hideDialog([{type: 0, count: 4}, {type: rewardId, count: 1}]);
         }
-        this.hideDialog();
     },
 
-    shareFail: function() {
+    shareFail: function () {
 
     },
+    /**
+     * 弹窗消失回调方法
+     */
+    onHideDialog(giftConfig) {
+    }
 });
