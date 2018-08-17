@@ -2688,6 +2688,9 @@
     "gameHelp": {
       "__id__": 66
     },
+    "likeNode": {
+      "__id__": 8
+    },
     "rankListDialog": {
       "__uuid__": "5e445560-33fb-4eed-990f-9d297663a8e2"
     }
