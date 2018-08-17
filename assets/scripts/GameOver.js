@@ -13,6 +13,7 @@ cc.Class({
         lose: cc.Node,
         star: cc.Node,
         ipt: cc.Prefab,
+        awardGotDialog: cc.Prefab,
     },
 
     onEnable: function () {
@@ -158,6 +159,11 @@ cc.Class({
 
     share: function (event, customEventData) {
         cc.info('share mode:' + customEventData);
-        WxHelper.share(customEventData);
+        WxHelper.share(customEventData, this.shareSuccess.bind(this));
+    },
+    shareSuccess(isShareViaGroup) {
+        let awardGotDialog = cc.instantiate(this.awardGotDialog);
+        awardGotDialog.getComponent('awardGotDialog').config([{type: 0, count: isShareViaGroup ? 10 : 2}]);
+        awardGotDialog.parent = this.node;
     }
 });
