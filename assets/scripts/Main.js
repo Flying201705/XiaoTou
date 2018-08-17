@@ -9,12 +9,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        rankList: cc.Node,
-        display: cc.Sprite,
         signIn: cc.Prefab,
         rewardHint: cc.Label,
         gameHelp: require("GameHelp"),
-        likeNode: cc.Node
+        likeNode: cc.Node,
+        rankListDialog: cc.Prefab,
     },
 
     onLoad() {
@@ -26,10 +25,6 @@ cc.Class({
         this.rankListInit();
         this.checkSignIn();
         this.isRankListShow = false;
-        let mask = this.rankList.getChildByName('bg_mask').getComponent('mask');
-        mask.setSelf(this);
-        mask.onHide = this.onRankListHide;
-
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             report.getRecommendInfo(function (tablelist) {
                 this.recommend = tablelist;
@@ -53,57 +48,18 @@ cc.Class({
         global.event.off("showAwardGotDialog", this.showAwardGotDialog);
     },
     start() {
-        this.tex = new cc.Texture2D();
-        this._resizeShareCanvas();
-        cc.info('main start');
         rank.hide();
-    },
-    _resizeShareCanvas() {
-        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
-            return;
-        }
-
-        let ratio = 1;
-        ratio = wx.getSystemInfoSync().pixelRatio;
-        ratio = ratio == 1 ? 1 : ratio / 2;
-        window.sharedCanvas.width = window.sharedCanvas.width * ratio;
-        window.sharedCanvas.height = window.sharedCanvas.height * ratio;
-
-    },
-    update() {
-        if (this.isRankListShow) {
-            this._updateSubDomainCanvas();
-        }
-    },
-    _updateSubDomainCanvas() {
-        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
-            return;
-        }
-
-        if (!this.tex) {
-            console.log('no tex');
-            return;
-        }
-        let openDataContext = wx.getOpenDataContext();
-        let sharedCanvas = openDataContext.canvas;
-        this.tex.initWithElement(sharedCanvas);
-        this.tex.handleLoadedTexture();
-        this.display.spriteFrame = new cc.SpriteFrame(this.tex);
     },
     /**
      * 显示好友排行榜
      */
     showRankList() {
-        this.rankList.active = true;
-
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
             return;
         }
 
-        // 发消息给子域
-        console.log('setRank');
-        rank.showRankList();
-        this.isRankListShow = true;
+        let rankListDialog = cc.instantiate(this.rankListDialog);
+        rankListDialog.parent = this.node;
     },
     checkSignIn() {
         if (InfoData.user.id > 0) {
@@ -162,7 +118,7 @@ cc.Class({
         self.isRankListShow = false;
         cc.info('onRankListHide');
     },
-    showAwardGotDialog(){
+    showAwardGotDialog() {
         // let dialog = cc.instantiate();
     },
 

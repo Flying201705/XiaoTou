@@ -21,6 +21,7 @@ export default {
             wx.postMessage({
                 type: 'show'
             });
+            cc.info('showRankList');
         }
     },
     hide: () => {
