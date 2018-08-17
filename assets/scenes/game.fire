@@ -6500,6 +6500,9 @@
     },
     "noviceGift": {
       "__uuid__": "0ca6be2f-dfe1-4e68-bcbd-03755666cf41"
+    },
+    "awardGotDialog": {
+      "__uuid__": "4fadc8bd-e8e7-4b68-8734-8a5c672257d1"
     }
   },
   {
