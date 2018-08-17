@@ -8,19 +8,19 @@ function weChatLogin() {
         success: function (res) {
             console.log("wx code : " + res.code);
             new InfoHandle().init(res.code);
-            wx.getUserInfo({
-                success: function (res) {
-                    global.userInfo = res.userInfo;
-                    let userInfo = res.userInfo;
-                    let nickName = userInfo.nickName;
-                    let avatarUrl = userInfo.avatarUrl;
-                    let gender = userInfo.gender; //性别 0：未知、1：男、2：女
-                    let province = userInfo.province;
-                    let city = userInfo.city;
-                    let country = userInfo.country;
-                    console.log("wx : " + nickName + "," + avatarUrl + ", " + gender + ", " + province + ", " + city + ", " + country);
-                }
-            });
+            // wx.getUserInfo({
+            //     success: function (res) {
+            //         global.userInfo = res.userInfo;
+            //         let userInfo = res.userInfo;
+            //         let nickName = userInfo.nickName;
+            //         let avatarUrl = userInfo.avatarUrl;
+            //         let gender = userInfo.gender; //性别 0：未知、1：男、2：女
+            //         let province = userInfo.province;
+            //         let city = userInfo.city;
+            //         let country = userInfo.country;
+            //         console.log("wx : " + nickName + "," + avatarUrl + ", " + gender + ", " + province + ", " + city + ", " + country);
+            //     }
+            // });
         },
         fail: function (res) {
             // iOS 和 Android 对于拒绝授权的回调 errMsg 没有统一，需要做一下兼容处理
@@ -35,6 +35,13 @@ function weChatLogin() {
             global.event.fire("onDataDownloadCallback", InfoData.TOKEN_ERROR);
         }
     })
+
+    if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+        let account = {
+            openid: "oVL0X0a5g1anxIss_WVtmRdb3G2c"
+        };
+        report.initWithAccount(5054, "xbsd", account, wx.getLaunchOptionsSync());
+    }
 }
 
 module.exports = {

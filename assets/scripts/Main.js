@@ -13,10 +13,9 @@ cc.Class({
         display: cc.Sprite,
         signIn: cc.Prefab,
         rewardHint: cc.Label,
-        gameHelp: require("GameHelp")
+        gameHelp: require("GameHelp"),
+        likeNode: cc.Node
     },
-
-    // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         WxHelper.showShareMenu();
@@ -30,6 +29,23 @@ cc.Class({
         let mask = this.rankList.getChildByName('bg_mask').getComponent('mask');
         mask.setSelf(this);
         mask.onHide = this.onRankListHide;
+
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            report.getRecommendInfo(function (tablelist) {
+                this.recommend = tablelist;
+                let that = this;
+                cc.loader.load(this.recommend.icon, function (err, texture) {
+                    if (err) {
+                        return;
+                    }
+                    let icon = that.likeNode.getChildByName("icon");
+                    console.log("recommend icon:" + that.recommend.icon + "; texture:" + texture);
+                    icon.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(texture);
+                });
+            }, this);
+        } else {
+            this.likeNode.active = false;
+        }
     },
     onDestroy() {
         global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
@@ -148,5 +164,40 @@ cc.Class({
     },
     showAwardGotDialog(){
         // let dialog = cc.instantiate();
+    },
+
+    onClickLikeBtn() {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            let recommendData = this.recommend;
+            wx.getSystemInfo({
+                success: function (system) {
+                    if (system && system.SDKVersion >= "2.2.0") {
+                        wx.navigateToMiniProgram({
+                            appId: recommendData.appid,
+                            path: recommendData.page,
+                            extraData: null,
+                            envVersion: "release",
+                            success: (res) => {
+                                report.linkEvent(recommendData.aid, recommendData.adid);
+                            },
+                            fail: (res) => {
+
+                            },
+                            complete: (res) => {
+                            },
+                        })
+                    } else {
+                        wx.previewImage({
+                            urls: [recommendData.ad_image],
+                            success: res => {
+                                report.linkEvent(recommendData.aid, recommendData.adid);
+                            },
+                            fail: res => {
+                            }
+                        });
+                    }
+                }
+            })
+        }
     }
 });
