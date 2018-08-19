@@ -1,9 +1,8 @@
 import {InfoData, InfoHandle} from "../InfoData";
 import global from "../global";
 
-function weChatLogin() {
+function weChatLogin(callback) {
     cc.log('login');
-    let that = this;
     wx.login({
         success: function (res) {
             console.log("wx code : " + res.code);
@@ -21,6 +20,8 @@ function weChatLogin() {
             //         console.log("wx : " + nickName + "," + avatarUrl + ", " + gender + ", " + province + ", " + city + ", " + country);
             //     }
             // });
+            console.log("zzz login success");
+            callback();
         },
         fail: function (res) {
             // iOS 和 Android 对于拒绝授权的回调 errMsg 没有统一，需要做一下兼容处理
@@ -35,26 +36,16 @@ function weChatLogin() {
             global.event.fire("onDataDownloadCallback", InfoData.TOKEN_ERROR);
         }
     })
-
-    if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-        let account = {
-            openid: "oVL0X0a5g1anxIss_WVtmRdb3G2c"
-        };
-        report.initWithAccount(5054, "xbsd", account, wx.getLaunchOptionsSync());
-    }
 }
 
 module.exports = {
-    login: () => {
+    login: (callback) => {
         console.log('[login] login');
-        if (CC_JSB) { //模拟器
-            new InfoHandle().init(0);
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) { //微信小游戏
+            weChatLogin(callback);
         } else {
-            if (cc.sys.platform === cc.sys.WECHAT_GAME) { //微信小游戏
-                weChatLogin();
-            } else {
-                new InfoHandle().init(0);
-            }
+            new InfoHandle().init(0);
+            callback();
         }
     }
 };

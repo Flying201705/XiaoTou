@@ -4,6 +4,7 @@ import {InfoData} from "./InfoData";
 import * as WxHelper from "./common/WxHelper";
 
 const remoteHelper = require("./common/RemoteHelper");
+const qmHelper = require("./common/QmHelper");
 
 cc.Class({
     extends: cc.Component,
@@ -25,22 +26,8 @@ cc.Class({
         this.rankListInit();
         this.checkSignIn();
         this.isRankListShow = false;
-        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            report.getRecommendInfo(function (tablelist) {
-                this.recommend = tablelist;
-                let that = this;
-                cc.loader.load(this.recommend.icon, function (err, texture) {
-                    if (err) {
-                        return;
-                    }
-                    let icon = that.likeNode.getChildByName("icon");
-                    console.log("recommend icon:" + that.recommend.icon + "; texture:" + texture);
-                    icon.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(texture);
-                });
-            }, this);
-        } else {
-            this.likeNode.active = false;
-        }
+
+        this.setLikeBtn();
     },
     onDestroy() {
         global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
@@ -122,38 +109,30 @@ cc.Class({
         // let dialog = cc.instantiate();
     },
 
-    onClickLikeBtn() {
+    setLikeBtn() {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            let recommendData = this.recommend;
-            wx.getSystemInfo({
-                success: function (system) {
-                    if (system && system.SDKVersion >= "2.2.0") {
-                        wx.navigateToMiniProgram({
-                            appId: recommendData.appid,
-                            path: recommendData.page,
-                            extraData: null,
-                            envVersion: "release",
-                            success: (res) => {
-                                report.linkEvent(recommendData.aid, recommendData.adid);
-                            },
-                            fail: (res) => {
-
-                            },
-                            complete: (res) => {
-                            },
-                        })
-                    } else {
-                        wx.previewImage({
-                            urls: [recommendData.ad_image],
-                            success: res => {
-                                report.linkEvent(recommendData.aid, recommendData.adid);
-                            },
-                            fail: res => {
-                            }
-                        });
+            let recommend = qmHelper.getCurrentRecommend();
+            if (recommend) {
+                let url = recommend.icon.replace(/\s+/g,"");
+                let that = this;
+                cc.loader.load(url, function (err, texture) {
+                    if (err) {
+                        return;
                     }
-                }
-            })
+                    that.likeNode.active = true;
+                    let icon = that.likeNode.getChildByName("icon");
+                    // console.log("recommend icon:" + that.recommend.icon + "; texture:" + texture);
+                    icon.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(texture);
+                });
+            } else {
+                this.likeNode.active = false;
+            }
+        } else {
+            this.likeNode.active = false;
         }
+    },
+
+    onClickLikeBtn() {
+        qmHelper.goToRecommend();
     }
 });

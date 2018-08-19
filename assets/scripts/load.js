@@ -1,4 +1,5 @@
 const login = require('./common/login');
+const qmHelper = require("./common/QmHelper");
 
 cc.Class({
     extends: cc.Component,
@@ -9,10 +10,14 @@ cc.Class({
 
     onLoad: function () {
         this.loadBar.progress = 0;
-        login.login();
+        login.login(this.loginSuccess.bind(this));
     },
 
-    start() {
+    loginSuccess() {
+        qmHelper.init(this.loadMain.bind(this));
+    },
+
+    loadMain() {
         let self = this;
         cc.loader.onProgress = function (completedCount, totalCount, item) {
             self.loadBar.progress = completedCount / totalCount;
