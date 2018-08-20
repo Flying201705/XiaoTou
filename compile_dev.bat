@@ -1,9 +1,13 @@
+rem 配置项
 set REMOTE_SERVER_ROOT='http://qyx18.com:1234/res/fenglp'
 set APPID='wx052c1c7a94625f6d'
 set idePath=C:\CocosCreator
-set projectPath=C:\Users\bunny\develepment\game\XiaoTou
+rem 配置项
+
+set projectPath=%~dp0
 
 ::修改默认配置
+chcp 65001
 set fn=%projectPath%\assets\scripts\common\config.js
 copy %fn% config.js.bak
 @echo off

@@ -1,9 +1,13 @@
+rem 配置项
 set REMOTE_SERVER_ROOT='https://cdn-xyx.raink.com.cn/xbsd/test/remote-res_0.10/'
 set APPID='wxafbaaa17fada0e47'
 set idePath=C:\CocosCreator
-set projectPath=C:\Users\bunny\develepment\game\XiaoTou
+rem 配置项
+
+set projectPath=%~dp0
 
 ::修改默认配置
+chcp 65001
 set fn=%projectPath%\assets\scripts\common\config.js
 copy %fn% config.js.bak
 @echo off
