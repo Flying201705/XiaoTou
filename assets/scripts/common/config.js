@@ -45,7 +45,7 @@ const appConfig = {
 module.exports = {
     appConfig: appConfig,
     //小游戏版本号
-    version: "1.0.0",
+    version: "1.0.1",
     host: DEBUG ? 'http://qyx18.com:1234' : 'https://xyxxbsd.raink.com.cn:8086',
     // 分享得水晶数
     shareForCrystal: {
