@@ -22,6 +22,10 @@ cc.Class({
         cc.info('ranklistDialog onDestroy');
         rank.hide();
         this.tex.destroy();
+        this.scheduleOnce(() => {
+            cc.sys.garbageCollect();
+            cc.info('garbageCollect');
+        }, 1);
     },
     _resizeShareCanvas() {
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
