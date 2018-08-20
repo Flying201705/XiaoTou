@@ -81,8 +81,9 @@ function share(mode = 'normal', successCallback, failCallback) {
                 if (successCallback) {
                     successCallback(_isShareViaGroup(ret));
                 } else {
-                    _addCrystal(ret)
-                    global.event.fire("add_reward_hint", data);
+                    _addCrystal(ret);
+                    let crystalCount = _isShareViaGroup(ret) ? shareForCrystal.group : shareForCrystal.person;
+                    global.event.fire("add_reward_hint", crystalCount);
 		        }
             }
         },
