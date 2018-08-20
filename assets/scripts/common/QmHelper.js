@@ -1,46 +1,28 @@
 /**
  *千墨对接文件
  */
-let recommendIndex = 0;
-let recommendList = [];
+let recommend = null;
 
 function init(callback) {
-    if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
-        callback();
-        return;
+    if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+        let account = {
+            openid: "0"
+        };
+        report.initWithAccount(5054, "xbsd", account, wx.getLaunchOptionsSync());
     }
 
-    let account = {
-        openid: "0"
-    };
-    report.initWithAccount(5054, "xbsd", account, wx.getLaunchOptionsSync());
-    report.getRecommendInfo(function (tablelist) {
-        recommendIndex = 0;
-        recommendList = recommendList.concat(tablelist);
-        callback();
-    }, this, false);
+    callback();
 }
 
-function updateRecommend() {
-    report.getRecommendInfo(function (tablelist) {
-        recommendIndex = 0;
-        recommendList = [];
-        recommendList = recommendList.concat(tablelist);
-    }, this, false);
-}
-
-function getCurrentRecommend() {
-    if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
-        return null;
+function updateRecommend(callback) {
+    if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+        report.getRecommendInfo(function (tablelist) {
+            recommend = tablelist;
+            if (callback) {
+                callback(tablelist);
+            }
+        }, this);
     }
-
-    if (recommendList === null || recommendList.length === 0) {
-        return null;
-    }
-
-    console.log("zzz recommendList.length:" + recommendList.length);
-
-    return recommendList[recommendIndex];
 }
 
 function goToRecommend() {
@@ -48,7 +30,7 @@ function goToRecommend() {
         return;
     }
 
-    let recommendData = getCurrentRecommend();
+    let recommendData = recommend;
     if (recommendData === null) {
         return;
     }
@@ -80,23 +62,13 @@ function goToRecommend() {
                     }
                 });
             }
-
-            if (recommendList.length === 1) {
-                updateRecommend();
-            } else {
-                recommendIndex++;
-                if (recommendIndex >= recommendList.length) {
-                    recommendIndex = 0;
-                }
-            }
         }
     })
 }
 
 module.exports = {
-    recommendIndex: recommendIndex,
-    recommendList: recommendList,
+    recommend: recommend,
     init: init,
-    getCurrentRecommend: getCurrentRecommend,
+    updateRecommend: updateRecommend,
     goToRecommend: goToRecommend
 };

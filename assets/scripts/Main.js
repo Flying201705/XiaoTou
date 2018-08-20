@@ -27,12 +27,14 @@ cc.Class({
         this.checkSignIn();
         this.isRankListShow = false;
 
-        this.setLikeBtn();
+        this.updateLikeBtn();
+        this.schedule(this.updateLikeBtn, 60);
     },
     onDestroy() {
         global.event.off('onDataDownloadCallback', this.onDataDownloadCallback);
         global.event.off("add_reward_hint", this.addRewardHint);
         global.event.off("showAwardGotDialog", this.showAwardGotDialog);
+        this.unschedule(this.updateLikeBtn, this);
     },
     start() {
         rank.hide();
@@ -109,30 +111,27 @@ cc.Class({
         // let dialog = cc.instantiate();
     },
 
-    setLikeBtn() {
-        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            let recommend = qmHelper.getCurrentRecommend();
+    updateLikeBtn() {
+        let that = this;
+        qmHelper.updateRecommend(function (recommend) {
             if (recommend) {
-                let url = recommend.icon.replace(/\s+/g,"");
-                let that = this;
+                let url = recommend.icon.replace(/\s+/g, "");
                 cc.loader.load(url, function (err, texture) {
                     if (err) {
                         return;
                     }
                     that.likeNode.active = true;
                     let icon = that.likeNode.getChildByName("icon");
-                    // console.log("recommend icon:" + that.recommend.icon + "; texture:" + texture);
                     icon.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(texture);
                 });
             } else {
                 this.likeNode.active = false;
             }
-        } else {
-            this.likeNode.active = false;
-        }
+        });
     },
 
     onClickLikeBtn() {
         qmHelper.goToRecommend();
+        this.updateLikeBtn();
     }
 });
