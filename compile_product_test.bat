@@ -1,7 +1,6 @@
 rem 配置项
 set REMOTE_SERVER_ROOT='https://cdn-xyx.raink.com.cn/xbsd/test/remote-res_0.10/'
 set APPID='wxafbaaa17fada0e47'
-set idePath=C:\CocosCreator
 rem 配置项
 
 set projectPath=%~dp0
@@ -15,7 +14,7 @@ powershell -c "(gc -encoding utf8 %fn%) -replace 'const DEBUG = true', 'const DE
 move /y config.js.tmp %fn% 
 
 ::构建主项目
-%idePath%\CocosCreator.exe ^
+CocosCreator.exe ^
 --path %projectPath% ^
 --build ^
 title=xiaotou_world;^
@@ -31,7 +30,7 @@ wechatgame={^
 md5Cache=true
 
 ::构建子域项目
-%idePath%\CocosCreator.exe ^
+CocosCreator.exe ^
 --path %projectPath%\wx-sub ^
 --build ^
 title=wx-sub;^
