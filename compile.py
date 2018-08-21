@@ -61,7 +61,7 @@ if type in ('2','3'):
         print('\n准备编译“生产测试版”')
     elif type == '3':
         print('\n准备编译“生产正式版”')    
-    version = input('输入版本号:')
+    version = input('\n输入版本号:')
     
 print(getAppId(type))
 print(getRemoteServer(type,version))
@@ -134,6 +134,8 @@ elif type=='3':
     shutil.move('config.js.tmp',CONFIG_PATH)
 
 print('============================================')
-print('构建[ %s ]完成 ，按任意键退出' % getVerInfo(type,version))
+print('构建[ %s ]完成' % getVerInfo(type,version))
+print('远程服务器地址：%s'% getRemoteServer(type,version))
 print('============================================')
+print('\n按任意键退出')
 input()
