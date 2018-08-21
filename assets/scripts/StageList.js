@@ -40,9 +40,6 @@ cc.Class({
             this.schedule(this._updateSubDomainCanvas, 2, 2, 1);
         }
     },
-    onDestroy() {
-        this.unschedule(this._updateSubDomainCanvas);
-    },
     // update(dt) {
     // this._updateSubDomainCanvas();
     // },
@@ -117,6 +114,7 @@ cc.Class({
     },
 
     onDestroy() {
+        this.unschedule(this._updateSubDomainCanvas, this);
         this.node.destroyAllChildren();
     },
 
